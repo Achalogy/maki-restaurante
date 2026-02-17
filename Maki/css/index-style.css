@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Spinnaker&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* ======== */
+/* Nav Bar  */
+/* ======== */
+
+.navbar {
+  background-color: #1b1b26 !important;
+  padding: 0 2rem;
+}
+
+.navbar-toggler {
+  background-color: #fefced;
+  border-radius: calc(Infinity * 1px); /*Borde totalmente redondo*/
+}
+
+/* Logo Navbar */
+#header-logo {
+  height: 8rem;
+  margin: 0;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-area > h1 {
+  font-family: "Staatliches", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  font-size: 4rem;
+  color: #fefced;
+  line-height: 1;
+}
+
+.title-area > h2 {
+  font-family: "Spinnaker", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: #fefced;
+  margin: 0;
+  font-size: .75rem;
+}
+
+
+/* Carousel */
+
+.nav-link img {
+  width: 40px;
+}
+
+.nav-item {
+  margin: 0 30px;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+/* Barra de busqueda */
+
+.form-control {
+  background-color: #6e7189;
+  color: white;
+  border-color: #6e7189;
+  margin-right: 15rem;
+  width: 250px;
+}
+
+.form-control::placeholder {
+  color: #e0e0e0;
+}
+
+.form-control:focus {
+  background-color: #6e7189;
+  color: white;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(94, 92, 90, 0.25);
+}
+
+/* Fondo y elementos generales */
+
+body {
+  background-image: url("/assets/tree_back.png");
+  background-size: cover;
+}
+
+main h3 {
+  font-family: "Staatliches", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 100px;
+  color: #eb7c21;
+  text-align: center;
+  margin: 50px;
+}
+
+
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Tarjeta de producto */
+
+.item-card {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+.item-card:hover {
+  transform: scale(1.05);
+}
+
+.card-elements {
+  border-radius: 1rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .card-elements {
+    height: 30rem;
+  }
+}
+
+
+.card-elements img {
+  height: 80%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-elements p {
+  background-color: #eb7c21;
+  border-color: #eb7c21;
+  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 20px 20px;
+  height: 20%;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fefced;
+  font-family: "Staatliches", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/*Footer*/
+
+footer {
+  background-color: #1b1b26;
+  height: 24rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+#footer-logo {
+  height: 90px;
+  margin: 0 0 0 30px;
+}
+
+footer{
+    padding: 10px;
+}
+
+footer p {
+  color: #fefced;
+  margin: 5px;
+}
+
+#contacts {
+  margin: 50px;
+}
+
+#contacts a {
+  margin: 20px;
+}
+
+h3{
+  color: #fefced;
+  size: 40px;
+  text-align: center;
+}
+
+section *{
+  text-align: center;
+}
+
+#logo-contacts{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  text-align: center;
+  margin: 0 6rem 2rem 6rem;
+}
+
+
+#menu-about{
+  display: flex;
+  align-items:start;
+  margin: 0 4% 2rem 4rem;
+  text-align: center;
+  justify-content:space-between;
+  flex-direction: row;
+}
+
+#menu-about section{
+  margin: 0 70px 10px 0;
+}
+
+
+#menu-about *{
+  color: #fefced;
+}
+
+
+#menu-about ul{
+  list-style-type: none; 
+}
+
+#menu-about a{
+  margin: 10px;
+  color: #F6CEAA;
+}
+#menu-about p{
+  margin: 10px;
+  color: #F6CEAA;
+}
+#menu-about h4{
+  margin: 10px 0 10px 0;
+}
+
+#logo-contacts, #menu-about{
+  margin: 0;
+}
+
+
