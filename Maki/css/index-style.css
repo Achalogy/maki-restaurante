@@ -95,7 +95,7 @@
 }
 
 body {
-  background-image: url("../Images/TreeBack.png");
+  background-image: url("/assets/tree_back.png");
   background-size: cover;
 }
 
