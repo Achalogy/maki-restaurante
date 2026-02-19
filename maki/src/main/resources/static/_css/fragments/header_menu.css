@@ -21,3 +21,7 @@
 .header-search-bar input {
   @apply outline-none;
 }
+
+.header-menu a img {
+  @apply h-5 w-5;
+}
