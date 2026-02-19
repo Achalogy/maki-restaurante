@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maki</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <script>
+    const files = [
+      // Poner acá los css necesarios para la pagina
+      // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+      "/_css/global.css",
+      "/_css/fragments/header_menu.css",
+
+    ];
+
+    (async () => {
+      for (const file of files) {
+        const req = await fetch(file)
+        const content = await req.text()
+
+        const style = document.createElement('style');
+        style.setAttribute('type', 'text/tailwindcss');
+        style.textContent = content
+        document.head.appendChild(style);
+      }
+    })()
+
+  </script>
+  <th:block th:replace="fragments/fonts :: fonts">
+
+  </th:block>
+
+</head>
+
+<body>
+
+  <header th:replace="fragments/header_menu :: header_menu"></header>
+
+  <p>Test</p>
+
+</body>
+
+</html>

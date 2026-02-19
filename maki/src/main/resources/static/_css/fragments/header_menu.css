@@ -1,0 +1,23 @@
+#header_menu {
+  @apply bg-maki-black text-maki-white;
+}
+
+#header_menu nav {
+  @apply flex p-8 md:px-12 gap-8 justify-between items-center;
+}
+
+.header_logo {
+  @apply flex items-center;
+}
+
+.header-menu {
+  @apply flex justify-center items-center;
+}
+
+.header-search-bar {
+  @apply flex rounded-full bg-[#ffffff10] items-center justify-center gap-4 h-8;
+}
+
+.header-search-bar input {
+  @apply outline-none;
+}

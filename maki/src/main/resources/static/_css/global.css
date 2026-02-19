@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  --color-maki-orange: #eb7c21;
+  --color-maki-white: #fefced;
+  --color-maki-black: #1b1b26;
+  --color-maki-beige: #f6ceaa;
+}
