@@ -113,10 +113,6 @@ main h3 {
   margin: 50px;
 }
 
-.span-color-orange {
-  
-  color: #eb7c21;
-}
 
 main {
   display: flex;
@@ -141,7 +137,6 @@ main {
 .item-card:hover {
   transform: scale(1.05);
 }
-
 
 .card-elements {
   border-radius: 1rem;
@@ -210,10 +205,6 @@ footer p {
 
 #contacts {
   margin: 50px;
-}
-
-#reviews .container .row > div .card {
-  height: 12rem;
 }
 
 #contacts a {
