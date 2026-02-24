@@ -1,0 +1,128 @@
+.item-card {
+    display: flex;
+    background-color: #EB7C21;
+    margin: 1rem;
+    height: 15rem;
+    width: 34rem;
+    color: #FEFCED;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+#products{
+    margin: 6rem;
+}
+.menu-cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15rem;
+    padding: 2rem;
+}
+
+.item-card h3{
+    color: #FEFCED;
+    text-align: right;
+    margin: 0;
+    font-size: 2rem;
+}
+
+.item-card img {
+    width: 50%;
+    margin: 0;
+}
+
+
+.item-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    margin: 0.4rem;
+    text-align: justify;
+}
+
+.item-info > .product-name {
+    text-align: center;
+    width: 100%;
+}
+
+.item-info p{
+    font-size: 0.7rem;
+}
+
+#products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.add-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px; 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: #FEFCED;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.add-btn:hover {
+    transform: scale(1.15);
+    background-color: #ffffff;
+    line-height: 1;
+}
+
+.entradas, .platos-fuertes, .postres , .sushi{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    flex-direction: row;
+    margin: 0;
+    width: 100%;
+}
+#title-area{
+    height: 20rem;
+    position: relative;
+    text-align: center;
+    color: #FEFCED;
+    margin: 0;
+}
+
+#title-area img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#title-area h2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10rem;
+    color: #FEFCED;
+}
+
+
