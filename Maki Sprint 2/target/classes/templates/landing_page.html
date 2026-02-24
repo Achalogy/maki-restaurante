@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maki</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <script>
+    const files = [
+      // Poner acá los css necesarios para la pagina
+      // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+      "/_css/global.css",
+      "/_css/fragments/landing/header_menu.css",
+      "/_css/fragments/landing/hero_carousel.css",
+      "/_css/fragments/food_menu_grid.css",
+      "/_css/fragments/footer.css",
+      "/_css/fragments/landing/review_carousel.css",
+
+    ];
+
+    (async () => {
+      for (const file of files) {
+        const req = await fetch(file)
+        const content = await req.text()
+
+        const style = document.createElement('style');
+        style.setAttribute('type', 'text/tailwindcss');
+        style.textContent = content
+        document.head.appendChild(style);
+      }
+    })()
+
+  </script>
+  <th:block th:replace="fragments/fonts :: fonts">
+
+  </th:block>
+
+</head>
+
+<body>
+
+  <header th:replace="fragments/landing/header_menu :: header-menu"></header>
+  <main class="tree_background">
+    <section th:replace="fragments/landing/hero_carousel :: hero-carousel"></section>
+
+    <br>
+    <h2 class="text-center">MENÚ</h2>
+
+    <section th:replace="fragments/food_menu_grid.html :: food-menu-grid"></section>
+
+    <br>
+    <h2 class="text-center">Reseñas</h2>
+
+    <section th:replace="fragments/landing/review_carousel.html :: review-carousel"></section>
+
+    <br>
+    <h2 class="text-center">Mapa</h2>
+    <p class="text-center text-[3rem] font-semibold">¿Donde nos encontramos?</p>
+
+    <div class="flex bg-maki-orange w-[95dvw] xl:max-w-[80dvw] h-[70dvh] mx-auto rounded overflow-hidden">
+      <div class="flex-1 flex items-center justify-center text-white text-[6rem] font-semibold p-12 text-center">
+        <p>DIRECCIÓN: CRA 45A #136C - 71</p>
+      </div>
+      <iframe class="flex-1 h-full" src="https://www.google.com/maps?q=Cra+45A+136C-71+Bogota+Colombia&output=embed"
+        width="100%" height="400" style="border: 0; border-radius: 12px" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <br>
+  </main>
+
+  <footer th:replace="fragments/footer.html :: footer"></footer>
+
+  <script src="/_js/carousel.js"></script>
+
+</body>
+
+</html>
