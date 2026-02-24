@@ -1,0 +1,7 @@
+.review-carousel {
+  @apply flex flex-wrap gap-8 justify-center;
+}
+
+.review-item {
+  @apply w-100 bg-white shadow-xl rounded-xl text-xl flex flex-col gap-6 items-center p-4 text-center;
+}
