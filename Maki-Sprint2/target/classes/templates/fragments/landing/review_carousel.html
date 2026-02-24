@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NO DEBERÍAS VER ESTA PAGINA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body>
+    <section th:fragment="review-carousel" class="review-carousel">
+
+      <div class="review-item">
+        <div class="review-img">
+          <img src="https://images.unsplash.com/photo-1581781870027-04212e231e96?w=800" alt="Review Image">
+        </div>
+        <div class="review-txt">
+          <p class="review-title">Finalista Regional - Sushi Master</p>
+          <p class="review-content">
+            "El sushi estaba fresquísimo y el ramen tenía muchísimo sabor.
+            El lugar es pequeño pero muy acogedor. Definitivamente vuelvo."
+          </p>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <div class="review-img">
+          <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800" alt="Review Image">
+        </div>
+        <div class="review-txt">
+          <p class="review-title">Experiencia 5 Estrellas</p>
+          <p class="review-content">
+            "Los ingredientes se sienten de primera calidad y el servicio fue
+            rapidísimo. El ambiente combina perfecto con la comida."
+          </p>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <div class="review-img">
+          <img src="https://images.unsplash.com/photo-1562158070-57f7b9f0b6d7?w=800" alt="Review Image">
+        </div>
+        <div class="review-txt">
+          <p class="review-title">Amante del Ramen</p>
+          <p class="review-content">
+            "El caldo del ramen estaba increíblemente bien logrado.
+            Sin duda uno de los mejores que he probado."
+          </p>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <div class="review-img">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800" alt="Review Image">
+        </div>
+        <div class="review-txt">
+          <p class="review-title">Cliente Frecuente</p>
+          <p class="review-content">
+            "Siempre que vengo pruebo algo nuevo y nunca decepciona.
+            La presentación de los platos es impecable."
+          </p>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <div class="review-img">
+          <img src="https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=800" alt="Review Image">
+        </div>
+        <div class="review-txt">
+          <p class="review-title">Recomendado 100%</p>
+          <p class="review-content">
+            "Excelente relación calidad-precio. Perfecto para una cena
+            especial o una salida con amigos."
+          </p>
+        </div>
+      </div>
+
+    </section>
+  </body>
+</html>

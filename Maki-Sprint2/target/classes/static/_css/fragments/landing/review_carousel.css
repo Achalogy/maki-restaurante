@@ -1,0 +1,70 @@
+.review-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+/* TARJETA */
+.review-item {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  height: 350px; /* 🔥 altura fija */
+  background-color: #1b1b26;
+  color: #fefced;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* IMAGEN (SIEMPRE 50%) */
+.review-img {
+  width: 50%;
+  height: 100%;
+}
+
+.review-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔥 clave para que no se deformen */
+}
+
+/* TEXTO (SIEMPRE 50%) */
+.review-txt {
+  width: 50%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.review-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.review-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .review-item {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .review-img,
+  .review-txt {
+    width: 100%;
+  }
+
+  .review-img {
+    height: 250px;
+  }
+}
