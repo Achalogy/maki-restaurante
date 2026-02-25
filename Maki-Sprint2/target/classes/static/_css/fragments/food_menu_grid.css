@@ -1,5 +1,5 @@
 .food-menu-grid {
-  @apply grid grid-cols-1 gap-6 md:grid-cols-3 max-w-400 mx-auto;
+  @apply grid grid-cols-2  p-8 xl:p-4 gap-6 xl:grid-cols-3 max-w-400 mx-auto;
 }
 
 .food-menu-item {
