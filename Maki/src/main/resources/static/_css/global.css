@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-maki-orange: #eb7c21;
+  --color-maki-white: #fefced;
+  --color-maki-black: #1b1b26;
+  --color-maki-beige: #f6ceaa;
+  --color-maki-bg: #fefced;
+
+  --font-staatliches: "Staatliches", sans-serif;
+  --font-spinnaker: "Spinnaker", sans-serif;
+}
+
+main h2 {
+  @apply text-maki-orange text-[8rem] font-staatliches;
+}
+main h3 {
+  @apply text-4xl font-staatliches text-maki-black;
+}
+main span{
+    @apply text-4xl font-staatliches text-maki-orange;
+}
+
+body {
+  @apply bg-maki-bg;
+}
+
+.tree_background {
+  background-image: url("/_images/tree_back.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NO DEBERÍAS VER ESTA PAGINA</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body>
+
+<section th:fragment="review-carousel" class="review-carousel">
+
+  <div class="review-item">
+    <div class="review-image-container">
+      <img src="https://images.unsplash.com/photo-1708388464912-d4ad82dca990?w=500" alt="Res Wagyu">
+    </div>
+    <div class="review-content">
+      <div class="quote-icon">“</div>
+      <p class="review-text">
+        La Res Wagyu es, sin duda, una experiencia religiosa. Ese veteado marmoleado hace que la carne se deshaga en la
+        lengua como si fuera mantequilla. Vale cada centavo por esa explosión de sabor rico y sofisticado.
+      </p>
+      <div class="review-author">
+        <span class="author-name">Ricardo Nakano</span>
+        <span class="author-role">Crítico de Carnes</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-item">
+    <div class="review-image-container">
+      <img src="https://images.unsplash.com/photo-1638866281450-3933540af86a?w=500" alt="Ramen">
+    </div>
+    <div class="review-content">
+      <div class="quote-icon">“</div>
+      <p class="review-text">
+        El caldo Tonkotsu es reconfortante y profundo. Se nota que las horas de cocción han extraído toda la esencia.
+        Los tallarines tienen la firmeza exacta y la barriga de cerdo marinada es simplemente espectacular.
+      </p>
+      <div class="review-author">
+        <span class="author-name">Ana María Silva</span>
+        <span class="author-role">Amante del Ramen</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-item">
+    <div class="review-image-container">
+      <img src="https://images.unsplash.com/photo-1712192674556-4a89f20240c1?w=500" alt="Rollo Dragón">
+    </div>
+    <div class="review-content">
+      <div class="quote-icon">“</div>
+      <p class="review-text">
+        Mi favorito personal es el Rollo Dragón. La anguila tiene ese toque dulce de la salsa kabayaki que contrasta de
+        maravilla con la cremosidad del aguacate. Es una obra de arte visual y gustativa.
+      </p>
+      <div class="review-author">
+        <span class="author-name">Daniel Gaviria</span>
+        <span class="author-role">Foodie Local</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-item">
+    <div class="review-image-container">
+      <img src="https://plus.unsplash.com/premium_photo-1694599325857-24139cf22ace?w=500" alt="Cheesecake Matcha">
+    </div>
+    <div class="review-content">
+      <div class="quote-icon">“</div>
+      <p class="review-text">
+        No se vayan sin probar el Cheesecake de Matcha. Tiene el balance perfecto: no es excesivamente dulce y las notas
+        terrosas del té verde premium le dan un final muy elegante a la cena. ¡Altamente recomendado!
+      </p>
+      <div class="review-author">
+        <span class="author-name">Sofía Herrera</span>
+        <span class="author-role">Diseñadora Gastronómica</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</body>
+
+</html>

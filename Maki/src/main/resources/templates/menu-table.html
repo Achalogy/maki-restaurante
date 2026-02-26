@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script>
+    const files = [
+        // Poner acá los css necesarios para la pagina
+        // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+        "/_css/global.css",
+        "/_css/fragments/landing/header_menu.css",
+        "/_css/fragments/footer.css",
+    ];
+
+    (async () => {
+        for (const file of files) {
+        const req = await fetch(file)
+        const content = await req.text()
+
+        const style = document.createElement('style');
+        style.setAttribute('type', 'text/tailwindcss');
+        style.textContent = content
+        document.head.appendChild(style);
+        }
+    })()
+
+    </script>
+    <th:block th:replace="fragments/fonts :: fonts">
+
+    </th:block>
+
+</head>
+
+<body class="font-sans">
+        <!-- Headersss-->
+    <header th:replace="fragments/landing/header_menu :: header-menu"></header>
+    <main class="tree_background">
+
+    <br>
+    <h2 class="text-center">MENÚ</h2>
+        <!-- TITLE -->
+    <section class="max-w-full mx-auto px-6 py-10">
+
+        <!-- ACTION BUTTONS -->
+        <div class="flex gap-4 mb-8">
+            <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
+                + Add New Item
+            </button>
+            <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
+                🗑 Delete Item
+            </button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="w-full border-collapse bg-white">
+                <thead class="bg-orange-500 text-white text-center">
+                    <tr>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Nombre de Producto</th>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Descripción</th>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Tag</th>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Precio</th>
+                        <th class="px-6 py-4 text-center font-bold text-lg">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="plato : ${menu}"
+                        class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+                        <!-- Image -->
+                        <td class="px-6 py-4">
+                            <img th:src="${plato.urlImage}"
+                                 alt="Imagen producto"
+                                 class="rounded-lg shadow-sm w-20 h-20 object-cover">
+                        </td>
+                        <!-- Product Name -->
+                        <td class="px-6 py-4">
+                            <h3 th:text="${plato.nombre}"
+                                class="text-xl font-bold uppercase text-black">
+                                Nombre Producto
+                            </h3>
+                        </td>
+                        <!-- Description -->
+                        <td class="px-6 py-4">
+                            <p th:text="${plato.descripcion}"
+                               class="text-gray-700 text-base font-medium">
+                                Descripción del producto
+                            </p>
+                        </td>
+                        <!-- Tag -->
+                        <td class="px-6 py-4">
+                            <span th:text="${plato.tag}"
+                                  class="inline-block text-gray-800 text-xs font-semibold px-2 py-1">
+                                Tag
+                            </span>
+                        </td>
+                        <!-- Price -->
+                        <td class="px-6 py-4">
+                            <span th:text="'$' + ${plato.precio}"
+                                  class="text-xl font-extrabold text-orange-500">
+                                $0.000
+                            </span>
+                        </td>
+                        <!-- Actions -->
+                        <td class="px-6 py-4 text-center">
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base">
+                                ✏ Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    </main>
+    <footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+</html>
