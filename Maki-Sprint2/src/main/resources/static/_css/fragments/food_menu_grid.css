@@ -3,7 +3,13 @@
 }
 
 .food-menu-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   @apply flex flex-col gap-2 h-160 rounded-2xl overflow-hidden shadow;
+}
+
+.food-menu-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 .food-menu-item img {
@@ -11,5 +17,5 @@
 }
 
 .food-menu-item p {
-  @apply p-8 bg-maki-orange text-white font-staatliches text-8xl text-center;
+  @apply p-8 bg-maki-orange text-white font-staatliches text-6xl text-center;
 }
