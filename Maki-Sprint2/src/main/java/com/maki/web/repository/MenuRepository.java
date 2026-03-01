@@ -117,4 +117,21 @@ public class MenuRepository {
         public Plato getById(Integer id) {
                 return menu.get(id);
         }
+        
+        public void addPlato(Plato plato) {
+                if (plato.getId() == null) {
+                        int tam = menu.size();
+                        int lastId = menu.get(tam).getId();
+                        plato.setId(lastId + 1);
+                        menu.put(plato.getId(), plato);
+                }
+                else{
+                        menu.put(plato.getId(), plato);
+                }
+                
+        }
+
+        public void deletePlato(Integer id) {
+                menu.remove(id);
+        }
 }

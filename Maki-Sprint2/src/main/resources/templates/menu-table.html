@@ -1,89 +1,178 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Menu</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script>
-    const files = [
+      const files = [
         // Poner acá los css necesarios para la pagina
         // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
         "/_css/global.css",
         "/_css/fragments/landing/header_menu.css",
         "/_css/fragments/footer.css",
-    ];
+      ];
 
-    (async () => {
+      (async () => {
         for (const file of files) {
-        const req = await fetch(file)
-        const content = await req.text()
+          const req = await fetch(file);
+          const content = await req.text();
 
-        const style = document.createElement('style');
-        style.setAttribute('type', 'text/tailwindcss');
-        style.textContent = content
-        document.head.appendChild(style);
+          const style = document.createElement("style");
+          style.setAttribute("type", "text/tailwindcss");
+          style.textContent = content;
+          document.head.appendChild(style);
         }
-    })()
-
+      })();
     </script>
-    <th:block th:replace="fragments/fonts :: fonts">
+    <th:block th:replace="fragments/fonts :: fonts"> </th:block>
+  </head>
 
-    </th:block>
-
-</head>
-
-<body class="font-sans">
-        <!-- HEADER -->
+  <body class="font-sans">
+    <!-- Headersss-->
     <header th:replace="fragments/landing/header_menu :: header-menu"></header>
     <main class="tree_background">
-
-    <br>
-    <h2 class="text-center">MENÚ</h2>
-        <!-- TITLE -->
-    <section class="max-w-6xl mx-auto px-6 py-10">
-
-        <!-- PRODUCTS -->
-        <div class="space-y-10">
-
-            <!-- PRODUCT ROW -->
-            <div th:each="plato : ${menu}"
-                 class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-
-                <!-- Image -->
-                <div>
-                    <img th:src="${plato.urlImage}"
-                         alt="Imagen producto"
-                         class="rounded-xl shadow-md w-full h-40 object-cover">
-                </div>
-                <!-- Info -->
-                <div class="md:col-span-2">
-                    <h3 th:text="${plato.nombre}"
-                        class="text-2xl font-bold uppercase text-black">
-                        Nombre Producto
-                    </h3>
-
-                    <p th:text="${plato.descripcion}"
-                       class="text-gray-700 mt-2">
-                        Descripción del producto
-                    </p>
-                </div>
-                <!-- Price -->
-                <div class="text-right">
-                    <span th:text="'$' + ${plato.precio}"
-                          class="text-2xl font-extrabold text-orange-500">
-                        $0.000
-                    </span>
-                </div>
-
-            </div>
-
+      <br />
+      <h2 class="text-center">MENÚ de Administrador</h2>
+      <!-- TITLE -->
+      <section class="max-w-full mx-auto px-6 py-10">
+        <!-- ACTION BUTTONS -->
+        <div class="flex gap-4 mb-8">
+          <form th:action="@{/Comidas/addMenuItem}" method="get">
+            <button
+              type="submit"
+              class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg"
+            >
+              + Add New Item
+            </button>
+          </form>
         </div>
-    </section>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto rounded-lg shadow-md">
+          <table class="w-full min-w-full border-collapse bg-white">
+            <thead class="bg-[#eb7c21] text-white text-center hidden sm:table-header-group">
+              <tr>
+                <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
+                <th class="px-6 py-4 text-center font-bold text-lg">
+                  Nombre de Producto
+                </th>
+                <th class="px-6 py-4 text-center font-bold text-lg">
+                  Descripción
+                </th>
+                <th class="px-6 py-4 text-center font-bold text-lg">Tag</th>
+                <th class="px-6 py-4 text-center font-bold text-lg">Precio</th>
+                <th class="px-6 py-4 text-center font-bold text-lg">Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                th:each="plato : ${menu}"
+                class="border-b border-gray-200 hover:bg-gray-50 transition duration-150 block sm:table-row"
+              >
+                <!-- Image -->
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Imagen:</span>
+                  <img
+                    th:src="${plato.urlImage}"
+                    alt="Imagen producto"
+                    class="rounded-lg shadow-sm w-20 h-20 object-cover"
+                  />
+                </td>
+                <!-- Product Name -->
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Nombre:</span>
+                  <h3
+                    th:text="${plato.nombre}"
+                    class="text-xl font-bold uppercase text-black"
+                  >
+                    Nombre Producto
+                  </h3>
+                </td>
+                <!-- Description -->
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Descripción:</span>
+                  <p
+                    th:text="${plato.descripcion}"
+                    class="text-gray-700 text-base font-medium"
+                  >
+                    Descripción del producto
+                  </p>
+                </td>
+                <!-- Tag -->
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Tag:</span>
+                  <span
+                    th:text="${plato.tag}"
+                    class="inline-block text-gray-800 text-xs font-semibold px-2 py-1"
+                  >
+                    Tag
+                  </span>
+                </td>
+                <!-- Price -->
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Precio:</span>
+                  <span
+                    th:text="'$' + ${#numbers.formatDecimal(plato.precio, 0, 'COMMA', 0, 'POINT')}"
+                    class="text-xl font-extrabold text-orange-500"
+                  >
+                    $0.000
+                  </span>
+                </td>
+
+                <td class="px-6 py-4 text-center block sm:table-cell">
+                  <form
+                    th:action="@{/Comidas/{id}(id=${plato.id})}"
+                    method="get"
+                  >
+                    <button
+                      type="submit"
+                      class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35"
+                    >
+                      🔎 View
+                    </button>
+                  </form>
+
+                  <form
+                    th:action="@{/Comidas/updateMenuItem/{id}(id=${plato.id})}"
+                    method="get"
+                  >
+                    <button
+                      type="submit"
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35"
+                    >
+                      ✏ Edit
+                    </button>
+                  </form>
+
+                  <form
+                    th:action="@{/Comidas/deleteMenuItem/{id}(id=${plato.id})}"
+                    method="post"
+                    onsubmit="
+                      return confirm(
+                        '¿Estás seguro de que deseas eliminar este plato?',
+                      );
+                    "
+                  >
+                    <button
+                      type="submit"
+                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35"
+                    >
+                      🗑 Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <footer th:replace="fragments/footer.html :: footer"></footer>
-</body>
+  </body>
+  <script src="/_js/admin-food-actions.js"></script>
 </html>
