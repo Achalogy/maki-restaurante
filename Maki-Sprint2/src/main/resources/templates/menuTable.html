@@ -44,37 +44,38 @@
     <br>
     <h2 class="text-center">MENÚ</h2>
         <!-- TITLE -->
-    <section class="max-w-6xl mx-auto px-6 py-10">
+    <!-- container with horizontal scroll for very small devices -->
+    <section class="max-w-6xl mx-auto px-6 py-10 overflow-x-auto">
 
         <!-- PRODUCTS -->
         <div class="space-y-10">
 
             <!-- PRODUCT ROW -->
             <div th:each="plato : ${menu}"
-                 class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-start">
 
                 <!-- Image -->
-                <div>
+                <div class="flex justify-center order-1">
                     <img th:src="${plato.urlImage}"
                          alt="Imagen producto"
-                         class="rounded-xl shadow-md w-full h-40 object-cover">
+                         class="rounded-xl shadow-md w-full h-32 sm:h-40 object-cover">
                 </div>
                 <!-- Info -->
-                <div class="md:col-span-2">
+                <div class="sm:col-span-1 md:col-span-2 order-2">
                     <h3 th:text="${plato.nombre}"
-                        class="text-2xl font-bold uppercase text-black">
+                        class="text-xl sm:text-2xl font-bold uppercase text-black">
                         Nombre Producto
                     </h3>
 
                     <p th:text="${plato.descripcion}"
-                       class="text-gray-700 mt-2">
+                       class="text-gray-700 mt-2 leading-relaxed">
                         Descripción del producto
                     </p>
                 </div>
                 <!-- Price -->
-                <div class="text-right">
+                <div class="text-right sm:text-left md:text-right flex items-center justify-end order-3 sm:order-4">
                     <span th:text="'$' + ${plato.precio}"
-                          class="text-2xl font-extrabold text-orange-500">
+                          class="text-lg sm:text-2xl font-extrabold text-orange-500">
                         $0.000
                     </span>
                 </div>

@@ -7,4 +7,8 @@ public interface MenuService {
     public Collection<Plato> getMenu();
 
     public Plato getById(Integer id);
+
+    public void addPlato(Plato plato);
+
+    public void deletePlato(Integer id);
 }
