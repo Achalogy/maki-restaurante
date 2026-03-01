@@ -23,4 +23,14 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.getById(id);
     }
 
+    @Override
+    public void addPlato(Plato plato) {
+        menuRepository.addPlato(plato);
+    }
+
+    @Override
+    public void deletePlato(Integer id) {
+        menuRepository.deletePlato(id);
+    }   
+
 }
