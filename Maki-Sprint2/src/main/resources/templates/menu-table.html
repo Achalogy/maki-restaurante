@@ -37,7 +37,9 @@
     <header th:replace="fragments/landing/header_menu :: header-menu"></header>
     <main class="tree_background">
       <br />
-      <h2 class="text-center ">MENÚ de Administrador</h2>
+      <h2 class="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
+        MENÚ de Administrador
+      </h2>
       <!-- TITLE -->
       <section class="max-w-full mx-auto px-6 py-10">
         <!-- ACTION BUTTONS -->
@@ -54,8 +56,8 @@
 
         <!-- TABLE -->
         <div class="overflow-x-auto rounded-lg shadow-md">
-          <table class="w-full border-collapse bg-white">
-            <thead class="bg-[#eb7c21] text-white text-center">
+          <table class="w-full min-w-full border-collapse bg-white">
+            <thead class="bg-[#eb7c21] text-white text-center hidden sm:table-header-group">
               <tr>
                 <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
                 <th class="px-6 py-4 text-center font-bold text-lg">
@@ -72,10 +74,11 @@
             <tbody>
               <tr
                 th:each="plato : ${menu}"
-                class="border-b border-gray-200 hover:bg-gray-50 transition duration-150"
+                class="border-b border-gray-200 hover:bg-gray-50 transition duration-150 block sm:table-row"
               >
                 <!-- Image -->
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Imagen:</span>
                   <img
                     th:src="${plato.urlImage}"
                     alt="Imagen producto"
@@ -83,7 +86,8 @@
                   />
                 </td>
                 <!-- Product Name -->
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Nombre:</span>
                   <h3
                     th:text="${plato.nombre}"
                     class="text-xl font-bold uppercase text-black"
@@ -92,7 +96,8 @@
                   </h3>
                 </td>
                 <!-- Description -->
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Descripción:</span>
                   <p
                     th:text="${plato.descripcion}"
                     class="text-gray-700 text-base font-medium"
@@ -101,7 +106,8 @@
                   </p>
                 </td>
                 <!-- Tag -->
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Tag:</span>
                   <span
                     th:text="${plato.tag}"
                     class="inline-block text-gray-800 text-xs font-semibold px-2 py-1"
@@ -110,7 +116,8 @@
                   </span>
                 </td>
                 <!-- Price -->
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 block sm:table-cell">
+                  <span class="sm:hidden font-semibold block mb-1">Precio:</span>
                   <span
                     th:text="'$' + ${#numbers.formatDecimal(plato.precio, 0, 'COMMA', 0, 'POINT')}"
                     class="text-xl font-extrabold text-orange-500"
@@ -119,7 +126,7 @@
                   </span>
                 </td>
 
-                <td class="px-6 py-4 text-center">
+                <td class="px-6 py-4 text-center block sm:table-cell">
                   <form
                     th:action="@{/Comidas/{id}(id=${plato.id})}"
                     method="get"
@@ -169,5 +176,5 @@
     </main>
     <footer th:replace="fragments/footer.html :: footer"></footer>
   </body>
-  <script src="\_js\admin-food-actions.js"></script>
+  <script src="/_js/admin-food-actions.js"></script>
 </html>
