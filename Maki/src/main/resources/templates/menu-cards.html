@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script>
+      const files = [
+        // Poner acá los css necesarios para la pagina
+        // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+        "/_css/global.css",
+        "/_css/fragments/landing/header_menu.css",
+        "/_css/fragments/footer.css",
+        "/_css/store-cards.css",
+      ];
+
+      (async () => {
+        for (const file of files) {
+          const req = await fetch(file);
+          const content = await req.text();
+
+          const style = document.createElement("style");
+          style.setAttribute("type", "text/tailwindcss");
+          style.textContent = content;
+          document.head.appendChild(style);
+        }
+      })();
+    </script>
+    <th:block th:replace="fragments/fonts :: fonts"> </th:block>
+  </head>
+
+  <body class="font-sans">
+    <!-- HEADER -->
+    <header th:replace="fragments/landing/header_menu :: header-menu"></header>
+    <main class="tree_background">
+      <br />
+      <div id="title-area">
+        <h2 class="text-center">MENÚ</h2>
+      </div>
+
+      <!-- TITLE -->
+      <section id="products">
+        <!-- PRODUCTS -->
+        <div id="menu-cards">
+          <h2>Entradas</h2>
+          <div
+            class="entradas grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+          ></div>
+          <h2>Platos fuertes</h2>
+          <div
+            class="platos-fuertes grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+          ></div>
+          <h2>Sushi</h2>
+          <div
+            class="sushi grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+          ></div>
+          <h2>Postres</h2>
+          <div
+            class="postres grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+          ></div>
+        </div>
+      </section>
+    </main>
+    <footer th:replace="fragments/footer.html :: footer"></footer>
+  </body>
+  <script th:inline="javascript">
+    const menu = /*[[${menu}]]*/ [];
+  </script>
+  <script src="\_js\card-sorter.js"></script>
+</html>
