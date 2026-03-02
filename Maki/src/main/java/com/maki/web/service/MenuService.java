@@ -11,4 +11,6 @@ public interface MenuService {
     public void addPlato(Plato plato);
 
     public void deletePlato(Integer id);
+
+    public void updateCategoria(Integer platoId, Integer categoriaId);
 }
