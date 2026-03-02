@@ -12,5 +12,5 @@ public class Plato {
     private String descripcion;
     private String urlImage;
     private boolean disponible;
-    private String tag;
+    private Categoria categoria;
 }

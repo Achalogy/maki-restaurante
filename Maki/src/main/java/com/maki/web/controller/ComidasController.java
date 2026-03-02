@@ -2,32 +2,35 @@ package com.maki.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Plato;
+import com.maki.web.repository.CategoriasRepository;
 import com.maki.web.service.MenuService;
 
 import org.springframework.ui.Model;
-
-
 
 @Controller
 @RequestMapping("/Comidas")
 public class ComidasController {
 
     @Autowired
-    MenuService menuService;
+    private MenuService menuService;
+
+    @Autowired
+    private CategoriasRepository categoriasRepository;
+
+    // ===================== ADMIN TABLE =====================
 
     @GetMapping("/AdminTable")
     public String mostrarMenuEnTarjetas(Model model) {
         model.addAttribute("menu", menuService.getMenu());
+        model.addAttribute("categorias", categoriasRepository.getAll());
         return "menu-table";
     }
+
+    // ===================== VIEW SINGLE =====================
 
     @GetMapping("/{id}")
     public String mostrarMenuEnTabla(Model model, @PathVariable("id") Integer plateid) {
@@ -36,12 +39,15 @@ public class ComidasController {
         return "single-item";
     }
 
+    // ===================== PUBLIC MENU =====================
 
     @GetMapping("/OurMenu")
-    public String mostrarMenuEnTabla(Model model) {
+    public String mostrarMenuPublico(Model model) {
         model.addAttribute("menu", menuService.getMenu());
         return "menu-cards";
     }
+
+    // ===================== DELETE PLATE =====================
 
     @PostMapping("/deleteMenuItem/{id}")
     public String deletePlato(@PathVariable Integer id) {
@@ -49,10 +55,17 @@ public class ComidasController {
         return "redirect:/Comidas/AdminTable";
     }
 
+    // ===================== CREATE PLATE =====================
+
     @GetMapping("/addMenuItem")
     public String mostrarFormularioCrearPlato(Model model) {
-        Plato plato = new Plato(null,"", 0.0, "", "",false,"");
+
+        Categoria none = categoriasRepository.getById(1); // get None safely here
+        Plato plato = new Plato(null, "", 0.0, "", "", false, none);
+
         model.addAttribute("plato", plato);
+        model.addAttribute("categorias", categoriasRepository.getAll());
+
         return "crear-plato";
     }
 
@@ -62,11 +75,43 @@ public class ComidasController {
         return "redirect:/Comidas/AdminTable";
     }
 
+    // ===================== EDIT PLATE =====================
+
     @GetMapping("/updateMenuItem/{id}")
     public String mostrarFormularioEditarPlato(@PathVariable("id") Integer id, Model model) {
         Plato plato = menuService.getById(id);
         model.addAttribute("plato", plato);
+        model.addAttribute("categorias", categoriasRepository.getAll());
         return "crear-plato";
     }
-    
+
+    // ===================== UPDATE CATEGORY FROM DROPDOWN =====================
+
+    @PostMapping("/updateCategoria")
+    public String updateCategoria(
+            @RequestParam Integer platoId,
+            @RequestParam Integer categoriaId) {
+
+        menuService.updateCategoria(platoId, categoriaId);
+        return "redirect:/Comidas/AdminTable";
+    }
+
+    // ===================== ADD CATEGORY =====================
+
+    @PostMapping("/categorias/add")
+    public String addCategoria(@RequestParam String nombre) {
+
+        categoriasRepository.addCategoria(new Categoria(null, nombre));
+        return "redirect:/Comidas/AdminTable";
+    }
+
+    // ===================== DELETE CATEGORY =====================
+
+    @PostMapping("/categorias/delete/{id}")
+    public String deleteCategoria(@PathVariable Integer id) {
+
+        categoriasRepository.deleteCategoria(id);
+        return "redirect:/Comidas/AdminTable";
+    }
+
 }
