@@ -14,7 +14,7 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
     public CategoriaRepository() {
         categorias.put(1, new Categoria(1, "None"));
         categorias.put(2, new Categoria(2, "Entradas"));
-        categorias.put(2, new Categoria(3, "Platos fuertes"));
+        categorias.put(3, new Categoria(3, "Platos fuertes"));
     }
 
     @Override
