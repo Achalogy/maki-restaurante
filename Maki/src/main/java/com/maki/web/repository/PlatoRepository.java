@@ -19,6 +19,8 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
         Categoria none;
         
         public PlatoRepository() {
+                none = categoriasRepository.selectById(1);
+
                 platos.put(1, new Plato(1, "Sushi Variado", 51960,
                                 "Una hermosa combinación de nigiri y rollos con los mejores ingredientes. Cada pieza es cuidadosamente elaborada por nuestros chefs expertos de sushi con precisión y artesanía.",
                                 "https://images.unsplash.com/photo-1581781870027-04212e231e96?w=500", true, none));
