@@ -1,0 +1,15 @@
+footer {
+  @apply bg-maki-black p-8 flex flex-col text-white text-xl font-spinnaker;
+}
+
+footer div {
+  @apply items-center justify-center;
+}
+
+footer h3 {
+  @apply text-4xl;
+}
+
+footer a {
+  @apply text-maki-beige;
+}
