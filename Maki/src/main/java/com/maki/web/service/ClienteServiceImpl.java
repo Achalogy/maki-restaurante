@@ -30,7 +30,7 @@ public class ClienteServiceImpl implements  ClienteService{
   }
 
   @Override
-  public void verificarCredenciales(Cliente cliente) throws InvalidCredentialsException, EntityNotFoundException {
+  public Cliente verificarCredenciales(Cliente cliente) throws InvalidCredentialsException, EntityNotFoundException {
     if(cliente.getId() == null) throw new EntityNotFoundException("No hay cliente con id nulo");
     Cliente repoClient = repo.selectById(cliente.getId());
 
@@ -38,10 +38,11 @@ public class ClienteServiceImpl implements  ClienteService{
 
     // TODO: OBVIAMENTE HAY QUE CAMBIAR ESTO POR UN JSON WEB TOKEN O ALGO ASÍ
     if(!repoClient.getContrasena().equals(cliente.getContrasena())) throw  new InvalidCredentialsException("Crednciales invalidas");
+    return repoClient;
   }
 
   @Override
-  public void verificarCredenciales(String correo, String contrasena) throws InvalidCredentialsException, EntityNotFoundException {
+  public Cliente verificarCredenciales(String correo, String contrasena) throws InvalidCredentialsException, EntityNotFoundException {
     Optional<Cliente> cliente = this.selectAll().stream().filter(c -> c.getCorreo().equals(correo)).findFirst();
 
     if(cliente.isEmpty()) throw new EntityNotFoundException("No hay cliente con correo="+correo);
@@ -50,7 +51,7 @@ public class ClienteServiceImpl implements  ClienteService{
 
     // TODO: OBVIAMENTE HAY QUE CAMBIAR ESTO POR UN JSON WEB TOKEN O ALGO ASÍ
     if(!repoClient.getContrasena().equals(cliente.get().getContrasena())) throw  new InvalidCredentialsException("Crednciales invalidas");
-
+    return repoClient;
   }
 
   @Override

@@ -14,4 +14,11 @@ public class Cliente {
     private String contrasena;
     private String telefono;
     private String Direccion;
+
+    public Cliente(String correo, String contrasena) {
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
+
+    public Cliente() {}
 }
