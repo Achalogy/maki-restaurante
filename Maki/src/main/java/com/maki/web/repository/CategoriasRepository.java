@@ -11,12 +11,9 @@ import com.maki.web.entities.Plato;
 
 @Repository
 public class CategoriasRepository {
-
-
     private Map<Integer, Categoria> categorias = new HashMap<>();
 
     public CategoriasRepository() {
-        // seed with default entry
         categorias.put(1, new Categoria(1, "None"));
     }
 
