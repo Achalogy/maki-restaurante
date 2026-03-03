@@ -193,7 +193,7 @@
                         th:each="cat : ${categorias}"
                         th:value="${cat.id}"
                         th:text="${cat.nombre}"
-                        th:selected="${plato.categoria.id == cat.id}"
+                        th:selected="${plato.categoria?.id == cat.id}"
                       >
                       </option>
                     </select>
