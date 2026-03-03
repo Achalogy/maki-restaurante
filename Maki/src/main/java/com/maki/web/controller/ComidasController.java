@@ -1,13 +1,13 @@
 package com.maki.web.controller;
 
+import com.maki.web.service.CategoriaService;
+import com.maki.web.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Plato;
-import com.maki.web.repository.CategoriasRepository;
-import com.maki.web.service.MenuService;
 
 import org.springframework.ui.Model;
 
@@ -16,17 +16,17 @@ import org.springframework.ui.Model;
 public class ComidasController {
 
     @Autowired
-    private MenuService menuService;
+    private PlatoService platoService;
 
     @Autowired
-    private CategoriasRepository categoriasRepository;
+    private CategoriaService categoriaService;
 
     // ===================== ADMIN TABLE =====================
 
     @GetMapping("/AdminTable")
     public String mostrarMenuEnTarjetas(Model model) {
-        model.addAttribute("menu", menuService.getMenu());
-        model.addAttribute("categorias", categoriasRepository.getAll());
+        model.addAttribute("menu", platoService.selectAll());
+        model.addAttribute("categorias", categoriaService.selectAll());
         return "menu-table";
     }
 
@@ -34,7 +34,7 @@ public class ComidasController {
 
     @GetMapping("/{id}")
     public String mostrarMenuEnTabla(Model model, @PathVariable("id") Integer plateid) {
-        Plato plato = menuService.getById(plateid);
+        Plato plato = platoService.selectById(plateid);
         model.addAttribute("plato", plato);
         return "single-item";
     }
@@ -43,7 +43,7 @@ public class ComidasController {
 
     @GetMapping("/OurMenu")
     public String mostrarMenuPublico(Model model) {
-        model.addAttribute("menu", menuService.getMenu());
+        model.addAttribute("menu", platoService.selectAll());
         return "menu-cards";
     }
 
@@ -51,7 +51,7 @@ public class ComidasController {
 
     @PostMapping("/deleteMenuItem/{id}")
     public String deletePlato(@PathVariable Integer id) {
-        menuService.deletePlato(id);
+        platoService.deleteByID(id);
         return "redirect:/Comidas/AdminTable";
     }
 
@@ -60,18 +60,18 @@ public class ComidasController {
     @GetMapping("/addMenuItem")
     public String mostrarFormularioCrearPlato(Model model) {
 
-        Categoria none = categoriasRepository.getById(1); // get None safely here
+        Categoria none = categoriaService.selectById(1); // get None safely here
         Plato plato = new Plato(null, "", 0.0, "", "", false, none);
 
         model.addAttribute("plato", plato);
-        model.addAttribute("categorias", categoriasRepository.getAll());
+        model.addAttribute("categorias", categoriaService.selectAll());
 
         return "crear-plato";
     }
 
     @PostMapping("/addMenuItem")
     public String agregarPlato(@ModelAttribute("plato") Plato plato) {
-        menuService.addPlato(plato);
+        platoService.insert(plato);
         return "redirect:/Comidas/AdminTable";
     }
 
@@ -79,9 +79,9 @@ public class ComidasController {
 
     @GetMapping("/updateMenuItem/{id}")
     public String mostrarFormularioEditarPlato(@PathVariable("id") Integer id, Model model) {
-        Plato plato = menuService.getById(id);
+        Plato plato = platoService.selectById(id);
         model.addAttribute("plato", plato);
-        model.addAttribute("categorias", categoriasRepository.getAll());
+        model.addAttribute("categorias", categoriaService.selectAll());
         return "crear-plato";
     }
 
@@ -92,7 +92,8 @@ public class ComidasController {
             @RequestParam Integer platoId,
             @RequestParam Integer categoriaId) {
 
-        menuService.updateCategoria(platoId, categoriaId);
+        Categoria categoria = categoriaService.selectById(categoriaId);
+        platoService.cambiarCategoria(categoria, platoId);
         return "redirect:/Comidas/AdminTable";
     }
 
@@ -101,7 +102,7 @@ public class ComidasController {
     @PostMapping("/categorias/add")
     public String addCategoria(@RequestParam String nombre) {
 
-        categoriasRepository.addCategoria(new Categoria(null, nombre));
+        categoriaService.insert(new Categoria(null, nombre));
         return "redirect:/Comidas/AdminTable";
     }
 
@@ -110,7 +111,7 @@ public class ComidasController {
     @PostMapping("/categorias/delete/{id}")
     public String deleteCategoria(@PathVariable Integer id) {
 
-        categoriasRepository.deleteCategoria(id);
+        categoriaService.deleteByID(id);
         return "redirect:/Comidas/AdminTable";
     }
 
