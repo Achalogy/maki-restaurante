@@ -15,11 +15,11 @@ public interface ClienteService extends ServiceInterface<Cliente> {
           String nombre, String apellido, String correo, String contrasena, String telefono, String direccion
   ) throws EntityConstraintException;
 
-  public void verificarCredenciales(
+  public Cliente verificarCredenciales(
       Cliente cliente
   ) throws InvalidCredentialsException, EntityNotFoundException;
 
-  public void verificarCredenciales(
+  public Cliente verificarCredenciales(
           String correo, String contrasena
   ) throws  InvalidCredentialsException, EntityNotFoundException;
 }
