@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class CategoriaServiceImpl implements CategoriaService {
+public class CategoriaServiceImpl implements categoriaService {
 
   @Autowired
   CategoriaRepository repo;
