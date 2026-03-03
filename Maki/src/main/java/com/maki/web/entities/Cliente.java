@@ -10,7 +10,7 @@ public class Cliente {
 
     private String nombre;
     private String Apellido;
-    private String email;
+    private String correo;
     private String contrasena;
     private String telefono;
     private String Direccion;

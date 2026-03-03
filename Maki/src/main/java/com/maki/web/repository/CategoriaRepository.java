@@ -2,8 +2,8 @@ package com.maki.web.repository;
 
 import java.util.*;
 
-import com.maki.web.repository.exception.EntityConstraintException;
-import com.maki.web.repository.exception.EntityNotFoundException;
+import com.maki.web.exception.EntityConstraintException;
+import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 import com.maki.web.entities.Categoria;
 

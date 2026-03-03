@@ -2,14 +2,11 @@ package com.maki.web.service;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
-import com.maki.web.repository.PlatoRepository;
-import com.maki.web.repository.exception.EntityConstraintException;
-import com.maki.web.repository.exception.EntityNotFoundException;
+import com.maki.web.exception.EntityConstraintException;
+import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.*;
 import java.util.Collection;
-import java.util.List;
 
 public class CategoriaServiceImpl implements CategoriaService {
 

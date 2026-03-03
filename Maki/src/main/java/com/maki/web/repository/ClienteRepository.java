@@ -1,9 +1,8 @@
 package com.maki.web.repository;
 
-import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Cliente;
-import com.maki.web.repository.exception.EntityConstraintException;
-import com.maki.web.repository.exception.EntityNotFoundException;
+import com.maki.web.exception.EntityConstraintException;
+import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -34,7 +33,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
         Cliente old = clientes.get(cliente.getId());
         if(old != null) throw new EntityConstraintException("Ya existe un cliente con este id");
 
-        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getEmail().equals(cliente.getEmail()))
+        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getCorreo().equals(cliente.getCorreo()))
                 .findFirst();
         if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
 
@@ -65,7 +64,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     public Cliente update(Cliente cliente) throws EntityConstraintException, EntityNotFoundException {
         if(clientes.get(cliente.getId()) == null) throw new EntityNotFoundException("No existe un cliente con este id");
 
-        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getEmail().equals(cliente.getEmail()))
+        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getCorreo().equals(cliente.getCorreo()))
                 .findFirst();
         if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
 
@@ -75,7 +74,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
 
     @Override
     public Cliente upsert(Cliente cliente) throws EntityConstraintException {
-        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getEmail().equals(cliente.getEmail()))
+        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getCorreo().equals(cliente.getCorreo()))
                 .findFirst();
         if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
 
