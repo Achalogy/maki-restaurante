@@ -117,19 +117,19 @@
               Categoría
             </label>
             <select
-                    th:field="*{categoria}"
                     id="categoria"
-                    name="categoria"
+                    name="categoriaId"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
             >
               <option value="" disabled selected>
                 Selecciona una categoría
               </option>
-              <option value="entrada">Entrada</option>
-              <option value="pfuerte">Plato Fuerte</option>
-              <option value="sushi">Sushi</option>
-              <option value="postre">Postre</option>
+              <option th:each="c : ${categorias}"
+                      th:value="${c.id}"
+                      th:text="${c.nombre}"
+                      th:selected="${plato.categoria != null and plato.categoria.id == c.id}">
+              </option>
             </select>
           </div>
 
