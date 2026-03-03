@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Plato;
-import com.maki.web.repository.CategoriaRepository;
 
 import org.springframework.ui.Model;
 

@@ -5,11 +5,12 @@ import com.maki.web.repository.CategoriaRepository;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class CategoriaServiceImpl implements CategoriaService {
-
 
   @Autowired
   CategoriaRepository repo;
