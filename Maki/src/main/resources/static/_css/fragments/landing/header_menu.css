@@ -1,0 +1,44 @@
+#header_menu {
+  @apply bg-maki-black text-white;
+}
+
+#header_menu nav {
+  @apply flex p-8 md:px-12 gap-8 justify-between items-center;
+}
+
+.header-logo {
+  @apply flex items-center gap-4;
+}
+
+.title-area > h1 {
+  @apply font-staatliches text-6xl;
+  line-height: 2.5rem;
+}
+
+.title-area > h2 {
+  @apply font-spinnaker text-xs;
+}
+
+.header-menu {
+  @apply flex justify-center items-center;
+}
+
+.header-search-bar {
+  @apply flex rounded-full bg-[#ffffff10] items-center justify-center gap-4 p-4 px-6 text-xl;
+}
+
+.header-search-bar input {
+  @apply outline-none;
+}
+
+.title-area {
+  @apply flex flex-col gap-0 justify-center items-center;
+}
+
+.header-menu {
+  @apply flex justify-between grow max-w-140 hidden xl:flex;
+}
+
+.header-menu a img {
+  @apply h-12 w-12;
+}

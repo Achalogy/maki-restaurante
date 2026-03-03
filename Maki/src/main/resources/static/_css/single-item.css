@@ -1,0 +1,96 @@
+.single-food-card {
+    width: 90%;
+    max-width: 1200px;
+    margin: 5rem auto;
+    display: flex;
+    gap: 0.2rem;
+    align-items: stretch;
+    border-radius: 2rem;
+    overflow: hidden;
+    background-color: #EB7C21;
+}
+
+#single-item {
+    position: relative;
+    min-height: 100vh;
+    background-image: var(--bg-img);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#single-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 20, 29, 0.8); 
+}
+
+#single-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+#plate-img {
+    flex: 1;
+    min-height: 350px;
+}
+
+#plate-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#plate-info {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f6ceaa;
+}
+
+.single-food-card h2 {
+    font-size: clamp(2rem, 4vw, 4rem);
+    margin-bottom: 1.5rem;
+}
+
+#plate-info p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+#special-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+textarea{
+    width: 100%;
+    height: 6rem;
+    padding: 0.5rem;    
+    border-radius: 0.5rem;
+    resize: none;
+    background-color: #fefced
+}
+
+label{
+    text-align: left;
+    font-family: "Staatliches", sans-serif  ;
+    font-size: 1.5rem;
+}
