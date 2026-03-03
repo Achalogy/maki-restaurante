@@ -1,7 +1,7 @@
 package com.maki.web.repository;
 
-import com.maki.web.repository.exception.EntityConstraintException;
-import com.maki.web.repository.exception.EntityNotFoundException;
+import com.maki.web.exception.EntityConstraintException;
+import com.maki.web.exception.EntityNotFoundException;
 
 import java.util.Collection;
 

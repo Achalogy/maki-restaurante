@@ -3,13 +3,12 @@ package com.maki.web.service;
 import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Plato;
 import com.maki.web.repository.PlatoRepository;
-import com.maki.web.repository.exception.EntityConstraintException;
-import com.maki.web.repository.exception.EntityNotFoundException;
+import com.maki.web.exception.EntityConstraintException;
+import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class PlatoServiceImpl implements PlatoService {

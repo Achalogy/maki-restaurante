@@ -1,4 +1,4 @@
-package com.maki.web.repository.exception;
+package com.maki.web.exception;
 
 public class EntityConstraintException extends RepositoryException {
     public EntityConstraintException(String message) {
