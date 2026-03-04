@@ -1,6 +1,10 @@
 console.log(menu);
 
 menu.forEach((plato) => {
+  // Skip items with no categoria
+  if (!plato.categoria) return;
+  
+  console.log(plato);
   const storeElement = document.createElement("article");
   storeElement.className = "item-card";
   //Agrega datos de comida
@@ -37,19 +41,19 @@ menu.forEach((plato) => {
   itemInfo.appendChild(price);
   storeElement.appendChild(itemInfo);
   //Para ver donde entra cada plato
-  if (plato.tag.includes("entrada")) {
+  if (plato.categoria.nombre.includes("Entradas")) {
     const entradaSection = document.querySelector(".entradas");
     entradaSection.appendChild(storeElement);
   }
-  if (plato.tag.includes("pfuerte")) {
+  if (plato.categoria.nombre.includes("Pfuerte")) {
     const pfuerteSection = document.querySelector(".platos-fuertes");
     pfuerteSection.appendChild(storeElement);
   }
-  if (plato.tag.includes("sushi")) {
+  if (plato.categoria.nombre.includes("Sushi")) {
     const sushiSection = document.querySelector(".sushi");
     sushiSection.appendChild(storeElement);
   }
-  if (plato.tag.includes("postre")) {
+  if (plato.categoria.nombre.includes("Postre")) {
     const postreSection = document.querySelector(".postres");
     postreSection.appendChild(storeElement);
   }

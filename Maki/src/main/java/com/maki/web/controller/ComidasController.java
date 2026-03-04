@@ -73,7 +73,7 @@ public class ComidasController {
     public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Integer categoriaId) {
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
-        platoService.insert(plato);
+        platoService.upsert(plato);
         return "redirect:/Comidas/AdminTable";
     }
 
