@@ -26,7 +26,7 @@
 <header th:replace="fragments/landing/header_menu :: header-menu"></header>
 
 <main class="tree_background min-h-[80dvh] py-12 flex items-center justify-center">
-    <section class="w-[95%] max-w-[40rem] bg-white shadow-2xl rounded-2xl p-8 md:p-12">
+    <section class="w-[95%] max-w-[40rem] bg-white shadow-2xl rounded-2xl p-8 md:p-12 flex flex-col gap-4">
 
         <div class="mb-8">
             <h2 class="text-4xl font-bold text-gray-800">Mi <span class="text-maki-orange">Perfil</span></h2>
@@ -71,6 +71,14 @@
                     Volver al Panel
                 </a>
             </div>
+        </form>
+
+        <form th:action="@{/client/profile/delete}" th:object="${cliente}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <button type="submit"
+                class="w-full bg-maki-black text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
+                Eliminar cuenta
+            </button>
         </form>
     </section>
 </main>
