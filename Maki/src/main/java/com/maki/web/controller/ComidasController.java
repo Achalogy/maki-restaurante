@@ -1,6 +1,6 @@
 package com.maki.web.controller;
 
-import com.maki.web.service.categoriaService;
+import com.maki.web.service.CategoriaService;
 import com.maki.web.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class ComidasController {
     private PlatoService platoService;
 
     @Autowired
-    private categoriaService categoriaService;
+    private CategoriaService categoriaService;
 
     // ===================== ADMIN TABLE =====================
 

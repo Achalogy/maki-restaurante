@@ -42,8 +42,9 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
             Integer latestId = Collections.max(ids);
             cliente.setId(latestId +1);
         }
-
-        return clientes.put(cliente.getId(), cliente);
+        
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 
     @Override
@@ -64,7 +65,8 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     public Cliente update(Cliente cliente) throws EntityConstraintException, EntityNotFoundException {
         if(clientes.get(cliente.getId()) == null) throw new EntityNotFoundException("No existe un cliente con este id");
 
-        return clientes.put(cliente.getId(), cliente);
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 
     @Override
@@ -75,6 +77,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
             cliente.setId(latestId +1);
         }
 
-        return clientes.put(cliente.getId(), cliente);
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 }
