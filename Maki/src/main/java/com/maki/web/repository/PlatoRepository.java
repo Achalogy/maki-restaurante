@@ -147,7 +147,8 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
       plato.setId(latestId +1);
     }
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 
   @Override
@@ -168,7 +169,8 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
   public Plato update(Plato plato) throws EntityConstraintException, EntityNotFoundException {
     if(platos.get(plato.getId())== null) throw new EntityNotFoundException("No existe un plato con este id");
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 
   @Override
@@ -179,6 +181,7 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
       plato.setId(latestId +1);
     }
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 }
