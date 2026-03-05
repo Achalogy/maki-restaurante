@@ -2,6 +2,8 @@ package com.maki.web.service;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
+import com.maki.web.service.PlatoService;
+import com.maki.web.entities.Plato;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class CategoriaServiceImpl implements categoriaService {
 
   @Autowired
   CategoriaRepository repo;
+
+  @Autowired
+  PlatoService platoService;
 
   @Override
   public Collection<Categoria> selectAll() {
@@ -37,6 +42,19 @@ public class CategoriaServiceImpl implements categoriaService {
 
   @Override
   public void deleteByID(Integer id) throws EntityNotFoundException {
+    // Reassign plates that reference this category to the 'None' category (id=1)
+    try {
+      var none = repo.selectById(1);
+      for (Plato p : platoService.selectAll()) {
+        if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
+          p.setCategoria(none);
+          platoService.update(p);
+        }
+      }
+    } catch (EntityNotFoundException ignored) {
+      // If none category doesn't exist, proceed without reassigning
+    }
+
     repo.deleteByID(id);
   }
 

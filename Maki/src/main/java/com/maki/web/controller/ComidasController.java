@@ -44,6 +44,7 @@ public class ComidasController {
     @GetMapping("/OurMenu")
     public String mostrarMenuPublico(Model model) {
         model.addAttribute("menu", platoService.selectAll());
+        model.addAttribute("categorias", categoriaService.selectAll());
         return "menu-cards";
     }
 
@@ -73,7 +74,7 @@ public class ComidasController {
     public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Integer categoriaId) {
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
-        platoService.insert(plato);
+        platoService.upsert(plato);
         return "redirect:/Comidas/AdminTable";
     }
 
