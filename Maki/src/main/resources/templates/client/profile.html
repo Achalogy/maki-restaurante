@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil – Maki</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+        // Mismo script de carga de CSS que usas en session.html
+        const files = ["/_css/global.css", "/_css/fragments/landing/header_menu.css", "/_css/fragments/footer.css"];
+        (async () => {
+            for (const file of files) {
+                const req = await fetch(file);
+                const content = await req.text();
+                const style = document.createElement('style');
+                style.setAttribute('type', 'text/tailwindcss');
+                style.textContent = content;
+                document.head.appendChild(style);
+            }
+        })()
+    </script>
+    <th:block th:replace="fragments/fonts :: fonts"></th:block>
+</head>
+<body>
+
+<header th:replace="fragments/landing/header_menu :: header-menu"></header>
+
+<main class="tree_background min-h-[80dvh] py-12 flex items-center justify-center">
+    <section class="w-[95%] max-w-[40rem] bg-white shadow-2xl rounded-2xl p-8 md:p-12">
+
+        <div class="mb-8">
+            <h2 class="text-4xl font-bold text-gray-800">Mi <span class="text-maki-orange">Perfil</span></h2>
+            <p class="text-gray-500">Actualiza tu información de contacto y entrega.</p>
+        </div>
+
+        <form th:action="@{/client/profile/update}" th:object="${cliente}" method="post" class="space-y-6">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Apellido</label>
+                    <input type="text" th:field="*{Apellido}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Correo Electrónico</label>
+                <input type="email" th:field="*{correo}" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" readonly>
+                <p class="text-xs text-gray-400 mt-1">El correo no puede ser modificado por seguridad.</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono</label>
+                <input type="tel" th:field="*{telefono}" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Dirección de Entrega</label>
+                <textarea th:field="*{Direccion}" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"></textarea>
+            </div>
+
+            <div class="pt-4 flex flex-col gap-3">
+                <button type="submit" class="w-full bg-maki-orange text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
+                    Guardar Cambios
+                </button>
+                <a th:href="@{/client/session/{id}(id=${cliente.id})}" class="text-center text-gray-500 hover:text-black font-medium transition">
+                    Volver al Panel
+                </a>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer th:replace="fragments/footer.html :: footer"></footer>
+
+</body>
+</html>
