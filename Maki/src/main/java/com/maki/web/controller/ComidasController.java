@@ -44,6 +44,7 @@ public class ComidasController {
     @GetMapping("/OurMenu")
     public String mostrarMenuPublico(Model model) {
         model.addAttribute("menu", platoService.selectAll());
+        model.addAttribute("categorias", categoriaService.selectAll());
         return "menu-cards";
     }
 
