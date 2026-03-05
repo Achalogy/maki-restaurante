@@ -137,6 +137,17 @@ public class ClientesController {
         return "client/profile";
     }
 
+    @PostMapping("/profile/delete")
+    public String eliminarClienteDesdePerfil(@ModelAttribute("cliente") Cliente cliente) {
+        try {
+            System.out.println(cliente);
+            clienteService.deleteByID(cliente.getId());
+            return "redirect:/?success=deleted";
+        } catch (Exception e) {
+            return "redirect:/?error=nodelete";
+        }
+    }
+
     /**
      * Procesa la actualización desde el perfil del usuario y lo devuelve a su sesión
      */
