@@ -2,7 +2,6 @@ package com.maki.web.service;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
-import com.maki.web.service.PlatoService;
 import com.maki.web.entities.Plato;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
