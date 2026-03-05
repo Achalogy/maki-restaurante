@@ -127,4 +127,40 @@ public class ClientesController {
             return "redirect:/client/crud?error=updatefailed";
         }
     }
+
+    // ============= GESTIÓN DE PERFIL PROPIO =============
+
+    /**
+     * Muestra el perfil del usuario loggeado para edición
+     */
+    @GetMapping("/profile/{id}")
+    public String verPerfilPropio(@PathVariable Integer id, Model model) {
+        Cliente cliente = clienteService.selectById(id);
+        model.addAttribute("cliente", cliente);
+        return "client/profile";
+    }
+
+    /**
+     * Procesa la actualización desde el perfil del usuario y lo devuelve a su sesión
+     */
+    @PostMapping("/profile/update")
+    public String actualizarPerfilPropio(@ModelAttribute("cliente") Cliente cliente) {
+        try {
+            // Obtenemos los datos actuales para no perder campos que no están en el form (como la contraseña)
+            Cliente clienteActual = clienteService.selectById(cliente.getId());
+
+            // Actualizamos solo los campos permitidos
+            clienteActual.setNombre(cliente.getNombre());
+            clienteActual.setApellido(cliente.getApellido());
+            clienteActual.setTelefono(cliente.getTelefono());
+            clienteActual.setDireccion(cliente.getDireccion());
+
+            clienteService.update(clienteActual);
+
+            return "redirect:/client/session/" + cliente.getId() + "?success=profileUpdated";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "redirect:/client/profile/" + cliente.getId() + "?error=failed";
+        }
+    }
 }

@@ -62,7 +62,7 @@
         <p>Explora nuestros platos disponibles</p>
       </a>
 
-      <a href="/"
+      <a th:href="@{/client/profile/{id}(id=${cliente.id})}"
          class="bg-black p-8 rounded-xl shadow-lg hover:scale-105 transition duration-200 text-center">
         <h3 class="text-2xl font-bold mb-2 text-white!">Mi Perfil</h3>
         <p class="text-white!">Gestiona tu información personal</p>
