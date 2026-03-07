@@ -60,9 +60,7 @@ public class ComidasController {
 
     @GetMapping("/addMenuItem")
     public String mostrarFormularioCrearPlato(Model model) {
-
-        Categoria none = categoriaService.selectById(1L); // get None safely here
-        Plato plato = new Plato(null, "", 0.0, "", "", false, none);
+        Plato plato = new Plato("", 0.0, "", "", false);
 
         model.addAttribute("plato", plato);
         model.addAttribute("categorias", categoriaService.selectAll());
@@ -74,7 +72,7 @@ public class ComidasController {
     public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
-        platoService.upsert(plato);
+        platoService.insert(plato); // Funciona como un upsert
         return "redirect:/Comidas/AdminTable";
     }
 

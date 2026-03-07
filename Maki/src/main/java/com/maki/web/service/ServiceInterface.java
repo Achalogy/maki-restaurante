@@ -12,7 +12,5 @@ public interface ServiceInterface<T> {
   public void delete(T entity) throws EntityNotFoundException;
   public void deleteByID(Long id) throws EntityNotFoundException;
   public T update(T entity) throws  EntityConstraintException, EntityNotFoundException;
-  public T upsert(T entity) throws  EntityConstraintException;
-
 
 }
