@@ -2,6 +2,9 @@ package com.maki.web.service;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
+
+import jakarta.transaction.Transactional;
+
 import com.maki.web.entities.Plato;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -21,49 +24,54 @@ public class CategoriaServiceImpl implements CategoriaService {
 
   @Override
   public Collection<Categoria> selectAll() {
-    return repo.selectAll();
+    return repo.findAll();
   }
 
   @Override
   public Categoria selectById(Long id) throws EntityNotFoundException {
-    return repo.selectById(id);
+    return repo.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
   }
 
   @Override
   public Categoria insert(Categoria entity) throws EntityConstraintException {
-    return repo.insert(entity);
+    if (entity.getId() != null) {
+      throw new EntityConstraintException("Insert no debe tener ID");
+    }
+    return repo.save(entity);
   }
 
   @Override
   public void delete(Categoria entity) throws EntityNotFoundException {
-    repo.delete(entity);
+    deleteByID(entity.getId());
   }
 
   @Override
+  @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
-    // Reassign plates that reference this category to the 'None' category (id=1)
-    try {
-      var none = repo.selectById(1L);
-      for (Plato p : platoService.selectAll()) {
-        if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
-          p.setCategoria(none);
-          platoService.update(p);
-        }
+
+    Categoria categoria = repo.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
+
+    Categoria none = repo.findById(1L)
+        .orElseThrow(() -> new EntityNotFoundException("Categoria 'None' no existe"));
+
+    for (Plato p : platoService.selectAll()) {
+      if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
+        p.setCategoria(none);
+        platoService.update(p);
       }
-    } catch (EntityNotFoundException ignored) {
-      // If none category doesn't exist, proceed without reassigning
     }
 
-    repo.deleteByID(id);
+    repo.delete(categoria);
   }
 
   @Override
   public Categoria update(Categoria entity) throws EntityConstraintException, EntityNotFoundException {
-    return repo.update(entity);
-  }
+    if (entity.getId() == null || !repo.existsById(entity.getId())) {
+      throw new EntityNotFoundException("Categoria no encontrada");
+    }
 
-  @Override
-  public Categoria upsert(Categoria entity) throws EntityConstraintException {
-    return repo.upsert(entity);
+    return repo.save(entity);
   }
 }
