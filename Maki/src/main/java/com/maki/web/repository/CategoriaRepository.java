@@ -9,12 +9,9 @@ import com.maki.web.entities.Categoria;
 
 @Repository
 public class CategoriaRepository implements RepositoryInterface<Categoria> {
-    private Map<Integer, Categoria> categorias = new HashMap<>();
+    private Map<Long, Categoria> categorias = new HashMap<>();
 
     public CategoriaRepository() {
-        categorias.put(1, new Categoria(1, "None"));
-        categorias.put(2, new Categoria(2, "Entradas"));
-        categorias.put(3, new Categoria(3, "Platos fuertes"));
     }
 
     @Override
@@ -23,7 +20,7 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
     }
 
     @Override
-    public Categoria selectById(Integer id) throws EntityNotFoundException {
+    public Categoria selectById(Long id) throws EntityNotFoundException {
         Categoria c = categorias.get(id);
 
         if(c == null) throw new EntityNotFoundException("No hay categoría con id=" + id);
@@ -35,8 +32,8 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
         Categoria old = categorias.get(categoria.getId());
         if(old != null) throw new EntityConstraintException("Ya exite una categoría con este id");
         if(categoria.getId() == null) {
-            List<Integer> ids = new ArrayList<>(categorias.keySet());
-            Integer latestId = Collections.max(ids);
+            List<Long> ids = new ArrayList<>(categorias.keySet());
+            Long latestId = Collections.max(ids);
             categoria.setId(latestId +1);
         }
 
@@ -52,7 +49,7 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
     }
 
     @Override
-    public void deleteByID(Integer id) throws EntityNotFoundException {
+    public void deleteByID(Long id) throws EntityNotFoundException {
         if(categorias.get(id) == null) throw new EntityNotFoundException("No existe una categoría con este id");
 
         categorias.remove(id);
@@ -69,8 +66,8 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
     @Override
     public Categoria upsert(Categoria categoria) throws EntityConstraintException {
         if(categoria.getId() == null) {
-            List<Integer> ids = new ArrayList<>(categorias.keySet());
-            Integer latestId = Collections.max(ids);
+            List<Long> ids = new ArrayList<>(categorias.keySet());
+            Long latestId = Collections.max(ids);
             categoria.setId(latestId + 1);
         }
 

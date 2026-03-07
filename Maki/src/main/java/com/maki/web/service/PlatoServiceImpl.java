@@ -22,7 +22,7 @@ public class PlatoServiceImpl implements PlatoService {
   }
 
   @Override
-  public Plato selectById(Integer id) throws EntityNotFoundException {
+  public Plato selectById(Long id) throws EntityNotFoundException {
     return repo.selectById(id);
   }
 
@@ -37,7 +37,7 @@ public class PlatoServiceImpl implements PlatoService {
   }
 
   @Override
-  public void deleteByID(Integer id) throws EntityNotFoundException {
+  public void deleteByID(Long id) throws EntityNotFoundException {
     repo.deleteByID(id);
   }
 
@@ -52,7 +52,7 @@ public class PlatoServiceImpl implements PlatoService {
   }
 
   @Override
-  public void cambiarCategoria(Categoria categoria, int platoId) throws EntityNotFoundException {
+  public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException {
     Plato plato = this.selectById(platoId);
 
     plato.setCategoria(categoria);
