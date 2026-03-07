@@ -9,10 +9,9 @@ import java.util.*;
 
 @Repository
 public class ClienteRepository implements RepositoryInterface<Cliente> {
-    private Map<Integer, Cliente> clientes = new HashMap<>();
+    private Map<Long, Cliente> clientes = new HashMap<>();
 
     public ClienteRepository() {
-        clientes.put(1, new Cliente(1, "Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241", "Cra 123 #24-242B"));
     }
 
     @Override
@@ -21,7 +20,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     }
 
     @Override
-    public Cliente selectById(Integer id) throws EntityNotFoundException {
+    public Cliente selectById(Long id) throws EntityNotFoundException {
         Cliente c = clientes.get(id);
 
         if(c == null) throw  new EntityNotFoundException("No hay cliente con id=" + id);
@@ -38,8 +37,8 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
         if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
 
         if(cliente.getId() == null) {
-            List<Integer> ids = new ArrayList<>(clientes.keySet());
-            Integer latestId = Collections.max(ids);
+            List<Long> ids = new ArrayList<>(clientes.keySet());
+            Long latestId = Collections.max(ids);
             cliente.setId(latestId +1);
         }
         
@@ -55,7 +54,7 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     }
 
     @Override
-    public void deleteByID(Integer id) throws EntityNotFoundException {
+    public void deleteByID(Long id) throws EntityNotFoundException {
         if(clientes.get(id) == null) throw new EntityNotFoundException("No existe un cliente con este id");
 
         clientes.remove(id);
@@ -72,8 +71,8 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     @Override
     public Cliente upsert(Cliente cliente) throws EntityConstraintException {
         if(cliente.getId() == null) {
-            List<Integer> ids = new ArrayList<>(clientes.keySet());
-            Integer latestId = Collections.max(ids);
+            List<Long> ids = new ArrayList<>(clientes.keySet());
+            Long latestId = Collections.max(ids);
             cliente.setId(latestId +1);
         }
 

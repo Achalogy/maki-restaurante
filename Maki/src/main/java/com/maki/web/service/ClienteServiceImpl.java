@@ -60,7 +60,7 @@ public class ClienteServiceImpl implements  ClienteService{
   }
 
   @Override
-  public Cliente selectById(Integer id) throws EntityNotFoundException {
+  public Cliente selectById(Long id) throws EntityNotFoundException {
     return repo.selectById(id);
   }
 
@@ -75,7 +75,7 @@ public class ClienteServiceImpl implements  ClienteService{
   }
 
   @Override
-  public void deleteByID(Integer id) throws EntityNotFoundException {
+  public void deleteByID(Long id) throws EntityNotFoundException {
     repo.deleteByID(id);
   }
 

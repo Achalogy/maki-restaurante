@@ -25,7 +25,7 @@ public class CategoriaServiceImpl implements CategoriaService {
   }
 
   @Override
-  public Categoria selectById(Integer id) throws EntityNotFoundException {
+  public Categoria selectById(Long id) throws EntityNotFoundException {
     return repo.selectById(id);
   }
 
@@ -40,10 +40,10 @@ public class CategoriaServiceImpl implements CategoriaService {
   }
 
   @Override
-  public void deleteByID(Integer id) throws EntityNotFoundException {
+  public void deleteByID(Long id) throws EntityNotFoundException {
     // Reassign plates that reference this category to the 'None' category (id=1)
     try {
-      var none = repo.selectById(1);
+      var none = repo.selectById(1L);
       for (Plato p : platoService.selectAll()) {
         if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
           p.setCategoria(none);

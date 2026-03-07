@@ -12,7 +12,7 @@ import lombok.Data;
 @Entity
 public class Plato {
     @Id
-    private Integer id;
+    private Long id;
     
     private String nombre;
     private double precio;
@@ -23,4 +23,12 @@ public class Plato {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
+    Plato(String nombre, double precio, String descripcion, String urlImage, boolean disponible) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.urlImage = urlImage;
+        this.disponible = disponible;
+    }
 }
