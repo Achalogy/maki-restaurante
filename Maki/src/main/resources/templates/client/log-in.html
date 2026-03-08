@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maki – Cocina Japonesa</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/_css/log-in-style.css}">
+</head>
+<body>
+
+<div class="bg-slideshow">
+  <div class="bg-slide activo"></div>
+  <div class="bg-slide"></div>
+  <div class="bg-slide"></div>
+</div>
+
+<div class="card-login">
+
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <img th:src="@{/_brand/logo.svg}" class="brand-logo" alt="Logo Maki">
+    <div>
+      <div class="brand-name">MAKI</div>
+      <div class="brand-sub">cocina japonesa</div>
+    </div>
+  </div>
+
+  <!-- FORM CONECTADO AL CONTROLLER -->
+  <form th:action="@{/LogIn/log-in}"
+        th:object="${cliente}"
+        method="post">
+
+    <div class="mb-3">
+      <input type="text"
+             class="form-control form-control-maki w-100"
+             placeholder="Correo"
+             th:field="*{correo}" />
+    </div>
+
+    <div class="mb-4">
+      <input type="password"
+             class="form-control form-control-maki w-100"
+             placeholder="Contraseña"
+             th:field="*{contrasena}" />
+    </div>
+
+    <div class="d-grid mb-4">
+      <button type="submit" class="btn btn-maki">Iniciar</button>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <a href="#" class="link-maki">¿Se te olvidó la<br>contraseña?</a>
+      <a href="#" class="link-maki text-end">¿No tienes<br>una cuenta?</a>
+    </div>
+
+  </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/_js/log-in.js}"></script>
+
+</body>
+</html>

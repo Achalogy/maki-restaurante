@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesión – Maki</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <script>
+    const files = [
+      "/_css/global.css",
+      "/_css/fragments/landing/header_menu.css",
+      "/_css/fragments/footer.css"
+    ];
+
+    (async () => {
+      for (const file of files) {
+        const req = await fetch(file)
+        const content = await req.text()
+        const style = document.createElement('style');
+        style.setAttribute('type', 'text/tailwindcss');
+        style.textContent = content
+        document.head.appendChild(style);
+      }
+    })()
+  </script>
+
+  <th:block th:replace="fragments/fonts :: fonts"></th:block>
+</head>
+
+<body>
+
+<!-- Header reutilizado -->
+<header th:replace="fragments/landing/header_menu :: header-menu"></header>
+
+<main class="tree_background min-h-[80dvh] flex items-center justify-center">
+
+  <section class="w-[95%] xl:max-w-[60rem] bg-white shadow-2xl rounded-2xl p-12">
+
+    <!-- Bienvenida -->
+    <div class="text-center mb-10">
+      <h2 class="text-[6rem]! font-bold mb-4">
+        Bienvenido a <span class="text-maki-orange text-[6rem]!">MAKI</span>
+      </h2>
+      <p class="text-xl text-gray-600">
+        Sesión activa como:
+      </p>
+      <p class="text-2xl font-semibold mt-2"
+         th:text="${cliente.correo}">
+      </p>
+    </div>
+
+    <!-- Panel de acciones -->
+    <div class="grid md:grid-cols-2 gap-8 mt-8">
+
+      <a href="/"
+         class="bg-maki-orange text-white p-8 rounded-xl shadow-lg hover:scale-105 transition duration-200 text-center">
+        <h3 class="text-2xl font-bold mb-2">Ver Menú</h3>
+        <p>Explora nuestros platos disponibles</p>
+      </a>
+
+      <a th:href="@{/client/profile/{id}(id=${cliente.id})}"
+         class="bg-black p-8 rounded-xl shadow-lg hover:scale-105 transition duration-200 text-center">
+        <h3 class="text-2xl font-bold mb-2 text-white!">Mi Perfil</h3>
+        <p class="text-white!">Gestiona tu información personal</p>
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer th:replace="fragments/footer.html :: footer"></footer>
+
+</body>
+</html>

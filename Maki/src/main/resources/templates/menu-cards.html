@@ -46,22 +46,6 @@
       <section id="products">
         <!-- PRODUCTS -->
         <div id="menu-cards">
-          <h2>Entradas</h2>
-          <div
-            class="entradas grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
-          ></div>
-          <h2>Platos fuertes</h2>
-          <div
-            class="platos-fuertes grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
-          ></div>
-          <h2>Sushi</h2>
-          <div
-            class="sushi grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
-          ></div>
-          <h2>Postres</h2>
-          <div
-            class="postres grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
-          ></div>
         </div>
       </section>
     </main>
@@ -69,6 +53,7 @@
   </body>
   <script th:inline="javascript">
     const menu = /*[[${menu}]]*/ [];
+    const categorias = /*[[${categorias}]]*/ [];
   </script>
   <script src="\_js\card-sorter.js"></script>
 </html>
