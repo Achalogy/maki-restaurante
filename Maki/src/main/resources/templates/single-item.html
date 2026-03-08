@@ -47,6 +47,7 @@
         <div id="plate-info">
           <h2 th:text="${plato.nombre}">Nombre del plato</h2>
           <p th:text="${plato.descripcion}">Descripción del plato</p>
+          <p th:text = "${plato.categoria.nombre}">Categoría del plato</p>
           <div id="special-info">
             <form action="">
               <label for="special-instructions"
