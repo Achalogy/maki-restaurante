@@ -27,17 +27,24 @@ public class Dataloader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Categoria none = categoriaRepo.save(new Categoria("None"));
         Categoria entradas = categoriaRepo.save(new Categoria("Entradas"));
-        Categoria platosFuertes = categoriaRepo.save(new Categoria("Plato fuertes"));
-        Categoria postres = categoriaRepo.save(new Categoria("Postres"));
+        Categoria platosFuertes = categoriaRepo.save(new Categoria("Platos fuertes"));
         Categoria sushi = categoriaRepo.save(new Categoria("Sushi"));
+        Categoria postres = categoriaRepo.save(new Categoria("Postres"));
+        Categoria bebidas = categoriaRepo.save(new Categoria("Bebidas"));
 
-        clienteRepo
-                .save(new Cliente("Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241", "Cra 123 #24-242B"));
-        clienteRepo
-                .save(new Cliente("Tomas", "Silva", "Neon@Zynth.dev", "StarlightSolos", "+57 316 776 6274", "Cra 53B #131A-72"));
-        
+        clienteRepo.save(new Cliente("Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241", "Cra 123 #24-242B"));
+        clienteRepo.save(new Cliente("Tomas", "Silva", "Neon@Zynth.dev", "StarlightSolos", "+57 316 776 6274", "Cra 53B #131A-72"));
+        clienteRepo.save(new Cliente("Alex", "Aponte", "Alex@Ap.dev", "AlezElNaci", "+57 317 445 8921", "Cra 15 #45-67"));
+        clienteRepo.save(new Cliente("Juan", "Vargas", "Pabon@GUI.dev", "GUIllermo", "+57 318 556 7832", "Cra 22 #89-145"));
+        clienteRepo.save(new Cliente("Laura", "Martínez", "laura.m@email.com", "LauraMart99", "+57 319 667 8743", "Cra 30 #12-34"));
+        clienteRepo.save(new Cliente("Diego", "López", "diego.lopez@email.com", "DiegoL2024", "+57 310 778 9654", "Cra 8 #56-78"));
+        clienteRepo.save(new Cliente("Sofía", "Herrera", "sofia.h@email.com", "SofiaHe88", "+57 311 889 0765", "Cra 18 #90-23"));
+        clienteRepo.save(new Cliente("Pablo", "Sánchez", "pablo.sanchez@email.com", "PabloSan77", "+57 312 990 1876", "Cra 25 #34-56"));
+        clienteRepo.save(new Cliente("Marcela", "Pérez", "marcela.p@email.com", "MarcelaPerez55", "+57 313 101 2987", "Cra 11 #67-89"));
+        clienteRepo.save(new Cliente("Javier", "Castro", "javier.c@email.com", "JavierCast44", "+57 314 212 3098", "Cra 20 #23-45"));
+
+
         Plato sushiVariado = new Plato("Sushi Variado", 51960,
                 "Una hermosa combinación de nigiri y rollos con los mejores ingredientes. Cada pieza es cuidadosamente elaborada por nuestros chefs expertos de sushi con precisión y artesanía.",
                 "https://images.unsplash.com/photo-1581781870027-04212e231e96?w=500", true);
@@ -189,6 +196,62 @@ public class Dataloader implements CommandLineRunner {
                 "https://plus.unsplash.com/premium_photo-1694599325857-24139cf22ace?w=500", true);
         cheesecakeMatcha.setCategoria(postres);
         platoRepo.save(cheesecakeMatcha);
+        Plato motiHelado = new Plato("Moti Helado", 19960,
+                        "Pequeñas esferas de arroz glutinoso rellenas de helado cremoso de sabores variados. Una textura única que combina lo suave del helado con la masticabilidad del moti.",
+                        "https://www.elespectador.com/resizer/JbZ9LGO_ygDGxdnmvdEh-63br7g=/arc-anglerfish-arc2-prod-elespectador/public/EXYQ4FEM3RBHTPTQ7JNQ5NKREU.jpg", true);
+        motiHelado.setCategoria(postres);
+        platoRepo.save(motiHelado);
+        Plato wontons = new Plato("Wontons de Chocolate", 31960,
+                        "Deliciosos wontons fritos rellenos de una mezcla decadente de chocolate derretido. El exterior crujiente contrasta perfectamente con el interior suave y chocolatoso, creando un postre indulgente que es difícil de resistir.",
+                        "https://www.umami.recipes/api/image/recipes/EZodnaVbHrA9KhS1qvaN/images/4PduTgOOsidjSZEVbUQZXM?w=3840&q=75", true);
+        wontons.setCategoria(postres);
+        platoRepo.save(wontons);
+        Plato donut = new Plato("Donut de Matcha", 15960,
+                        "Un donut cubierto con glaseado de matcha verde vibrante y relleno de crema suave. Una combinación deliciosa de frío y lo cálido, con sabor a matcha auténtico.",
+                        "https://buenprovecho.hn/wp-content/uploads/2020/10/Donas_matcha.jpg", true);
+        donut.setCategoria(postres);
+        platoRepo.save(donut);
+        Plato brownie = new Plato("Brownie de Chocolate", 23960,
+                        "Un brownie denso y pegajoso hecho con chocolate premium de alta calidad. Servido caliente con helado de vainilla, es el postre de chocolate perfecto para los amantes del cacao.",
+                        "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFnc04hxbpnE4BATtLUfa7f2_oFZYqVnXaHxb9nkaiDgzf-U0qjBIInHXiHjV1sxrtiKFHXek6G_69WFoBpBPJwxCNCBI1OopcjF4C6UdxTgcBf59cq5JIWgTdtTaZHsR9NpwCTz-BmIk/s1600/20121209_151908.jpg", true);
+        brownie.setCategoria(postres);
+        platoRepo.save(brownie);
+
+        Plato teVerde = new Plato("Té Verde", 7960,
+        "Té verde tradicional japonés con un sabor fresco y ligero. Perfecto para acompañar tus platos favoritos.",
+        "https://image.tuasaude.com/media/article/yp/dt/beneficios-del-te-verde_17350.jpg", true);
+        teVerde.setCategoria(bebidas);
+        platoRepo.save(teVerde);
+
+        Plato sakeTradicional = new Plato("Sake Tradicional", 35960,
+                "Bebida alcohólica japonesa elaborada con arroz fermentado. Suave con notas complejas de sabor.",
+                "https://monstersushi.es/blog/wp-content/uploads/2022/04/sake-robata-barcelona-e1637227199971-1024x784-1.png", true);
+        sakeTradicional.setCategoria(bebidas);
+        platoRepo.save(sakeTradicional);
+
+        Plato limonada = new Plato("Limonada Fresca", 9960,
+                "Bebida refrescante y natural preparada con limón fresco y azúcar. Ideal para días calurosos.",
+                "https://cdn.shopify.com/s/files/1/0191/9978/files/Como-hacer-limonada.jpg?v=1753088533", true);
+        limonada.setCategoria(bebidas);
+        platoRepo.save(limonada);
+
+        Plato jugoNatural = new Plato("Jugos naturales", 11960,
+                "Jugo natural de durazno con un sabor dulce y tropical. Hecho con fruta fresca de temporada.",
+                "https://www.wikihow.com/images_en/thumb/b/b0/Peach-juice-Intro.jpg/v4-1200px-Peach-juice-Intro.jpg", true);
+        jugoNatural.setCategoria(bebidas);
+        platoRepo.save(jugoNatural);
+
+        Plato aguaArroz = new Plato("Agua de Arroz", 5960,
+                "Bebida tradicional refrescante hecha con arroz y un toque de vainilla. Suave y reconfortante.",
+                "https://image.tuasaude.com/media/article/pc/nx/agua-de-arroz-para-la-diarrea_19076.jpg", true);
+        aguaArroz.setCategoria(bebidas);
+        platoRepo.save(aguaArroz);
+
+        Plato smoothie = new Plato("Smoothies", 13960,
+                "Selección de smoothies saludables y deliciosos hechos con frutas frescas, yogur y un toque de miel. Perfectos para un impulso de energía natural.",
+                "https://saposyprincesas.elmundo.es/assets/2017/05/Batidos-verano.jpg", true);
+        smoothie.setCategoria(bebidas);
+        platoRepo.save(smoothie);
     }
 
 }
