@@ -42,8 +42,9 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
             Integer latestId = Collections.max(ids);
             cliente.setId(latestId +1);
         }
-
-        return clientes.put(cliente.getId(), cliente);
+        
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 
     @Override
@@ -64,26 +65,19 @@ public class ClienteRepository implements RepositoryInterface<Cliente> {
     public Cliente update(Cliente cliente) throws EntityConstraintException, EntityNotFoundException {
         if(clientes.get(cliente.getId()) == null) throw new EntityNotFoundException("No existe un cliente con este id");
 
-        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getCorreo().equals(cliente.getCorreo()))
-                .findFirst();
-        if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
-
-
-        return clientes.put(cliente.getId(), cliente);
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 
     @Override
     public Cliente upsert(Cliente cliente) throws EntityConstraintException {
-        Optional<Cliente> sameEmail = clientes.values().stream().filter(c -> c.getCorreo().equals(cliente.getCorreo()))
-                .findFirst();
-        if(sameEmail.isPresent()) throw  new EntityConstraintException("Ya existe un cliente con este correo");
-
         if(cliente.getId() == null) {
             List<Integer> ids = new ArrayList<>(clientes.keySet());
             Integer latestId = Collections.max(ids);
             cliente.setId(latestId +1);
         }
 
-        return clientes.put(cliente.getId(), cliente);
+        clientes.put(cliente.getId(), cliente);
+        return cliente;
     }
 }

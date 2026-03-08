@@ -19,7 +19,12 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
         Categoria none;
 
         public PlatoRepository(CategoriaRepository categoriasRepository) {
-                this.categoriasRepository = categoriasRepository;
+          this.categoriasRepository = categoriasRepository;
+          try {
+            this.none = categoriasRepository.selectById(1);
+          } catch (EntityNotFoundException e) {
+            this.none = new Categoria(1, "None");
+          }
                 platos.put(1, new Plato(1, "Sushi Variado", 51960,
                                 "Una hermosa combinación de nigiri y rollos con los mejores ingredientes. Cada pieza es cuidadosamente elaborada por nuestros chefs expertos de sushi con precisión y artesanía.",
                                 "https://images.unsplash.com/photo-1581781870027-04212e231e96?w=500", true, none));
@@ -142,7 +147,8 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
       plato.setId(latestId +1);
     }
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 
   @Override
@@ -163,7 +169,8 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
   public Plato update(Plato plato) throws EntityConstraintException, EntityNotFoundException {
     if(platos.get(plato.getId())== null) throw new EntityNotFoundException("No existe un plato con este id");
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 
   @Override
@@ -174,6 +181,7 @@ public class PlatoRepository implements RepositoryInterface<Plato> {
       plato.setId(latestId +1);
     }
 
-    return platos.put(plato.getId(), plato);
+    platos.put(plato.getId(), plato);
+    return plato;
   }
 }

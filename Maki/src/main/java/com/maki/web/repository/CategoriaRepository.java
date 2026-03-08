@@ -40,7 +40,8 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
             categoria.setId(latestId +1);
         }
 
-        return categorias.put(categoria.getId(), categoria);
+        categorias.put(categoria.getId(), categoria);
+        return categoria;
     }
 
     @Override
@@ -61,7 +62,8 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
     public Categoria update(Categoria categoria) throws EntityConstraintException, EntityNotFoundException {
         if(categorias.get(categoria.getId()) == null) throw new EntityNotFoundException("No existe una categoría con este id");
 
-        return categorias.put(categoria.getId(), categoria);
+        categorias.put(categoria.getId(), categoria);
+        return categoria;
     }
 
     @Override
@@ -72,6 +74,7 @@ public class CategoriaRepository implements RepositoryInterface<Categoria> {
             categoria.setId(latestId + 1);
         }
 
-        return categorias.put(categoria.getId(), categoria);
+        categorias.put(categoria.getId(), categoria);
+        return categoria;
     }
 }
