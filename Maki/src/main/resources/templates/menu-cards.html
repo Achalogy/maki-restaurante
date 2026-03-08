@@ -45,15 +45,16 @@
       <!-- TITLE -->
       <section id="products">
         <!-- PRODUCTS -->
-        <div id="menu-cards">
-        </div>
+        <div id="menu-cards"></div>
       </section>
     </main>
     <footer th:replace="fragments/footer.html :: footer"></footer>
   </body>
   <script th:inline="javascript">
-    const menu = /*[[${menu}]]*/ [];
-    const categorias = /*[[${categorias}]]*/ [];
+    /*<![CDATA[*/
+    var menu = /*[[${menu}]]*/ [];
+    var categorias = /*[[${categorias}]]*/ [];
+    /*]]>*/
   </script>
   <script src="\_js\card-sorter.js"></script>
 </html>

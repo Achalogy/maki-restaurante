@@ -45,7 +45,8 @@
           <img th:src="${plato.urlImage}" alt="Imagen del plato" />
         </div>
         <div id="plate-info">
-          <h2 th:text="${plato.nombre}">Nombre del plato</h2>
+          <h2 th:text="${plato.nombre}" class="mb-0">Nombre del plato</h2>
+          <h3 th:text = "${plato.categoria.nombre}" class="font-semibold mt-0 text-sm">Categoría del plato</h3>
           <p th:text="${plato.descripcion}">Descripción del plato</p>
           <div id="special-info">
             <form action="">

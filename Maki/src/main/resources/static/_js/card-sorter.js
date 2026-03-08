@@ -2,12 +2,12 @@ console.log(categorias);
 
 categorias.forEach((categoria) => {
   const section = document.createElement("section");
-  section.className = "menu-section";
+  section.className = "menu-section grid grid-cols-2 gap-6";
   if (categoria.nombre.includes("None")) {
-    section.innerHTML = `<h2>No categorizado</h2>`;
-  } else {
-    section.innerHTML = `<h2>${categoria.nombre}</h2>`;
-  }
+  section.innerHTML = `<h2 class="col-span-2">No categorizado</h2>`;
+} else {
+  section.innerHTML = `<h2 class="col-span-2">${categoria.nombre}</h2>`;
+}
 
   menu.forEach((plato) => {
     const storeElement = document.createElement("article");
