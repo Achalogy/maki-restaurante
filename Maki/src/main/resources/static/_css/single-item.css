@@ -36,7 +36,8 @@
 
 #plate-img {
     flex: 1;
-    min-height: 350px;
+    aspect-ratio: 4 / 3; 
+    overflow: hidden;
 }
 
 #plate-img img {
@@ -56,7 +57,7 @@
 
 .single-food-card h2 {
     font-size: clamp(2rem, 4vw, 4rem);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
 }
 
 #plate-info p {

@@ -60,11 +60,9 @@ public class ComidasController {
 
     @GetMapping("/addMenuItem")
     public String mostrarFormularioCrearPlato(Model model) {
-        Plato plato = new Plato("", 0.0, "", "", false);
-
-        model.addAttribute("plato", plato);
+        model.addAttribute("plato", new Plato("", 0.0, "", "", false));
         model.addAttribute("categorias", categoriaService.selectAll());
-
+        model.addAttribute("formAction", "/Comidas/addMenuItem"); // 👈
         return "crear-plato";
     }
 
@@ -80,10 +78,19 @@ public class ComidasController {
 
     @GetMapping("/updateMenuItem/{id}")
     public String mostrarFormularioEditarPlato(@PathVariable("id") Long id, Model model) {
-        Plato plato = platoService.selectById(id);
-        model.addAttribute("plato", plato);
+        model.addAttribute("plato", platoService.selectById(id));
         model.addAttribute("categorias", categoriaService.selectAll());
+        model.addAttribute("formAction", "/Comidas/updateMenuItem/" + id); // 👈
         return "crear-plato";
+    }
+
+    @PostMapping("/updateMenuItem/{id}")  // 👈 esto faltaba
+    public String editarPlato(@PathVariable("id") Long id, @ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
+        plato.setId(id);
+        Categoria categoria = categoriaService.selectById(categoriaId);
+        plato.setCategoria(categoria);
+        platoService.update(plato);
+        return "redirect:/Comidas/AdminTable";
     }
 
     // ===================== UPDATE CATEGORY FROM DROPDOWN =====================
@@ -103,7 +110,7 @@ public class ComidasController {
     @PostMapping("/categorias/add")
     public String addCategoria(@RequestParam String nombre) {
 
-        categoriaService.insert(new Categoria(null, nombre));
+        categoriaService.insert(new Categoria(nombre));
         return "redirect:/Comidas/AdminTable";
     }
 
