@@ -103,7 +103,7 @@ public class ComidasController {
     @PostMapping("/categorias/add")
     public String addCategoria(@RequestParam String nombre) {
 
-        categoriaService.insert(new Categoria(null, nombre));
+        categoriaService.insert(new Categoria(nombre));
         return "redirect:/Comidas/AdminTable";
     }
 
