@@ -33,7 +33,7 @@ public class ComidasController {
     // ===================== VIEW SINGLE =====================
 
     @GetMapping("/{id}")
-    public String mostrarMenuEnTabla(Model model, @PathVariable("id") Integer plateid) {
+    public String mostrarMenuEnTabla(Model model, @PathVariable("id") Long plateid) {
         Plato plato = platoService.selectById(plateid);
         model.addAttribute("plato", plato);
         return "single-item";
@@ -51,7 +51,7 @@ public class ComidasController {
     // ===================== DELETE PLATE =====================
 
     @PostMapping("/deleteMenuItem/{id}")
-    public String deletePlato(@PathVariable Integer id) {
+    public String deletePlato(@PathVariable Long id) {
         platoService.deleteByID(id);
         return "redirect:/Comidas/AdminTable";
     }
@@ -60,9 +60,7 @@ public class ComidasController {
 
     @GetMapping("/addMenuItem")
     public String mostrarFormularioCrearPlato(Model model) {
-
-        Categoria none = categoriaService.selectById(1); // get None safely here
-        Plato plato = new Plato(null, "", 0.0, "", "", false, none);
+        Plato plato = new Plato("", 0.0, "", "", false);
 
         model.addAttribute("plato", plato);
         model.addAttribute("categorias", categoriaService.selectAll());
@@ -71,17 +69,17 @@ public class ComidasController {
     }
 
     @PostMapping("/addMenuItem")
-    public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Integer categoriaId) {
+    public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
-        platoService.upsert(plato);
+        platoService.insert(plato); // Funciona como un upsert
         return "redirect:/Comidas/AdminTable";
     }
 
     // ===================== EDIT PLATE =====================
 
     @GetMapping("/updateMenuItem/{id}")
-    public String mostrarFormularioEditarPlato(@PathVariable("id") Integer id, Model model) {
+    public String mostrarFormularioEditarPlato(@PathVariable("id") Long id, Model model) {
         Plato plato = platoService.selectById(id);
         model.addAttribute("plato", plato);
         model.addAttribute("categorias", categoriaService.selectAll());
@@ -92,8 +90,8 @@ public class ComidasController {
 
     @PostMapping("/updateCategoria")
     public String updateCategoria(
-            @RequestParam Integer platoId,
-            @RequestParam Integer categoriaId) {
+            @RequestParam Long platoId,
+            @RequestParam Long categoriaId) {
 
         Categoria categoria = categoriaService.selectById(categoriaId);
         platoService.cambiarCategoria(categoria, platoId);
@@ -112,7 +110,7 @@ public class ComidasController {
     // ===================== DELETE CATEGORY =====================
 
     @PostMapping("/categorias/delete/{id}")
-    public String deleteCategoria(@PathVariable Integer id) {
+    public String deleteCategoria(@PathVariable Long id) {
 
         categoriaService.deleteByID(id);
         return "redirect:/Comidas/AdminTable";

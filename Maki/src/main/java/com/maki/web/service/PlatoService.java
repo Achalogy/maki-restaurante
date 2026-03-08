@@ -6,5 +6,5 @@ import com.maki.web.exception.EntityNotFoundException;
 
 public interface PlatoService extends ServiceInterface<Plato> {
 
-  public void cambiarCategoria(Categoria categoria, int platoId) throws EntityNotFoundException;
+  public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException;
 }
