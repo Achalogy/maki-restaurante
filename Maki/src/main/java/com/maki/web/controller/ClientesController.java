@@ -41,7 +41,7 @@ public class ClientesController {
     }
 
     @GetMapping("/session/{id}")
-    public String getMethodName(@PathVariable Integer id, Model model) {
+    public String getMethodName(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.selectById(id);
 
         model.addAttribute("cliente", cliente);
@@ -89,7 +89,7 @@ public class ClientesController {
      * Elimina un cliente por su ID
      */
     @PostMapping("/delete/{id}")
-    public String eliminarCliente(@PathVariable Integer id) {
+    public String eliminarCliente(@PathVariable Long id) {
         try {
             clienteService.deleteByID(id);
             return "redirect:/client/crud?success=deleted";
@@ -102,7 +102,7 @@ public class ClientesController {
      * Muestra el formulario de edición para un cliente existente
      */
     @GetMapping("/edit/{id}")
-    public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
         try {
             Cliente cliente = clienteService.selectById(id);
             model.addAttribute("cliente", cliente);
@@ -131,7 +131,7 @@ public class ClientesController {
      * Muestra el perfil del usuario loggeado para edición
      */
     @GetMapping("/profile/{id}")
-    public String verPerfilPropio(@PathVariable Integer id, Model model) {
+    public String verPerfilPropio(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.selectById(id);
         model.addAttribute("cliente", cliente);
         return "client/profile";
