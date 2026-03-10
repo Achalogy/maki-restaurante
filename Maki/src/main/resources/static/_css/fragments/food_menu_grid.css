@@ -17,22 +17,14 @@
 }
 
 .food-menu-item img {
-  @apply w-full h-48 object-cover;
+  @apply w-full h-64 object-cover;
 }
 
 .food-menu-item p {
-  @apply py-4 bg-maki-orange text-white font-staatliches text-2xl text-center;
+  @apply py-4 bg-maki-orange text-white font-staatliches text-3xl text-center;
 }
 
 .food-menu-item:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-.food-menu-item img {
-  @apply grow object-cover;
-}
-
-.food-menu-item p {
-  @apply p-8 bg-maki-orange text-white font-staatliches text-6xl text-center;
 }
