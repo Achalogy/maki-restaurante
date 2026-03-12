@@ -36,8 +36,11 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 
 ## 👥 Integrantes del Grupo
 
+<p align="center">
+<img src="README_Images/miguel.jpeg" width="150">
+</p>
 - Miguel Francisco Vargas Contreras
-  ![Integrante](README_Images/Miguel.jpeg)
+
 - Tomás Alejandro Silva Correal  
 - Alexander Aponte Largacha  
 - Juan Guillermo Pabón Vargas  
