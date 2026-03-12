@@ -36,22 +36,29 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 
 ## 👥 Integrantes del Grupo
 
-<p align="center">
-<img src="./READMEIMG/Miguel.jpeg" width="150">
-<h3>Miguel Francisco Vargas Contreras</h3>
-</p>
-<p align="center">
-<img src="./READMEIMG/Tomas.jpeg" width="150">
-<h3>Tomás Alejandro Silva Correal</h3>
-</p> 
-<p align="center">
-<img src="./READMEIMG/Alex.jpeg" width="150">
-<h3>Alexander Aponte Largacha</h3>
-</p>
-<p align="center">
-<img src="./READMEIMG/Juan.jpeg" width="150">
-<h3>Juan Guillermo Pabón Vargas</h3>
-</p>
+<table>
+<tr>
+<td align="center">
+<img src="./READMEIMG/Miguel.jpeg" width="140"><br>
+<strong>Miguel Francisco Vargas Contreras</strong>
+</td>
+
+<td align="center">
+<img src="./READMEIMG/Tomas.jpeg" width="140"><br>
+<strong>Tomás Alejandro Silva Correal</strong>
+</td>
+
+<td align="center">
+<img src="./READMEIMG/Alex.jpeg" width="140"><br>
+<strong>Alexander Aponte Largacha</strong>
+</td>
+
+<td align="center">
+<img src="./READMEIMG/Juan.jpeg" width="140"><br>
+<strong>Juan Guillermo Pabón Vargas</strong>
+</td>
+</tr>
+</table>
 
 ---
 
