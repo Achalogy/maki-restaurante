@@ -36,7 +36,7 @@ public class ClientesController {
 
             return "redirect:/client/session/" + clienteSesion.getId();
         } catch(Exception e) {
-            return "redirect:/client/log-in";
+            return "redirect:/client/log-in?msg=Credenciales Invalidas";
         }
     }
 
