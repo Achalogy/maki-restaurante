@@ -38,13 +38,19 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 
 <p align="center">
 <img src="./READMEIMG/Miguel.jpeg" width="150">
+<h3>Miguel Francisco Vargas Contreras</h3>
 </p>
-- Miguel Francisco Vargas Contreras
+<p align="center">
 <img src="./READMEIMG/Tomas.jpeg" width="150">
+</p>
 - Tomás Alejandro Silva Correal  
+<p align="center">
 <img src="./READMEIMG/Alex.jpeg" width="150">
+</p>
 - Alexander Aponte Largacha  
+<p align="center">
 <img src="./READMEIMG/Juan.jpeg" width="150">
+</p>
 - Juan Guillermo Pabón Vargas  
 
 ---
