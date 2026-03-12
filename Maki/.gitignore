@@ -33,3 +33,5 @@ build/
 .vscode/
 
 *.mv.db
+
+.DS_Store
