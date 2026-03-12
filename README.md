@@ -37,7 +37,7 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 ## 👥 Integrantes del Grupo
 
 <p align="center">
-<img src="README_Images/miguel.jpeg" width="150">
+<img src="READMEIMG/miguel.jpeg" width="150">
 </p>
 - Miguel Francisco Vargas Contreras
 
