@@ -1,6 +1,6 @@
 # 🍣 MAKI – Aplicativo Web para Restaurante Japonés
 
-<img src="./READMEIMG/Maki Banner 1.png" width="100%" style="object-fit:cover;">
+<img src="./READMEIMG/banner_1.png" width="100%" style="object-fit:cover;">
 
 **MAKI** es una aplicación web diseñada para digitalizar la gestión integral de un restaurante japonés. Permite a los clientes realizar pedidos de forma intuitiva y al personal gestionar la operación del restaurante de manera eficiente.
 
