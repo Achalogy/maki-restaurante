@@ -4,6 +4,10 @@
 
 Este proyecto fue desarrollado como parte de la asignatura **Desarrollo Web** en la **Pontificia Universidad Javeriana – Sede Bogotá**.
 
+<td align="center">
+<img src="./READMEIMG/logo.svg" width="140" height="140" style="object-fit:cover;"><br>
+<strong>Miguel Francisco Vargas Contreras</strong>
+</td>
 ---
 
 ## Descripción del Proyecto
