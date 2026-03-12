@@ -1,5 +1,5 @@
 .carousel {
-  @apply w-full h-[40dvh] xl:h-[80dvh] object-cover relative overflow-hidden;
+  @apply w-full h-[30dvh] xl:h-[60dvh] object-cover relative overflow-hidden;
 }
 
 .carousel_image {
@@ -43,5 +43,5 @@
 }
 
 .carousel-controls img {
-  @apply h-24 w-24
+  @apply h-16 w-16
 }
