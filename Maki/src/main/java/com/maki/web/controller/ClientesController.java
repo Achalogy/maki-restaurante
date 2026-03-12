@@ -69,7 +69,7 @@ public class ClientesController {
             if(e instanceof EntityConstraintException) {
                 return "redirect:/client/sign-up?msg=" + e.getMessage();
             }
-            return "redirect:/client/sign-up?msg=\"Error desconocido\"";
+            return "redirect:/client/sign-up?msg=Error desconocido";
         }
     }
     

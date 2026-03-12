@@ -37,7 +37,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
     try {
       return repo.save(entity);
-    } catch(ConstraintViolationException e) {
+    } catch(Exception e) {
       throw new EntityConstraintException("Ya existe un usuario con este correo");
     }
   }
