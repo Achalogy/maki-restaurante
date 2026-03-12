@@ -38,30 +38,27 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 
 <table>
 <tr>
+
 <td align="center">
-<img src="./READMEIMG/Miguel.jpeg" width="140"><br>
+<img src="./READMEIMG/Miguel.jpeg" width="140" height="140" style="object-fit:cover;"><br>
 <strong>Miguel Francisco Vargas Contreras</strong>
 </td>
 
 <td align="center">
-<img src="./READMEIMG/Tomas.jpeg" width="140"><br>
+<img src="./READMEIMG/Tomas.jpeg" width="140" height="140" style="object-fit:cover;"><br>
 <strong>Tomás Alejandro Silva Correal</strong>
 </td>
 
 <td align="center">
-<img src="./READMEIMG/Alex.jpeg" width="140"><br>
+<img src="./READMEIMG/Alex.jpeg" width="140" height="140" style="object-fit:cover;"><br>
 <strong>Alexander Aponte Largacha</strong>
 </td>
 
 <td align="center">
-<img src="./READMEIMG/Juan.jpeg" width="140"><br>
+<img src="./READMEIMG/Juan.jpeg" width="140" height="140" style="object-fit:cover;"><br>
 <strong>Juan Guillermo Pabón Vargas</strong>
 </td>
+
 </tr>
 </table>
-
----
-
-## 📄 Licencia
-
 Este proyecto fue desarrollado con fines meramente académicos.
