@@ -42,16 +42,16 @@ La aplicación permite gestionar el menú, visualizar productos, organizar pedid
 </p>
 <p align="center">
 <img src="./READMEIMG/Tomas.jpeg" width="150">
-</p>
-- Tomás Alejandro Silva Correal  
+<h3>Tomás Alejandro Silva Correal</h3>
+</p> 
 <p align="center">
 <img src="./READMEIMG/Alex.jpeg" width="150">
+<h3>Alexander Aponte Largacha</h3>
 </p>
-- Alexander Aponte Largacha  
 <p align="center">
 <img src="./READMEIMG/Juan.jpeg" width="150">
+<h3>Juan Guillermo Pabón Vargas</h3>
 </p>
-- Juan Guillermo Pabón Vargas  
 
 ---
 
