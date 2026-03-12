@@ -12,8 +12,8 @@ import com.maki.web.entities.Plato;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/Comidas")
-public class ComidasController {
+@RequestMapping("/plate")
+public class PlatosController {
 
     @Autowired
     private PlatoService platoService;
@@ -23,11 +23,11 @@ public class ComidasController {
 
     // ===================== ADMIN TABLE =====================
 
-    @GetMapping("/AdminTable")
+    @GetMapping("/crud")
     public String mostrarMenuEnTarjetas(Model model) {
         model.addAttribute("menu", platoService.selectAll());
         model.addAttribute("categorias", categoriaService.selectAll());
-        return "menu-table";
+        return "pages/plate/crud";
     }
 
     // ===================== VIEW SINGLE =====================
@@ -36,91 +36,63 @@ public class ComidasController {
     public String mostrarMenuEnTabla(Model model, @PathVariable("id") Long plateid) {
         Plato plato = platoService.selectById(plateid);
         model.addAttribute("plato", plato);
-        return "single-item";
-    }
-
-    // ===================== PUBLIC MENU =====================
-
-    @GetMapping("/OurMenu")
-    public String mostrarMenuPublico(Model model) {
-        model.addAttribute("menu", platoService.selectAll());
-        model.addAttribute("categorias", categoriaService.selectAll());
-        return "menu-cards";
+        return "pages/plate/plate";
     }
 
     // ===================== DELETE PLATE =====================
 
-    @PostMapping("/deleteMenuItem/{id}")
+    @PostMapping("/delete/{id}")
     public String deletePlato(@PathVariable Long id) {
         platoService.deleteByID(id);
-        return "redirect:/Comidas/AdminTable";
+        return "redirect:/plate/crud";
     }
 
     // ===================== CREATE PLATE =====================
 
-    @GetMapping("/addMenuItem")
+    @GetMapping("/create")
     public String mostrarFormularioCrearPlato(Model model) {
         model.addAttribute("plato", new Plato("", 0.0, "", "", false));
         model.addAttribute("categorias", categoriaService.selectAll());
-        model.addAttribute("formAction", "/Comidas/addMenuItem"); // 👈
-        return "crear-plato";
+        model.addAttribute("formAction", "/plate/create"); // 👈
+        return "pages/plate/create";
     }
 
-    @PostMapping("/addMenuItem")
+    @PostMapping("/create")
     public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
         platoService.insert(plato); // Funciona como un upsert
-        return "redirect:/Comidas/AdminTable";
+        return "redirect:/plate/crud";
     }
 
     // ===================== EDIT PLATE =====================
 
-    @GetMapping("/updateMenuItem/{id}")
+    @GetMapping("/edit/{id}")
     public String mostrarFormularioEditarPlato(@PathVariable("id") Long id, Model model) {
         model.addAttribute("plato", platoService.selectById(id));
         model.addAttribute("categorias", categoriaService.selectAll());
-        model.addAttribute("formAction", "/Comidas/updateMenuItem/" + id); // 👈
-        return "crear-plato";
+        model.addAttribute("formAction", "/plate/edit/" + id); // 👈
+        return "pages/plate/edit";
     }
 
-    @PostMapping("/updateMenuItem/{id}")  // 👈 esto faltaba
+    @PostMapping("/edit/{id}")  // 👈 esto faltaba
     public String editarPlato(@PathVariable("id") Long id, @ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
         plato.setId(id);
         Categoria categoria = categoriaService.selectById(categoriaId);
         plato.setCategoria(categoria);
         platoService.update(plato);
-        return "redirect:/Comidas/AdminTable";
+        return "redirect:/plate/crud";
     }
 
     // ===================== UPDATE CATEGORY FROM DROPDOWN =====================
 
-    @PostMapping("/updateCategoria")
+    @PostMapping("/update_category")
     public String updateCategoria(
             @RequestParam Long platoId,
             @RequestParam Long categoriaId) {
 
         Categoria categoria = categoriaService.selectById(categoriaId);
         platoService.cambiarCategoria(categoria, platoId);
-        return "redirect:/Comidas/AdminTable";
+        return "redirect:/plate/crud";
     }
-
-    // ===================== ADD CATEGORY =====================
-
-    @PostMapping("/categorias/add")
-    public String addCategoria(@RequestParam String nombre) {
-
-        categoriaService.insert(new Categoria(nombre));
-        return "redirect:/Comidas/AdminTable";
-    }
-
-    // ===================== DELETE CATEGORY =====================
-
-    @PostMapping("/categorias/delete/{id}")
-    public String deleteCategoria(@PathVariable Long id) {
-
-        categoriaService.deleteByID(id);
-        return "redirect:/Comidas/AdminTable";
-    }
-
 }
