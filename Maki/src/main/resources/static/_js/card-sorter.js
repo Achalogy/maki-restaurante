@@ -6,8 +6,10 @@ categorias.forEach((categoria) => {
   if (categoria.nombre.includes("None")) {
   section.innerHTML = `<h2 class="col-span-2">No categorizado</h2>`;
 } else {
-  section.innerHTML = `<h2 class="col-span-2">${categoria.nombre}</h2>`;
+  section.innerHTML = `<h2 class="col-span-2">${categoria.nombre} ${categoria.id}</h2>`;
 }
+section.id = `cat-${categoria.id}`
+section.setAttribute("id", `cat-${categoria.id}`)
 
   menu.forEach((plato) => {
     const storeElement = document.createElement("article");
@@ -53,3 +55,13 @@ categorias.forEach((categoria) => {
 
   document.getElementById("menu-cards").appendChild(section);
 });
+
+// Safari es una kk :)
+if (window.location.hash) {
+  const target = document.querySelector(window.location.hash);
+  if (target) {
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 500);
+  }
+}
