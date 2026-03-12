@@ -8,6 +8,26 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+  <!-- Tailwind -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <script>
+    const files = [
+      "/_css/global.css",
+    ];
+
+    (async () => {
+      for (const file of files) {
+        const req = await fetch(file)
+        const content = await req.text()
+        const style = document.createElement('style');
+        style.setAttribute('type', 'text/tailwindcss');
+        style.textContent = content
+        document.head.appendChild(style);
+      }
+    })()
+  </script>
+
   <link rel="stylesheet" th:href="@{/_css/log-in-style.css}">
 </head>
 <body>
@@ -45,6 +65,10 @@
              class="form-control form-control-maki w-100"
              placeholder="Contraseña"
              th:field="*{contrasena}" />
+    </div>
+
+    <div id="log-in-errors">
+
     </div>
 
     <div class="d-grid mb-4">

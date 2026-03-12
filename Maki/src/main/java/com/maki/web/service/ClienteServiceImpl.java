@@ -5,6 +5,8 @@ import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.ClienteRepository;
+
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -33,7 +35,11 @@ public class ClienteServiceImpl implements ClienteService {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert no debe tener ID");
     }
-    return repo.save(entity);
+    try {
+      return repo.save(entity);
+    } catch(ConstraintViolationException e) {
+      throw new EntityConstraintException("Ya existe un usuario con este correo");
+    }
   }
 
   @Override
