@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Menu</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <script>
+    const files = [
+      // Poner acá los css necesarios para la pagina
+      // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+      "/_css/global.css",
+      "/_css/fragments/landing/header_menu.css",
+      "/_css/fragments/footer.css",
+    ];
+
+    (async () => {
+      for (const file of files) {
+        const req = await fetch(file);
+        const content = await req.text();
+
+        const style = document.createElement("style");
+        style.setAttribute("type", "text/tailwindcss");
+        style.textContent = content;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
+  <th:block th:replace="fragments/fonts :: fonts"> </th:block>
+</head>
+
+<body class="font-sans">
+  <!-- Headers-->
+  <header th:replace="fragments/landing/header_menu :: header-menu"></header>
+  <main class="tree_background">
+    <br />
+    <h2 class="text-center ">MENÚ de Administrador</h2>
+    <!-- Title -->
+    <section class="max-w-full mx-auto px-6 mt-8 mb-10">
+
+      <div class="bg-white shadow-md rounded-xl p-6">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-gray-800">
+            Gestión de Categorías
+          </h3>
+
+          <!-- Add Tag Button -->
+          <button onclick="toggleNewTag()"
+            class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
+            + Nueva Categoría
+          </button>
+        </div>
+
+        <!-- Tag List -->
+        <div class="flex flex-wrap gap-3 items-center">
+
+          <div th:each="cat : ${categorias}"
+            class="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
+            <span th:text="${cat.nombre}" class="text-sm font-semibold text-gray-800">
+              Categoria
+            </span>
+
+            <!-- Delete Button -->
+            <form th:action="@{/plate/categorias/delete/{id}(id=${cat.id})}" method="post"
+              onsubmit="return confirm('¿Eliminar esta categoría?');">
+              <button type="submit" class="text-red-500 hover:text-red-700 font-bold text-sm">
+                ✖
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Tag Form -->
+        <div id="newTagForm" class="mt-6 hidden">
+          <form th:action="@{/category/create}" method="post" class="flex gap-3 items-center">
+            <input type="text" name="nombre" placeholder="Nombre de nueva categoría" required
+              class="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-[#eb7c21]" />
+
+            <button type="submit"
+              class="bg-green-500 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
+              Guardar
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+    <section class="max-w-full mx-auto px-6 py-10">
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mb-8">
+        <form th:action="@{/plate/create}" method="get">
+          <button type="submit"
+            class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
+            + Add New Item
+          </button>
+        </form>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto rounded-lg shadow-md">
+        <table class="w-full border-collapse bg-white">
+          <thead class="bg-[#eb7c21] text-white text-center">
+            <tr>
+              <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Nombre de Producto
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Descripción
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Tag</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Precio</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="plato : ${menu}" class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+              <!-- Image -->
+              <td class="px-6 py-4">
+                <img th:src="${plato.urlImage}" alt="Imagen producto"
+                  class="rounded-lg shadow-sm w-20 h-20 object-cover" />
+              </td>
+              <!-- Product Name -->
+              <td class="px-6 py-4">
+                <h3 th:text="${plato.nombre}" class="text-xl font-bold uppercase text-black">
+                  Nombre Producto
+                </h3>
+              </td>
+              <!-- Description -->
+              <td class="px-6 py-4">
+                <p th:text="${plato.descripcion}" class="text-gray-700 text-base font-medium">
+                  Descripción del producto
+                </p>
+              </td>
+              <!-- Tag -->
+              <td class="px-6 py-4">
+                <form th:action="@{/plate/update_category}" method="post">
+                  <input type="hidden" name="platoId" th:value="${plato.id}" />
+
+                  <select name="categoriaId" onchange="this.form.submit()" class="border rounded-lg px-3 py-1 text-sm">
+                    <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}"
+                      th:selected="${plato.categoria?.id == cat.id}">
+                    </option>
+                  </select>
+                </form>
+              </td>
+              <!-- Price -->
+              <td class="px-6 py-4">
+                <span th:text="'$' + ${#numbers.formatDecimal(plato.precio, 0, 'COMMA', 0, 'POINT')}"
+                  class="text-xl font-extrabold text-orange-500">
+                  $0.000
+                </span>
+              </td>
+
+              <td class="px-6 py-4 text-center">
+                <form th:action="@{/plate/{id}(id=${plato.id})}" method="get">
+                  <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35">
+                    🔎 View
+                  </button>
+                </form>
+
+                <form th:action="@{/plate/edit/{id}(id=${plato.id})}" method="get">
+                  <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35">
+                    ✏ Edit
+                  </button>
+                </form>
+
+                <form th:action="@{/plate/delete/{id}(id=${plato.id})}" method="post" onsubmit="
+                      return confirm(
+                        '¿Estás seguro de que deseas eliminar este plato?',
+                      );
+                    ">
+                  <button type="submit"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-35">
+                    🗑 Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+<script src="\_js\admin-food-actions.js"></script>
+<script src="/_js/admin-categorias.js"></script>
+
+</html>

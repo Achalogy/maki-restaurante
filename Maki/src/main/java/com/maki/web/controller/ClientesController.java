@@ -26,7 +26,7 @@ public class ClientesController {
     @GetMapping("/log-in")
     public String mostrarLogin(Model model) {
         model.addAttribute("cliente", new Cliente());
-        return "client/log-in";
+        return "pages/client/log-in";
     }
 
     @PostMapping("/log-in")
@@ -45,7 +45,7 @@ public class ClientesController {
         Cliente cliente = clienteService.selectById(id);
 
         model.addAttribute("cliente", cliente);
-        return "client/session";
+        return "pages/client/session";
     }
     
 
@@ -56,7 +56,7 @@ public class ClientesController {
 
         model.addAttribute("cliente", cliente);
 
-        return "client/sign-up";
+        return "pages/client/sign-up";
     }
 
     @PostMapping("/sign-up")
@@ -82,7 +82,7 @@ public class ClientesController {
     public String listarClientes(Model model) {
         // Obtenemos todos los clientes del service
         model.addAttribute("clientes", clienteService.selectAll());
-        return "client/crud"; 
+        return "pages/client/crud"; 
     }
 
     /**
@@ -134,7 +134,7 @@ public class ClientesController {
     public String verPerfilPropio(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.selectById(id);
         model.addAttribute("cliente", cliente);
-        return "client/profile";
+        return "pages/client/profile";
     }
 
     @PostMapping("/profile/delete")

@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorTitle", "Página no encontrada");
         model.addAttribute("errorMessage", "Lo sentimos, la página que buscas no existe o fue movida.");
         model.addAttribute("errorIcon");
-        return "error-page";
+        return "pages/error";
     }
 
     // Entidad no encontrada en base de datos //
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorTitle", "Recurso no encontrado");
         model.addAttribute("errorMessage", ex.getMessage());
         model.addAttribute("errorIcon");
-        return "error-page";
+        return "pages/error";
     }
 
     // Violación de restricción //
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorTitle", "Datos inválidos");
         model.addAttribute("errorMessage", ex.getMessage());
         model.addAttribute("errorIcon");
-        return "error-page";
+        return "pages/error";
     }
 
     //Cualquier otro error inesperado//
@@ -48,6 +48,6 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorTitle", "Error interno");
         model.addAttribute("errorMessage", "Algo salió mal en el servidor. Por favor intenta más tarde.");
         model.addAttribute("errorIcon");
-        return "error-page";
+        return "pages/error";
     }
 }

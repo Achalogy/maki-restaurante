@@ -6,7 +6,7 @@ categorias.forEach((categoria) => {
   if (categoria.nombre.includes("None")) {
   section.innerHTML = `<h2 class="col-span-2">No categorizado</h2>`;
 } else {
-  section.innerHTML = `<h2 class="col-span-2">${categoria.nombre} ${categoria.id}</h2>`;
+  section.innerHTML = `<h2 class="col-span-2">${categoria.nombre}</h2>`;
 }
 section.id = `cat-${categoria.id}`
 section.setAttribute("id", `cat-${categoria.id}`)
@@ -24,7 +24,7 @@ section.setAttribute("id", `cat-${categoria.id}`)
     const addButton = document.createElement("button");
 
     addButton.addEventListener("click", () => {
-      window.location.href = `/Comidas/${plato.id}`;
+      window.location.href = `/plate/${plato.id}`;
     });
     addButton.className = "add-btn";
 

@@ -1,0 +1,35 @@
+.error-stamp {
+  @apply font-staatliches;
+}
+
+.error-card {
+  @apply flex flex-col gap-8 p-8 items-center justify-center min-h-screen
+}
+
+.maki-error {
+  @apply h-48;
+}
+
+h1 {
+  @apply font-staatliches text-maki-orange text-6xl font-bold
+}
+
+p, a {
+  @apply font-spinnaker text-xl
+}
+
+.btn-group {
+  @apply flex gap-12 bg-maki-black px-10 p-4 rounded text-white
+}
+
+.btn-primary {
+  @apply bg-maki-orange p-2 px-4 rounded
+}
+
+.btn-secondary {
+  @apply p-2 px-4 rounded
+}
+
+.error-note {
+  @apply text-xs 
+}
