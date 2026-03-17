@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MakiApplication<maki>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.maki.web.MakiApplication",
+            "projectName": "maki",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

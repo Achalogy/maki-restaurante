@@ -26,7 +26,7 @@ public class ClientesController {
     @GetMapping("/log-in")
     public String mostrarLogin(Model model) {
         model.addAttribute("cliente", new Cliente());
-        return "client/log-in";
+        return "pages/client/log-in";
     }
 
     @PostMapping("/log-in")
@@ -36,16 +36,16 @@ public class ClientesController {
 
             return "redirect:/client/session/" + clienteSesion.getId();
         } catch(Exception e) {
-            return "redirect:/client/log-in";
+            return "redirect:/client/log-in?msg=Credenciales Invalidas";
         }
     }
 
     @GetMapping("/session/{id}")
-    public String getMethodName(@PathVariable Integer id, Model model) {
+    public String getMethodName(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.selectById(id);
 
         model.addAttribute("cliente", cliente);
-        return "client/session";
+        return "pages/client/session";
     }
     
 
@@ -56,7 +56,7 @@ public class ClientesController {
 
         model.addAttribute("cliente", cliente);
 
-        return "client/sign-up";
+        return "pages/client/sign-up";
     }
 
     @PostMapping("/sign-up")
@@ -67,9 +67,9 @@ public class ClientesController {
             return "redirect:/client/session/" + cliente.getId();
         } catch(Exception e) {
             if(e instanceof EntityConstraintException) {
-                return "redirect:/client/sign-up?msg=\"" + e.getMessage() + "\"";
+                return "redirect:/client/sign-up?msg=" + e.getMessage();
             }
-            return "redirect:/client/sign-up?msg=\"Error desconocido\"";
+            return "redirect:/client/sign-up?msg=Error desconocido";
         }
     }
     
@@ -82,14 +82,14 @@ public class ClientesController {
     public String listarClientes(Model model) {
         // Obtenemos todos los clientes del service
         model.addAttribute("clientes", clienteService.selectAll());
-        return "client/crud"; 
+        return "pages/client/crud"; 
     }
 
     /**
      * Elimina un cliente por su ID
      */
     @PostMapping("/delete/{id}")
-    public String eliminarCliente(@PathVariable Integer id) {
+    public String eliminarCliente(@PathVariable Long id) {
         try {
             clienteService.deleteByID(id);
             return "redirect:/client/crud?success=deleted";
@@ -102,7 +102,7 @@ public class ClientesController {
      * Muestra el formulario de edición para un cliente existente
      */
     @GetMapping("/edit/{id}")
-    public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
         try {
             Cliente cliente = clienteService.selectById(id);
             model.addAttribute("cliente", cliente);
@@ -131,10 +131,10 @@ public class ClientesController {
      * Muestra el perfil del usuario loggeado para edición
      */
     @GetMapping("/profile/{id}")
-    public String verPerfilPropio(@PathVariable Integer id, Model model) {
+    public String verPerfilPropio(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.selectById(id);
         model.addAttribute("cliente", cliente);
-        return "client/profile";
+        return "pages/client/profile";
     }
 
     @PostMapping("/profile/delete")

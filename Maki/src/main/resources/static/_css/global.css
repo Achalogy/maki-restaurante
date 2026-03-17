@@ -26,9 +26,15 @@ body {
 }
 
 .tree_background {
-  background-image: url("/_images/tree_back.png");
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+    url("/_images/tree_back.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.p-error {
+  @apply text-red-500;
 }
