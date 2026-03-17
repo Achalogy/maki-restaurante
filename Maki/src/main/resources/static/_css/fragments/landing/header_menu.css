@@ -3,29 +3,31 @@
 }
 
 #header_menu nav {
-  @apply flex p-8 md:px-12 gap-8 justify-between items-center;
+  @apply flex p-6 md:px-12 gap-8 justify-between items-center;
 }
 
 .header-logo {
   @apply flex items-center gap-4;
 }
 
+.header-logo img {
+  @apply h-16
+}
+
 .title-area > h1 {
-  @apply font-staatliches text-6xl;
+  @apply font-staatliches text-5xl;
   line-height: 2.5rem;
 }
 
 .title-area > h2 {
-  @apply font-spinnaker text-xs;
+  @apply font-spinnaker text-[.6rem];
 }
 
 .header-menu {
   @apply flex justify-center items-center;
 }
 
-.header-search-bar {
-  @apply flex rounded-full bg-[#ffffff10] items-center justify-center gap-4 p-4 px-6 text-xl;
-}
+
 
 .header-search-bar input {
   @apply outline-none;
@@ -40,5 +42,5 @@
 }
 
 .header-menu a img {
-  @apply h-12 w-12;
+  @apply h-8 w-8;
 }

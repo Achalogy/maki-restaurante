@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error | Maki</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<script>
+    const files = [
+        // Poner acá los css necesarios para la pagina
+        // EN ORDEN, POR LO MENOS PRIMERO EL GLOBAL (tailwind theme)
+        "/_css/global.css",
+        "/_css/fragments/footer.css",
+        "/_css/error.css"
+
+    ];
+
+    (async () => {
+        for (const file of files) {
+            const req = await fetch(file)
+            const content = await req.text()
+
+            const style = document.createElement('style');
+            style.setAttribute('type', 'text/tailwindcss');
+            style.textContent = content
+            document.head.appendChild(style);
+        }
+    })()
+
+</script>
+<th:block th:replace="fragments/fonts :: fonts">
+</head>
+<body>
+
+    <header>
+
+    </header>
+
+    <main>
+        <div class="error-card">
+
+            <!-- Sello estilo hanko -->
+            <div class="error-stamp">
+                <span class="stamp-icon" th:text="${errorIcon != null ? errorIcon : '⚠️'}">⚠️</span>
+                <span class="stamp-code" th:text="${errorCode != null ? errorCode : '???'}">500</span>
+            </div>
+
+            <img src="/_brand/maki_error.png" class="maki-error" alt="">
+
+            <h1 class="error-title" th:text="${errorTitle != null ? errorTitle : 'Algo salió mal'}">
+                Algo salió mal
+            </h1>
+
+            <p class="error-message" th:text="${errorMessage != null ? errorMessage : 'Ocurrió un error inesperado. Por favor, intenta de nuevo más tarde.'}">
+                Ocurrió un error inesperado. Por favor, intenta de nuevo más tarde.
+            </p>
+
+            <div class="btn-group">
+                <a href="/" class="btn btn-primary">
+                    Ir al inicio
+                </a>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    Volver atrás
+                </a>
+            </div>
+
+            <p class="error-note">
+                Si el problema persiste, contacta al administrador del sitio.
+            </p>
+
+        </div>
+    </main>
+
+<th:block th:replace="fragments/footer :: footer">
+
+</body>
+</html>

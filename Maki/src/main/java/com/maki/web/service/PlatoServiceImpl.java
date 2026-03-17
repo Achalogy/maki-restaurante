@@ -7,6 +7,7 @@ import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 
@@ -14,49 +15,60 @@ import java.util.Collection;
 public class PlatoServiceImpl implements PlatoService {
 
   @Autowired
-  PlatoRepository repo;
+  private PlatoRepository repo;
 
   @Override
   public Collection<Plato> selectAll() {
-    return repo.selectAll();
+    return repo.findAll();
   }
 
   @Override
-  public Plato selectById(Integer id) throws EntityNotFoundException {
-    return repo.selectById(id);
+  public Plato selectById(Long id) throws EntityNotFoundException {
+    return repo.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Plato no encontrado con ID: " + id));
   }
 
   @Override
   public Plato insert(Plato entity) throws EntityConstraintException {
-    return repo.insert(entity);
+    if (entity.getId() != null) {
+      throw new EntityConstraintException("El insert de Plato no debe incluir un ID");
+    }
+    return repo.save(entity);
+  }
+
+  @Override
+  @Transactional
+  public Plato update(Plato entity) throws EntityConstraintException, EntityNotFoundException {
+    if (entity.getId() == null || !repo.existsById(entity.getId())) {
+      throw new EntityNotFoundException("No se puede actualizar: Plato no existe");
+    }
+    return repo.save(entity);
   }
 
   @Override
   public void delete(Plato entity) throws EntityNotFoundException {
-    repo.delete(entity);
+    if (entity == null || entity.getId() == null) {
+      throw new EntityNotFoundException("Plato inválido para eliminar");
+    }
+    this.deleteByID(entity.getId());
   }
 
   @Override
-  public void deleteByID(Integer id) throws EntityNotFoundException {
-    repo.deleteByID(id);
+  @Transactional
+  public void deleteByID(Long id) throws EntityNotFoundException {
+    if (!repo.existsById(id)) {
+      throw new EntityNotFoundException("No se puede eliminar: Plato no encontrado con ID: " + id);
+    }
+    repo.deleteById(id);
   }
 
   @Override
-  public Plato update(Plato entity) throws EntityConstraintException, EntityNotFoundException {
-    return repo.update(entity);
-  }
-
-  @Override
-  public Plato upsert(Plato entity) throws EntityConstraintException {
-    return repo.upsert(entity);
-  }
-
-  @Override
-  public void cambiarCategoria(Categoria categoria, int platoId) throws EntityNotFoundException {
+  @Transactional
+  public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException {
     Plato plato = this.selectById(platoId);
 
     plato.setCategoria(categoria);
-
-    this.update(plato);
+    
+    repo.save(plato);
   }
 }
