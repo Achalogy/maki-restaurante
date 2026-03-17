@@ -6,12 +6,17 @@ import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
 
+import com.maki.web.entities.Adicional;
+import com.maki.web.entities.AdicionalCategoria;
 import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Cliente;
 import com.maki.web.entities.Plato;
+import com.maki.web.repository.AdicionalCategoriaRepository;
+import com.maki.web.repository.AdicionalRepository;
 import com.maki.web.repository.CategoriaRepository;
 import com.maki.web.repository.ClienteRepository;
 import com.maki.web.repository.PlatoRepository;
+import java.util.Random;
 
 @Component
 @Transactional
@@ -23,10 +28,14 @@ public class Dataloader implements CommandLineRunner {
     private PlatoRepository platoRepo;
     @Autowired
     private ClienteRepository clienteRepo;
-
+    @Autowired
+    private AdicionalRepository adicionalRepo;
+    @Autowired
+    private AdicionalCategoriaRepository adcatRepo;
     @Override
     public void run(String... args) throws Exception {
 
+        Random random = new Random();
         Categoria entradas = categoriaRepo.save(new Categoria("Entradas"));
         Categoria platosFuertes = categoriaRepo.save(new Categoria("Platos fuertes"));
         Categoria sushi = categoriaRepo.save(new Categoria("Sushi"));
@@ -252,6 +261,60 @@ public class Dataloader implements CommandLineRunner {
                 "https://saposyprincesas.elmundo.es/assets/2017/05/Batidos-verano.jpg", true);
         smoothie.setCategoria(bebidas);
         platoRepo.save(smoothie);
+
+        Adicional algaNori = new Adicional("Alga Nori", 3960);
+        adicionalRepo.save(algaNori);
+
+        Adicional sésamo = new Adicional("Semillas de Sésamo", 2960);
+        adicionalRepo.save(sésamo);
+
+        Adicional rayu = new Adicional("Rayu", 2960);
+        adicionalRepo.save(rayu);
+
+        Adicional jengibre = new Adicional("Jengibre Encurtido", 1960);
+        adicionalRepo.save(jengibre);
+
+        Adicional cebolleta = new Adicional("Cebolleta Fresca", 1960);
+        adicionalRepo.save(cebolleta);
+
+        Adicional mayo = new Adicional("Mayonesa Japonesa", 2960);
+        adicionalRepo.save(mayo);
+
+        Adicional sriracha = new Adicional("Sriracha", 2960);
+        adicionalRepo.save(sriracha);
+
+        Adicional aguacate = new Adicional("Aguacate Extra", 5960);
+        adicionalRepo.save(aguacate);        
+
+        Adicional panko = new Adicional("Panko Crujiente", 3960);
+        adicionalRepo.save(panko);
+
+        Adicional curry = new Adicional("Curry Japonés", 4960);
+        adicionalRepo.save(curry);
+
+        Adicional wasabi = new Adicional("Wasabi", 3960);
+        adicionalRepo.save(wasabi);
+
+        Adicional salsasoja = new Adicional("Salsa de Soja", 1960);
+        adicionalRepo.save(salsasoja);
+
+        Adicional teriyaki = new Adicional("Salsa Teriyaki", 3960);
+        adicionalRepo.save(teriyaki);
+
+        Adicional bonito = new Adicional("Copos de Bonito", 4960);
+        adicionalRepo.save(bonito);
+
+        Adicional ponzu = new Adicional("Salsa Ponzu", 2960);
+        adicionalRepo.save(ponzu);
+
+        int cantidadCategorias = (int) categoriaRepo.findAll().size();
+
+        for(Adicional adicional : adicionalRepo.findAll()) {
+                int randomNum = random.nextInt(1, cantidadCategorias + 1);
+                adcatRepo.save(new AdicionalCategoria((long) randomNum, adicional.getId()));
+        }
+        
+        
     }
 
 }

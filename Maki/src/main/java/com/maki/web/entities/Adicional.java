@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Adicional {
   @Id
+  @Column(name = "id", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
@@ -23,4 +24,9 @@ public class Adicional {
 
   @Column(nullable = false)
   private double precio;
+
+  public Adicional(String nombre, double precio) {
+    this.nombre = nombre;
+    this.precio = precio;
+  }
 }

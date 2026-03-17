@@ -26,4 +26,11 @@ public class AdicionalCategoria {
   @ManyToOne
   @JoinColumn(name = "adicional_id", nullable = false)
   private Adicional adicional;
+
+  public AdicionalCategoria(Long categoriaId, Long adicionalId) {
+    this.categoria = new Categoria();
+    this.categoria.setId(categoriaId);
+    this.adicional = new Adicional();
+    this.adicional.setId(adicionalId);
+  }
 }
