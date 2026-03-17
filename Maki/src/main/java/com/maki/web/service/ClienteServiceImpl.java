@@ -1,6 +1,7 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Cliente;
+import com.maki.web.entities.Pedido;
 import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -16,8 +17,13 @@ import java.util.Collection;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+  private final PedidoServiceImpl pedidoServiceImpl;
   @Autowired
   private ClienteRepository repo;
+
+  ClienteServiceImpl(PedidoServiceImpl pedidoServiceImpl) {
+    this.pedidoServiceImpl = pedidoServiceImpl;
+  }
 
   @Override
   public Collection<Cliente> selectAll() {
@@ -56,10 +62,12 @@ public class ClienteServiceImpl implements ClienteService {
     Cliente cliente = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado: " + id));
 
-    // TODO: CUANDO el cliente tenga Pedidos, aquí deberías decidir si:
-    // 1. Los borras en cascada.
-    // 2. Los dejas huérfanos (setCliente(null)).
-    // 3. Impides el borrado si tiene historial.
+    for (Pedido p : pedidoServiceImpl.selectAll()) {
+      if (p.getCliente() != null && p.getCliente().getId().equals(id)) {
+        p.setCliente(null);
+        pedidoServiceImpl.update(p);
+      }
+    }
 
     repo.delete(cliente);
   }
