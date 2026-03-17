@@ -50,7 +50,7 @@
         <table class="w-full border-collapse bg-white">
           <thead class="bg-[#eb7c21] text-white text-center">
             <tr>
-              <th class="px-6 py-4 font-bold text-lg">ID</th>
+              <th class="px-6 py-4 font-bold text-lg">Email</th>
               <th class="px-6 py-4 font-bold text-lg text-left">Nombre Completo</th>
               <th class="px-6 py-4 font-bold text-lg text-left">Contacto</th>
               <th class="px-6 py-4 font-bold text-lg text-left">Dirección</th>
@@ -59,15 +59,14 @@
           </thead>
           <tbody>
             <tr th:each="c : ${clientes}" class="border-b border-gray-200 hover:bg-orange-50 transition duration-150">
-              <td class="px-6 py-4 text-center font-mono text-gray-500" th:text="${c.id}">
-                1
+              <td class="px-6 py-4 text-center font-mono text-gray-500" th:text="${c.correo}">
+              correo@maki.com
               </td>
 
               <td class="px-6 py-4">
                 <div class="flex flex-col">
                   <span th:text="${c.nombre} + ' ' + ${c.Apellido}"
                     class="text-xl font-bold text-black uppercase">Nombre Apellido</span>
-                  <span th:text="${c.correo}" class="text-sm text-gray-500 italic">correo@maki.com</span>
                 </div>
               </td>
 
