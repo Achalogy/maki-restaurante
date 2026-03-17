@@ -27,9 +27,7 @@
   @apply flex justify-center items-center;
 }
 
-.header-search-bar {
-  @apply flex rounded-full bg-[#ffffff10] items-center justify-center gap-4 p-1 px-2 text-base;
-}
+
 
 .header-search-bar input {
   @apply outline-none;
