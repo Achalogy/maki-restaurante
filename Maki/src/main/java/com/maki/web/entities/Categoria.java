@@ -23,13 +23,14 @@ public class Categoria {
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name="nombre", length=100, nullable=false)
+
+    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private List<Plato> platos;
+
     public Categoria(String nombre) {
         this.nombre = nombre;
     }
