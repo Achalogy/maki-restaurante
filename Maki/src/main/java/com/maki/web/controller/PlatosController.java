@@ -1,5 +1,6 @@
 package com.maki.web.controller;
 
+import com.maki.web.service.AdicionalCategoriaService;
 import com.maki.web.service.CategoriaService;
 import com.maki.web.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PlatosController {
     @Autowired
     private CategoriaService categoriaService;
 
+    @Autowired
+    private AdicionalCategoriaService adicionalCategoriaService;
+
     // ===================== ADMIN TABLE =====================
 
     @GetMapping("/crud")
@@ -36,6 +40,7 @@ public class PlatosController {
     public String mostrarMenuEnTabla(Model model, @PathVariable("id") Long plateid) {
         Plato plato = platoService.selectById(plateid);
         model.addAttribute("plato", plato);
+        model.addAttribute("adicionales", adicionalCategoriaService.findByCategoria_Id(plato.getCategoria().getId()));
         return "pages/plate/plate";
     }
 
