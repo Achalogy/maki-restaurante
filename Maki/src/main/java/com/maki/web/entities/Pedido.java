@@ -40,4 +40,10 @@ public class Pedido {
   @ManyToOne
   @JoinColumn(name = "operador_id", nullable = true)
   private Operador operador;
+
+  public Pedido(Cliente cliente) {
+    this.cliente = cliente;
+    this.estado = "PENDIENTE";
+    this.fechaCreacion = java.time.LocalDateTime.now();
+  }
 }
