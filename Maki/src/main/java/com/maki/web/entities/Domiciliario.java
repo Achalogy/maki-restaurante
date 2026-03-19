@@ -29,4 +29,11 @@ public class Domiciliario {
 
   @Column(nullable = false)
   private boolean disponible;
+
+  public Domiciliario(String nombre, String celular, String cedula, boolean disponible) {
+    this.nombre = nombre;
+    this.celular = celular;
+    this.cedula = cedula;
+    this.disponible = disponible;
+  }
 }

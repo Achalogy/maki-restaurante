@@ -26,4 +26,10 @@ public class Administrador {
 
   @Column(length = 100, nullable = false)
   private String contrasena;
+
+  public Administrador(String nombre, String usuario, String contrasena) {
+    this.nombre = nombre;
+    this.usuario = usuario;
+    this.contrasena = contrasena;
+  }
 }

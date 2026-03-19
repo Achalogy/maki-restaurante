@@ -275,3 +275,11 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/USER/ma
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 64 more
+2026-03-18 23:05:05.156682-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM ADMINISTRADOR ADICIONAL_PEDIDO_DETALLES [*]DOMICILIARIO"
+Syntax error in SQL statement "SELECT * FROM ADMINISTRADOR ADICIONAL_PEDIDO_DETALLES [*]DOMICILIARIO"; SQL statement:
+SELECT * FROM ADMINISTRADOR ADICIONAL_PEDIDO_DETALLES DOMICILIARIO [42000-232]
+2026-03-18 23:16:01.372235-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]SEPEDIDO_DETALLES LECT * FROM PEDIDO"; se esperaba "SAVEPOINT, SCRIPT, SHUTDOWN"
+Syntax error in SQL statement "[*]SEPEDIDO_DETALLES LECT * FROM PEDIDO"; expected "SAVEPOINT, SCRIPT, SHUTDOWN"; SQL statement:
+SEPEDIDO_DETALLES LECT * FROM PEDIDO [42001-232]
