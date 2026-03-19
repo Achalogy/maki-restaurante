@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService {
@@ -54,5 +55,10 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
       throw new EntityNotFoundException("No se puede actualizar: El registro no existe");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public List<AdicionalCategoria> findByCategoria_Id(Long categoriaId) {
+    return repo.findByCategoria_Id(categoriaId);
   }
 }
