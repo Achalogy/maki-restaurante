@@ -39,8 +39,8 @@ export class PlateTableComponent {
     if (confirm(
       '¿Estás seguro de que deseas eliminar este plato?',
     )) {
-      this.plateList =
-        this.plateList.filter(p => p.id != id)
+      this.plateService.delete(id)
+      this.plateList = this.plateService.selectAll()
     }
   }
 }
