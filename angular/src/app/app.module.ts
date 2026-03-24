@@ -16,6 +16,7 @@ import { HeaderMenuComponent } from './landing/header-menu/header-menu.component
 import { ReviewCarouselComponent } from './landing/review-carousel/review-carousel.component';
 import { FoodMenuGridComponent } from './landing/food-menu-grid/food-menu-grid.component';
 import { FormsModule } from '@angular/forms';
+import { FoodMenuGridCardComponent } from './landing/food-menu-grid-card/food-menu-grid-card.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +31,14 @@ import { FormsModule } from '@angular/forms';
     HeroCarouselComponent,
     HeaderMenuComponent,
     ReviewCarouselComponent,
-    FoodMenuGridComponent
   ],  
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgOptimizedImage,
-    FormsModule
+    FormsModule,
+    FoodMenuGridComponent,
+    FoodMenuGridCardComponent
 ],
   providers: [],
   bootstrap: [AppComponent]
