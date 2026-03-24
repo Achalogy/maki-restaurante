@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+footer {
+  @apply gap-8 bg-maki-black p-8 flex flex-col text-white font-spinnaker;
+}
+
+footer div {
+  @apply items-center justify-between;
+}
+
+footer h3 {
+  @apply text-3xl;
+}
+
+footer a {
+  @apply text-maki-beige;
+}
+
+footer img {
+  @apply h-12
+}
