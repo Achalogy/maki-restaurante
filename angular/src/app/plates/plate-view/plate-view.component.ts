@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PLATES } from 'src/app/data/platos.data';
+import { PLATES_DATA } from 'src/app/data/platos.data';
 import { Plate } from 'src/app/interfaces/plate.interface';
 
 @Component({
@@ -17,7 +17,7 @@ export class PlateViewComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
-    this.plate = PLATES.find(p => p.id === id);
+    this.plate = PLATES_DATA.getInstance().plates.find(p => p.id === id);
   }
 
   addToOrder() {
