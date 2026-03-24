@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { PLATES_DATA } from 'src/app/data/platos.data';
+import { Router } from '@angular/router';
 import { Plate } from 'src/app/interfaces/plate.interface';
+import { PlateService } from 'src/app/service/plate.service';
 
 @Component({
   selector: 'app-plate-table',
@@ -8,7 +9,31 @@ import { Plate } from 'src/app/interfaces/plate.interface';
   styleUrls: ['./plate-table.component.css']
 })
 export class PlateTableComponent {
-  plateList: Plate[] = PLATES_DATA.getInstance().plates
+
+  plateList: Plate[] = []
+
+  constructor(
+    private plateService: PlateService,
+        private router: Router
+  ) {
+
+  }
+
+  ngOnInit() {
+    this.plateList = this.plateService.selectAll()
+  }
+
+  goToPlate(id: number) {
+    this.router.navigate([`/plate/${id}`])
+  }
+
+  editPlate(id: number) {
+    this.router.navigate([`/plate/${id}/edit`])
+  }
+
+  createPlate() {
+    this.router.navigate([`/plate/create`])
+  }
 
   deletePlateById(id: number) {
     if (confirm(

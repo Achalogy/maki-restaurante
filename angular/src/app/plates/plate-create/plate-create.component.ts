@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Plate } from 'src/app/interfaces/plate.interface';
+import { PlateService } from 'src/app/service/plate.service';
 
 @Component({
   selector: 'app-plate-create',
@@ -17,11 +19,20 @@ export class PlateCreateComponent {
     available: true
   };
 
+  constructor(
+    public plateService: PlateService,
+    private router: Router
+  ) {
+
+  }
+
   savePlate() {
     this.plate.id = Math.floor(Math.random() * 1000);
     console.log('Plato guardado:', this.plate);
 
-    this.resetForm();
+    this.plateService.create(this.plate)
+
+    this.router.navigate(['/plate/crud']);
   }
 
   resetForm() {
