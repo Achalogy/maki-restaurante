@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+main h2 {
+  @apply text-maki-orange text-[8rem] font-staatliches;
+}
+main h3 {
+  @apply text-4xl font-staatliches text-maki-black;
+}
+main span{
+    @apply text-4xl font-staatliches text-maki-orange;
+}
+
+body {
+  @apply bg-maki-bg;
+}
+
+.tree_background {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+    url("assets/images/tree_back.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.p-error {
+  @apply text-red-500;
+}
