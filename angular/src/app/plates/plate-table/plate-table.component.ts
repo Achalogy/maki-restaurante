@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PLATES } from 'src/app/data/platos.data';
+import { PLATES_DATA } from 'src/app/data/platos.data';
 import { Plate } from 'src/app/interfaces/plate.interface';
 
 @Component({
@@ -8,7 +8,7 @@ import { Plate } from 'src/app/interfaces/plate.interface';
   styleUrls: ['./plate-table.component.css']
 })
 export class PlateTableComponent {
-  plateList: Plate[] = PLATES
+  plateList: Plate[] = PLATES_DATA.getInstance().plates
 
   deletePlateById(id: number) {
     if (confirm(
