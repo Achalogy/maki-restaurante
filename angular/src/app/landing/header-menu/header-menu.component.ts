@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-menu',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HeaderMenuComponent {
 
+  constructor(
+    private router: Router
+  ) {}
+
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
 }
