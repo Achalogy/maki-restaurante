@@ -17,6 +17,8 @@ import { ReviewCarouselComponent } from './landing/review-carousel/review-carous
 import { FoodMenuGridComponent } from './landing/food-menu-grid/food-menu-grid.component';
 import { FormsModule } from '@angular/forms';
 import { FoodMenuGridCardComponent } from './landing/food-menu-grid-card/food-menu-grid-card.component';
+import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
+import { OperatorViewComponent } from './operators/operator-view/operator-view.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { FoodMenuGridCardComponent } from './landing/food-menu-grid-card/food-me
     HeroCarouselComponent,
     HeaderMenuComponent,
     ReviewCarouselComponent,
+    OperatorCrudComponent,
+    OperatorViewComponent,
   ],  
   imports: [
     BrowserModule,

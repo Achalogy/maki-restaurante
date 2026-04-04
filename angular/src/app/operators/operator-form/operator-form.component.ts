@@ -38,7 +38,7 @@ export class OperatorFormComponent implements OnInit {
       if (encontrado) {
         this.operator = { ...encontrado };
       } else {
-        this.router.navigate(['/operator']);
+        this.router.navigate(['/operator/crud']);
       }
     }
   }
@@ -50,10 +50,10 @@ export class OperatorFormComponent implements OnInit {
       this.operatorService.update(+this.operator.id, this.operator);
     }
 
-    this.router.navigate(['/operator']);
+    this.router.navigate(['/operator/crud']);
   }
 
   cancelar(): void {
-    this.router.navigate(['/operator']);
+    this.router.navigate(['/operator/crud']);
   }
 }
