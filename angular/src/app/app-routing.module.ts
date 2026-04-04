@@ -17,13 +17,12 @@ const routes: Routes = [
   { path: 'plate/create', component: PlateCreateComponent },
   { path: 'plate/:id', component: PlateViewComponent },
 
-  { path: 'opreator/crud', component: OperatorCrudComponent },
+  { path: 'operator/crud', component: OperatorCrudComponent },
   { path: 'operator/:id/edit', component: OperatorFormComponent },
   { path: 'operator/create', component: OperatorFormComponent },
   { path: 'operator/:id', component: OperatorViewComponent },
 
   { path: '**', pathMatch: 'full', redirectTo: '' }
-
 ];
 
 
