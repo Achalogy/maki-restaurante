@@ -1,0 +1,220 @@
+/* =====================================================
+   operario-form.component.css
+   Diseño MAKI: #1b1b26 fondo · #eb7c21 naranja
+   Fuentes: Staatliches (títulos) + Spinnaker (cuerpo)
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&family=Spinnaker&display=swap');
+
+:host {
+  --maki-black:       #1b1b26;
+  --maki-orange:      #eb7c21;
+  --maki-orange-dark: #d15d19;
+  --maki-gray:        #6e7189;
+  --maki-bg-input:    #f4f4f6;
+  --radius:           14px;
+  --t:                0.22s ease;
+}
+
+/* ── Página ── */
+.maki-form-page {
+  min-height: 100vh;
+  background-color: var(--maki-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Spinnaker', sans-serif;
+}
+
+.bg-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(235,124,33,0.05) 0px,
+      rgba(235,124,33,0.05) 1px,
+      transparent 1px,
+      transparent 55px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(235,124,33,0.05) 0px,
+      rgba(235,124,33,0.05) 1px,
+      transparent 1px,
+      transparent 55px
+    );
+}
+
+/* ── Tarjeta ── */
+.form-wrapper {
+  background: white;
+  border-radius: var(--radius);
+  padding: 2.5rem 2.2rem;
+  width: 100%;
+  max-width: 480px;
+  border-top: 5px solid var(--maki-orange);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.38s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Encabezado ── */
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.4rem;
+}
+
+.brand-circle {
+  width: 50px;
+  height: 50px;
+  background: var(--maki-black);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Staatliches', sans-serif;
+  font-size: 1.5rem;
+  color: var(--maki-orange);
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: 'Staatliches', sans-serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--maki-black);
+}
+
+.brand-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--maki-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Título ── */
+.form-title {
+  font-family: 'Staatliches', sans-serif;
+  font-size: 2.4rem;
+  color: var(--maki-black);
+  margin: 0 0 1.6rem;
+  line-height: 1;
+}
+
+.title-accent { color: var(--maki-orange); }
+
+/* ── Grupos de campo ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--maki-black);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+
+.label-hint {
+  font-weight: 400;
+  color: var(--maki-gray);
+  text-transform: none;
+  font-size: 0.7rem;
+  margin-left: 4px;
+}
+
+.form-group input {
+  border: 2px solid #e2e2e2;
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-family: 'Spinnaker', sans-serif;
+  font-size: 0.88rem;
+  color: var(--maki-black);
+  background: var(--maki-bg-input);
+  outline: none;
+  transition: border-color var(--t), box-shadow var(--t), background var(--t);
+}
+
+.form-group input::placeholder { color: #b0b0b8; }
+
+.form-group input:focus {
+  border-color: var(--maki-orange);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(235,124,33,0.15);
+}
+
+.field-error {
+  font-size: 0.7rem;
+  color: #e53e3e;
+  margin-top: 3px;
+}
+
+/* ── Acciones ── */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.8rem;
+}
+
+.btn-primary {
+  background: var(--maki-orange);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 1.5rem;
+  font-family: 'Staatliches', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(235,124,33,0.35);
+  transition: background var(--t), transform var(--t), box-shadow var(--t);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--maki-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(235,124,33,0.45);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--maki-gray);
+  border: 2px solid #e2e2e2;
+  border-radius: 10px;
+  padding: 11px 1.5rem;
+  font-family: 'Spinnaker', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color var(--t), color var(--t);
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  border-color: var(--maki-black);
+  color: var(--maki-black);
+}
