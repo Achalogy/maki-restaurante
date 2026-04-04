@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Operator } from '../../interfaces/operator.interface'; 
-import { OPERARIOS } from '../../data/operarios.data';
+import {OperatorService} from '../../service/operator.service';
 
 @Component({
-  selector: 'app-operario-form',
+  selector: 'app-operator-form',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './operario-form.component.html',
-  styleUrls: ['./operario-form.component.css']
+  templateUrl: './operator-form.component.html',
+  styleUrls: ['./operator-form.component.css']
 })
-export class OperarioFormComponent implements OnInit {
+export class OperatorFormComponent implements OnInit {
 
   modo: 'crear' | 'editar' = 'crear';
 
-  operario: Operator = {
+  operator: Operator = {
     id: 0,
     name: '',
     username: '',
@@ -25,7 +25,8 @@ export class OperarioFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private operatorService: OperatorService
   ) {}
 
   ngOnInit(): void {
@@ -33,26 +34,26 @@ export class OperarioFormComponent implements OnInit {
 
     if (id) {
       this.modo = 'editar';
-      const encontrado = OPERARIOS.find(o => o.id === +id);
+      const encontrado = this.operatorService.selectById(+id);
       if (encontrado) {
-        this.operario = { ...encontrado };
+        this.operator = { ...encontrado };
+      } else {
+        this.router.navigate(['/operator']);
       }
     }
   }
 
   onSubmit(): void {
     if (this.modo === 'crear') {
-      console.log('Crear operario:', this.operario);
-      alert(`Operario "${this.operario.name}" creado (simulado).`);
+      this.operatorService.create(this.operator);
     } else {
-      console.log('Actualizar operario:', this.operario);
-      alert(`Operario "${this.operario.name}" actualizado (simulado).`);
+      this.operatorService.update(+this.operator.id, this.operator);
     }
 
-    this.router.navigate(['/operarios']);
+    this.router.navigate(['/operator']);
   }
 
   cancelar(): void {
-    this.router.navigate(['/operarios']);
+    this.router.navigate(['/operator']);
   }
 }

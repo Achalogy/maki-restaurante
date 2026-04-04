@@ -5,7 +5,7 @@ import { PlateEditComponent } from './plates/plate-edit/plate-edit.component';
 import { PlateCreateComponent } from './plates/plate-create/plate-create.component';
 import { PlateViewComponent } from './plates/plate-view/plate-view.component';
 import { LandingPageComponent } from './landing/landing-page/landing-page.component';
-import { OperarioFormComponent } from './components/operario-form/operario-form.component';
+import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
 
 const routes: Routes = [
   { path: 'plate/crud', component: PlateTableComponent },
@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'plate/:id', component: PlateViewComponent },
   { path: '', component: LandingPageComponent },
 
-  { path: 'operarios/crear', component: OperarioFormComponent },
-  { path: 'operarios/editar/:id', component: OperarioFormComponent },
+  { path: 'operator/create', component: OperatorFormComponent },
+  { path: 'operator/:id/edit', component: OperatorFormComponent },
 
   { path: '**', pathMatch: 'full', redirectTo:''}
   
