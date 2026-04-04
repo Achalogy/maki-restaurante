@@ -380,6 +380,36 @@ public class Dataloader implements CommandLineRunner {
                 operadorRepo.save(operador4);
                 Operador operador5 = new Operador((long) 101015, "Rodriguez", "sofia.rodriguez@example.com", "123456");
                 operadorRepo.save(operador5);
+                Operador operador6 = new Operador((long) 101016, "Martinez", "javier.martinez@example.com", "123456");
+                operadorRepo.save(operador6);
+                Operador operador7 = new Operador((long) 101017, "Ramirez", "laura.ramirez@example.com", "123456");
+                operadorRepo.save(operador7);
+                Operador operador8 = new Operador((long) 101018, "Torres", "andres.torres@example.com", "123456");
+                operadorRepo.save(operador8);
+                Operador operador9 = new Operador((long) 101019, "Vargas", "sofia.vargas@example.com", "123456");
+                operadorRepo.save(operador9);
+                Operador operador10 = new Operador((long) 101020, "Castillo", "camila.castillo@example.com", "123456");
+                operadorRepo.save(operador10);
+                Operador operador11 = new Operador((long) 101021, "Silva", "diego.silva@example.com", "123456");
+                operadorRepo.save(operador11);
+                Operador operador12 = new Operador((long) 101022, "Cruz", "mariana.cruz@example.com", "123456");
+                operadorRepo.save(operador12);
+                Operador operador13 = new Operador((long) 101023, "Ortiz", "felipe.ortiz@example.com", "123456");
+                operadorRepo.save(operador13);
+                Operador operador14 = new Operador((long) 101024, "Rojas", "andrea.rojas@example.com", "123456");
+                operadorRepo.save(operador14);
+                Operador operador15 = new Operador((long) 101025, "Pérez", "jose.perez@example.com", "123456");
+                operadorRepo.save(operador15);
+                Operador operador16 = new Operador((long) 101026, "Suarez", "valentina.suarez@example.com", "123456");
+                operadorRepo.save(operador16);
+                Operador operador17 = new Operador((long) 101027, "Moreno", "santiago.moreno@example.com", "123456");
+                operadorRepo.save(operador17);
+                Operador operador18 = new Operador((long) 101028, "Núñez", "camilo.nunez@example.com", "123456");
+                operadorRepo.save(operador18);
+                Operador operador19 = new Operador((long) 101029, "Herrera", "natasha.herrera@example.com", "123456");
+                operadorRepo.save(operador19);
+                Operador operador20 = new Operador((long) 101030, "Medina", "gabriel.medina@example.com", "123456");
+                operadorRepo.save(operador20);
 
                 Domiciliario domiciliario1 = new Domiciliario("Perez", "101", "11010101", true);
                 domiciliarioRepo.save(domiciliario1);
@@ -399,7 +429,6 @@ public class Dataloader implements CommandLineRunner {
                 pedido1.setFechaEntrega(java.time.LocalDateTime.now().plusHours(1));
                 pedido1.setFechaCreacion(java.time.LocalDateTime.now());
                 pedido1.setEstado("En preparación");
-
                 pedidoRepo.save(pedido1);
 
                 Pedido pedido2 = new Pedido();
@@ -446,6 +475,142 @@ public class Dataloader implements CommandLineRunner {
                 pedido6.setFechaCreacion(java.time.LocalDateTime.now());
                 pedido6.setEstado("En preparación");
                 pedidoRepo.save(pedido6);
+                
+                Pedido pedido7 = new Pedido();
+                pedido7.setCliente(clienteRepo.findById(7L).orElse(null));
+                pedido7.setOperador(operadorRepo.findById(6L).orElse(null));
+                pedido7.setDomiciliario(domiciliarioRepo.findById(2L).orElse(null));
+                pedido7.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(45));
+                pedido7.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido7.setEstado("Pendiente");
+                pedidoRepo.save(pedido7);
+
+                Pedido pedido8 = new Pedido();
+                pedido8.setCliente(clienteRepo.findById(8L).orElse(null));
+                pedido8.setOperador(operadorRepo.findById(7L).orElse(null));
+                pedido8.setDomiciliario(domiciliarioRepo.findById(3L).orElse(null));
+                pedido8.setFechaEntrega(java.time.LocalDateTime.now().plusHours(3).plusMinutes(30));
+                pedido8.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido8.setEstado("En preparación");
+                pedidoRepo.save(pedido8);
+
+                Pedido pedido9 = new Pedido();
+                pedido9.setCliente(clienteRepo.findById(9L).orElse(null));
+                pedido9.setOperador(operadorRepo.findById(8L).orElse(null));
+                pedido9.setDomiciliario(domiciliarioRepo.findById(4L).orElse(null));
+                pedido9.setFechaEntrega(java.time.LocalDateTime.now().plusHours(1).plusMinutes(15));
+                pedido9.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido9.setEstado("En camino");
+                pedidoRepo.save(pedido9);
+
+                Pedido pedido10 = new Pedido();
+                pedido10.setCliente(clienteRepo.findById(10L).orElse(null));
+                pedido10.setOperador(operadorRepo.findById(9L).orElse(null));
+                pedido10.setDomiciliario(domiciliarioRepo.findById(5L).orElse(null));
+                pedido10.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(20));
+                pedido10.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido10.setEstado("Entregado");
+                pedidoRepo.save(pedido10);
+
+                Pedido pedido11 = new Pedido();
+                pedido11.setCliente(clienteRepo.findById(1L).orElse(null));
+                pedido11.setOperador(operadorRepo.findById(10L).orElse(null));
+                pedido11.setDomiciliario(domiciliarioRepo.findById(1L).orElse(null));
+                pedido11.setFechaEntrega(java.time.LocalDateTime.now().plusHours(4).plusMinutes(10));
+                pedido11.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido11.setEstado("Pendiente");
+                pedidoRepo.save(pedido11);
+
+                Pedido pedido12 = new Pedido();
+                pedido12.setCliente(clienteRepo.findById(2L).orElse(null));
+                pedido12.setOperador(operadorRepo.findById(11L).orElse(null));
+                pedido12.setDomiciliario(domiciliarioRepo.findById(2L).orElse(null));
+                pedido12.setFechaEntrega(java.time.LocalDateTime.now().plusHours(1).plusMinutes(50));
+                pedido12.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido12.setEstado("En preparación");
+                pedidoRepo.save(pedido12);
+
+                Pedido pedido13 = new Pedido();
+                pedido13.setCliente(clienteRepo.findById(3L).orElse(null));
+                pedido13.setOperador(operadorRepo.findById(12L).orElse(null));
+                pedido13.setDomiciliario(domiciliarioRepo.findById(3L).orElse(null));
+                pedido13.setFechaEntrega(java.time.LocalDateTime.now().plusHours(3).plusMinutes(5));
+                pedido13.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido13.setEstado("En camino");
+                pedidoRepo.save(pedido13);
+
+                Pedido pedido14 = new Pedido();
+                pedido14.setCliente(clienteRepo.findById(4L).orElse(null));
+                pedido14.setOperador(operadorRepo.findById(13L).orElse(null));
+                pedido14.setDomiciliario(domiciliarioRepo.findById(4L).orElse(null));
+                pedido14.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(35));
+                pedido14.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido14.setEstado("Pendiente");
+                pedidoRepo.save(pedido14);
+
+                Pedido pedido15 = new Pedido();
+                pedido15.setCliente(clienteRepo.findById(5L).orElse(null));
+                pedido15.setOperador(operadorRepo.findById(14L).orElse(null));
+                pedido15.setDomiciliario(domiciliarioRepo.findById(5L).orElse(null));
+                pedido15.setFechaEntrega(java.time.LocalDateTime.now().plusHours(1).plusMinutes(40));
+                pedido15.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido15.setEstado("En preparación");
+                pedidoRepo.save(pedido15);
+
+                Pedido pedido16 = new Pedido();
+                pedido16.setCliente(clienteRepo.findById(6L).orElse(null));
+                pedido16.setOperador(operadorRepo.findById(15L).orElse(null));
+                pedido16.setDomiciliario(domiciliarioRepo.findById(1L).orElse(null));
+                pedido16.setFechaEntrega(java.time.LocalDateTime.now().plusHours(3).plusMinutes(25));
+                pedido16.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido16.setEstado("Entregado");
+                pedidoRepo.save(pedido16);
+
+                Pedido pedido17 = new Pedido();
+                pedido17.setCliente(clienteRepo.findById(7L).orElse(null));
+                pedido17.setOperador(operadorRepo.findById(16L).orElse(null));
+                pedido17.setDomiciliario(domiciliarioRepo.findById(2L).orElse(null));
+                pedido17.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(55));
+                pedido17.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido17.setEstado("En camino");
+                pedidoRepo.save(pedido17);
+
+                Pedido pedido18 = new Pedido();
+                pedido18.setCliente(clienteRepo.findById(8L).orElse(null));
+                pedido18.setOperador(operadorRepo.findById(17L).orElse(null));
+                pedido18.setDomiciliario(domiciliarioRepo.findById(3L).orElse(null));
+                pedido18.setFechaEntrega(java.time.LocalDateTime.now().plusHours(1).plusMinutes(35));
+                pedido18.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido18.setEstado("Pendiente");
+                pedidoRepo.save(pedido18);
+
+                Pedido pedido19 = new Pedido();
+                pedido19.setCliente(clienteRepo.findById(9L).orElse(null));
+                pedido19.setOperador(operadorRepo.findById(18L).orElse(null));
+                pedido19.setDomiciliario(domiciliarioRepo.findById(4L).orElse(null));
+                pedido19.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(10));
+                pedido19.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido19.setEstado("En preparación");
+                pedidoRepo.save(pedido19);
+
+                Pedido pedido20 = new Pedido();
+                pedido20.setCliente(clienteRepo.findById(10L).orElse(null));
+                pedido20.setOperador(operadorRepo.findById(19L).orElse(null));
+                pedido20.setDomiciliario(domiciliarioRepo.findById(5L).orElse(null));
+                pedido20.setFechaEntrega(java.time.LocalDateTime.now().plusHours(3).plusMinutes(45));
+                pedido20.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido20.setEstado("En camino");
+                pedidoRepo.save(pedido20);
+
+                Pedido pedido21 = new Pedido();
+                pedido21.setCliente(clienteRepo.findById(1L).orElse(null));
+                pedido21.setOperador(operadorRepo.findById(20L).orElse(null));
+                pedido21.setDomiciliario(domiciliarioRepo.findById(1L).orElse(null));
+                pedido21.setFechaEntrega(java.time.LocalDateTime.now().plusHours(2).plusMinutes(20));
+                pedido21.setFechaCreacion(java.time.LocalDateTime.now());
+                pedido21.setEstado("Entregado");
+                pedidoRepo.save(pedido21);
+                
 
                 PedidoDetalles detalle1 = new PedidoDetalles(pedido1, platoRepo.findById(1L).orElse(null), 2);
                 pedidoDetallesRepo.save(detalle1);
@@ -464,6 +629,66 @@ public class Dataloader implements CommandLineRunner {
                 PedidoDetalles detalle6 = new PedidoDetalles(pedido4, platoRepo.findById(25L).orElse(null), 2);
                 pedidoDetallesRepo.save(detalle6);
 
+                PedidoDetalles detalle7 = new PedidoDetalles(pedido2, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle7);
+
+                PedidoDetalles detalle8 = new PedidoDetalles(pedido3, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle8);
+
+                PedidoDetalles detalle9 = new PedidoDetalles(pedido4, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle9);
+
+                PedidoDetalles detalle10 = new PedidoDetalles(pedido5, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle10);
+
+                PedidoDetalles detalle11 = new PedidoDetalles(pedido6, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle11);
+
+                PedidoDetalles detalle12 = new PedidoDetalles(pedido7, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle12);
+
+                PedidoDetalles detalle13 = new PedidoDetalles(pedido8, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle13);
+
+                PedidoDetalles detalle14 = new PedidoDetalles(pedido9, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle14);
+
+                PedidoDetalles detalle15 = new PedidoDetalles(pedido10, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle15);
+
+                PedidoDetalles detalle16 = new PedidoDetalles(pedido11, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle16);
+
+                PedidoDetalles detalle17 = new PedidoDetalles(pedido12, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle17);
+
+                PedidoDetalles detalle18 = new PedidoDetalles(pedido13, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle18);
+
+                PedidoDetalles detalle19 = new PedidoDetalles(pedido14, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle19);
+
+                PedidoDetalles detalle20 = new PedidoDetalles(pedido15, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle20);
+
+                PedidoDetalles detalle21 = new PedidoDetalles(pedido16, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle21);
+
+                PedidoDetalles detalle22 = new PedidoDetalles(pedido17, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle22);
+
+                PedidoDetalles detalle23 = new PedidoDetalles(pedido18, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle23);
+
+                PedidoDetalles detalle24 = new PedidoDetalles(pedido19, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle24);
+
+                PedidoDetalles detalle25 = new PedidoDetalles(pedido20, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle25);
+
+                PedidoDetalles detalle26 = new PedidoDetalles(pedido21, platoRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
+                pedidoDetallesRepo.save(detalle26);
+
                 AdicionalPedidoDetalles adicionalDetalle1 = new AdicionalPedidoDetalles(pedidoDetallesRepo.findById(1L).orElse(null), adicionalRepo.findById(1L).orElse(null));
                 adicionalPedidoDetallesRepo.save(adicionalDetalle1);
                 AdicionalPedidoDetalles adicionalDetalle2 = new AdicionalPedidoDetalles(pedidoDetallesRepo.findById(2L).orElse(null), adicionalRepo.findById(2L).orElse(null));
@@ -476,5 +701,6 @@ public class Dataloader implements CommandLineRunner {
                 adicionalPedidoDetallesRepo.save(adicionalDetalle5);
 
         }
+
 
 }
