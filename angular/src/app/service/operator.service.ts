@@ -54,6 +54,10 @@ export class OperatorService {
   }
 
   create(data: Operator) {
+    if (!data.id) {
+      data.id = this.operatorList.length > 0 ? Math.max(...this.operatorList.map(x => x.id)) + 1 : 1
+    }
+
     this.operatorList.push(data)
   }
 }
