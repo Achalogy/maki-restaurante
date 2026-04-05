@@ -147,16 +147,11 @@ export class PlateService {
   ];
 
   selectAll() {
-    console.log(
-      this.plateList)
+    
     return this.plateList
   }
 
   selectById(id: number) {
-    console.log(
-      this.plateList,
-      id
-    )
     return this.plateList.find(x => x.id == id)
   }
 
@@ -175,6 +170,10 @@ export class PlateService {
   }
 
   create(data: Plate) {
+    if(!data.id) {
+      data.id = this.plateList.length > 0 ? Math.max(...this.plateList.map(x => x.id)) + 1 : 1
+    }
+
     this.plateList.push(data)
   }
 }
