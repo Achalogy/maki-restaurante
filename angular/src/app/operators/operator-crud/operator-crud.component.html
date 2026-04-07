@@ -35,27 +35,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let operator of opreatorList" class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+          <tr *ngFor="let operator of opreatorList"
+            class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
             <!-- id -->
             <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black">
+              <h3 class="text-xl font-bold uppercase text-black text-center">
                 {{operator.id}}
               </h3>
             </td>
             <!-- Operator Name -->
             <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black">
+              <h3 class="text-xl font-bold uppercase text-black text-center">
                 {{operator.name}}
               </h3>
             </td>
             <!-- Operator Username -->
             <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black">
+              <h3 class="text-xl font-bold uppercase text-black text-center">
                 {{operator.username}}
               </h3>
             </td>
 
-            <td class="flex flex-col px-6 py-4 text-center">
+            <td class="flex flex-col px-6 py-4 text-center items-center">
               <a (click)="goToOperator(operator.id)">
                 <button type="submit"
                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
