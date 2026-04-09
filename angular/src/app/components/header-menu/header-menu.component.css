@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.header-button {
+  @apply flex gap-2 items-center justify-center rounded-full p-2 lg:px-4 text-2xl lg:text-base;
+}
+
 #header_menu {
   @apply bg-maki-black text-white;
 }
@@ -11,40 +15,37 @@
 }
 
 .header-logo {
-  @apply flex items-center gap-4;
+  @apply flex items-center gap-4 cursor-pointer;
 }
 
 .header-logo img {
-  @apply h-16
-}
-
-.title-area > h1 {
-  @apply font-staatliches text-5xl;
-  line-height: 2.5rem;
-}
-
-.title-area > h2 {
-  @apply font-spinnaker text-[.6rem];
-}
-
-.header-menu {
-  @apply flex justify-center items-center;
-}
-
-
-
-.header-search-bar input {
-  @apply outline-none;
+  @apply h-8 lg:h-16
 }
 
 .title-area {
   @apply flex flex-col gap-0 justify-center items-center;
 }
 
-.header-menu {
-  @apply flex justify-between grow max-w-[35rem] xl:flex;
+.title-area > h1 {
+  @apply font-staatliches text-2xl lg:text-5xl leading-6 lg:leading-10;
 }
 
-.header-menu a img {
-  @apply h-8 w-8;
+.title-area > h2 {
+  @apply font-spinnaker text-[.3rem] lg:text-[.6rem];
+}
+
+.header-menu {
+  @apply flex gap-4 flex-grow justify-end items-center;
+}
+
+.header-menu a {
+  @apply header-button bg-white bg-opacity-5;
+}
+
+.header-profile a {
+  @apply header-button bg-white bg-opacity-15;
+}
+
+.header-button p {
+  @apply hidden lg:block;
 }
