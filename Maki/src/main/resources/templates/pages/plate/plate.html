@@ -52,6 +52,27 @@
             <textarea id="special-instructions" name="special-instructions" rows="4" cols="50"></textarea>
           </form>
         </div>
+        <div id="adicionales">
+          <h4 class="text-lg font-semibold mb-2">Adicionales disponibles:</h4>
+          <form th:if="${adicionales != null and !adicionales.isEmpty()}" action="#" method="post">
+            <div th:each="adicionalCat : ${adicionales}" class="flex items-center mb-2">
+              <input type="checkbox" 
+                     th:id="'adicional-' + ${adicionalCat.adicional.id}" 
+                     th:name="'adicional-' + ${adicionalCat.adicional.id}" 
+                     th:value="${adicionalCat.adicional.id}" 
+                     class="mr-2">
+              <label th:for="'adicional-' + ${adicionalCat.adicional.id}" 
+                     th:text="${adicionalCat.adicional.nombre} + ' (+$' + ${adicionalCat.adicional.precio} + ')'" 
+                     class="text-sm"></label>
+            </div>
+            <button type="submit" class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">
+              Agregar al pedido
+            </button>
+          </form>
+          <p th:if="${adicionales == null or adicionales.isEmpty()}" class="text-gray-500 text-sm">
+            No hay adicionales disponibles para esta categoría.
+          </p>
+        </div>
       </div>
     </div>
   </main>

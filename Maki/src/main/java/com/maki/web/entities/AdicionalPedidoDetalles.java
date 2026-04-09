@@ -26,4 +26,9 @@ public class AdicionalPedidoDetalles {
   @ManyToOne
   @JoinColumn(name = "adicional_id", nullable = false)
   private Adicional adicional;
+
+  public AdicionalPedidoDetalles(PedidoDetalles detalle, Adicional adicional) {
+    this.detalle = detalle;
+    this.adicional = adicional;
+  }
 }

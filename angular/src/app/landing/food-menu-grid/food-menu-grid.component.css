@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.food-menu-grid {
+  @apply flex flex-wrap gap-6 md:grid-cols-3 max-w-[90dvw] mx-auto px-4 items-center justify-center;
+}
+
