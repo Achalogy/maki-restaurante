@@ -30,4 +30,10 @@ public class PedidoDetalles {
 
   @Column(nullable = false)
   private int cantidad;
+
+  public PedidoDetalles(Pedido pedido, Plato producto, int cantidad) {
+    this.pedido = pedido;
+    this.producto = producto;
+    this.cantidad = cantidad;
+  }
 }

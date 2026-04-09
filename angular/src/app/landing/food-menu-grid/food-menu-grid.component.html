@@ -1,0 +1,8 @@
+<section class="food-menu-grid">
+  <app-food-menu-grid-card
+    *ngFor="let item of menuItems"
+    [href]="item.href"
+    [src]="item.src"
+    [label]="item.label"
+  />
+</section>
