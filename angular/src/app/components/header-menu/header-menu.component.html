@@ -10,20 +10,27 @@
 
     <div class="header-menu">
       <a (click)="navigateTo('/')">
-        <img src="assets/icon/home_icon.png" alt="">
+        <!-- <img src="assets/icon/home_icon.png" alt=""> -->
+         <p>Inicio</p>
       </a>
       <a (click)="navigateTo('/menu')">
-        <img src="assets/icon/menu_icon.png" alt="">
+        <!-- <img src="assets/icon/menu_icon.png" alt=""> -->
+         <p>Menú</p>
       </a>
       <a (click)="navigateTo('/plate/crud')">
-        <img src="assets/icon/delivery_icon.png" alt="">
+        <!-- <img src="assets/icon/delivery_icon.png" alt=""> -->
+         <p>Domicilio</p>
       </a>
       <a (click)="navigateTo('/operator/crud')">
-        <img src="assets/icon/user_profile_icon.png" alt="">
+        <!-- <img src="assets/icon/user_profile_icon.png" alt=""> -->
+         
       </a>
     </div>
 
-    <div class="header-search-bar"> 
+    <div class="header-profile">
+      <a (click)="navigateTo('/profile')">
+        <p>Perfil</p>
+      </a>
     </div>
 
   </nav>
