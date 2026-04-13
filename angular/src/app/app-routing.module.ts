@@ -28,11 +28,11 @@ const routes: Routes = [
   { path: 'operator/:id', component: OperatorViewComponent },
 
   
-  {path: "client/:id", component: ClientSessionComponent },
-  {path: "client/edit/:id", component: ClientEditComponent },
   {path: "client/log-in", component: ClientLogInComponent},
   {path: "client/sign-up", component: ClientSignUpComponent},
   {path: "client/crud", component: ClientCrudComponent},
+  {path: "client/edit/:id", component: ClientEditComponent },
+  {path: "client/:id", component: ClientSessionComponent },
   
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

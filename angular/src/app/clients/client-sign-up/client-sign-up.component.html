@@ -1,1 +1,47 @@
-<p>client-sign-up works!</p>
+<main>
+  <div class="login-container">
+    <div class="card-login">
+
+      <app-maki-logo></app-maki-logo>
+
+      <!-- FORM CONECTADO AL CONTROLLER -->
+      <form>
+
+        <div>
+          <input type="text" placeholder="Nombre" />
+          <input type="text" placeholder="Apellido" />
+        </div>
+
+        <div>
+          <input type="text" placeholder="Correo Electrónico" />
+        </div>
+        <div>
+          <input type="text" placeholder="Teléfono" />
+        </div>
+        <div>
+          <input type="text" placeholder="Dirección de entrega" />
+        </div>
+
+        <div>
+          <input type="password" placeholder="Contraseña" />
+        </div>
+
+        <div id="log-in-errors">
+
+        </div>
+
+        <div>
+          <button type="submit">Iniciar sesión</button>
+        </div>
+
+        <div class="login-urls">
+          <a class="text-right" href="/client/log-in">¿Ya tienes cuenta?<br> Inicia sesión acá</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

@@ -24,6 +24,7 @@ import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.c
 import { ClientSessionComponent } from './clients/client-session/client-session.component';
 import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
+import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
     ClientSessionComponent,
     PlateMenuComponent,
     ClientEditComponent,
+    MakiLogoComponent,
   ],  
   imports: [
     BrowserModule,

@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-client-log-in',
-  templateUrl: './client-log-in.component.html',
-  styleUrls: ['./client-log-in.component.css']
+  selector: 'app-maki-logo',
+  templateUrl: './maki-logo.component.html',
+  styleUrls: ['./maki-logo.component.css']
 })
-export class ClientLogInComponent {
+export class MakiLogoComponent {
   constructor(
     private router: Router
-  ) { }
+  ) {}
 
   navigateTo(url: string) {
     this.router.navigate([url])
