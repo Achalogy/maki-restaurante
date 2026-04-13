@@ -21,10 +21,6 @@ main {
   @apply flex flex-col gap-4
 }
 
-#log-in-errors {
-  @apply hidden
-}
-
 .card-login form > div {
   @apply flex gap-4
 }
@@ -33,8 +29,8 @@ main {
   @apply w-full p-2 px-3 lg:px-4 lg:p-3 rounded outline-none text-neutral-900
 }
 
-.log-in-errors {
-  @apply text-red-500
+#log-in-errors {
+  @apply flex-col gap-0 text-red-500
 }
 
 .card-login button {
