@@ -7,7 +7,7 @@
 }
 
 #header_menu {
-  @apply bg-maki-black text-white;
+  @apply bg-maki-black text-white cursor-pointer;
 }
 
 #header_menu nav {
