@@ -5,19 +5,35 @@
     
       <app-maki-logo></app-maki-logo>
     
-      <!-- FORM CONECTADO AL CONTROLLER -->
-      <form>
+      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm" >
     
         <div>
-          <input type="text" placeholder="Correo" />
+          <input 
+            name="email"
+            type="text" 
+            [(ngModel)]="email"
+            required
+            #emailRef="ngModel"
+            placeholder="Correo" />
         </div>
     
         <div>
-          <input type="password" placeholder="Contraseña" />
+          <input 
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            required
+            #passwordRef="ngModel" 
+            placeholder="Contraseña" />
         </div>
     
         <div id="log-in-errors">
-    
+          <p *ngIf="emailRef.invalid && emailRef.touched">
+            El correo es obligatorio
+          </p>
+          <p *ngIf="passwordRef.invalid && passwordRef.touched">
+            La contraseña es obligatoria
+          </p>
         </div>
     
         <div >
