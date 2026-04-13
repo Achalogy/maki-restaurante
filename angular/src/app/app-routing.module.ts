@@ -13,6 +13,7 @@ import { ClientLogInComponent } from './clients/client-log-in/client-log-in.comp
 import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.component';
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
 import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
+import { GatewayComponent } from './admin/gateway/gateway.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -33,6 +34,8 @@ const routes: Routes = [
   {path: "client/crud", component: ClientCrudComponent},
   {path: "client/edit/:id", component: ClientEditComponent },
   {path: "client/:id", component: ClientSessionComponent },
+  
+  {path: "admin", component: GatewayComponent },
   
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

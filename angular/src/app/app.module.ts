@@ -25,6 +25,7 @@ import { ClientSessionComponent } from './clients/client-session/client-session.
 import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
 import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.component';
+import { GatewayComponent } from './admin/gateway/gateway.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.compo
     PlateMenuComponent,
     ClientEditComponent,
     MakiLogoComponent,
+    GatewayComponent,
   ],  
   imports: [
     BrowserModule,
