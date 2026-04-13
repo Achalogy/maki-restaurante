@@ -1,0 +1,107 @@
+<main>
+  <div class="login-container">
+    <div class="card-login">
+
+      <app-maki-logo></app-maki-logo>
+
+      <!-- FORM CONECTADO AL CONTROLLER -->
+      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm">
+
+        <div>
+          <input
+            type="text" 
+            placeholder="Nombre" 
+            name="name"
+            [(ngModel)]="client.name"
+            required
+            #nameRef="ngModel"
+            />
+          <input
+            type="text" 
+            placeholder="Apellido" 
+            name="surname"
+            [(ngModel)]="client.surname"
+            required
+            #surnameRef="ngModel"
+            />
+        </div>
+
+        <div>
+          <input
+            type="text" 
+            placeholder="Correo Electrónico" 
+            name="email"
+            [(ngModel)]="client.email"
+            required
+            #emailRef="ngModel"
+            />
+        </div>
+        <div>
+          <input
+            type="text" 
+            placeholder="Teléfono" 
+            name="phone"
+            [(ngModel)]="client.phone"
+            required
+            #phoneRef="ngModel"
+            />
+        </div>
+        <div>
+          <input
+            type="text" 
+            placeholder="Dirección de entrega" 
+            name="address"
+            [(ngModel)]="client.address"
+            required
+            #addressRef="ngModel"
+            />
+        </div>
+
+        <div>
+          <input
+            type="password" 
+            placeholder="Contraseña"  
+            name="password"
+            [(ngModel)]="client.password"
+            required
+            #passwordRef="ngModel"
+            />
+        </div>
+
+        <div id="log-in-errors">
+          <p *ngIf="nameRef.invalid && nameRef.touched">
+            El nombre es obligatorio
+          </p>
+          <p *ngIf="surnameRef.invalid && surnameRef.touched">
+            El apellido es obligatorio
+          </p>
+          <p *ngIf="emailRef.invalid && emailRef.touched">
+            El correo es obligatorio
+          </p>
+          <p *ngIf="phoneRef.invalid && phoneRef.touched">
+            El telefono es obligatorio
+          </p>
+          <p *ngIf="addressRef.invalid && addressRef.touched">
+            La dirección es obligatoria
+          </p>
+          <p *ngIf="passwordRef.invalid && passwordRef.touched">
+            La contraseña es obligatoria
+          </p>
+
+        </div>
+
+        <div>
+          <button type="submit">Registrarse</button>
+        </div>
+
+        <div class="login-urls">
+          <a class="text-right" href="/client/log-in">¿Ya tienes cuenta? Inicia sesión acá</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>
