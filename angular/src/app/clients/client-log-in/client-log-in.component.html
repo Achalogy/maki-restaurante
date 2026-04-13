@@ -1,0 +1,54 @@
+
+<main>  
+  <div class="login-container">
+    <div class="card-login">
+    
+      <app-maki-logo></app-maki-logo>
+    
+      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm" >
+    
+        <div>
+          <input 
+            name="email"
+            type="text" 
+            [(ngModel)]="email"
+            required
+            #emailRef="ngModel"
+            placeholder="Correo" />
+        </div>
+    
+        <div>
+          <input 
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            required
+            #passwordRef="ngModel" 
+            placeholder="Contraseña" />
+        </div>
+    
+        <div id="log-in-errors">
+          <p *ngIf="emailRef.invalid && emailRef.touched">
+            El correo es obligatorio
+          </p>
+          <p *ngIf="passwordRef.invalid && passwordRef.touched">
+            La contraseña es obligatoria
+          </p>
+        </div>
+    
+        <div >
+          <button type="submit">Iniciar sesión</button>
+        </div>
+    
+        <div class="login-urls">
+          <a class="text-left" href="#" >¿Se te olvidó la contraseña?</a>
+          <a class="text-right" href="/client/sign-up">¿No tienes una cuenta?</a>
+        </div>
+    
+      </form>
+    
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>
