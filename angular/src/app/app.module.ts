@@ -23,6 +23,7 @@ import { ClientLogInComponent } from './clients/client-log-in/client-log-in.comp
 import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.component';
 import { ClientSessionComponent } from './clients/client-session/client-session.component';
 import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
+import { ClientEditComponent } from './clients/client-edit/client-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
     ClientSignUpComponent,
     ClientSessionComponent,
     PlateMenuComponent,
+    ClientEditComponent,
   ],  
   imports: [
     BrowserModule,
