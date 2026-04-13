@@ -30,7 +30,7 @@ main {
 }
 
 .card-login input {
-  @apply w-full p-2 px-3 lg:px-4 lg:p-3 rounded outline-none
+  @apply w-full p-2 px-3 lg:px-4 lg:p-3 rounded outline-none text-neutral-900
 }
 
 .log-in-errors {
