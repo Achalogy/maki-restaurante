@@ -11,7 +11,7 @@ import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -23,7 +23,7 @@ public class CategoriaServiceImpl implements CategoriaService {
   PlatoService platoService;
 
   @Override
-  public Collection<Categoria> selectAll() {
+  public List<Categoria> selectAll() {
     return repo.findAll();
   }
 

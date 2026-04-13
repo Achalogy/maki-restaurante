@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -26,7 +26,7 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Collection<Cliente> selectAll() {
+  public List<Cliente> selectAll() {
     return repo.findAll();
   }
 
