@@ -7,7 +7,7 @@ import com.maki.web.repository.AdministradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class AdministradorServiceImpl implements AdministradorService {
@@ -16,7 +16,7 @@ public class AdministradorServiceImpl implements AdministradorService {
   private AdministradorRepository repo;
 
   @Override
-  public Collection<Administrador> selectAll() {
+  public List<Administrador> selectAll() {
     return repo.findAll();
   }
 

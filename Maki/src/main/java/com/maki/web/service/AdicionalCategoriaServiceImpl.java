@@ -7,7 +7,6 @@ import com.maki.web.repository.AdicionalCategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -17,7 +16,7 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   private AdicionalCategoriaRepository repo;
 
   @Override
-  public Collection<AdicionalCategoria> selectAll() {
+  public List<AdicionalCategoria> selectAll() {
     return repo.findAll();
   }
 
