@@ -5,7 +5,7 @@
       <app-maki-logo></app-maki-logo>
 
       <!-- FORM CONECTADO AL CONTROLLER -->
-      <form>
+      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm">
 
         <div>
           <input

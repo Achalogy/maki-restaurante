@@ -13,10 +13,13 @@ export class ClientSignUpComponent {
 
   constructor(
       private router: Router
-    ) { }
-  
-    navigateTo(url: string) {
-      this.router.navigate([url])
-    }
+  ) { }
 
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
+
+  onSubmit() {
+    
+  }
 }
