@@ -1,12 +1,6 @@
 <header id="header_menu" >
   <nav>
-    <a (click)="navigateTo('/')" class="header-logo">
-      <img src="assets/brand/logo.svg" class="h-20" alt="">
-      <div class="title-area">
-        <h1>Maki</h1>
-        <h2>Cocina Japonesa</h2>
-      </div>
-    </a>
+    <app-maki-logo></app-maki-logo>
 
     <div class="header-menu">
       <a (click)="navigateTo('/menu')">
@@ -20,7 +14,7 @@
     </div>
 
     <div class="header-profile">
-      <a (click)="navigateTo('/profile')">
+      <a (click)="navigateTo('/client/profile')">
         <i class="ti ti-user"></i>
         <p>Iniciar Sesión</p>
       </a>

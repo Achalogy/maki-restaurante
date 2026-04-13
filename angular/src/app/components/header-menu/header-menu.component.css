@@ -14,26 +14,6 @@
   @apply flex p-6 md:px-12 gap-8 justify-between items-center;
 }
 
-.header-logo {
-  @apply flex items-center gap-4 cursor-pointer;
-}
-
-.header-logo img {
-  @apply h-8 lg:h-16
-}
-
-.title-area {
-  @apply flex flex-col gap-0 justify-center items-center;
-}
-
-.title-area > h1 {
-  @apply font-staatliches text-2xl lg:text-5xl leading-6 lg:leading-10;
-}
-
-.title-area > h2 {
-  @apply font-spinnaker text-[.3rem] lg:text-[.6rem];
-}
-
 .header-menu {
   @apply flex gap-4 flex-grow justify-end items-center;
 }

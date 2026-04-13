@@ -1,1 +1,38 @@
-<p>client-log-in works!</p>
+
+<main>  
+  <div class="login-container">
+    <div class="card-login">
+    
+      <app-maki-logo></app-maki-logo>
+    
+      <!-- FORM CONECTADO AL CONTROLLER -->
+      <form>
+    
+        <div>
+          <input type="text" placeholder="Correo" />
+        </div>
+    
+        <div>
+          <input type="password" placeholder="Contraseña" />
+        </div>
+    
+        <div id="log-in-errors">
+    
+        </div>
+    
+        <div >
+          <button type="submit">Iniciar sesión</button>
+        </div>
+    
+        <div class="login-urls">
+          <a class="text-left" href="#" >¿Se te olvidó la contraseña?</a>
+          <a class="text-right" href="/client/sign-up">¿No tienes una cuenta?</a>
+        </div>
+    
+      </form>
+    
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>
