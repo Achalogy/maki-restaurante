@@ -15,6 +15,7 @@ import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.c
 import { ClientEditComponent } from './clients/client-edit/client-edit.component';
 import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
 import { GatewayComponent } from './admin/gateway/gateway.component';
+import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path: "client/crud", component: ClientCrudComponent},
   {path: "client/edit/:id", component: ClientEditComponent },
   {path: "client/:id", component: ClientSessionComponent },
+  {path: "client/profile/:id", component: ClientProfileComponent },
   
   {path: "admin", component: GatewayComponent },
   
