@@ -24,6 +24,10 @@ export class ClientService {
     return this.http.post<Client>(`http://localhost:8080/api/v1/client`, client)
   }
 
+  logIn(client: Partial<Omit<Client, 'id'>>): Observable<Client> {
+    return this.http.post<Client>(`http://localhost:8080/api/v1/client/log-in`, client)
+  }
+
   update(id: number, data: Partial<Client>): Observable<Client> {
     return this.http.post<Client>(`http://localhost:8080/api/v1/client/${id}`, data)
   }

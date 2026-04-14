@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/interfaces/client.interface';
+import { ClientService } from 'src/app/service/client.service';
 
 @Component({
   selector: 'app-client-log-in',
@@ -13,6 +14,7 @@ export class ClientLogInComponent {
   password: string = ""
 
   constructor(
+    private clientService: ClientService,
     private router: Router
   ) { }
 
@@ -21,6 +23,22 @@ export class ClientLogInComponent {
   }
 
   onSubmit(): void {
-    
+    this.clientService.logIn({
+      email: this.email,
+      password: this.password
+    } as Partial<Client>).subscribe({
+      next: (valid) => {
+        this.router.navigate([`/client/${valid.id}`]);
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.router.navigate(["/client/log-in"], {
+            queryParams: { error: 'credentials' }
+          });
+         } else {
+          console.error(err);
+        }
+      }
+    });
   }
 }
