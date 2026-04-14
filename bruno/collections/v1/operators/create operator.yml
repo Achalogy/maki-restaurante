@@ -1,0 +1,23 @@
+info:
+  name: create operator
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/operator"
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Acha Operador",
+        "usuario": "acha_admin",
+        "contrasena": "seguridad123"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

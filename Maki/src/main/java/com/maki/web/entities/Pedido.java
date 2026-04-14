@@ -39,7 +39,7 @@ public class Pedido {
 
   @ManyToOne
   @JoinColumn(name = "operador_id", nullable = true)
-  private Operador operador;
+  private Operator operador;
 
   public Pedido(Cliente cliente) {
     this.cliente = cliente;

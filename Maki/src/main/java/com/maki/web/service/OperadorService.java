@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Operador;
+import com.maki.web.entities.Operator;
 
-public interface OperadorService extends ServiceInterface<Operador> {
+public interface OperadorService extends ServiceInterface<Operator> {
 
 }
