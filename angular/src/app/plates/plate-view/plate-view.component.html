@@ -1,67 +1,57 @@
-<app-header-menu> </app-header-menu>
+<app-header-menu></app-header-menu>
 
-<main
-  id="single-item"
-  [ngStyle]="{ 'background-image': 'url(' + plate.urlImage + ')' }"
-  *ngIf="plate; else notFound"
->
+<main id="single-item" [ngStyle]="{ 'background-image': 'url(' + plate.urlImage + ')' }" *ngIf="plate; else notFound">
   <div class="single-food-card">
     <div id="plate-img">
       <img [src]="plate.urlImage" [alt]="plate.name" />
     </div>
 
     <div id="plate-info">
-      <h2 class="mb-0">{{ plate.name }}</h2>
+      <h2 class="mb-0 text-3xl font-bold">{{ plate.name }}</h2>
       <h3 class="font-semibold mt-0 text-md text-orange-600">
         {{ plate.category.name }}
       </h3>
 
-      <p class="mt-4">{{ plate.description }}</p>
+      <p class="mt-4 text-gray-700">{{ plate.description }}</p>
 
-      <div id="special-info">
-        <form>
-          <label for="special-instructions">Instrucciones especiales:</label>
-          <textarea
-            id="special-instructions"
-            name="specialInstructions"
-            [(ngModel)]="specialInstructions"
-            rows="4"
-            cols="50"
-            class="w-full border rounded p-2"
-          >
-          </textarea>
-        </form>
+      <div id="special-info" class="mt-6">
+        <label for="special-instructions" class="block font-medium mb-1">Instrucciones especiales:</label>
+        <textarea id="special-instructions" name="specialInstructions" [(ngModel)]="specialInstructions" rows="3"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-orange-500 outline-none"
+          placeholder="Ej: Sin cebolla, salsa aparte..."></textarea>
       </div>
 
-      <div id="adicionales">
-        <h4 class="text-lg font-semibold mb-2">Adicionales disponibles:</h4>
+      <div id="adicionales" class="mt-6">
+        <h4 class="text-lg font-semibold mb-3">Adicionales disponibles:</h4>
 
-        <form (ngSubmit)="addToOrder()">
-          <div class="flex items-center mb-2" *ngIf="plate.category.id === 1">
-            <input type="checkbox" id="extra" class="mr-2" />
-            <label for="extra" class="text-sm">Porción extra de salsa</label>
+        <div *ngIf="additionalsList.length > 0; else noAdditionals">
+          <div *ngFor="let add of additionalsList" class="flex items-center mb-2">
+            <input type="checkbox" [id]="'add-' + add.id" (change)="onCheckboxChange(add.id, $event)"
+              class="w-4 h-4 text-orange-500 accent-orange-500 mr-2" />
+            <label [for]="'add-' + add.id" class="text-sm cursor-pointer">
+              {{ add.name }} <span class="text-gray-500">(+${{ add.price }})</span>
+            </label>
           </div>
+        </div>
 
-          <button
-            type="submit"
-            class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Agregar al pedido
-          </button>
-        </form>
+        <ng-template #noAdditionals>
+          <p class="text-gray-500 text-sm italic">No hay adicionales disponibles para este plato.</p>
+        </ng-template>
 
-        <p *ngIf="!plate.available" class="text-red-500 text-sm mt-2">
-          Lo sentimos, este plato no está disponible actualmente.
-        </p>
+        <button (click)="addToOrder()" [disabled]="!plate.available"
+          class="mt-6 w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+          {{ plate.available ? 'Agregar al pedido' : 'No disponible' }}
+        </button>
       </div>
     </div>
   </div>
 </main>
 
 <ng-template #notFound>
-  <div class="text-center py-20">
-    <h2 class="text-2xl font-bold">Plato no encontrado</h2>
-    <p>El plato que buscas no existe en nuestro menú.</p>
+  <div class="flex flex-col items-center justify-center py-20">
+    <h2 class="text-3xl font-bold text-gray-800">404</h2>
+    <p class="text-gray-600">El plato que buscas no existe en nuestro menú.</p>
+    <button routerLink="/menu" class="mt-4 text-orange-500 font-semibold underline">Volver al menú</button>
   </div>
 </ng-template>
 

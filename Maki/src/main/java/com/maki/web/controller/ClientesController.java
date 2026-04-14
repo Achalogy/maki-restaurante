@@ -16,27 +16,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/client")
-@CrossOrigin("http://localhost:4200")
+
 public class ClientesController {
 
     @Autowired
     private ClienteService clienteService;
 
     @GetMapping("")
-    @ResponseBody
     public List<Cliente> getAllClients() {
         return clienteService.selectAll();
     }
 
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Cliente> getClientById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(clienteService.selectById(id), HttpStatus.OK);
@@ -46,7 +45,6 @@ public class ClientesController {
     }
     
     @PostMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Cliente> updateClient(@PathVariable Long id, @RequestBody(required = false) Cliente data) {
         try {
             Cliente updateData = clienteService.selectById(id);
@@ -74,7 +72,6 @@ public class ClientesController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Boolean> deleteClient(@PathVariable Long id) {
         try {
             clienteService.deleteByID(id);
@@ -85,7 +82,6 @@ public class ClientesController {
     }
 
     @PostMapping("")
-    @ResponseBody
     public ResponseEntity<Cliente> createClient(@RequestBody(required = false) Cliente data) {
         try {
             return new ResponseEntity<>(clienteService.insert(data), HttpStatus.OK);
@@ -99,7 +95,6 @@ public class ClientesController {
     }
     
     @PostMapping("/log-in")
-    @ResponseBody
     public ResponseEntity<Cliente> loginClient(@RequestBody(required = false) Cliente data) {
         try {
             return new ResponseEntity<>(clienteService.verificarCredenciales(

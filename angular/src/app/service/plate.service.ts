@@ -21,11 +21,25 @@ export class PlateService {
   }
 
   create(plate: Partial<Omit<Plate, 'id'>>): Observable<Plate> {
-    return this.http.post<Plate>(`http://localhost:8080/api/v1/plate`, plate)
+    const categoryId = plate.category?.id;
+
+    const payload = {
+      name: plate.name,
+      price: plate.price,
+      description: plate.description,
+      urlImage: plate.urlImage,
+      available: plate.available
+    }
+
+    return this.http.post<Plate>(`http://localhost:8080/api/v1/plate?categoryId=${categoryId}`, payload)
   }
 
   update(id: number, data: Partial<Plate>): Observable<Plate> {
     return this.http.post<Plate>(`http://localhost:8080/api/v1/plate/${id}`, data)
+  }
+
+  updateCategory(id: number, categoryId: number): Observable<Plate> {
+    return this.http.post<Plate>(`http://localhost:8080/api/v1/plate/${id}/category/${categoryId}`, {})
   }
 
   delete(id: number): Observable<Boolean> {

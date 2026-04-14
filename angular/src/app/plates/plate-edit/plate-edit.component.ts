@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'src/app/interfaces/category.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
+import { CategoryService } from 'src/app/service/category.service';
 import { PlateService } from 'src/app/service/plate.service';
 
 @Component({
@@ -19,8 +21,11 @@ export class PlateEditComponent {
     available: true
   };
 
+  categoryList: Category[] = []
+
   constructor(
     private plateService: PlateService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -34,8 +39,10 @@ export class PlateEditComponent {
     p.subscribe(plate => {
       if (!plate)
         this.router.navigate(['/plate/crud']);
-      else
+      else {
+        this.categoryService.selectAll().subscribe(cats => this.categoryList = cats)
         this.plate = plate
+      }
     })
 
   }
@@ -44,7 +51,9 @@ export class PlateEditComponent {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log('Actualizando plato:', this.plate);
     this.plateService.update(id, this.plate).subscribe(() => {
-      this.router.navigate(['/plate/crud']);
+      this.plateService.updateCategory(id, this.plate.category.id).subscribe(() => {
+        this.router.navigate(['/plate/crud']);
+      })
     })
     
   }

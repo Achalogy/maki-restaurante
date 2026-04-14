@@ -13,9 +13,9 @@ import com.maki.web.service.AdicionalCategoriaService;
 import com.maki.web.service.CategoriaService;
 import com.maki.web.service.PlatoService;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/plate")
-@CrossOrigin("http://localhost:4200")
+
 public class PlatosController {
 
     @Autowired
@@ -26,14 +26,12 @@ public class PlatosController {
 
     // ===================== GET ALL =====================
     @GetMapping("")
-    @ResponseBody
     public List<Plato> getAllPlates() {
         return platoService.selectAll();
     }
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Plato> getPlateById(@PathVariable Long id) {
         try {
             Plato plato = platoService.selectById(id);
@@ -48,7 +46,6 @@ public class PlatosController {
 
     // ===================== CREATE / EDIT PLATE (UPSERT) =====================
     @PostMapping("")
-    @ResponseBody
     public ResponseEntity<Plato> savePlate(@RequestBody Plato plato, @RequestParam Long categoryId) {
         try {
             Categoria category = categoryService.selectById(categoryId);
@@ -65,9 +62,48 @@ public class PlatosController {
         }
     }
 
+    // ===================== UPDATE PLATE =====================
+    @PostMapping("/{id}")
+    public ResponseEntity<Plato> updatePlate(@PathVariable Long id, @RequestBody(required = false) Plato data,
+            @RequestParam(required = false) Long categoryId) {
+        try {
+            // 1. Buscamos el plato existente
+            Plato updateData = platoService.selectById(id);
+            if (updateData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            // 2. Actualizamos campos básicos si vienen en el body
+            if (data.getName() != null)
+                updateData.setName(data.getName());
+            
+            updateData.setPrice(data.getPrice());
+            updateData.setAvailable(data.isAvailable());
+
+            if (data.getDescription() != null)
+                updateData.setDescription(data.getDescription());
+            if (data.getUrlImage() != null)
+                updateData.setUrlImage(data.getUrlImage());
+
+            // 3. Actualizamos la categoría solo si se envía un nuevo categoryId
+            if (categoryId != null) {
+                Categoria category = categoryService.selectById(categoryId);
+                if (category != null) {
+                    updateData.setCategory(category);
+                }
+            }
+
+            // 4. Guardamos los cambios
+            return new ResponseEntity<>(platoService.update(updateData), HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // ===================== DELETE PLATE =====================
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Boolean> deletePlate(@PathVariable Long id) {
         try {
             platoService.deleteByID(id);
@@ -79,7 +115,6 @@ public class PlatosController {
 
     // ===================== ASSIGN/UPDATE CATEGORY =====================
     @PostMapping("/{platoId}/category/{categoryId}")
-    @ResponseBody
     public ResponseEntity<Boolean> updatePlateCategory(
             @PathVariable Long platoId,
             @PathVariable Long categoryId) {

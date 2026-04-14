@@ -37,7 +37,7 @@
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Categoría</label>
-          <select name="categoryId" [(ngModel)]="plate.category.id" required
+          <select [value]="1" name="categoryId" [(ngModel)]="plate.category.id" required
             class="w-full border border-gray-300 rounded-lg px-4 py-3">
             <option [value]="0" disabled>Selecciona una categoría</option>
             <option [value]="1">Entradas</option>

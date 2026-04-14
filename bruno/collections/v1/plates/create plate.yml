@@ -5,20 +5,20 @@ info:
 
 http:
   method: POST
-  url: "{{host}}/api/v1/plate?categoriaId=2"
+  url: "{{host}}/api/v1/plate?categoryId=3"
   params:
-    - name: categoriaId
-      value: "2"
+    - name: categoryId
+      value: "3"
       type: query
   body:
     type: json
     data: |-
       {
-        "nombre": "Sushi Maki Especial",
-        "precio": 25.50,
-        "descripcion": "Roll acevichado con topping de aguacate",
+        "name": "Sushi Maki Especial",
+        "price": 25.50,
+        "description": "Roll acevichado con topping de aguacate",
         "urlImage": "http://imagen.png",
-        "disponibilidad": true
+        "available": true
       }
   auth: inherit
 
