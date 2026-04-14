@@ -30,16 +30,18 @@ export class ClientProfileComponent implements OnInit {
 
   onUpdate(): void {
     if (this.client) {
-      this.clientService.update(this.client.id, this.client);
-      this.router.navigate(['/client/session', this.client.id]);
+      this.clientService.update(this.client.id, this.client).subscribe((client) => {
+        this.router.navigate([`/client/${client.id}`]);
+      })
     }
   }
 
   onDelete(): void {
     const confirmed = confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.');
     if (this.client && confirmed) {
-      this.clientService.delete(this.client.id);
-      this.router.navigate(['/client/crud']);
+      this.clientService.delete(this.client.id).subscribe(() => {
+        this.router.navigate(['/client/crud']);
+      })
     }
   }
 }
