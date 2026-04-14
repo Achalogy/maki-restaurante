@@ -34,7 +34,7 @@ public class Plato {
     private boolean disponible;
     
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id", nullable = true)
     private Categoria categoria;
 
     public Plato(String nombre, double precio, String descripcion, String urlImage, boolean disponible) {

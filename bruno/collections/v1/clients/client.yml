@@ -1,0 +1,15 @@
+info:
+  name: client
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/client"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
