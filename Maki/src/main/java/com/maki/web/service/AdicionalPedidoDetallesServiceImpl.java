@@ -7,7 +7,7 @@ import com.maki.web.repository.AdicionalPedidoDetallesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class AdicionalPedidoDetallesServiceImpl implements AdicionalPedidoDetallesService {
@@ -16,7 +16,7 @@ public class AdicionalPedidoDetallesServiceImpl implements AdicionalPedidoDetall
   private AdicionalPedidoDetallesRepository repo;
 
   @Override
-  public Collection<AdicionalPedidoDetalles> selectAll() {
+  public List<AdicionalPedidoDetalles> selectAll() {
     return repo.findAll();
   }
 

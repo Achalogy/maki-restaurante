@@ -3,10 +3,10 @@ package com.maki.web.service;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ServiceInterface<T> {
-  public Collection<T> selectAll();
+  public List<T> selectAll();
   public T selectById(Long id) throws EntityNotFoundException;
   public T insert(T entity) throws EntityConstraintException;
   public void delete(T entity) throws EntityNotFoundException;
