@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Operator;
+import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.OperadorService;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/operator")
+
 public class OperatorController {
 
     @Autowired
@@ -19,14 +21,12 @@ public class OperatorController {
 
     // ===================== GET ALL =====================
     @GetMapping("")
-    @ResponseBody
     public List<Operator> getAllOperators() {
         return OperatorService.selectAll();
     }
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Operator> getOperatorById(@PathVariable Long id) {
         try {
             Operator Operator = OperatorService.selectById(id);
@@ -38,9 +38,8 @@ public class OperatorController {
         }
     }
 
-    // ===================== CREATE / EDIT (UPSERT) =====================
+    // ===================== CREATE =====================
     @PostMapping("")
-    @ResponseBody
     public ResponseEntity<Operator> saveOperator(@RequestBody Operator Operator) {
         try {
             // El servicio insert suele manejar el guardado o actualización
@@ -50,9 +49,37 @@ public class OperatorController {
         }
     }
 
+    // ===================== Update =====================
+    @PostMapping("/{id}")
+    public ResponseEntity<Operator> updateOperator(@PathVariable Long id,
+            @RequestBody(required = false) Operator data) {
+        try {
+            // Buscamos el operador existente por ID
+            Operator updateData = OperatorService.selectById(id);
+
+            // Validamos y actualizamos solo los campos presentes en el request
+            if (data.getName() != null)
+                updateData.setName(data.getName());
+            if (data.getUsername() != null)
+                updateData.setUsername(data.getUsername());
+            if (data.getPassword() != null)
+                updateData.setPassword(data.getPassword());
+
+            // Guardamos los cambios usando el servicio
+            return new ResponseEntity<>(OperatorService.update(updateData), HttpStatus.OK);
+
+        } catch (Exception e) {
+            // Si no se encuentra el registro
+            if (e instanceof EntityNotFoundException) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            // Error genérico de solicitud
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // ===================== DELETE =====================
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Boolean> deleteOperator(@PathVariable Long id) {
         try {
             OperatorService.deleteByID(id);

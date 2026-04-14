@@ -30,9 +30,10 @@ export class PlateCreateComponent {
     this.plate.id = Math.floor(Math.random() * 1000);
     console.log('Plato guardado:', this.plate);
 
-    this.plateService.create(this.plate)
+    this.plateService.create(this.plate).subscribe(() => {
+      this.router.navigate(['/plate/crud']);
+    })
 
-    this.router.navigate(['/plate/crud']);
   }
 
   resetForm() {
