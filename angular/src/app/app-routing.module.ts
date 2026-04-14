@@ -4,6 +4,7 @@ import { PlateTableComponent } from './plates/plate-table/plate-table.component'
 import { PlateEditComponent } from './plates/plate-edit/plate-edit.component';
 import { PlateCreateComponent } from './plates/plate-create/plate-create.component';
 import { PlateViewComponent } from './plates/plate-view/plate-view.component';
+import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
 import { LandingPageComponent } from './landing/landing-page/landing-page.component';
 import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
 import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'plate/crud', component: PlateTableComponent },
   { path: 'plate/:id/edit', component: PlateEditComponent },
   { path: 'plate/create', component: PlateCreateComponent },
+  { path: 'plate/menu', component: PlateMenuComponent },
   { path: 'plate/:id', component: PlateViewComponent },
 
   { path: 'operator/crud', component: OperatorCrudComponent },
