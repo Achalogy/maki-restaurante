@@ -1,8 +1,10 @@
-<app-header-menu>
-  
-</app-header-menu>
+<app-header-menu> </app-header-menu>
 
-<main id="single-item" *ngIf="plate; else notFound">
+<main
+  id="single-item"
+  [ngStyle]="{ 'background-image': 'url(' + plate.urlImage + ')' }"
+  *ngIf="plate; else notFound"
+>
   <div class="single-food-card">
     <div id="plate-img">
       <img [src]="plate.urlImage" [alt]="plate.name" />
@@ -10,7 +12,7 @@
 
     <div id="plate-info">
       <h2 class="mb-0">{{ plate.name }}</h2>
-      <h3 class="font-semibold mt-0 text-sm text-orange-600">
+      <h3 class="font-semibold mt-0 text-md text-orange-600">
         {{ plate.category.name }}
       </h3>
 
@@ -19,8 +21,14 @@
       <div id="special-info">
         <form>
           <label for="special-instructions">Instrucciones especiales:</label>
-          <textarea id="special-instructions" name="specialInstructions" [(ngModel)]="specialInstructions" rows="4"
-            cols="50" class="w-full border rounded p-2">
+          <textarea
+            id="special-instructions"
+            name="specialInstructions"
+            [(ngModel)]="specialInstructions"
+            rows="4"
+            cols="50"
+            class="w-full border rounded p-2"
+          >
           </textarea>
         </form>
       </div>
@@ -30,11 +38,14 @@
 
         <form (ngSubmit)="addToOrder()">
           <div class="flex items-center mb-2" *ngIf="plate.category.id === 1">
-            <input type="checkbox" id="extra" class="mr-2">
+            <input type="checkbox" id="extra" class="mr-2" />
             <label for="extra" class="text-sm">Porción extra de salsa</label>
           </div>
 
-          <button type="submit" class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">
+          <button
+            type="submit"
+            class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded"
+          >
             Agregar al pedido
           </button>
         </form>
