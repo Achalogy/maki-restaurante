@@ -18,10 +18,16 @@ export class ClientSessionComponent {
   }
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.client = this.clientService.selectById(id);
-    if (!this.client) {
-      this.router.navigate(['/client/crud']);
-    }
+    
+    this.clientService.selectById(id).subscribe(client => {
+      if (!client) {
+        this.router.navigate(['/client/crud']);
+      } else {
+        this.client = client;
+      }
+
+    })
+
   }
 
 }

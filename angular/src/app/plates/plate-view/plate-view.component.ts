@@ -20,7 +20,9 @@ export class PlateViewComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
-    this.plate = this.plateService.selectById(id)
+    this.plateService.selectById(id).subscribe(
+      plate => this.plate = plate
+    )
   }
 
   addToOrder() {

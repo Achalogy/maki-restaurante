@@ -26,19 +26,21 @@ export class ClientEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router
   ) {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const found = this.clientService.selectById(id);
+    this.client = {} as Client
 
-    if (found) {
-      this.client = { ...found }; // spread so edits don't mutate the original
-    } else {
-      this.router.navigate(['/client/crud']);
-      this.client = {} as Client; // fallback to satisfy TypeScript
-    }
+    this.clientService.selectById(id).subscribe(client => {
+      if(client) {
+        this.client = client;
+      } else {
+        this.router.navigate(['/client/crud']);
+      }
+    })
   }
 
   clientUpdate(): void {
-    this.clientService.update(this.client.id, this.client);
-    this.router.navigate(['/client/crud']);
+    this.clientService.update(this.client.id, this.client).subscribe(() => {
+      this.router.navigate(['/client/crud']);
+    })
   }
 
   cancelar(): void {

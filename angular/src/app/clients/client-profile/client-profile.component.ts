@@ -19,13 +19,13 @@ export class ClientProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const found = this.clientService.selectById(id);
+    this.clientService.selectById(id).subscribe(client => {
+      if(!client)
+        this.router.navigate(['/client/crud']);
+      else 
+      this.client = client
+    })
 
-    if (found) {
-      this.client = { ...found };
-    } else {
-      this.router.navigate(['/client/crud']);
-    }
   }
 
   onUpdate(): void {
