@@ -10,7 +10,7 @@ import { OperatorService } from 'src/app/service/operator.service';
 })
 export class OperatorCrudComponent {
 
-  opreatorList: Operator[] = []
+  operatorList: Operator[] = []
 
   constructor(
     private operatorService: OperatorService,
@@ -20,7 +20,7 @@ export class OperatorCrudComponent {
   }
 
   ngOnInit() {
-    this.opreatorList = this.operatorService.selectAll()
+    this.operatorService.selectAll().subscribe(operators => this.operatorList = operators)
   }
 
   createOperator(): void {
@@ -39,8 +39,9 @@ export class OperatorCrudComponent {
     if (confirm(
       '¿Estás seguro de que deseas eliminar este operario?',
     )) {
-      this.operatorService.delete(id)
-      this.opreatorList = this.operatorService.selectAll()
+      this.operatorService.delete(id).subscribe(() => {
+        this.operatorService.selectAll().subscribe(operators => this.operatorList = operators)
+      })
     }
 
   }
