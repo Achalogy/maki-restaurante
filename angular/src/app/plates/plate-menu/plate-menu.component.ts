@@ -1,10 +1,39 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Category } from 'src/app/interfaces/category.interface';
+import { Plate } from 'src/app/interfaces/plate.interface';
+import { PlateService } from 'src/app/service/plate.service';
 
 @Component({
   selector: 'app-plate-menu',
   templateUrl: './plate-menu.component.html',
   styleUrls: ['./plate-menu.component.css']
 })
-export class PlateMenuComponent {
+export class PlateMenuComponent 
+{
+  categorias: Category[] = [];
+  plateList: Plate[] = [];
 
+  constructor(
+    private plateService: PlateService,
+        private router: Router
+  ) {
+
+  }
+  ngOnInit() {
+  this.plateList = this.plateService.selectAll()
+  this.categorias = [...new Map(this.plateList.map(p => [p.category.id, p.category])).values()];
+  }
+  goToPlate(id: number) {
+    this.router.navigate([`/plate/${id}`])
+  }
+  getCategoryLabel(nombre: string): string {
+    return nombre.includes('None') ? 'No categorizado' : nombre;
+  }
+  platesForCategory(cat: string){
+    return this.plateList.filter(plate => plate.category.name === cat);
+  }
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
 }
