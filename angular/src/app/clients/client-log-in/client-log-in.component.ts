@@ -21,6 +21,6 @@ export class ClientLogInComponent {
   }
 
   onSubmit(): void {
-
+    
   }
 }
