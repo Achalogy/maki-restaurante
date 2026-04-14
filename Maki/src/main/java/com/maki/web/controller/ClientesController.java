@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/api/v1/client")
+@CrossOrigin("http://localhost:4200")
 public class ClientesController {
 
     @Autowired
@@ -49,18 +51,18 @@ public class ClientesController {
         try {
             Cliente updateData = clienteService.selectById(id);
 
-            if(data.getNombre() != null)
-                updateData.setNombre(data.getNombre());
-            if(data.getApellido() != null)
-                updateData.setApellido(data.getApellido());
-            if(data.getCorreo() != null)
-                updateData.setCorreo(data.getCorreo());
-            if(data.getContrasena() != null)
-                updateData.setContrasena(data.getContrasena());
-            if(data.getTelefono() != null)
-                updateData.setTelefono(data.getTelefono());
-            if(data.getDireccion() != null)
-                updateData.setDireccion(data.getDireccion());
+            if(data.getName() != null)
+                updateData.setName(data.getName());
+            if(data.getSurname() != null)
+                updateData.setSurname(data.getSurname());
+            if(data.getEmail() != null)
+                updateData.setEmail(data.getEmail());
+            if(data.getPassword() != null)
+                updateData.setPassword(data.getPassword());
+            if(data.getPhone() != null)
+                updateData.setPhone(data.getPhone());
+            if(data.getAddress() != null)
+                updateData.setAddress(data.getAddress());
 
             return new ResponseEntity<>(clienteService.update(updateData), HttpStatus.OK);
         } catch(Exception e) {
@@ -101,8 +103,8 @@ public class ClientesController {
     public ResponseEntity<Cliente> loginClient(@RequestBody(required = false) Cliente data) {
         try {
             return new ResponseEntity<>(clienteService.verificarCredenciales(
-                data.getCorreo(),
-                data.getContrasena()
+                data.getEmail(),
+                data.getPassword()
             ), HttpStatus.OK);
         }catch(Exception e) {
             e.printStackTrace();

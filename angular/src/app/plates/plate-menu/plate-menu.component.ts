@@ -21,13 +21,20 @@ export class PlateMenuComponent
 
   }
   ngOnInit() {
-  this.plateList = this.plateService.selectAll()
-  this.categorias = [...new Map(this.plateList.map(p => [p.category.id, p.category])).values()];
+
+    this.plateService.selectAll().subscribe(
+      (plates) => {
+        this.plateList = plates
+        this.categorias = [...new Map(plates.map(p => [p.category.id, p.category])).values()];
+      }
+    )
+
   }
   goToPlate(id: number) {
     this.router.navigate([`/plate/${id}`])
   }
   getCategoryLabel(nombre: string): string {
+    if(!nombre) return nombre;
     return nombre.includes('None') ? 'No categorizado' : nombre;
   }
   platesForCategory(cat: string){

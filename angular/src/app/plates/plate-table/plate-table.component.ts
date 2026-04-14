@@ -14,13 +14,15 @@ export class PlateTableComponent {
 
   constructor(
     private plateService: PlateService,
-        private router: Router
+    private router: Router
   ) {
 
   }
 
   ngOnInit() {
-    this.plateList = this.plateService.selectAll()
+    this.plateService.selectAll().subscribe(
+      (plates) => this.plateList = plates
+    )
   }
 
   goToPlate(id: number) {
@@ -40,7 +42,10 @@ export class PlateTableComponent {
       '¿Estás seguro de que deseas eliminar este plato?',
     )) {
       this.plateService.delete(id)
-      this.plateList = this.plateService.selectAll()
+      
+      this.plateService.selectAll().subscribe(
+        (plates) => this.plateList = plates
+      )
     }
   }
 }

@@ -15,16 +15,14 @@ import com.maki.web.service.PlatoService;
 
 @Controller
 @RequestMapping("/api/v1/plate")
+@CrossOrigin("http://localhost:4200")
 public class PlatosController {
 
     @Autowired
     private PlatoService platoService;
 
     @Autowired
-    private CategoriaService categoriaService;
-
-    @Autowired
-    private AdicionalCategoriaService adicionalCategoriaService;
+    private CategoriaService categoryService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
@@ -51,14 +49,14 @@ public class PlatosController {
     // ===================== CREATE / EDIT PLATE (UPSERT) =====================
     @PostMapping("")
     @ResponseBody
-    public ResponseEntity<Plato> savePlate(@RequestBody Plato plato, @RequestParam Long categoriaId) {
+    public ResponseEntity<Plato> savePlate(@RequestBody Plato plato, @RequestParam Long categoryId) {
         try {
-            Categoria categoria = categoriaService.selectById(categoriaId);
-            if (categoria == null) {
+            Categoria category = categoryService.selectById(categoryId);
+            if (category == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            plato.setCategoria(categoria);
+            plato.setCategory(category);
             // El servicio usa .insert() que internamente gestiona si es nuevo o update
             return new ResponseEntity<>(platoService.insert(plato), HttpStatus.OK);
         } catch (Exception e) {
@@ -80,18 +78,18 @@ public class PlatosController {
     }
 
     // ===================== ASSIGN/UPDATE CATEGORY =====================
-    @PostMapping("/{platoId}/category/{categoriaId}")
+    @PostMapping("/{platoId}/category/{categoryId}")
     @ResponseBody
     public ResponseEntity<Boolean> updatePlateCategory(
             @PathVariable Long platoId,
-            @PathVariable Long categoriaId) {
+            @PathVariable Long categoryId) {
         try {
-            Categoria categoria = categoriaService.selectById(categoriaId);
-            if (categoria == null) {
+            Categoria category = categoryService.selectById(categoryId);
+            if (category == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            platoService.cambiarCategoria(categoria, platoId);
+            platoService.cambiarCategoria(category, platoId);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
