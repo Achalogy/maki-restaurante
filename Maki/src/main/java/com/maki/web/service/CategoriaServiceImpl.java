@@ -1,5 +1,6 @@
 package com.maki.web.service;
 
+import com.maki.web.entities.AdicionalCategoria;
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
 
@@ -21,6 +22,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
   @Autowired
   PlatoService platoService;
+
+  @Autowired
+  AdicionalCategoriaService adicionalCategoriaService;
 
   @Override
   public List<Categoria> selectAll() {
@@ -53,13 +57,15 @@ public class CategoriaServiceImpl implements CategoriaService {
     Categoria categoria = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
 
-    Categoria none = repo.findById(1L)
-        .orElseThrow(() -> new EntityNotFoundException("Categoria 'None' no existe"));
-
     for (Plato p : platoService.selectAll()) {
       if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
-        p.setCategoria(none);
+        p.setCategoria(null);
         platoService.update(p);
+      }
+    }
+    for (AdicionalCategoria p : adicionalCategoriaService.selectAll()) {
+      if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
+        adicionalCategoriaService.delete(p);
       }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,9 +71,20 @@ public class ClientesController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Boolean> deleteClient(@PathVariable Long id) {
+        try {
+            clienteService.deleteByID(id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("")
     @ResponseBody
-    public ResponseEntity<Cliente> updateClient(@RequestBody(required = false) Cliente data) {
+    public ResponseEntity<Cliente> createClient(@RequestBody(required = false) Cliente data) {
         try {
             return new ResponseEntity<>(clienteService.insert(data), HttpStatus.OK);
         } catch(Exception e) {

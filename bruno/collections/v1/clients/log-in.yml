@@ -1,0 +1,22 @@
+info:
+  name: log-in
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/client/log-in"
+  body:
+    type: json
+    data: |-
+      {
+        "correo": "acha@acha.dev",
+        "contrasena": "eveyzoe"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

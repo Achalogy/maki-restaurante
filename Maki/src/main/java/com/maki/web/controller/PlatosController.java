@@ -1,19 +1,20 @@
 package com.maki.web.controller;
 
-import com.maki.web.service.AdicionalCategoriaService;
-import com.maki.web.service.CategoriaService;
-import com.maki.web.service.PlatoService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Categoria;
 import com.maki.web.entities.Plato;
-
-import org.springframework.ui.Model;
+import com.maki.web.service.AdicionalCategoriaService;
+import com.maki.web.service.CategoriaService;
+import com.maki.web.service.PlatoService;
 
 @Controller
-@RequestMapping("/plate")
+@RequestMapping("/api/v1/plate")
 public class PlatosController {
 
     @Autowired
@@ -25,79 +26,75 @@ public class PlatosController {
     @Autowired
     private AdicionalCategoriaService adicionalCategoriaService;
 
-    // ===================== ADMIN TABLE =====================
-
-    @GetMapping("/crud")
-    public String mostrarMenuEnTarjetas(Model model) {
-        model.addAttribute("menu", platoService.selectAll());
-        model.addAttribute("categorias", categoriaService.selectAll());
-        return "pages/plate/crud";
+    // ===================== GET ALL =====================
+    @GetMapping("")
+    @ResponseBody
+    public List<Plato> getAllPlates() {
+        return platoService.selectAll();
     }
 
-    // ===================== VIEW SINGLE =====================
-
+    // ===================== GET BY ID =====================
     @GetMapping("/{id}")
-    public String mostrarMenuEnTabla(Model model, @PathVariable("id") Long plateid) {
-        Plato plato = platoService.selectById(plateid);
-        model.addAttribute("plato", plato);
-        model.addAttribute("adicionales", adicionalCategoriaService.findByCategoria_Id(plato.getCategoria().getId()));
-        return "pages/plate/plate";
+    @ResponseBody
+    public ResponseEntity<Plato> getPlateById(@PathVariable Long id) {
+        try {
+            Plato plato = platoService.selectById(id);
+            if (plato == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(plato, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ===================== CREATE / EDIT PLATE (UPSERT) =====================
+    @PostMapping("")
+    @ResponseBody
+    public ResponseEntity<Plato> savePlate(@RequestBody Plato plato, @RequestParam Long categoriaId) {
+        try {
+            Categoria categoria = categoriaService.selectById(categoriaId);
+            if (categoria == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            plato.setCategoria(categoria);
+            // El servicio usa .insert() que internamente gestiona si es nuevo o update
+            return new ResponseEntity<>(platoService.insert(plato), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // ===================== DELETE PLATE =====================
-
-    @PostMapping("/delete/{id}")
-    public String deletePlato(@PathVariable Long id) {
-        platoService.deleteByID(id);
-        return "redirect:/plate/crud";
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Boolean> deletePlate(@PathVariable Long id) {
+        try {
+            platoService.deleteByID(id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    // ===================== CREATE PLATE =====================
+    // ===================== ASSIGN/UPDATE CATEGORY =====================
+    @PostMapping("/{platoId}/category/{categoriaId}")
+    @ResponseBody
+    public ResponseEntity<Boolean> updatePlateCategory(
+            @PathVariable Long platoId,
+            @PathVariable Long categoriaId) {
+        try {
+            Categoria categoria = categoriaService.selectById(categoriaId);
+            if (categoria == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-    @GetMapping("/create")
-    public String mostrarFormularioCrearPlato(Model model) {
-        model.addAttribute("plato", new Plato("", 0.0, "", "", false));
-        model.addAttribute("categorias", categoriaService.selectAll());
-        model.addAttribute("formAction", "/plate/create"); // 👈
-        return "pages/plate/create";
-    }
-
-    @PostMapping("/create")
-    public String agregarPlato(@ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
-        Categoria categoria = categoriaService.selectById(categoriaId);
-        plato.setCategoria(categoria);
-        platoService.insert(plato); // Funciona como un upsert
-        return "redirect:/plate/crud";
-    }
-
-    // ===================== EDIT PLATE =====================
-
-    @GetMapping("/edit/{id}")
-    public String mostrarFormularioEditarPlato(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("plato", platoService.selectById(id));
-        model.addAttribute("categorias", categoriaService.selectAll());
-        model.addAttribute("formAction", "/plate/edit/" + id); // 👈
-        return "pages/plate/edit";
-    }
-
-    @PostMapping("/edit/{id}")  // 👈 esto faltaba
-    public String editarPlato(@PathVariable("id") Long id, @ModelAttribute("plato") Plato plato, @RequestParam("categoriaId") Long categoriaId) {
-        plato.setId(id);
-        Categoria categoria = categoriaService.selectById(categoriaId);
-        plato.setCategoria(categoria);
-        platoService.update(plato);
-        return "redirect:/plate/crud";
-    }
-
-    // ===================== UPDATE CATEGORY FROM DROPDOWN =====================
-
-    @PostMapping("/update_category")
-    public String updateCategoria(
-            @RequestParam Long platoId,
-            @RequestParam Long categoriaId) {
-
-        Categoria categoria = categoriaService.selectById(categoriaId);
-        platoService.cambiarCategoria(categoria, platoId);
-        return "redirect:/plate/crud";
+            platoService.cambiarCategoria(categoria, platoId);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
