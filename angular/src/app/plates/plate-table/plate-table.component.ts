@@ -41,11 +41,12 @@ export class PlateTableComponent {
     if (confirm(
       '¿Estás seguro de que deseas eliminar este plato?',
     )) {
-      this.plateService.delete(id)
+      this.plateService.delete(id).subscribe(() => {
+        this.plateService.selectAll().subscribe(
+          (plates) => this.plateList = plates
+        )
+      })
       
-      this.plateService.selectAll().subscribe(
-        (plates) => this.plateList = plates
-      )
     }
   }
 }
