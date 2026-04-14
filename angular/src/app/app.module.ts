@@ -27,6 +27,7 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.component';
 import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,9 @@ import { ClientProfileComponent } from './clients/client-profile/client-profile.
     FoodMenuGridComponent,
     FoodMenuGridCardComponent
 ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

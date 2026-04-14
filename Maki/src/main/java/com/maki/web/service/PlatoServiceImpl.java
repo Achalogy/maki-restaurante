@@ -67,7 +67,7 @@ public class PlatoServiceImpl implements PlatoService {
   public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException {
     Plato plato = this.selectById(platoId);
 
-    plato.setCategoria(categoria);
+    plato.setCategory(categoria);
     
     repo.save(plato);
   }

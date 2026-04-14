@@ -58,8 +58,8 @@ public class CategoriaServiceImpl implements CategoriaService {
         .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
 
     for (Plato p : platoService.selectAll()) {
-      if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
-        p.setCategoria(null);
+      if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
+        p.setCategory(null);
         platoService.update(p);
       }
     }

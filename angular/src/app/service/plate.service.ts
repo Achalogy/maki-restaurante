@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Plate } from '../interfaces/plate.interface';
+import { HttpClient } from "@angular/common/http"
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlateService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   plateList: Plate[] = [
     {
@@ -147,8 +150,7 @@ export class PlateService {
   ];
 
   selectAll() {
-    
-    return this.plateList
+    return this.http.get<Plate[]>('http://localhost:8080/api/v1/plate')
   }
 
   selectById(id: number) {
