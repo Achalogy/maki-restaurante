@@ -1,1 +1,61 @@
-<p>client-edit works!</p>
+<div class="bg-slideshow">
+  <div
+    *ngFor="let slide of bgSlides; let i = index"
+    class="bg-slide"
+    [class.activo]="i === currentSlide"
+    [style.background-image]="'url(' + slide + ')'">
+  </div>
+</div>
+
+<div class="login-wrapper">
+  <div class="card-login" style="max-width: 500px;">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <app-maki-logo></app-maki-logo>
+      <div>
+        <div class="brand-name">MAKI</div>
+        <div class="brand-sub">editar cuenta</div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="clientUpdate()">
+    <input style="display:none;" type="number" name="id" [(ngModel)]="client.id">
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+        <input type="text" class="form-control form-control-maki"
+            placeholder="Nombre" [(ngModel)]="client.name" name="name" required />
+        </div>
+        <div class="col-md-6 mb-3">
+        <input type="text" class="form-control form-control-maki"
+            placeholder="Apellido" [(ngModel)]="client.surname" name="surname" required />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input type="email" class="form-control form-control-maki w-100"
+        placeholder="Correo electrónico" [(ngModel)]="client.email" name="email" required />
+    </div>
+
+    <div class="mb-3">
+        <input type="password" class="form-control form-control-maki w-100"
+        placeholder="Contraseña" [(ngModel)]="client.password" name="password" required />
+    </div>
+
+    <div class="mb-3">
+        <input type="tel" class="form-control form-control-maki w-100"
+        placeholder="Teléfono" [(ngModel)]="client.phone" name="phone" />
+    </div>
+
+    <div class="mb-4">
+        <input type="text" class="form-control form-control-maki w-100"
+        placeholder="Dirección de entrega" [(ngModel)]="client.address" name="address" />
+    </div>
+
+    <div class="d-grid mb-4">
+        <button type="submit" class="btn btn-maki">Actualizar cuenta</button>
+    </div>
+    </form>
+
+    <p *ngIf="errorMessage" class="p-error">{{ errorMessage }}</p>
+  </div>
+</div>

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Client } from 'src/app/interfaces/client.interface';
+import { ClientService } from 'src/app/service/client.service';
 
 @Component({
   selector: 'app-client-crud',
@@ -6,5 +9,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./client-crud.component.css']
 })
 export class ClientCrudComponent {
+
+  clientes: Client[] = [];
+
+  constructor(
+    private clientService: ClientService,
+        private router: Router
+  ) {
+
+  }
+  ngOnInit() {
+  this.clientes = this.clientService.selectAll()}
+
+  deleteClient(id: number){
+    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+      const success = this.clientService.delete(id);
+    }
+
+  }
 
 }
