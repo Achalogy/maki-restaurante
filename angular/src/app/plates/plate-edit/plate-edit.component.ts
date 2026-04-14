@@ -30,17 +30,22 @@ export class PlateEditComponent {
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     const p = this.plateService.selectById(id)
-    if (!p)
-      this.router.navigate(['/plate/crud']);
+    
+    p.subscribe(plate => {
+      if (!plate)
+        this.router.navigate(['/plate/crud']);
+      else
+        this.plate = plate
+    })
 
-    this.plate = p!
   }
 
   updatePlate() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log('Actualizando plato:', this.plate);
-    this.plateService.update(id, this.plate)
+    this.plateService.update(id, this.plate).subscribe(() => {
+      this.router.navigate(['/plate/crud']);
+    })
     
-    this.router.navigate(['/plate/crud']);
   }
 }

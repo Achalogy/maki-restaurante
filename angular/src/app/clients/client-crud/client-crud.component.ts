@@ -19,11 +19,14 @@ export class ClientCrudComponent {
 
   }
   ngOnInit() {
-  this.clientes = this.clientService.selectAll()}
+    this.clientService.selectAll().subscribe(clients => this.clientes = clients) 
+  }
 
   deleteClient(id: number){
     if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-      const success = this.clientService.delete(id);
+      this.clientService.delete(id).subscribe(() => {
+        this.clientService.selectAll().subscribe(clients => this.clientes = clients) 
+      })
     }
 
   }
