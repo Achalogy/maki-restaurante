@@ -13,8 +13,7 @@
 #single-item {
     position: relative;
     min-height: 100vh;
-    /* TODO: ESTO ESTA ROTO, BUSCAR COMO ARREGLAR */
-    background-image: var(--bg-img);
+    background-image: unset;
     background-size: cover;
     background-position: center;
     display: flex;
