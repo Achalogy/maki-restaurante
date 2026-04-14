@@ -1,0 +1,32 @@
+.food-menu-item {
+  @apply flex flex-row rounded-2xl overflow-hidden shadow-lg bg-maki-orange w-[40dvw] xl:w-[35dvw];
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.food-menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Image takes up exactly half the card */
+.food-menu-item img {
+  @apply w-1/2 h-[25dvh] xl:h-[35dvh] object-cover flex-shrink-0;
+}
+
+/* Text side takes the other half */
+.food-menu-item .item-info {
+  @apply w-1/2 flex flex-col justify-between p-3;
+}
+
+.food-menu-item .item-info h3 {
+  @apply text-black font-staatliches text-lg xl:text-4xl;
+}
+
+.food-menu-item .item-info p {
+  @apply text-black flex-grow text-sm xl:text-4xl;
+}
+
+/* Price bar at the bottom of the text side */
+.food-menu-item .item-info .price {
+  @apply bg-maki-orange text-white font-staatliches text-xl xl:text-5xl text-center py-2 rounded-xl mt-2;
+}
