@@ -30,6 +30,7 @@ import { ClientProfileComponent } from './clients/client-profile/client-profile.
 import { provideHttpClient } from '@angular/common/http';
 import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
 import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
+import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AditionalFormComponent } from './aditionals/aditional-form/aditional-fo
     ClientProfileComponent,
     AditionalCrudComponent,
     AditionalFormComponent,
+    AditionalEditComponent,
   ],  
   imports: [
     BrowserModule,

@@ -1,8 +1,11 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Adicional;
+import com.maki.web.entities.AdicionalCategoria;
+import com.maki.web.entities.AdicionalPedidoDetalles;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.repository.AdicionalCategoriaRepository;
 import com.maki.web.repository.AdicionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,15 @@ public class AdicionalServiceImpl implements AdicionalService {
 
   @Autowired
   private AdicionalRepository repo;
+  
+  @Autowired
+  private AdicionalCategoriaService adicionalCategoriaService;
+
+  @Autowired
+  private AdicionalPedidoDetallesService adicionalPedidoDetallesService;
+
+  AdicionalServiceImpl() {
+  }
 
   @Override
   public List<Adicional> selectAll() {
@@ -44,6 +56,18 @@ public class AdicionalServiceImpl implements AdicionalService {
     if (!repo.existsById(id)) {
       throw new EntityNotFoundException("No se puede eliminar: Adicional no existe con ID: " + id);
     }
+
+    for(AdicionalCategoria a: adicionalCategoriaService.selectAll()) {
+      if(a.getAditional() != null && a.getAditional().getId() == id) {
+        adicionalCategoriaService.delete(a);
+      }
+    }
+    for(AdicionalPedidoDetalles a: adicionalPedidoDetallesService.selectAll()) {
+      if(a.getAditional() != null && a.getAditional().getId() == id) {
+        adicionalPedidoDetallesService.delete(a);
+      }
+    }
+
     repo.deleteById(id);
   }
 

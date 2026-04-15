@@ -1,11 +1,11 @@
 info:
-  name: category
+  name: aditional by id
   type: http
-  seq: 4
+  seq: 2
 
 http:
-  method: POST
-  url: "{{host}}/api/v1/category"
+  method: GET
+  url: "{{host}}/api/v1/aditional/2"
   auth: inherit
 
 settings:

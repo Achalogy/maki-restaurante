@@ -1,12 +1,14 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.AdicionalCategoria;
+import com.maki.web.entities.Categoria;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.AdicionalCategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,7 +59,33 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   }
 
   @Override
-  public List<AdicionalCategoria> findByCategoria_Id(Long categoriaId) {
-    return repo.findByCategoria_Id(categoriaId);
+  public List<AdicionalCategoria> findByCategory_Id(Long categoriaId) {
+    return repo.findByCategory_Id(categoriaId);
+  }
+
+  @Override
+  public List<AdicionalCategoria> findByAditional_Id(Long adicionalId) {
+    return repo.findByAditional_Id(adicionalId);
+  }
+
+  @Override
+  public List<AdicionalCategoria> setCategorias(Long aditionalId, List<Categoria> categories) {
+    List<AdicionalCategoria> payload = new ArrayList<>();
+
+    for(AdicionalCategoria a: repo.findByAditional_Id(aditionalId)) {
+      repo.delete(a);
+    }
+    for(Categoria c: categories) {
+      AdicionalCategoria adc = new AdicionalCategoria(
+          c.getId(),
+          aditionalId
+        );
+      repo.save(
+        adc
+      );
+      payload.add(adc);
+    }
+
+    return payload;
   }
 }
