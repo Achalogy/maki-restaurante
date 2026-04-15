@@ -20,17 +20,17 @@ public class AdicionalCategoria {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "categoria_id", nullable = false)
-  private Categoria categoria;
+  @JoinColumn(name = "category_id", nullable = false)
+  private Categoria category;
 
   @ManyToOne
-  @JoinColumn(name = "adicional_id", nullable = false)
-  private Adicional adicional;
+  @JoinColumn(name = "aditional_id", nullable = false)
+  private Adicional aditional;
 
-  public AdicionalCategoria(Long categoriaId, Long adicionalId) {
-    this.categoria = new Categoria();
-    this.categoria.setId(categoriaId);
-    this.adicional = new Adicional();
-    this.adicional.setId(adicionalId);
+  public AdicionalCategoria(Long categoryId, Long aditionalId) {
+    this.category = new Categoria();
+    this.category.setId(categoryId);
+    this.aditional = new Adicional();
+    this.aditional.setId(aditionalId);
   }
 }

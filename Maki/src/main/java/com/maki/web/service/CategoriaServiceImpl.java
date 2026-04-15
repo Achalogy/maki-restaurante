@@ -64,7 +64,7 @@ public class CategoriaServiceImpl implements CategoriaService {
       }
     }
     for (AdicionalCategoria p : adicionalCategoriaService.selectAll()) {
-      if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
+      if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
         adicionalCategoriaService.delete(p);
       }
     }

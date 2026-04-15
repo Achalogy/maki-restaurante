@@ -24,11 +24,11 @@ public class AdicionalPedidoDetalles {
   private PedidoDetalles detalle;
 
   @ManyToOne
-  @JoinColumn(name = "adicional_id", nullable = false)
-  private Adicional adicional;
+  @JoinColumn(name = "aditional_id", nullable = false)
+  private Adicional aditional;
 
-  public AdicionalPedidoDetalles(PedidoDetalles detalle, Adicional adicional) {
+  public AdicionalPedidoDetalles(PedidoDetalles detalle, Adicional aditional) {
     this.detalle = detalle;
-    this.adicional = adicional;
+    this.aditional = aditional;
   }
 }

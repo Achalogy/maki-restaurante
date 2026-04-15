@@ -18,6 +18,7 @@ import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
 import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
 import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
+import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   
   { path: 'aditional/crud', component: AditionalCrudComponent },
   { path: 'aditional/create', component: AditionalFormComponent },
+  { path: 'aditional/:id/edit', component: AditionalEditComponent },
 
   {path: "admin", component: GatewayComponent },
   
