@@ -28,6 +28,8 @@ import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.compo
 import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
 import { provideHttpClient } from '@angular/common/http';
+import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
+import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { provideHttpClient } from '@angular/common/http';
     MakiLogoComponent,
     GatewayComponent,
     ClientProfileComponent,
+    AditionalCrudComponent,
+    AditionalFormComponent,
   ],  
   imports: [
     BrowserModule,

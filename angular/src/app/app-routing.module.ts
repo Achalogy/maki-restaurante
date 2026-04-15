@@ -16,6 +16,8 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
 import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
+import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
+import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -30,7 +32,7 @@ const routes: Routes = [
   { path: 'operator/:id/edit', component: OperatorFormComponent },
   { path: 'operator/create', component: OperatorFormComponent },
   { path: 'operator/:id', component: OperatorViewComponent },
-
+  
   
   {path: "client/log-in", component: ClientLogInComponent},
   {path: "client/sign-up", component: ClientSignUpComponent},
@@ -39,6 +41,9 @@ const routes: Routes = [
   {path: "client/:id", component: ClientSessionComponent },
   {path: "client/profile/:id", component: ClientProfileComponent },
   
+  { path: 'aditional/crud', component: AditionalCrudComponent },
+  { path: 'aditional/create', component: AditionalFormComponent },
+
   {path: "admin", component: GatewayComponent },
   
   { path: '**', pathMatch: 'full', redirectTo: '' },
