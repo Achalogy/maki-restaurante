@@ -41,7 +41,8 @@ public class AdicionalServiceImpl implements AdicionalService {
   @Override
   public Adicional insert(Adicional entity) throws EntityConstraintException {
     if (entity.getId() != null) {
-      throw new EntityConstraintException("El insert de Adicional no debe incluir un ID");
+      entity.setId(null);
+      // throw new EntityConstraintException("El insert de Adicional no debe incluir un ID");
     }
     return repo.save(entity);
   }

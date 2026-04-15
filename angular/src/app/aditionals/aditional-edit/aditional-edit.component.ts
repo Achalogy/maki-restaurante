@@ -52,7 +52,8 @@ export class AditionalEditComponent implements OnInit {
   updateAditional() {
     this.aditionalService.update(this.aditional.id, this.aditional).subscribe(() => {
       this.aditionalService.setCategories(this.aditional.id, this.selectedCategoryList).subscribe(() => {
-        this.updateLists()
+        // this.updateLists()
+        this.router.navigate(["/aditional/crud"])
       })
     })
   }
