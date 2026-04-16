@@ -31,6 +31,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
 import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
 import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
+import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-ed
     NgOptimizedImage,
     FormsModule,
     FoodMenuGridComponent,
-    FoodMenuGridCardComponent
+    FoodMenuGridCardComponent,
+    OperatorFormComponent
 ],
   providers: [
     provideHttpClient()

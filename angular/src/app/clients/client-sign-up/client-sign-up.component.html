@@ -4,7 +4,6 @@
 
       <app-maki-logo></app-maki-logo>
 
-      <!-- FORM CONECTADO AL CONTROLLER -->
       <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm">
 
         <div>
@@ -15,7 +14,8 @@
             [(ngModel)]="client.name"
             required
             #nameRef="ngModel"
-            />
+            [class.border-2]="nameRef.invalid && nameRef.touched"
+            [class.border-red-500]="nameRef.invalid && nameRef.touched" />
           <input
             type="text" 
             placeholder="Apellido" 
@@ -23,29 +23,35 @@
             [(ngModel)]="client.surname"
             required
             #surnameRef="ngModel"
-            />
+            [class.border-2]="surnameRef.invalid && surnameRef.touched"
+            [class.border-red-500]="surnameRef.invalid && surnameRef.touched" />
         </div>
 
         <div>
           <input
-            type="text" 
+            type="email" 
             placeholder="Correo Electrónico" 
             name="email"
             [(ngModel)]="client.email"
             required
+            email
             #emailRef="ngModel"
-            />
+            [class.border-2]="emailRef.invalid && emailRef.touched"
+            [class.border-red-500]="emailRef.invalid && emailRef.touched" />
         </div>
+
         <div>
           <input
-            type="text" 
+            type="tel" 
             placeholder="Teléfono" 
             name="phone"
             [(ngModel)]="client.phone"
             required
             #phoneRef="ngModel"
-            />
+            [class.border-2]="phoneRef.invalid && phoneRef.touched"
+            [class.border-red-500]="phoneRef.invalid && phoneRef.touched" />
         </div>
+
         <div>
           <input
             type="text" 
@@ -54,7 +60,8 @@
             [(ngModel)]="client.address"
             required
             #addressRef="ngModel"
-            />
+            [class.border-2]="addressRef.invalid && addressRef.touched"
+            [class.border-red-500]="addressRef.invalid && addressRef.touched" />
         </div>
 
         <div>
@@ -64,34 +71,45 @@
             name="password"
             [(ngModel)]="client.password"
             required
+            minlength="6"
             #passwordRef="ngModel"
-            />
+            [class.border-2]="passwordRef.invalid && passwordRef.touched"
+            [class.border-red-500]="passwordRef.invalid && passwordRef.touched" />
         </div>
+
 
         <div id="log-in-errors">
           <p *ngIf="nameRef.invalid && nameRef.touched">
-            El nombre es obligatorio
+            El nombre es obligatorio.
           </p>
           <p *ngIf="surnameRef.invalid && surnameRef.touched">
-            El apellido es obligatorio
+            El apellido es obligatorio.
           </p>
-          <p *ngIf="emailRef.invalid && emailRef.touched">
-            El correo es obligatorio
+          <p *ngIf="emailRef.errors?.['required'] && emailRef.touched">
+            El correo es obligatorio.
+          </p>
+          <p *ngIf="emailRef.errors?.['email'] && emailRef.touched">
+            Ingresa un correo válido.
           </p>
           <p *ngIf="phoneRef.invalid && phoneRef.touched">
-            El telefono es obligatorio
+            El teléfono es obligatorio.
           </p>
           <p *ngIf="addressRef.invalid && addressRef.touched">
-            La dirección es obligatoria
+            La dirección es obligatoria.
           </p>
-          <p *ngIf="passwordRef.invalid && passwordRef.touched">
-            La contraseña es obligatoria
+          <p *ngIf="passwordRef.errors?.['required'] && passwordRef.touched">
+            La contraseña es obligatoria.
           </p>
-
+          <p *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched">
+            La contraseña debe tener al menos 6 caracteres.
+          </p>
         </div>
 
         <div>
-          <button type="submit">Registrarse</button>
+          
+          <button type="submit" [disabled]="clientForm.invalid">
+            Registrarse
+          </button>
         </div>
 
         <div class="login-urls">
