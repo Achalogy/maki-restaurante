@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Client;
-import com.maki.web.entities.Order;
+import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -62,9 +62,9 @@ public class ClienteServiceImpl implements ClienteService {
     Client cliente = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado: " + id));
 
-    for (Order p : pedidoServiceImpl.selectAll()) {
-      if (p.getCliente() != null && p.getCliente().getId().equals(id)) {
-        p.setCliente(null);
+    for (PurchaseOrder p : pedidoServiceImpl.selectAll()) {
+      if (p.getClient() != null && p.getClient().getId().equals(id)) {
+        p.setClient(null);
         pedidoServiceImpl.update(p);
       }
     }

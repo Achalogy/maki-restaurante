@@ -4,12 +4,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Plate;
-import com.maki.web.service.AdicionalCategoriaService;
 import com.maki.web.service.CategoriaService;
 import com.maki.web.service.PlatoService;
 
@@ -57,7 +55,7 @@ public class PlatosController {
             // El servicio usa .insert() que internamente gestiona si es nuevo o update
             return new ResponseEntity<>(platoService.insert(plato), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -97,7 +95,7 @@ public class PlatosController {
             return new ResponseEntity<>(platoService.update(updateData), HttpStatus.OK);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

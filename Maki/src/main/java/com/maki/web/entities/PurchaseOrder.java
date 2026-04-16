@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Order {
+public class PurchaseOrder {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -24,7 +24,7 @@ public class Order {
   private java.time.LocalDateTime creation_date;
 
   @Column(nullable = true)
-  private java.time.LocalDateTime delivery_dat;
+  private java.time.LocalDateTime delivery_date;
 
   @Column(length = 50)
   private String status;
@@ -41,7 +41,7 @@ public class Order {
   @JoinColumn(name = "operator_id", nullable = true)
   private Operator operator;
 
-  public Order(Client client) {
+  public PurchaseOrder(Client client) {
     this.client = client;
     this.status = "PENDING";
     this.creation_date = java.time.LocalDateTime.now();

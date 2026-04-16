@@ -4,7 +4,6 @@ import com.maki.web.entities.AditionalCategory;
 import com.maki.web.entities.Category;
 
 import java.util.List;
-import java.util.Locale.Category;
 
 public interface AdicionalCategoriaService extends ServiceInterface<AditionalCategory> {
   List<AditionalCategory> findByCategory_Id(Long categoriaId);

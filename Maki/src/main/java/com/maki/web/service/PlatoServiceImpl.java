@@ -65,7 +65,7 @@ public class PlatoServiceImpl implements PlatoService {
     }
 
     for( OrderDetails pd: pedidoDetallesService.selectAll()) {
-      if(pd.getProducto() != null && pd.getProducto().getId().equals(id)) {
+      if(pd.getPlate() != null && pd.getPlate().getId().equals(id)) {
         pedidoDetallesService.delete(pd);
       }
     }

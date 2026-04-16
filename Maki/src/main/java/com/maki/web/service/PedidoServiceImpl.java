@@ -1,6 +1,6 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Order;
+import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -21,42 +21,42 @@ public class PedidoServiceImpl implements PedidoService {
   private PedidoDetallesService pedidoDetallesService;
 
   @Override
-  public List<Order> selectAll() {
+  public List<PurchaseOrder> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Order selectById(Long id) throws EntityNotFoundException {
+  public PurchaseOrder selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Pedido no encontrado con ID: " + id));
   }
 
   @Override
-  public Order insert(Order entity) throws EntityConstraintException {
+  public PurchaseOrder insert(PurchaseOrder entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de Pedido no debe incluir un ID");
     }
     // Opcional: Establecer fecha de creación por defecto si viene nula
-    if (entity.getFechaCreacion() == null) {
-      entity.setFechaCreacion(java.time.LocalDateTime.now());
+    if (entity.getCreation_date() == null) {
+      entity.setCreation_date(java.time.LocalDateTime.now());
     }
     return repo.save(entity);
   }
 
   @Override
-  public void delete(Order entity) throws EntityNotFoundException {
+  public void delete(PurchaseOrder entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
   @Override
   @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
-    Order pedido = repo.findById(id)
+    PurchaseOrder pedido = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Pedido no encontrado"));
 
     // Limpiar los detalles del pedido antes de borrar el pedido principal
     for (OrderDetails detalle : pedidoDetallesService.selectAll()) {
-      if (detalle.getPedido() != null && detalle.getPedido().getId().equals(id)) {
+      if (detalle.getOrder() != null && detalle.getOrder().getId().equals(id)) {
         pedidoDetallesService.deleteByID(detalle.getId());
       }
     }
@@ -65,7 +65,7 @@ public class PedidoServiceImpl implements PedidoService {
   }
 
   @Override
-  public Order update(Order entity) throws EntityConstraintException, EntityNotFoundException {
+  public PurchaseOrder update(PurchaseOrder entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: Pedido no encontrado");
     }
