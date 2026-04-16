@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Delivery;
-import com.maki.web.entities.Order;
+import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.DomiciliarioRepository;
@@ -51,9 +51,9 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
         .orElseThrow(() -> new EntityNotFoundException("Domiciliario no encontrado para eliminar: " + id));
 
     // Lógica de integridad: Desvincular pedidos antes de borrar al domiciliario
-    for (Order p : pedidoService.selectAll()) {
-      if (p.getDomiciliario() != null && p.getDomiciliario().getId().equals(id)) {
-        p.setDomiciliario(null);
+    for (PurchaseOrder p : pedidoService.selectAll()) {
+      if (p.getDelivery() != null && p.getDelivery().getId().equals(id)) {
+        p.setDelivery(null);
         pedidoService.update(p);
       }
     }

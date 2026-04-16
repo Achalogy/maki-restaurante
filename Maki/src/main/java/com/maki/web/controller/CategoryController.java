@@ -52,7 +52,7 @@ public class CategoryController {
             categoriaService.deleteByID(id);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

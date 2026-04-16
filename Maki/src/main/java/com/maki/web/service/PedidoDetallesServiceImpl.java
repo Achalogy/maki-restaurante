@@ -52,7 +52,7 @@ public class PedidoDetallesServiceImpl implements PedidoDetallesService {
 
     // Limpiar los adicionales asociados a este detalle específico antes de borrarlo
     for (AditionalOrderDetails apd : adicionalDetalleService.selectAll()) {
-      if (apd.getDetalle() != null && apd.getDetalle().getId().equals(id)) {
+      if (apd.getDetail() != null && apd.getDetail().getId().equals(id)) {
         adicionalDetalleService.deleteByID(apd.getId());
       }
     }

@@ -22,7 +22,7 @@ public class OrderDetails {
 
   @ManyToOne
   @JoinColumn(name = "order_id", nullable = false)
-  private Order order;
+  private PurchaseOrder order;
 
   @ManyToOne
   @JoinColumn(name = "plate_id", nullable = false)
@@ -31,7 +31,7 @@ public class OrderDetails {
   @Column(nullable = false)
   private int quantity;
 
-  public OrderDetails(Order order, Plate plate, int quantity) {
+  public OrderDetails(PurchaseOrder order, Plate plate, int quantity) {
     this.order = order;
     this.plate = plate;
     this.quantity = quantity;

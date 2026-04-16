@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Operator;
-import com.maki.web.entities.Order;
+import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.OperadorRepository;
@@ -51,9 +51,9 @@ public class OperatorServiceImpl implements OperadorService {
         .orElseThrow(() -> new EntityNotFoundException("Operator no encontrado para eliminar: " + id));
 
     // Desvincular pedidos antes de borrar al Operator para mantener integridad
-    for (Order p : pedidoService.selectAll()) {
-      if (p.getOperador() != null && p.getOperador().getId().equals(id)) {
-        p.setOperador(null);
+    for (PurchaseOrder p : pedidoService.selectAll()) {
+      if (p.getOperator() != null && p.getOperator().getId().equals(id)) {
+        p.setOperator(null);
         pedidoService.update(p);
       }
     }
