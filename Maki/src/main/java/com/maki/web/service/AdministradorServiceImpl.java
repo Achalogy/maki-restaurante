@@ -1,6 +1,6 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Administrador;
+import com.maki.web.entities.Administrator;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.AdministradorRepository;
@@ -16,18 +16,18 @@ public class AdministradorServiceImpl implements AdministradorService {
   private AdministradorRepository repo;
 
   @Override
-  public List<Administrador> selectAll() {
+  public List<Administrator> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Administrador selectById(Long id) throws EntityNotFoundException {
+  public Administrator selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Administrador no encontrado con ID: " + id));
   }
 
   @Override
-  public Administrador insert(Administrador entity) throws EntityConstraintException {
+  public Administrator insert(Administrator entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de Administrador no debe incluir un ID");
     }
@@ -35,7 +35,7 @@ public class AdministradorServiceImpl implements AdministradorService {
   }
 
   @Override
-  public void delete(Administrador entity) throws EntityNotFoundException {
+  public void delete(Administrator entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
@@ -48,7 +48,7 @@ public class AdministradorServiceImpl implements AdministradorService {
   }
 
   @Override
-  public Administrador update(Administrador entity) throws EntityConstraintException, EntityNotFoundException {
+  public Administrator update(Administrator entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: Administrador no encontrado");
     }

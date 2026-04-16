@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "clientes")
-public class Cliente {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +41,13 @@ public class Cliente {
     private String address;
 
     // Constructor para Login/Auth
-    public Cliente(String email, String password) {
+    public Client(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
     // Constructor para registro/creación (sin ID)
-    public Cliente(String name, String surname, String email, String password, String phone, String address) {
+    public Client(String name, String surname, String email, String password, String phone, String address) {
         this.name = name;
         this.surname = surname;
         this.email = email;

@@ -13,27 +13,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Domiciliario {
+public class Delivery {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(length = 100, nullable = false)
-  private String nombre;
+  private String name;
 
   @Column(length = 20, nullable = false)
-  private String celular;
+  private String phone;
 
   @Column(length = 20, nullable = false, unique = true)
-  private String cedula;
+  private String national_id;
 
   @Column(nullable = false)
-  private boolean disponible;
+  private boolean available;
 
-  public Domiciliario(String nombre, String celular, String cedula, boolean disponible) {
-    this.nombre = nombre;
-    this.celular = celular;
-    this.cedula = cedula;
-    this.disponible = disponible;
+  public Delivery(String name, String phone, String national_id, boolean available) {
+    this.name = name;
+    this.phone = phone;
+    this.national_id = national_id;
+    this.available = available;
   }
 }

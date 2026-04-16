@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Domiciliario;
-import com.maki.web.entities.Pedido;
+import com.maki.web.entities.Delivery;
+import com.maki.web.entities.Order;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.DomiciliarioRepository;
@@ -21,18 +21,18 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
   private PedidoService pedidoService;
 
   @Override
-  public List<Domiciliario> selectAll() {
+  public List<Delivery> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Domiciliario selectById(Long id) throws EntityNotFoundException {
+  public Delivery selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Domiciliario no encontrado con ID: " + id));
   }
 
   @Override
-  public Domiciliario insert(Domiciliario entity) throws EntityConstraintException {
+  public Delivery insert(Delivery entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de Domiciliario no debe tener ID");
     }
@@ -40,18 +40,18 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
   }
 
   @Override
-  public void delete(Domiciliario entity) throws EntityNotFoundException {
+  public void delete(Delivery entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
   @Override
   @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
-    Domiciliario domiciliario = repo.findById(id)
+    Delivery domiciliario = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Domiciliario no encontrado para eliminar: " + id));
 
     // Lógica de integridad: Desvincular pedidos antes de borrar al domiciliario
-    for (Pedido p : pedidoService.selectAll()) {
+    for (Order p : pedidoService.selectAll()) {
       if (p.getDomiciliario() != null && p.getDomiciliario().getId().equals(id)) {
         p.setDomiciliario(null);
         pedidoService.update(p);
@@ -62,7 +62,7 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
   }
 
   @Override
-  public Domiciliario update(Domiciliario entity) throws EntityConstraintException, EntityNotFoundException {
+  public Delivery update(Delivery entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: Domiciliario no encontrado");
     }

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "platos")
-public class Plato {
+public class Plate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +41,10 @@ public class Plato {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = true)
-    private Categoria category;
+    private Category category;
 
     // Constructor para creación manual (sin ID)
-    public Plato(String name, double price, String description, String urlImage, boolean available) {
+    public Plate(String name, double price, String description, String urlImage, boolean available) {
         this.name = name;
         this.price = price;
         this.description = description;

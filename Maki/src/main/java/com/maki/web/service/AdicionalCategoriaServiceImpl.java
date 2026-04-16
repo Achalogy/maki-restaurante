@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.AdicionalCategoria;
-import com.maki.web.entities.Categoria;
+import com.maki.web.entities.AditionalCategory;
+import com.maki.web.entities.Category;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.AdicionalCategoriaRepository;
@@ -18,18 +18,18 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   private AdicionalCategoriaRepository repo;
 
   @Override
-  public List<AdicionalCategoria> selectAll() {
+  public List<AditionalCategory> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public AdicionalCategoria selectById(Long id) throws EntityNotFoundException {
+  public AditionalCategory selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Relación Adicional-Categoría no encontrada: " + id));
   }
 
   @Override
-  public AdicionalCategoria insert(AdicionalCategoria entity) throws EntityConstraintException {
+  public AditionalCategory insert(AditionalCategory entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de AdicionalCategoria no debe tener ID");
     }
@@ -37,7 +37,7 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   }
 
   @Override
-  public void delete(AdicionalCategoria entity) throws EntityNotFoundException {
+  public void delete(AditionalCategory entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
@@ -50,7 +50,7 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   }
 
   @Override
-  public AdicionalCategoria update(AdicionalCategoria entity)
+  public AditionalCategory update(AditionalCategory entity)
       throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: El registro no existe");
@@ -59,24 +59,24 @@ public class AdicionalCategoriaServiceImpl implements AdicionalCategoriaService 
   }
 
   @Override
-  public List<AdicionalCategoria> findByCategory_Id(Long categoriaId) {
+  public List<AditionalCategory> findByCategory_Id(Long categoriaId) {
     return repo.findByCategory_Id(categoriaId);
   }
 
   @Override
-  public List<AdicionalCategoria> findByAditional_Id(Long adicionalId) {
+  public List<AditionalCategory> findByAditional_Id(Long adicionalId) {
     return repo.findByAditional_Id(adicionalId);
   }
 
   @Override
-  public List<AdicionalCategoria> setCategorias(Long aditionalId, List<Categoria> categories) {
-    List<AdicionalCategoria> payload = new ArrayList<>();
+  public List<AditionalCategory> setCategorias(Long aditionalId, List<Category> categories) {
+    List<AditionalCategory> payload = new ArrayList<>();
 
-    for(AdicionalCategoria a: repo.findByAditional_Id(aditionalId)) {
+    for(AditionalCategory a: repo.findByAditional_Id(aditionalId)) {
       repo.delete(a);
     }
-    for(Categoria c: categories) {
-      AdicionalCategoria adc = new AdicionalCategoria(
+    for(Category c: categories) {
+      AditionalCategory adc = new AditionalCategory(
           c.getId(),
           aditionalId
         );

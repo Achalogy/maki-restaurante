@@ -1,6 +1,6 @@
 package com.maki.web.controller;
 
-import com.maki.web.entities.Cliente;
+import com.maki.web.entities.Client;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.ClienteService;
 
@@ -31,12 +31,12 @@ public class ClientesController {
     private ClienteService clienteService;
 
     @GetMapping("")
-    public List<Cliente> getAllClients() {
+    public List<Client> getAllClients() {
         return clienteService.selectAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getClientById(@PathVariable Long id) {
+    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(clienteService.selectById(id), HttpStatus.OK);
         } catch(Exception e) {
@@ -45,9 +45,9 @@ public class ClientesController {
     }
     
     @PostMapping("/{id}")
-    public ResponseEntity<Cliente> updateClient(@PathVariable Long id, @RequestBody(required = false) Cliente data) {
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody(required = false) Client data) {
         try {
-            Cliente updateData = clienteService.selectById(id);
+            Client updateData = clienteService.selectById(id);
 
             if(data.getName() != null)
                 updateData.setName(data.getName());
@@ -82,7 +82,7 @@ public class ClientesController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Cliente> createClient(@RequestBody(required = false) Cliente data) {
+    public ResponseEntity<Client> createClient(@RequestBody(required = false) Client data) {
         try {
             return new ResponseEntity<>(clienteService.insert(data), HttpStatus.OK);
         } catch(Exception e) {
@@ -95,7 +95,7 @@ public class ClientesController {
     }
     
     @PostMapping("/log-in")
-    public ResponseEntity<Cliente> loginClient(@RequestBody(required = false) Cliente data) {
+    public ResponseEntity<Client> loginClient(@RequestBody(required = false) Client data) {
         try {
             return new ResponseEntity<>(clienteService.verificarCredenciales(
                 data.getEmail(),

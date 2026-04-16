@@ -1,6 +1,6 @@
 package com.maki.web.controller;
 
-import com.maki.web.entities.Cliente;
+import com.maki.web.entities.Client;
 import com.maki.web.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,14 +20,14 @@ public class LogInRegisterController {
 
     @GetMapping("/log-in")
     public String mostrarLogin(Model model) {
-        model.addAttribute("cliente", new Cliente());
+        model.addAttribute("cliente", new Client());
         return "log-in";
     }
 
     @PostMapping("/log-in")
-    public String loggearCliente(@ModelAttribute("cliente") Cliente cliente, HttpSession session) {
+    public String loggearCliente(@ModelAttribute("cliente") Client cliente, HttpSession session) {
         try {
-            Cliente clienteSesion = clienteService.verificarCredenciales(cliente.getEmail(), cliente.getPassword());
+            Client clienteSesion = clienteService.verificarCredenciales(cliente.getEmail(), cliente.getPassword());
 
             session.setAttribute("clienteSesion", clienteSesion);
 
@@ -40,8 +40,8 @@ public class LogInRegisterController {
     @GetMapping("/sesion")
     public String mostrarSesion(HttpSession session, Model model) {
 
-        Cliente clienteSesion =
-                (Cliente) session.getAttribute("clienteSesion");
+        Client clienteSesion =
+                (Client) session.getAttribute("clienteSesion");
 
         if(clienteSesion == null) {
             return "redirect:/LogIn/log-in";

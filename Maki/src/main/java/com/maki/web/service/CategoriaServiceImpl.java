@@ -1,12 +1,12 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.AdicionalCategoria;
-import com.maki.web.entities.Categoria;
+import com.maki.web.entities.AditionalCategory;
+import com.maki.web.entities.Category;
 import com.maki.web.repository.CategoriaRepository;
 
 import jakarta.transaction.Transactional;
 
-import com.maki.web.entities.Plato;
+import com.maki.web.entities.Plate;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +27,18 @@ public class CategoriaServiceImpl implements CategoriaService {
   AdicionalCategoriaService adicionalCategoriaService;
 
   @Override
-  public List<Categoria> selectAll() {
+  public List<Category> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Categoria selectById(Long id) throws EntityNotFoundException {
+  public Category selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
   }
 
   @Override
-  public Categoria insert(Categoria entity) throws EntityConstraintException {
+  public Category insert(Category entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("Insert no debe tener ID");
     }
@@ -46,7 +46,7 @@ public class CategoriaServiceImpl implements CategoriaService {
   }
 
   @Override
-  public void delete(Categoria entity) throws EntityNotFoundException {
+  public void delete(Category entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
@@ -54,15 +54,15 @@ public class CategoriaServiceImpl implements CategoriaService {
   @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
 
-    Categoria categoria = repo.findById(id)
+    Category categoria = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
 
-    for (Plato p : platoService.selectAll()) {
+    for (Plate p : platoService.selectAll()) {
       if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
         platoService.delete(p);
       }
     }
-    for (AdicionalCategoria p : adicionalCategoriaService.selectAll()) {
+    for (AditionalCategory p : adicionalCategoriaService.selectAll()) {
       if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
         adicionalCategoriaService.delete(p);
       }
@@ -72,7 +72,7 @@ public class CategoriaServiceImpl implements CategoriaService {
   }
 
   @Override
-  public Categoria update(Categoria entity) throws EntityConstraintException, EntityNotFoundException {
+  public Category update(Category entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("Categoria no encontrada");
     }

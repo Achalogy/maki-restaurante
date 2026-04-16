@@ -1,5 +1,5 @@
 import { Client } from "./client.interface";
-import { Domiciliary } from "./domiciliary.interface";
+import { Delivery } from "./delivery.interface";
 import { Operator } from "./operator.interface";
 
 export interface Order {
@@ -8,6 +8,6 @@ export interface Order {
   delivery_date: Date,
   status: string,
   client: Client,
-  domiciliary: Domiciliary,
+  domiciliary: Delivery,
   operator: Operator
 }

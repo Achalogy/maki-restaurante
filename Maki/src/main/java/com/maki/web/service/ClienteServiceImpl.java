@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Cliente;
-import com.maki.web.entities.Pedido;
+import com.maki.web.entities.Client;
+import com.maki.web.entities.Order;
 import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -26,18 +26,18 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public List<Cliente> selectAll() {
+  public List<Client> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Cliente selectById(Long id) throws EntityNotFoundException {
+  public Client selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado: " + id));
   }
 
   @Override
-  public Cliente insert(Cliente entity) throws EntityConstraintException {
+  public Client insert(Client entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert no debe tener ID");
     }
@@ -49,7 +49,7 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public void delete(Cliente entity) throws EntityNotFoundException {
+  public void delete(Client entity) throws EntityNotFoundException {
     if (entity == null || entity.getId() == null) {
       throw new EntityNotFoundException("No se puede eliminar un cliente sin ID");
     }
@@ -59,10 +59,10 @@ public class ClienteServiceImpl implements ClienteService {
   @Override
   @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
-    Cliente cliente = repo.findById(id)
+    Client cliente = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado: " + id));
 
-    for (Pedido p : pedidoServiceImpl.selectAll()) {
+    for (Order p : pedidoServiceImpl.selectAll()) {
       if (p.getCliente() != null && p.getCliente().getId().equals(id)) {
         p.setCliente(null);
         pedidoServiceImpl.update(p);
@@ -73,7 +73,7 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente update(Cliente entity) throws EntityConstraintException, EntityNotFoundException {
+  public Client update(Client entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("Cliente no encontrado para actualizar");
     }
@@ -81,14 +81,14 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente registrarCliente(Cliente cliente) throws EntityConstraintException {
+  public Client registrarCliente(Client cliente) throws EntityConstraintException {
     return this.insert(cliente);
   }
 
   @Override
-  public Cliente registrarCliente(String nombre, String apellido, String correo, String Password, String telefono,
+  public Client registrarCliente(String nombre, String apellido, String correo, String Password, String telefono,
       String direccion) throws EntityConstraintException {
-    Cliente nuevo = new Cliente(
+    Client nuevo = new Client(
       nombre, apellido, correo, Password, telefono, direccion
     );
 
@@ -96,12 +96,12 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente verificarCredenciales(Cliente cliente) throws InvalidCredentialsException, EntityNotFoundException {
+  public Client verificarCredenciales(Client cliente) throws InvalidCredentialsException, EntityNotFoundException {
     if (cliente.getId() == null) {
       throw new EntityNotFoundException("ID de cliente es obligatorio para verificar por objeto");
     }
 
-    Cliente repoClient = this.selectById(cliente.getId());
+    Client repoClient = this.selectById(cliente.getId());
 
     if (!repoClient.getEmail().equalsIgnoreCase(cliente.getEmail())) {
       throw new InvalidCredentialsException("El Email no coincide con el ID proporcionado");
@@ -115,9 +115,9 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente verificarCredenciales(String correo, String Password)
+  public Client verificarCredenciales(String correo, String Password)
       throws InvalidCredentialsException, EntityNotFoundException {
-    Cliente repoClient = repo.findByEmail(correo)
+    Client repoClient = repo.findByEmail(correo)
         .orElseThrow(() -> new EntityNotFoundException("No existe un cliente registrado con el correo: " + correo));
 
     if (!repoClient.getPassword().equals(Password)) {

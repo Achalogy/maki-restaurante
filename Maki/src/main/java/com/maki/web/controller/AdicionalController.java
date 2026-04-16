@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maki.web.entities.Adicional;
-import com.maki.web.entities.AdicionalCategoria;
-import com.maki.web.entities.Categoria;
+import com.maki.web.entities.Aditional;
+import com.maki.web.entities.AditionalCategory;
+import com.maki.web.entities.Category;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.AdicionalCategoriaService;
 import com.maki.web.service.AdicionalService;
@@ -33,22 +33,22 @@ public class AdicionalController {
     private AdicionalCategoriaService adicionalCategoryService;
 
     @GetMapping("")
-    public List<Adicional> getAllAdicionales(@RequestParam(required=false) Long categoryId, 
+    public List<Aditional> getAllAdicionales(@RequestParam(required=false) Long categoryId, 
             @RequestParam(required = false) Long aditionalId) {
         if(categoryId == null && aditionalId == null) {
             return adicionalService.selectAll();
         } else if (categoryId != null) {
-            List<AdicionalCategoria> intermedias = adicionalCategoryService.findByCategory_Id(categoryId);
+            List<AditionalCategory> intermedias = adicionalCategoryService.findByCategory_Id(categoryId);
             return intermedias.stream().map( i -> i.getAditional()).collect(Collectors.toList());
         }else {
-            List<AdicionalCategoria> intermedias = adicionalCategoryService.findByAditional_Id(aditionalId);
+            List<AditionalCategory> intermedias = adicionalCategoryService.findByAditional_Id(aditionalId);
             return intermedias.stream().map( i -> i.getAditional()).collect(Collectors.toList());
         }
 
     }
 
     @GetMapping("/categories")
-    public List<AdicionalCategoria> getAllAditionalCategories(@RequestParam(required=false) Long categoryId, 
+    public List<AditionalCategory> getAllAditionalCategories(@RequestParam(required=false) Long categoryId, 
             @RequestParam(required = false) Long aditionalId) {
         if(categoryId == null && aditionalId == null) {
             return adicionalCategoryService.selectAll();
@@ -62,7 +62,7 @@ public class AdicionalController {
     // ===================== ADD ADITIONAL =====================
 
     @PostMapping("")
-    public ResponseEntity<Adicional> createAditional(@RequestBody(required = false) Adicional data) {
+    public ResponseEntity<Aditional> createAditional(@RequestBody(required = false) Aditional data) {
         try {
             return new ResponseEntity<>(adicionalService.insert(data), HttpStatus.OK);
         } catch(Exception e) {
@@ -74,7 +74,7 @@ public class AdicionalController {
     }
 
     @PostMapping("/{id}/categories")
-    public List<AdicionalCategoria> setCategories(@PathVariable Long id, @RequestBody List<Categoria> categories) {
+    public List<AditionalCategory> setCategories(@PathVariable Long id, @RequestBody List<Category> categories) {
         return adicionalCategoryService.setCategorias(id, categories);
     }
     
@@ -94,7 +94,7 @@ public class AdicionalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Adicional> getAditionalById(@PathVariable Long id) {
+    public ResponseEntity<Aditional> getAditionalById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(adicionalService.selectById(id), HttpStatus.OK);
         } catch(Exception e) {
@@ -103,10 +103,10 @@ public class AdicionalController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Adicional> updateAdicional(@PathVariable Long id,
-            @RequestBody(required = false) Adicional data) {
+    public ResponseEntity<Aditional> updateAdicional(@PathVariable Long id,
+            @RequestBody(required = false) Aditional data) {
         try {
-            Adicional updateData = adicionalService.selectById(id);
+            Aditional updateData = adicionalService.selectById(id);
 
             if (data.getName() != null) {
                 updateData.setName(data.getName());

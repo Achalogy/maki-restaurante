@@ -4,6 +4,6 @@ import { Plate } from "./plate.interface";
 export interface OrderDetails {
   id: number,
   order: Order,
-  product: Plate,
+  plate: Plate,
   quantity: number
 }
