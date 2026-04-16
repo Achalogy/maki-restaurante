@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Aditional } from 'src/app/interfaces/aditional.interface';
+import { Additional } from 'src/app/interfaces/additional.interface';
 import { Category } from 'src/app/interfaces/category.interface';
-import { AditionalService } from 'src/app/service/aditional.service';
+import { AdditionalService } from 'src/app/service/additional.service';
 import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
-  selector: 'app-aditional-form',
-  templateUrl: './aditional-form.component.html',
-  styleUrls: ['./aditional-form.component.css']
+  selector: 'app-additional-form',
+  templateUrl: './additional-form.component.html',
+  styleUrls: ['./additional-form.component.css']
 })
-export class AditionalFormComponent {
+export class AdditionalFormComponent {
   // Inicializamos un objeto limpio
-  aditional: Aditional = {
+  additional: Additional = {
     name: "",
     price: 0,
     id: -1
@@ -24,7 +24,7 @@ export class AditionalFormComponent {
   constructor(
     public router: Router,
     private categoryService: CategoryService,
-    private aditionalService: AditionalService
+    private additionalService: AdditionalService
   ) { }
 
   ngOnInit() {
@@ -37,14 +37,14 @@ export class AditionalFormComponent {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
-  saveAditional() {
-    this.aditionalService.create(this.aditional).subscribe((newAditional) => {
+  saveAdditional() {
+    this.additionalService.create(this.additional).subscribe((newAdditional) => {
       if (this.selectedCategoryList.length > 0) {
-        this.aditionalService.setCategories(newAditional.id, this.selectedCategoryList).subscribe(() => {
-          this.router.navigate(['/aditional/crud']); // Redirigir al terminar
+        this.additionalService.setCategories(newAdditional.id, this.selectedCategoryList).subscribe(() => {
+          this.router.navigate(['/additional/crud']); // Redirigir al terminar
         });
       } else {
-        this.router.navigate(['/aditional/crud']);
+        this.router.navigate(['/additional/crud']);
       }
     });
   }

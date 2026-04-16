@@ -5,23 +5,23 @@
 <main class="tree_background">
   <br />
   <h2 class="text-center">MENÚ de Administrador</h2>
-  <section class="max-w-full mx-auto px-6 py-10" *ngIf="aditional">
+  <section class="max-w-full mx-auto px-6 py-10" *ngIf="additional">
     <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl mx-auto">
       <h3 class="text-2xl font-bold mb-8 text-gray-800 text-center">Editar Adicional</h3>
 
-      <form class="space-y-6" (ngSubmit)="updateAditional()">
-        <input type="hidden" name="id" [(ngModel)]="aditional.id" />
+      <form class="space-y-6" (ngSubmit)="updateAdditional()">
+        <input type="hidden" name="id" [(ngModel)]="additional.id" />
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Nombre del adicional</label>
-          <input type="text" name="name" [(ngModel)]="aditional.name" required
+          <input type="text" name="name" [(ngModel)]="additional.name" required
             class="w-full border border-gray-300 rounded-lg px-4 py-3" />
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Precio</label>
-            <input type="number" name="price" [(ngModel)]="aditional.price" step="0.01" required
+            <input type="number" name="price" [(ngModel)]="additional.price" step="0.01" required
               class="w-full border border-gray-300 rounded-lg px-4 py-3" />
           </div>
         </div>

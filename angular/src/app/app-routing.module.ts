@@ -16,9 +16,9 @@ import { ClientEditComponent } from './clients/client-edit/client-edit.component
 import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
 import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
-import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
-import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
-import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
+import { AdditionalCrudComponent } from './additionals/additional-crud/additional-crud.component';
+import { AdditionalFormComponent } from './additionals/additional-form/additional-form.component';
+import { AdditionalEditComponent } from './additionals/additional-edit/additional-edit.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -42,9 +42,9 @@ const routes: Routes = [
   {path: "client/:id", component: ClientSessionComponent },
   {path: "client/profile/:id", component: ClientProfileComponent },
   
-  { path: 'aditional/crud', component: AditionalCrudComponent },
-  { path: 'aditional/create', component: AditionalFormComponent },
-  { path: 'aditional/:id/edit', component: AditionalEditComponent },
+  { path: 'additional/crud', component: AdditionalCrudComponent },
+  { path: 'additional/create', component: AdditionalFormComponent },
+  { path: 'additional/:id/edit', component: AdditionalEditComponent },
 
   {path: "admin", component: GatewayComponent },
   

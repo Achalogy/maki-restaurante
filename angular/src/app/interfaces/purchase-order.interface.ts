@@ -8,6 +8,6 @@ export interface PurchaseOrder {
   delivery_date: Date,
   status: string,
   client: Client,
-  domiciliary: Delivery,
+  delivery: Delivery,
   operator: Operator
 }
