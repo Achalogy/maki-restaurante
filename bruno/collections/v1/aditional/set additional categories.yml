@@ -1,11 +1,11 @@
 info:
-  name: set aditional categories
+  name: set additional categories
   type: http
   seq: 6
 
 http:
   method: POST
-  url: "{{host}}/api/v1/aditional/1/categories"
+  url: "{{host}}/api/v1/additional/1/categories"
   body:
     type: json
     data: |-

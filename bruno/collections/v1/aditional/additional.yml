@@ -1,11 +1,11 @@
 info:
-  name: aditional
+  name: additional
   type: http
   seq: 4
 
 http:
   method: POST
-  url: "{{host}}/api/v1/aditional"
+  url: "{{host}}/api/v1/additional"
   auth: inherit
 
 settings:
