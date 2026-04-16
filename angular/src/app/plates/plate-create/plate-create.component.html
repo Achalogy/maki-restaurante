@@ -1,7 +1,4 @@
-<app-header-menu>
-
-</app-header-menu>
-
+<app-header-menu></app-header-menu>
 
 <main class="tree_background">
   <h2 class="text-center">MENÚ de Administrador</h2>
@@ -9,57 +6,156 @@
     <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl mx-auto">
       <h3 class="text-2xl font-bold mb-8 text-gray-800 text-center">Crear Nuevo Plato</h3>
 
-      <form class="space-y-6" (ngSubmit)="savePlate()">
+      <!-- ① Añadimos #plateForm="ngForm" para que Angular rastree el estado del form -->
+      <form class="space-y-6" (ngSubmit)="savePlate()" #plateForm="ngForm">
+
+        <!-- Nombre -->
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Nombre del plato</label>
-          <input type="text" name="name" [(ngModel)]="plate.name" required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="plate.name"
+            required
+            minlength="3"
+            #nameRef="ngModel"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3"
+            [class.border-red-500]="nameRef.invalid && nameRef.touched"
+            placeholder="Ej: Sushi Variado"
+          />
+          <!-- ② Mensajes de error con *ngIf sobre la referencia del campo -->
+          <div *ngIf="nameRef.invalid && nameRef.touched" class="mt-1">
+            <p *ngIf="nameRef.errors?.['required']" class="p-error">
+              El nombre del plato es obligatorio.
+            </p>
+            <p *ngIf="nameRef.errors?.['minlength']" class="p-error">
+              El nombre debe tener al menos 3 caracteres.
+            </p>
+          </div>
         </div>
 
+        <!-- Descripción -->
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Descripción</label>
-          <textarea name="description" rows="4" [(ngModel)]="plate.description" required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none"></textarea>
+          <textarea
+            name="description"
+            rows="4"
+            [(ngModel)]="plate.description"
+            required
+            minlength="10"
+            #descRef="ngModel"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none"
+            [class.border-red-500]="descRef.invalid && descRef.touched"
+            placeholder="Describe el plato..."
+          ></textarea>
+          <div *ngIf="descRef.invalid && descRef.touched" class="mt-1">
+            <p *ngIf="descRef.errors?.['required']" class="p-error">
+              La descripción es obligatoria.
+            </p>
+            <p *ngIf="descRef.errors?.['minlength']" class="p-error">
+              La descripción debe tener al menos 10 caracteres.
+            </p>
+          </div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
+
+          <!-- Precio -->
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Precio</label>
-            <input type="number" name="price" [(ngModel)]="plate.price" step="0.01" required
-              class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+            <input
+              type="number"
+              name="price"
+              [(ngModel)]="plate.price"
+              required
+              min="1"
+              #priceRef="ngModel"
+              step="0.01"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3"
+              [class.border-red-500]="priceRef.invalid && priceRef.touched"
+              placeholder="Ej: 35000"
+            />
+            <div *ngIf="priceRef.invalid && priceRef.touched" class="mt-1">
+              <p *ngIf="priceRef.errors?.['required']" class="p-error">
+                El precio es obligatorio.
+              </p>
+              <p *ngIf="priceRef.errors?.['min']" class="p-error">
+                El precio debe ser mayor a 0.
+              </p>
+            </div>
           </div>
+
+          <!-- URL Imagen -->
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Imagen (URL)</label>
-            <input type="text" name="urlImage" [(ngModel)]="plate.urlImage" required
-              class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+            <input
+              type="text"
+              name="urlImage"
+              [(ngModel)]="plate.urlImage"
+              required
+              #urlRef="ngModel"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3"
+              [class.border-red-500]="urlRef.invalid && urlRef.touched"
+              placeholder="https://..."
+            />
+            <div *ngIf="urlRef.invalid && urlRef.touched" class="mt-1">
+              <p *ngIf="urlRef.errors?.['required']" class="p-error">
+                La URL de la imagen es obligatoria.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Categoría -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-2">Categoría</label>
+          <select
+            name="categoryId"
+            [(ngModel)]="plate.category.id"
+            required
+            [ngModel]="plate.category ? (plate.category.id === 0 ? null : plate.category.id) : null"
+            #catRef="ngModel"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3"
+            [class.border-red-500]="catRef.invalid && catRef.touched"
+          >
+            <option *ngFor="let category of categoryList" [ngValue]="category.id">{{category.name}}</option>
+          </select>
+          <div *ngIf="catRef.invalid && catRef.touched" class="mt-1">
+            <p class="p-error">Debes seleccionar una categoría.</p>
           </div>
         </div>
 
-        <div>
-          <label class="block font-semibold text-gray-700 mb-2">Categoría</label>
-          <select name="categoryId" [(ngModel)]="plate.category.id" required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3">
-            <option [value]="0" disabled>Selecciona una categoría</option>
-            <option [value]="1">Entradas</option>
-            <option [value]="2">Platos Fuertes</option>
-            <option [value]="3">Postres</option>
-          </select>
-        </div>
-
+        <!-- Disponible -->
         <div class="flex items-center gap-3">
-          <input type="checkbox" name="available" [(ngModel)]="plate.available" class="w-5 h-5 accent-orange-500" />
+          <input
+            type="checkbox"
+            name="available"
+            [(ngModel)]="plate.available"
+            class="w-5 h-5 accent-orange-500"
+          />
           <label class="font-semibold text-gray-700">Disponible para venta</label>
         </div>
 
-        <button type="submit"
-          class="w-full bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-4 rounded-xl text-lg">
+        <!-- ③ Mensaje global si el form es inválido y fue tocado -->
+        <div
+          *ngIf="plateForm.invalid && plateForm.submitted"
+          class="bg-red-50 border border-red-300 text-red-700 rounded-lg px-4 py-3 text-sm"
+        >
+           Por favor completa todos los campos correctamente antes de guardar.
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-4 rounded-xl text-lg transition duration-200"
+          [class.opacity-60]="plateForm.invalid"
+        >
           Guardar Plato
         </button>
+
       </form>
     </div>
   </section>
 </main>
 
-<app-footer>
-
-</app-footer>
+<app-footer></app-footer>

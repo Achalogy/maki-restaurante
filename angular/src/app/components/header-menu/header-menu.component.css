@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header-button {
+  @apply flex gap-2 items-center justify-center rounded-full p-2 lg:px-4 text-2xl lg:text-base;
+}
+
+#header_menu {
+  @apply bg-maki-black text-white cursor-pointer;
+}
+
+#header_menu nav {
+  @apply flex p-6 md:px-12 gap-8 justify-between items-center;
+}
+
+.header-menu {
+  @apply flex gap-4 flex-grow justify-end items-center;
+}
+
+.header-menu a {
+  @apply header-button bg-white bg-opacity-5;
+}
+
+.header-profile a {
+  @apply header-button bg-white bg-opacity-15;
+}
+
+.header-button p {
+  @apply hidden lg:block;
+}

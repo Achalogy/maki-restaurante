@@ -7,41 +7,48 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@Entity
 @NoArgsConstructor
+@Entity
+@Table(name = "platos")
 public class Plato {
-    @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name = "nombre", length = 100, nullable = false)
-    private String nombre;
-    
-    @Column(name = "precio", nullable = false)
-    private double precio;
-    @Column(name = "descripcion", length = 1500, nullable = false)
-    private String descripcion;
-    @Column(name = "urlImage", length = 500, nullable = false)
-    private String urlImage;
-    @Column(name = "disponible", nullable = false)
-    private boolean disponible;
-    
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
 
-    public Plato(String nombre, double precio, String descripcion, String urlImage, boolean disponible) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private Long id;
+
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
+
+    @Column(name = "price", nullable = false)
+    private double price;
+
+    @Column(name = "description", length = 1500, nullable = false)
+    private String description;
+
+    @Column(name = "url_image", length = 500, nullable = false)
+    private String urlImage;
+
+    @Column(name = "available", nullable = false)
+    private boolean available;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = true)
+    private Categoria category;
+
+    // Constructor para creación manual (sin ID)
+    public Plato(String name, double price, String description, String urlImage, boolean available) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
         this.urlImage = urlImage;
-        this.disponible = disponible;
+        this.available = available;
     }
 }

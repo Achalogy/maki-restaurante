@@ -20,7 +20,9 @@ export class OperatorViewComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
-    this.operator = this.operatorService.selectById(id)
+    this.operatorService.selectById(id).subscribe((op) => {
+      this.operator = op
+    })
   }
 
   editOperator() {

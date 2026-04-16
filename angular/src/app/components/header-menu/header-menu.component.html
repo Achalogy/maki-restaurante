@@ -1,0 +1,24 @@
+<header id="header_menu" >
+  <nav>
+    <app-maki-logo></app-maki-logo>
+
+    <div class="header-menu">
+      <a (click)="navigateTo('plate/menu')">
+        <i class="ti ti-picnic-table"></i>
+        <p>Ver Menú</p>
+      </a>
+      <a (click)="navigateTo('')">
+        <i class="ti ti-truck-delivery"></i>
+         <p>Domicilios</p>
+      </a>
+    </div>
+
+    <div class="header-profile">
+      <a (click)="navigateTo('/client/log-in')">
+        <i class="ti ti-user"></i>
+        <p>Iniciar Sesión</p>
+      </a>
+    </div>
+
+  </nav>
+</header>

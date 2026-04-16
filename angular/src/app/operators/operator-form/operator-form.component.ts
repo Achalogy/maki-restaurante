@@ -34,23 +34,28 @@ export class OperatorFormComponent implements OnInit {
 
     if (id) {
       this.modo = 'editar';
-      const encontrado = this.operatorService.selectById(+id);
-      if (encontrado) {
-        this.operator = { ...encontrado };
-      } else {
-        this.router.navigate(['/operator/crud']);
-      }
+
+      this.operatorService.selectById(+id).subscribe(found => {
+        if(found)
+          this.operator = found
+        else 
+          this.router.navigate(['/operator/crud']);
+      })
+
     }
   }
 
   onSubmit(): void {
     if (this.modo === 'crear') {
-      this.operatorService.create(this.operator);
+      this.operatorService.create(this.operator).subscribe(() => {
+        this.router.navigate(['/operator/crud']);
+      })
     } else {
-      this.operatorService.update(+this.operator.id, this.operator);
+      this.operatorService.update(+this.operator.id, this.operator).subscribe(() => {
+        this.router.navigate(['/operator/crud']);
+      })
     }
 
-    this.router.navigate(['/operator/crud']);
   }
 
   cancelar(): void {

@@ -13,25 +13,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Operador {
+public class Operator {
   @Id
   @Column(name = "id", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "nombre", length = 100, nullable = false)
-  private String nombre;
+  @Column(name = "name", length = 100, nullable = false)
+  private String name;
 
-  @Column(name="usuario", length = 100, nullable = false, unique = true)
-  private String usuario;
+  @Column(name = "username", length = 100, nullable = false, unique = true)
+  private String username;
 
-  @Column(name="contrasena", length = 100, nullable = false)
-  private String contrasena;
+  @Column(name = "password", length = 100, nullable = false)
+  private String password;
 
-  public Operador(String nombre, String usuario, String contrasena) {
-    this.nombre = nombre;
-    this.usuario = usuario;
-    this.contrasena = contrasena;
+  public Operator(String name, String username, String password) {
+    this.name = name;
+    this.username = username;
+    this.password = password;
   }
-  
 }

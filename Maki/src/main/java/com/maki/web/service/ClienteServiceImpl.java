@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -26,7 +26,7 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Collection<Cliente> selectAll() {
+  public List<Cliente> selectAll() {
     return repo.findAll();
   }
 
@@ -86,10 +86,10 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente registrarCliente(String nombre, String apellido, String correo, String contrasena, String telefono,
+  public Cliente registrarCliente(String nombre, String apellido, String correo, String Password, String telefono,
       String direccion) throws EntityConstraintException {
     Cliente nuevo = new Cliente(
-      nombre, apellido, correo, contrasena, telefono, direccion
+      nombre, apellido, correo, Password, telefono, direccion
     );
 
     return this.insert(nuevo);
@@ -103,11 +103,11 @@ public class ClienteServiceImpl implements ClienteService {
 
     Cliente repoClient = this.selectById(cliente.getId());
 
-    if (!repoClient.getCorreo().equalsIgnoreCase(cliente.getCorreo())) {
-      throw new InvalidCredentialsException("El correo no coincide con el ID proporcionado");
+    if (!repoClient.getEmail().equalsIgnoreCase(cliente.getEmail())) {
+      throw new InvalidCredentialsException("El Email no coincide con el ID proporcionado");
     }
 
-    if (!repoClient.getContrasena().equals(cliente.getContrasena())) {
+    if (!repoClient.getPassword().equals(cliente.getPassword())) {
       throw new InvalidCredentialsException("Contraseña incorrecta");
     }
 
@@ -115,12 +115,12 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente verificarCredenciales(String correo, String contrasena)
+  public Cliente verificarCredenciales(String correo, String Password)
       throws InvalidCredentialsException, EntityNotFoundException {
-    Cliente repoClient = repo.findByCorreo(correo)
+    Cliente repoClient = repo.findByEmail(correo)
         .orElseThrow(() -> new EntityNotFoundException("No existe un cliente registrado con el correo: " + correo));
 
-    if (!repoClient.getContrasena().equals(contrasena)) {
+    if (!repoClient.getPassword().equals(Password)) {
       throw new InvalidCredentialsException("Credenciales inválidas");
     }
 

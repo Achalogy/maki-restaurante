@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface AdicionalCategoriaRepository extends JpaRepository<AdicionalCategoria, Long> {
-  List<AdicionalCategoria> findByCategoria_Id(Long categoriaId);
+  List<AdicionalCategoria> findByCategory_Id(Long categoryId);
+  List<AdicionalCategoria> findByAditional_Id(Long aditionalId);
 }

@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "bruno"
+  type: workspace
+
+collections:
+  - name: "v1"
+    path: "collections/v1"
+
+specs:
+
+docs: ''

@@ -1,6 +1,7 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Categoria;
+import com.maki.web.entities.PedidoDetalles;
 import com.maki.web.entities.Plato;
 import com.maki.web.repository.PlatoRepository;
 import com.maki.web.exception.EntityConstraintException;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class PlatoServiceImpl implements PlatoService {
@@ -17,8 +18,11 @@ public class PlatoServiceImpl implements PlatoService {
   @Autowired
   private PlatoRepository repo;
 
+  @Autowired
+  private PedidoDetallesService pedidoDetallesService;
+
   @Override
-  public Collection<Plato> selectAll() {
+  public List<Plato> selectAll() {
     return repo.findAll();
   }
 
@@ -59,6 +63,13 @@ public class PlatoServiceImpl implements PlatoService {
     if (!repo.existsById(id)) {
       throw new EntityNotFoundException("No se puede eliminar: Plato no encontrado con ID: " + id);
     }
+
+    for( PedidoDetalles pd: pedidoDetallesService.selectAll()) {
+      if(pd.getProducto() != null && pd.getProducto().getId().equals(id)) {
+        pedidoDetallesService.delete(pd);
+      }
+    }
+
     repo.deleteById(id);
   }
 
@@ -67,7 +78,7 @@ public class PlatoServiceImpl implements PlatoService {
   public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException {
     Plato plato = this.selectById(platoId);
 
-    plato.setCategoria(categoria);
+    plato.setCategory(categoria);
     
     repo.save(plato);
   }
