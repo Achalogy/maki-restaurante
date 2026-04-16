@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class DomiciliarioServiceImpl implements DomiciliarioService {
@@ -21,7 +21,7 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
   private PedidoService pedidoService;
 
   @Override
-  public Collection<Domiciliario> selectAll() {
+  public List<Domiciliario> selectAll() {
     return repo.findAll();
   }
 

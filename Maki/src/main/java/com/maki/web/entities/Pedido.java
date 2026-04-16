@@ -30,7 +30,7 @@ public class Pedido {
   private String estado;
 
   @ManyToOne
-  @JoinColumn(name = "cliente_id", nullable = false)
+  @JoinColumn(name = "cliente_id", nullable = true)
   private Cliente cliente;
 
   @ManyToOne
@@ -39,7 +39,7 @@ public class Pedido {
 
   @ManyToOne
   @JoinColumn(name = "operador_id", nullable = true)
-  private Operador operador;
+  private Operator operador;
 
   public Pedido(Cliente cliente) {
     this.cliente = cliente;

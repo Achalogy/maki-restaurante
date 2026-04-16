@@ -20,13 +20,13 @@ public class Adicional {
   private Long id;
 
   @Column(length = 100, nullable = false)
-  private String nombre;
+  private String name;
 
   @Column(nullable = false)
-  private double precio;
+  private double price;
 
-  public Adicional(String nombre, double precio) {
-    this.nombre = nombre;
-    this.precio = precio;
+  public Adicional(String name, double price) {
+    this.name = name;
+    this.price = price;
   }
 }

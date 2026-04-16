@@ -1,0 +1,21 @@
+info:
+  name: client by id (edit)
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/client/2"
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "aguacate"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

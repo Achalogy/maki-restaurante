@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,36 +14,45 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "clientes")
 public class Cliente {
+
     @Id
-    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "nombre", length = 100, nullable = false)
-    private String nombre;
-    @Column(name = "apellido", length = 100, nullable = false)
-    private String apellido;
-    @Column(name = "correo", length = 100, nullable = false, unique = true)
-    private String correo;
-    @Column(name = "contrasena", length = 100, nullable = false, unique = true)
-    private String contrasena;
-    @Column(name = "telefono", length = 100, nullable = false)
-    private String telefono;
-    @Column(name = "direccion", length = 100, nullable = false)
-    private String direccion;
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
 
-    public Cliente(String correo, String contrasena) {
-        this.correo = correo;
-        this.contrasena = contrasena;
+    @Column(name = "surname", length = 100, nullable = false)
+    private String surname;
+
+    @Column(name = "email", length = 100, nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password", length = 100, nullable = false)
+    private String password;
+
+    @Column(name = "phone", length = 100, nullable = false)
+    private String phone;
+
+    @Column(name = "address", length = 100, nullable = false)
+    private String address;
+
+    // Constructor para Login/Auth
+    public Cliente(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public Cliente(String nombre, String apellido, String correo, String contrasena, String telefono, String direccion) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.contrasena = contrasena;
-        this.telefono = telefono;
-        this.direccion = direccion;
+    // Constructor para registro/creación (sin ID)
+    public Cliente(String name, String surname, String email, String password, String phone, String address) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.address = address;
     }
 }

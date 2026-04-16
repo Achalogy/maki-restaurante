@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -21,7 +21,7 @@ public class PedidoServiceImpl implements PedidoService {
   private PedidoDetallesService pedidoDetallesService;
 
   @Override
-  public Collection<Pedido> selectAll() {
+  public List<Pedido> selectAll() {
     return repo.findAll();
   }
 

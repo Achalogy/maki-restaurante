@@ -1,5 +1,6 @@
 package com.maki.web.service;
 
+import com.maki.web.entities.AdicionalCategoria;
 import com.maki.web.entities.Categoria;
 import com.maki.web.repository.CategoriaRepository;
 
@@ -11,7 +12,7 @@ import com.maki.web.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -22,8 +23,11 @@ public class CategoriaServiceImpl implements CategoriaService {
   @Autowired
   PlatoService platoService;
 
+  @Autowired
+  AdicionalCategoriaService adicionalCategoriaService;
+
   @Override
-  public Collection<Categoria> selectAll() {
+  public List<Categoria> selectAll() {
     return repo.findAll();
   }
 
@@ -53,13 +57,14 @@ public class CategoriaServiceImpl implements CategoriaService {
     Categoria categoria = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada: " + id));
 
-    Categoria none = repo.findById(1L)
-        .orElseThrow(() -> new EntityNotFoundException("Categoria 'None' no existe"));
-
     for (Plato p : platoService.selectAll()) {
-      if (p.getCategoria() != null && p.getCategoria().getId().equals(id)) {
-        p.setCategoria(none);
-        platoService.update(p);
+      if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
+        platoService.delete(p);
+      }
+    }
+    for (AdicionalCategoria p : adicionalCategoriaService.selectAll()) {
+      if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
+        adicionalCategoriaService.delete(p);
       }
     }
 

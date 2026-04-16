@@ -1,0 +1,29 @@
+info:
+  name: create plate
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/plate?categoryId=3"
+  params:
+    - name: categoryId
+      value: "3"
+      type: query
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Sushi Maki Especial",
+        "price": 25.50,
+        "description": "Roll acevichado con topping de aguacate",
+        "urlImage": "http://imagen.png",
+        "available": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

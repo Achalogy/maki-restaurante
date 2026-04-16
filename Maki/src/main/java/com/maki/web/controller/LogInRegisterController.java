@@ -27,7 +27,7 @@ public class LogInRegisterController {
     @PostMapping("/log-in")
     public String loggearCliente(@ModelAttribute("cliente") Cliente cliente, HttpSession session) {
         try {
-            Cliente clienteSesion = clienteService.verificarCredenciales(cliente.getCorreo(), cliente.getContrasena());
+            Cliente clienteSesion = clienteService.verificarCredenciales(cliente.getEmail(), cliente.getPassword());
 
             session.setAttribute("clienteSesion", clienteSesion);
 
