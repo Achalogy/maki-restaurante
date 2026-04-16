@@ -31,3 +31,8 @@ body {
 .p-error {
   @apply text-red-500;
 }
+
+.field-error {
+  @apply text-red-500 text-sm mt-1;
+  display: block;
+}
