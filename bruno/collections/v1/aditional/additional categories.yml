@@ -1,11 +1,11 @@
 info:
-  name: aditional categories
+  name: additional categories
   type: http
   seq: 5
 
 http:
   method: GET
-  url: "{{host}}/api/v1/aditional/categories"
+  url: "{{host}}/api/v1/additional/categories"
   auth: inherit
 
 settings:
