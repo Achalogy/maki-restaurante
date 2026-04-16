@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Aditional } from 'src/app/interfaces/aditional.interface';
+import { Additional } from 'src/app/interfaces/additional.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
-import { AditionalService } from 'src/app/service/aditional.service';
+import { AdditionalService } from 'src/app/service/additional.service';
 import { PlateService } from 'src/app/service/plate.service';
 
 @Component({
@@ -16,12 +16,12 @@ export class PlateViewComponent {
 
   selectedAdditionals: number[] = [];
 
-  additionalsList: Aditional[] = [];
+  additionalsList: Additional[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private plateService: PlateService,
-    private aditionalService: AditionalService
+    private additionalService: AdditionalService
   ) { }
 
   ngOnInit(): void {
@@ -38,8 +38,8 @@ export class PlateViewComponent {
 
   loadAdditionals(categoryId: number) {
 
-    this.aditionalService.selectByCategoryId(categoryId).subscribe(aditionals => {
-      this.additionalsList = aditionals
+    this.additionalService.selectByCategoryId(categoryId).subscribe(additionals => {
+      this.additionalsList = additionals
       console.log(this.additionalsList)
     })
     

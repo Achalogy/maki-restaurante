@@ -1,4 +1,4 @@
-export interface Aditional {
+export interface Additional {
   id: number,
   name: string,
   price: number

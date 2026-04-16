@@ -28,9 +28,9 @@ import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.compo
 import { GatewayComponent } from './admin/gateway/gateway.component';
 import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
 import { provideHttpClient } from '@angular/common/http';
-import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
-import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
-import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
+import { AdditionalCrudComponent } from './additionals/additional-crud/additional-crud.component';
+import { AdditionalFormComponent } from './additionals/additional-form/additional-form.component';
+import { AdditionalEditComponent } from './additionals/additional-edit/additional-edit.component';
 import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
 
 @NgModule({
@@ -56,9 +56,9 @@ import { OperatorFormComponent } from './operators/operator-form/operator-form.c
     MakiLogoComponent,
     GatewayComponent,
     ClientProfileComponent,
-    AditionalCrudComponent,
-    AditionalFormComponent,
-    AditionalEditComponent,
+    AdditionalCrudComponent,
+    AdditionalFormComponent,
+    AdditionalEditComponent,
   ],  
   imports: [
     BrowserModule,
