@@ -1,20 +1,22 @@
-
 <main>  
   <div class="login-container">
     <div class="card-login">
     
       <app-maki-logo></app-maki-logo>
     
-      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm" >
+      <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm">
     
         <div>
           <input 
             name="email"
-            type="text" 
+            type="email" 
             [(ngModel)]="email"
             required
+            email
             #emailRef="ngModel"
-            placeholder="Correo" />
+            placeholder="Correo"
+            [class.border-2]="emailRef.invalid && emailRef.touched"
+            [class.border-red-500]="emailRef.invalid && emailRef.touched" />
         </div>
     
         <div>
@@ -23,25 +25,38 @@
             type="password"
             [(ngModel)]="password"
             required
-            #passwordRef="ngModel" 
-            placeholder="Contraseña" />
+            minlength="6"
+            #passwordRef="ngModel"
+            placeholder="Contraseña"
+            [class.border-2]="passwordRef.invalid && passwordRef.touched"
+            [class.border-red-500]="passwordRef.invalid && passwordRef.touched" />
         </div>
     
+        <!-- ✅ FIX: el div ahora tiene display:flex gracias al CSS corregido -->
         <div id="log-in-errors">
-          <p *ngIf="emailRef.invalid && emailRef.touched">
-            El correo es obligatorio
+          <p *ngIf="emailRef.errors?.['required'] && emailRef.touched">
+            El correo es obligatorio.
           </p>
-          <p *ngIf="passwordRef.invalid && passwordRef.touched">
-            La contraseña es obligatoria
+          <p *ngIf="emailRef.errors?.['email'] && emailRef.touched">
+            Ingresa un correo válido.
+          </p>
+          <p *ngIf="passwordRef.errors?.['required'] && passwordRef.touched">
+            La contraseña es obligatoria.
+          </p>
+          <p *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched">
+            La contraseña debe tener al menos 6 caracteres.
           </p>
         </div>
     
-        <div >
-          <button type="submit">Iniciar sesión</button>
+        <div>
+      
+          <button type="submit" [disabled]="clientForm.invalid">
+            Iniciar sesión
+          </button>
         </div>
     
         <div class="login-urls">
-          <a class="text-left" href="#" >¿Se te olvidó la contraseña?</a>
+          <a class="text-left" href="#">¿Se te olvidó la contraseña?</a>
           <a class="text-right" href="/client/sign-up">¿No tienes una cuenta?</a>
         </div>
     

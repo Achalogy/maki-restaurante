@@ -6,7 +6,6 @@ main {
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
-
 }
 
 .login-container {
@@ -30,11 +29,15 @@ main {
 }
 
 #log-in-errors {
-  @apply flex-col gap-0 text-red-500
+  @apply flex flex-col gap-1 text-red-400 text-sm;
 }
 
 .card-login button {
   @apply bg-maki-orange text-white w-full p-2 lg:p-3 rounded font-semibold text-base lg:text-lg
+}
+
+.card-login button:disabled {
+  @apply opacity-50 cursor-not-allowed;
 }
 
 .login-urls {
