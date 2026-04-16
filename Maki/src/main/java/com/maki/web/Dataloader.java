@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
 
-import com.maki.web.entities.Aditional;
-import com.maki.web.entities.AditionalCategory;
+import com.maki.web.entities.Additional;
+import com.maki.web.entities.AdditionalCategory;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Client;
 import com.maki.web.entities.Operator;
@@ -16,18 +16,18 @@ import com.maki.web.entities.Plate;
 import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.Delivery;
-import com.maki.web.entities.AditionalOrderDetails;
-import com.maki.web.repository.AdicionalCategoriaRepository;
-import com.maki.web.repository.AdicionalPedidoDetallesRepository;
-import com.maki.web.repository.AdicionalRepository;
-import com.maki.web.repository.AdministradorRepository;
-import com.maki.web.repository.CategoriaRepository;
-import com.maki.web.repository.ClienteRepository;
-import com.maki.web.repository.OperadorRepository;
-import com.maki.web.repository.PedidoDetallesRepository;
-import com.maki.web.repository.PlatoRepository;
-import com.maki.web.repository.PedidoRepository;
-import com.maki.web.repository.DomiciliarioRepository;
+import com.maki.web.entities.AdditionalOrderDetails;
+import com.maki.web.repository.AdditionalCategoryRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.AdditionalRepository;
+import com.maki.web.repository.AdministratorRepository;
+import com.maki.web.repository.CategoryRepository;
+import com.maki.web.repository.ClientRepository;
+import com.maki.web.repository.OperatorRepository;
+import com.maki.web.repository.OrderDetailRepository;
+import com.maki.web.repository.PlateRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
+import com.maki.web.repository.DeliveryRepository;
 import java.util.Random;
 
 @Component
@@ -35,28 +35,28 @@ import java.util.Random;
 public class Dataloader implements CommandLineRunner {
 
         @Autowired
-        private CategoriaRepository categoriaRepo;
+        private CategoryRepository categoriaRepo;
         @Autowired
-        private PlatoRepository plateRepo;
+        private PlateRepository plateRepo;
         @Autowired
-        private ClienteRepository clientRepo;
+        private ClientRepository clientRepo;
         @Autowired
-        private AdicionalRepository aditionalRepo;
+        private AdditionalRepository additionalRepo;
         @Autowired
-        private AdicionalCategoriaRepository adcatRepo;
+        private AdditionalCategoryRepository adcatRepo;
         @Autowired
-        private AdministradorRepository adminRep;
+        private AdministratorRepository adminRep;
         @Autowired
-        private OperadorRepository operatorRepo;
+        private OperatorRepository operatorRepo;
         @Autowired
-        private PedidoRepository orderRepo;
+        private PurchaseOrderRepository orderRepo;
         @Autowired
-        private PedidoDetallesRepository orderDetallesRepo;
+        private OrderDetailRepository orderDetallesRepo;
 
         @Autowired
-        private DomiciliarioRepository deliveryRepo;
+        private DeliveryRepository deliveryRepo;
         @Autowired
-        private AdicionalPedidoDetallesRepository aditionalPedidoDetallesRepo;
+        private AdditionalOrderDetailsRepository additionalPedidoDetallesRepo;
 
         @Override
         public void run(String... args) throws Exception {
@@ -100,7 +100,7 @@ public class Dataloader implements CommandLineRunner {
                 ramen.setCategory(platesFuertes);
                 plateRepo.save(ramen);
                 Plate tempura = new Plate("Tempura", 43960,
-                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa traditional.",
+                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa tradditional.",
                                 "https://images.unsplash.com/photo-1677743537607-f7fc9273ec4d?w=500", true);
                 tempura.setCategory(entradas);
                 plateRepo.save(tempura);
@@ -120,7 +120,7 @@ public class Dataloader implements CommandLineRunner {
                 edamame.setCategory(entradas);
                 plateRepo.save(edamame);
                 Plate sopaMiso = new Plate("Sopa Miso", 15960,
-                                "Sopa traditional japonesa con pasta miso fermentada, tofu y alga marina.",
+                                "Sopa tradditional japonesa con pasta miso fermentada, tofu y alga marina.",
                                 "https://images.unsplash.com/photo-1610393069309-2607fcf74146?w=500", true);
                 sopaMiso.setCategory(entradas);
                 plateRepo.save(sopaMiso);
@@ -265,18 +265,18 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(brownie);
 
                 Plate teVerde = new Plate("Té Verde", 7960,
-                                "Té verde traditional japonés con sabor fresco y ligero.",
+                                "Té verde tradditional japonés con sabor fresco y ligero.",
                                 "https://image.tuasaude.com/media/article/yp/dt/beneficios-del-te-verde_17350.jpg",
                                 true);
                 teVerde.setCategory(bebidas);
                 plateRepo.save(teVerde);
 
-                Plate sakeTraditional = new Plate("Sake Traditional", 35960,
+                Plate sakeTradditional = new Plate("Sake Tradditional", 35960,
                                 "Bebida alcohólica japonesa elaborada con arroz fermentado con notas complejas de sabor.",
                                 "https://monstersushi.es/blog/wp-content/uploads/2022/04/sake-robata-barcelona-e1637227199971-1024x784-1.png",
                                 true);
-                sakeTraditional.setCategory(bebidas);
-                plateRepo.save(sakeTraditional);
+                sakeTradditional.setCategory(bebidas);
+                plateRepo.save(sakeTradditional);
 
                 Plate limonada = new Plate("Limonada Fresca", 9960,
                                 "Bebida refrescante y natural preparada con limón fresco y azúcar.",
@@ -293,7 +293,7 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(jugoNatural);
 
                 Plate aguaArroz = new Plate("Agua de Arroz", 5960,
-                                "Bebida traditional refrescante hecha con arroz y un toque de vainilla.",
+                                "Bebida tradditional refrescante hecha con arroz y un toque de vainilla.",
                                 "https://image.tuasaude.com/media/article/pc/nx/agua-de-arroz-para-la-diarrea_19076.jpg",
                                 true);
                 aguaArroz.setCategory(bebidas);
@@ -305,56 +305,56 @@ public class Dataloader implements CommandLineRunner {
                 smoothie.setCategory(bebidas);
                 plateRepo.save(smoothie);
 
-                Aditional algaNori = new Aditional("Alga Nori", 3960);
-                aditionalRepo.save(algaNori);
+                Additional algaNori = new Additional("Alga Nori", 3960);
+                additionalRepo.save(algaNori);
 
-                Aditional sésamo = new Aditional("Semillas de Sésamo", 2960);
-                aditionalRepo.save(sésamo);
+                Additional sésamo = new Additional("Semillas de Sésamo", 2960);
+                additionalRepo.save(sésamo);
 
-                Aditional rayu = new Aditional("Rayu", 2960);
-                aditionalRepo.save(rayu);
+                Additional rayu = new Additional("Rayu", 2960);
+                additionalRepo.save(rayu);
 
-                Aditional jengibre = new Aditional("Jengibre Encurtido", 1960);
-                aditionalRepo.save(jengibre);
+                Additional jengibre = new Additional("Jengibre Encurtido", 1960);
+                additionalRepo.save(jengibre);
 
-                Aditional cebolleta = new Aditional("Cebolleta Fresca", 1960);
-                aditionalRepo.save(cebolleta);
+                Additional cebolleta = new Additional("Cebolleta Fresca", 1960);
+                additionalRepo.save(cebolleta);
 
-                Aditional mayo = new Aditional("Mayonesa Japonesa", 2960);
-                aditionalRepo.save(mayo);
+                Additional mayo = new Additional("Mayonesa Japonesa", 2960);
+                additionalRepo.save(mayo);
 
-                Aditional sriracha = new Aditional("Sriracha", 2960);
-                aditionalRepo.save(sriracha);
+                Additional sriracha = new Additional("Sriracha", 2960);
+                additionalRepo.save(sriracha);
 
-                Aditional aguacate = new Aditional("Aguacate Extra", 5960);
-                aditionalRepo.save(aguacate);
+                Additional aguacate = new Additional("Aguacate Extra", 5960);
+                additionalRepo.save(aguacate);
 
-                Aditional panko = new Aditional("Panko Crujiente", 3960);
-                aditionalRepo.save(panko);
+                Additional panko = new Additional("Panko Crujiente", 3960);
+                additionalRepo.save(panko);
 
-                Aditional curry = new Aditional("Curry Japonés", 4960);
-                aditionalRepo.save(curry);
+                Additional curry = new Additional("Curry Japonés", 4960);
+                additionalRepo.save(curry);
 
-                Aditional wasabi = new Aditional("Wasabi", 3960);
-                aditionalRepo.save(wasabi);
+                Additional wasabi = new Additional("Wasabi", 3960);
+                additionalRepo.save(wasabi);
 
-                Aditional salsasoja = new Aditional("Salsa de Soja", 1960);
-                aditionalRepo.save(salsasoja);
+                Additional salsasoja = new Additional("Salsa de Soja", 1960);
+                additionalRepo.save(salsasoja);
 
-                Aditional teriyaki = new Aditional("Salsa Teriyaki", 3960);
-                aditionalRepo.save(teriyaki);
+                Additional teriyaki = new Additional("Salsa Teriyaki", 3960);
+                additionalRepo.save(teriyaki);
 
-                Aditional bonito = new Aditional("Copos de Bonito", 4960);
-                aditionalRepo.save(bonito);
+                Additional bonito = new Additional("Copos de Bonito", 4960);
+                additionalRepo.save(bonito);
 
-                Aditional ponzu = new Aditional("Salsa Ponzu", 2960);
-                aditionalRepo.save(ponzu);
+                Additional ponzu = new Additional("Salsa Ponzu", 2960);
+                additionalRepo.save(ponzu);
 
                 int cantidadCategorias = (int) categoriaRepo.findAll().size();
 
-                for (Aditional aditional : aditionalRepo.findAll()) {
+                for (Additional additional : additionalRepo.findAll()) {
                         int randomNum = random.nextInt(1, cantidadCategorias + 1);
-                        adcatRepo.save(new AditionalCategory((long) randomNum, aditional.getId()));
+                        adcatRepo.save(new AdditionalCategory((long) randomNum, additional.getId()));
                 }
 
                 adminRep.save(new Administrator("Miguel", "eveyzoe",
@@ -687,16 +687,16 @@ public class Dataloader implements CommandLineRunner {
                 OrderDetails detalle26 = new OrderDetails(order21, plateRepo.findById((long) random.nextInt(1, 38)).orElse(null), random.nextInt(1, 6));
                 orderDetallesRepo.save(detalle26);
 
-                AditionalOrderDetails aditionalDetalle1 = new AditionalOrderDetails(orderDetallesRepo.findById(1L).orElse(null), aditionalRepo.findById(1L).orElse(null));
-                aditionalPedidoDetallesRepo.save(aditionalDetalle1);
-                AditionalOrderDetails aditionalDetalle2 = new AditionalOrderDetails(orderDetallesRepo.findById(2L).orElse(null), aditionalRepo.findById(2L).orElse(null));
-                aditionalPedidoDetallesRepo.save(aditionalDetalle2);
-                AditionalOrderDetails aditionalDetalle3 = new AditionalOrderDetails(orderDetallesRepo.findById(3L).orElse(null), aditionalRepo.findById(3L).orElse(null));
-                aditionalPedidoDetallesRepo.save(aditionalDetalle3);
-                AditionalOrderDetails aditionalDetalle4 = new AditionalOrderDetails(orderDetallesRepo.findById(4L).orElse(null), aditionalRepo.findById(4L).orElse(null));
-                aditionalPedidoDetallesRepo.save(aditionalDetalle4);
-                AditionalOrderDetails aditionalDetalle5 = new AditionalOrderDetails(orderDetallesRepo.findById(5L).orElse(null), aditionalRepo.findById(5L).orElse(null));
-                aditionalPedidoDetallesRepo.save(aditionalDetalle5);
+                AdditionalOrderDetails additionalDetalle1 = new AdditionalOrderDetails(orderDetallesRepo.findById(1L).orElse(null), additionalRepo.findById(1L).orElse(null));
+                additionalPedidoDetallesRepo.save(additionalDetalle1);
+                AdditionalOrderDetails additionalDetalle2 = new AdditionalOrderDetails(orderDetallesRepo.findById(2L).orElse(null), additionalRepo.findById(2L).orElse(null));
+                additionalPedidoDetallesRepo.save(additionalDetalle2);
+                AdditionalOrderDetails additionalDetalle3 = new AdditionalOrderDetails(orderDetallesRepo.findById(3L).orElse(null), additionalRepo.findById(3L).orElse(null));
+                additionalPedidoDetallesRepo.save(additionalDetalle3);
+                AdditionalOrderDetails additionalDetalle4 = new AdditionalOrderDetails(orderDetallesRepo.findById(4L).orElse(null), additionalRepo.findById(4L).orElse(null));
+                additionalPedidoDetallesRepo.save(additionalDetalle4);
+                AdditionalOrderDetails additionalDetalle5 = new AdditionalOrderDetails(orderDetallesRepo.findById(5L).orElse(null), additionalRepo.findById(5L).orElse(null));
+                additionalPedidoDetallesRepo.save(additionalDetalle5);
 
         }
 

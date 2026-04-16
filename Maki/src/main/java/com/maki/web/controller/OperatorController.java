@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Operator;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.service.OperadorService;
+import com.maki.web.service.OperatorService;
 
 @RestController
 @RequestMapping("/api/v1/operator")
@@ -16,7 +16,7 @@ import com.maki.web.service.OperadorService;
 public class OperatorController {
 
     @Autowired
-    private OperadorService OperatorService;
+    private OperatorService OperatorService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
