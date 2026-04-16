@@ -114,15 +114,12 @@
             name="categoryId"
             [(ngModel)]="plate.category.id"
             required
-            [ngModel]="plate.category.id === 0 ? null : plate.category.id"
+            [ngModel]="plate.category ? (plate.category.id === 0 ? null : plate.category.id) : null"
             #catRef="ngModel"
             class="w-full border border-gray-300 rounded-lg px-4 py-3"
             [class.border-red-500]="catRef.invalid && catRef.touched"
           >
-            <option [ngValue]="null" disabled>Selecciona una categoría</option>
-            <option [ngValue]="1">Entradas</option>
-            <option [ngValue]="2">Platos Fuertes</option>
-            <option [ngValue]="3">Postres</option>
+            <option *ngFor="let category of categoryList" [ngValue]="category.id">{{category.name}}</option>
           </select>
           <div *ngIf="catRef.invalid && catRef.touched" class="mt-1">
             <p class="p-error">Debes seleccionar una categoría.</p>

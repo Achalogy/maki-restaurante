@@ -5,7 +5,15 @@ info:
 
 http:
   method: POST
-  url: "{{host}}/api/v1/aditional"
+  url: "{{host}}/api/v1/aditional/1/categories"
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "id": 1
+        }
+      ]
   auth: inherit
 
 settings:

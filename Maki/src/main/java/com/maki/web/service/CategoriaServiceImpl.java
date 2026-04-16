@@ -59,8 +59,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     for (Plato p : platoService.selectAll()) {
       if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
-        p.setCategory(null);
-        platoService.update(p);
+        platoService.delete(p);
       }
     }
     for (AdicionalCategoria p : adicionalCategoriaService.selectAll()) {
