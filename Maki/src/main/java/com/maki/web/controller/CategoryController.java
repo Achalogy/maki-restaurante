@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.maki.web.entities.Category;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.service.CategoriaService;
+import com.maki.web.service.CategoryService;
 
 @RequestMapping("/api/v1/category")
 
@@ -23,7 +23,7 @@ import com.maki.web.service.CategoriaService;
 public class CategoryController {
   
     @Autowired
-    private CategoriaService categoriaService;
+    private CategoryService categoriaService;
 
     @GetMapping("")
     public List<Category> getAllCategories() {
