@@ -37,8 +37,6 @@ export class PlateEditComponent {
         this.categoryService.selectAll().subscribe(cats => this.categoryList = cats);
         this.plate = plate;
       }
-      // Si no existe, plate queda con sus valores por defecto
-      // y el template mostrará el ng-template #notFound
       
     });
   }

@@ -68,6 +68,7 @@ export class PlateTableComponent {
         this.plateService.selectAll().subscribe(
           (plates) => this.plateList = plates
         )
+        this.categoryService.selectAll().subscribe(categories => this.categoryList = categories)
       })
       
     }
@@ -78,9 +79,10 @@ export class PlateTableComponent {
       '¿Estás seguro de que deseas eliminar esta categoria?',
     )) {
       this.categoryService.delete(id).subscribe(() => {
-        this.categoryService.selectAll().subscribe(
-          (categories) => this.categoryList = categories
+        this.plateService.selectAll().subscribe(
+          (plates) => this.plateList = plates
         )
+        this.categoryService.selectAll().subscribe(categories => this.categoryList = categories)
       })
       
     }

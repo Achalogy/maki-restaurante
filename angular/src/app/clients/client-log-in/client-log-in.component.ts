@@ -32,6 +32,7 @@ export class ClientLogInComponent {
       },
       error: (err) => {
         if (err.status === 400) {
+          alert("credenciales incorrectas")
           this.router.navigate(["/client/log-in"], {
             queryParams: { error: 'credentials' }
           });
