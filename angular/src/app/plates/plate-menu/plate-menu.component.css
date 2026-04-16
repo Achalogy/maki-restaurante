@@ -10,7 +10,7 @@
 
 /* Image takes up exactly half the card */
 .food-menu-item img {
-  @apply w-1/2 h-[25dvh] xl:h-[35dvh] object-cover flex-shrink-0;
+  @apply w-1/2 h-full object-cover flex-shrink-0;
 }
 
 /* Text side takes the other half */
