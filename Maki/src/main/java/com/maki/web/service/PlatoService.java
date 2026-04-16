@@ -1,10 +1,10 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Categoria;
-import com.maki.web.entities.Plato;
+import com.maki.web.entities.Category;
+import com.maki.web.entities.Plate;
 import com.maki.web.exception.EntityNotFoundException;
 
-public interface PlatoService extends ServiceInterface<Plato> {
+public interface PlatoService extends ServiceInterface<Plate> {
 
-  public void cambiarCategoria(Categoria categoria, Long platoId) throws EntityNotFoundException;
+  public void cambiarCategoria(Category categoria, Long platoId) throws EntityNotFoundException;
 }

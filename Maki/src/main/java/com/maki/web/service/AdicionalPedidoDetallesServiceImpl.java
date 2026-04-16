@@ -1,6 +1,6 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.AdicionalPedidoDetalles;
+import com.maki.web.entities.AditionalOrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.AdicionalPedidoDetallesRepository;
@@ -16,18 +16,18 @@ public class AdicionalPedidoDetallesServiceImpl implements AdicionalPedidoDetall
   private AdicionalPedidoDetallesRepository repo;
 
   @Override
-  public List<AdicionalPedidoDetalles> selectAll() {
+  public List<AditionalOrderDetails> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public AdicionalPedidoDetalles selectById(Long id) throws EntityNotFoundException {
+  public AditionalOrderDetails selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Registro de AdicionalPedidoDetalles no encontrado: " + id));
   }
 
   @Override
-  public AdicionalPedidoDetalles insert(AdicionalPedidoDetalles entity) throws EntityConstraintException {
+  public AditionalOrderDetails insert(AditionalOrderDetails entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de AdicionalPedidoDetalles no debe tener ID");
     }
@@ -35,7 +35,7 @@ public class AdicionalPedidoDetallesServiceImpl implements AdicionalPedidoDetall
   }
 
   @Override
-  public void delete(AdicionalPedidoDetalles entity) throws EntityNotFoundException {
+  public void delete(AditionalOrderDetails entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
@@ -48,7 +48,7 @@ public class AdicionalPedidoDetallesServiceImpl implements AdicionalPedidoDetall
   }
 
   @Override
-  public AdicionalPedidoDetalles update(AdicionalPedidoDetalles entity)
+  public AditionalOrderDetails update(AditionalOrderDetails entity)
       throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar, el registro no existe");

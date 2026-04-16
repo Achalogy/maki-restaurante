@@ -14,23 +14,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class AdicionalCategoria {
+public class AditionalCategory {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false)
-  private Categoria category;
+  private Category category;
 
   @ManyToOne
   @JoinColumn(name = "aditional_id", nullable = false)
-  private Adicional aditional;
+  private Aditional aditional;
 
-  public AdicionalCategoria(Long categoryId, Long aditionalId) {
-    this.category = new Categoria();
+  public AditionalCategory(Long categoryId, Long aditionalId) {
+    this.category = new Category();
     this.category.setId(categoryId);
-    this.aditional = new Adicional();
+    this.aditional = new Aditional();
     this.aditional.setId(aditionalId);
   }
 }

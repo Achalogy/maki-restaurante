@@ -13,23 +13,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Administrador {
+public class Administrator {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(length = 100, nullable = false)
-  private String nombre;
+  private String name;
 
   @Column(length = 100, nullable = false, unique = true)
-  private String usuario;
+  private String username;
 
   @Column(length = 100, nullable = false)
-  private String contrasena;
+  private String password;
 
-  public Administrador(String nombre, String usuario, String contrasena) {
-    this.nombre = nombre;
-    this.usuario = usuario;
-    this.contrasena = contrasena;
+  public Administrator(String name, String username, String password) {
+    this.name = name;
+    this.username = username;
+    this.password = password;
   }
 }

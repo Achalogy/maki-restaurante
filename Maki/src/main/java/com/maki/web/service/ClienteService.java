@@ -1,25 +1,25 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Cliente;
+import com.maki.web.entities.Client;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.exception.InvalidCredentialsException;
 
-public interface ClienteService extends ServiceInterface<Cliente> {
+public interface ClienteService extends ServiceInterface<Client> {
 
-  public Cliente registrarCliente(
-          Cliente cliente
+  public Client registrarCliente(
+          Client cliente
   ) throws EntityConstraintException;
 
-  public Cliente registrarCliente(
+  public Client registrarCliente(
           String nombre, String apellido, String correo, String contrasena, String telefono, String direccion
   ) throws EntityConstraintException;
 
-  public Cliente verificarCredenciales(
-      Cliente cliente
+  public Client verificarCredenciales(
+      Client cliente
   ) throws InvalidCredentialsException, EntityNotFoundException;
 
-  public Cliente verificarCredenciales(
+  public Client verificarCredenciales(
           String correo, String contrasena
   ) throws  InvalidCredentialsException, EntityNotFoundException;
 }

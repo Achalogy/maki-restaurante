@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,20 +15,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Adicional {
+public class OrderDetails {
   @Id
-  @Column(name = "id", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(length = 100, nullable = false)
-  private String name;
+  @ManyToOne
+  @JoinColumn(name = "order_id", nullable = false)
+  private Order order;
+
+  @ManyToOne
+  @JoinColumn(name = "plate_id", nullable = false)
+  private Plate plate; 
 
   @Column(nullable = false)
-  private double price;
+  private int quantity;
 
-  public Adicional(String name, double price) {
-    this.name = name;
-    this.price = price;
+  public OrderDetails(Order order, Plate plate, int quantity) {
+    this.order = order;
+    this.plate = plate;
+    this.quantity = quantity;
   }
 }

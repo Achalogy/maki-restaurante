@@ -1,8 +1,8 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.Adicional;
-import com.maki.web.entities.AdicionalCategoria;
-import com.maki.web.entities.AdicionalPedidoDetalles;
+import com.maki.web.entities.Aditional;
+import com.maki.web.entities.AditionalCategory;
+import com.maki.web.entities.AditionalOrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.AdicionalCategoriaRepository;
@@ -28,18 +28,18 @@ public class AdicionalServiceImpl implements AdicionalService {
   }
 
   @Override
-  public List<Adicional> selectAll() {
+  public List<Aditional> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public Adicional selectById(Long id) throws EntityNotFoundException {
+  public Aditional selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Adicional no encontrado con ID: " + id));
   }
 
   @Override
-  public Adicional insert(Adicional entity) throws EntityConstraintException {
+  public Aditional insert(Aditional entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       entity.setId(null);
       // throw new EntityConstraintException("El insert de Adicional no debe incluir un ID");
@@ -48,7 +48,7 @@ public class AdicionalServiceImpl implements AdicionalService {
   }
 
   @Override
-  public void delete(Adicional entity) throws EntityNotFoundException {
+  public void delete(Aditional entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
@@ -58,12 +58,12 @@ public class AdicionalServiceImpl implements AdicionalService {
       throw new EntityNotFoundException("No se puede eliminar: Adicional no existe con ID: " + id);
     }
 
-    for(AdicionalCategoria a: adicionalCategoriaService.selectAll()) {
+    for(AditionalCategory a: adicionalCategoriaService.selectAll()) {
       if(a.getAditional() != null && a.getAditional().getId() == id) {
         adicionalCategoriaService.delete(a);
       }
     }
-    for(AdicionalPedidoDetalles a: adicionalPedidoDetallesService.selectAll()) {
+    for(AditionalOrderDetails a: adicionalPedidoDetallesService.selectAll()) {
       if(a.getAditional() != null && a.getAditional().getId() == id) {
         adicionalPedidoDetallesService.delete(a);
       }
@@ -73,7 +73,7 @@ public class AdicionalServiceImpl implements AdicionalService {
   }
 
   @Override
-  public Adicional update(Adicional entity) throws EntityConstraintException, EntityNotFoundException {
+  public Aditional update(Aditional entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: Adicional no encontrado");
     }

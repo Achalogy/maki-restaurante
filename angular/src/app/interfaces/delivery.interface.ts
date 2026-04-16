@@ -1,4 +1,4 @@
-export interface Domiciliary {
+export interface Delivery {
   id: number,
   name: string,
   phone: string,

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Categoria {
+public class Category {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +29,9 @@ public class Categoria {
 
     @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private List<Plato> platos;
+    private List<Plate> plates;
 
-    public Categoria(String name) {
+    public Category(String name) {
         this.name = name;
     }
 }

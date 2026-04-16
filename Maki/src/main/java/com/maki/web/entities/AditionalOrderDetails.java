@@ -1,6 +1,5 @@
 package com.maki.web.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,25 +14,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class PedidoDetalles {
+public class AditionalOrderDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "pedido_id", nullable = false)
-  private Pedido pedido;
+  @JoinColumn(name = "detail_id", nullable = false)
+  private OrderDetails detail;
 
   @ManyToOne
-  @JoinColumn(name = "producto_id", nullable = false)
-  private Plato producto; 
+  @JoinColumn(name = "aditional_id", nullable = false)
+  private Aditional aditional;
 
-  @Column(nullable = false)
-  private int cantidad;
-
-  public PedidoDetalles(Pedido pedido, Plato producto, int cantidad) {
-    this.pedido = pedido;
-    this.producto = producto;
-    this.cantidad = cantidad;
+  public AditionalOrderDetails(OrderDetails detail, Aditional aditional) {
+    this.detail = detail;
+    this.aditional = aditional;
   }
 }

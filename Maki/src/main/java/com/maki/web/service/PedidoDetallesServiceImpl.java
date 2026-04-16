@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.AdicionalPedidoDetalles;
-import com.maki.web.entities.PedidoDetalles;
+import com.maki.web.entities.AditionalOrderDetails;
+import com.maki.web.entities.OrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.PedidoDetallesRepository;
@@ -21,18 +21,18 @@ public class PedidoDetallesServiceImpl implements PedidoDetallesService {
   private AdicionalPedidoDetallesService adicionalDetalleService;
 
   @Override
-  public List<PedidoDetalles> selectAll() {
+  public List<OrderDetails> selectAll() {
     return repo.findAll();
   }
 
   @Override
-  public PedidoDetalles selectById(Long id) throws EntityNotFoundException {
+  public OrderDetails selectById(Long id) throws EntityNotFoundException {
     return repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Detalle de pedido no encontrado: " + id));
   }
 
   @Override
-  public PedidoDetalles insert(PedidoDetalles entity) throws EntityConstraintException {
+  public OrderDetails insert(OrderDetails entity) throws EntityConstraintException {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de PedidoDetalles no debe tener ID");
     }
@@ -40,18 +40,18 @@ public class PedidoDetallesServiceImpl implements PedidoDetallesService {
   }
 
   @Override
-  public void delete(PedidoDetalles entity) throws EntityNotFoundException {
+  public void delete(OrderDetails entity) throws EntityNotFoundException {
     deleteByID(entity.getId());
   }
 
   @Override
   @Transactional
   public void deleteByID(Long id) throws EntityNotFoundException {
-    PedidoDetalles detalle = repo.findById(id)
+    OrderDetails detalle = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Detalle no encontrado"));
 
     // Limpiar los adicionales asociados a este detalle específico antes de borrarlo
-    for (AdicionalPedidoDetalles apd : adicionalDetalleService.selectAll()) {
+    for (AditionalOrderDetails apd : adicionalDetalleService.selectAll()) {
       if (apd.getDetalle() != null && apd.getDetalle().getId().equals(id)) {
         adicionalDetalleService.deleteByID(apd.getId());
       }
@@ -61,7 +61,7 @@ public class PedidoDetallesServiceImpl implements PedidoDetallesService {
   }
 
   @Override
-  public PedidoDetalles update(PedidoDetalles entity) throws EntityConstraintException, EntityNotFoundException {
+  public OrderDetails update(OrderDetails entity) throws EntityConstraintException, EntityNotFoundException {
     if (entity.getId() == null || !repo.existsById(entity.getId())) {
       throw new EntityNotFoundException("No se puede actualizar: Detalle de pedido no existe");
     }

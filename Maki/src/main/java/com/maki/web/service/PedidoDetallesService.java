@@ -1,7 +1,7 @@
 package com.maki.web.service;
 
-import com.maki.web.entities.PedidoDetalles;
+import com.maki.web.entities.OrderDetails;
 
-public interface PedidoDetallesService extends ServiceInterface<PedidoDetalles> {
+public interface PedidoDetallesService extends ServiceInterface<OrderDetails> {
 
 }
