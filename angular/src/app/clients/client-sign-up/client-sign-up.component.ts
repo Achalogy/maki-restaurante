@@ -24,7 +24,7 @@ export class ClientSignUpComponent {
   onSubmit() {
     this.clientService.create(this.client as Omit<Client, 'id'>).subscribe((client) => {
       if(client) {
-        this.router.navigate(['/client/crud']);
+        this.router.navigate(['/client/' + client.id]);
       } else {
         
       }

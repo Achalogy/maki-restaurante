@@ -1,0 +1,64 @@
+.menu-title {
+  @apply text-center text-white text-3xl font-bold tracking-widest uppercase py-6;
+}
+
+.category-label {
+  @apply text-white text-xl font-semibold uppercase tracking-widest col-span-2 mb-2 pl-1;
+}
+
+.menu-section {
+  @apply w-full max-w-4xl;
+}
+
+.cards-grid {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.food-menu-item {
+  @apply flex flex-row rounded-2xl overflow-hidden bg-maki-orange relative cursor-pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.food-menu-item:hover {
+  transform: scale(1.04);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+
+.food-menu-item img {
+  @apply w-1/2 object-cover flex-shrink-0;
+  height: 160px;
+}
+
+@screen xl {
+  .food-menu-item img {
+    height: 220px;
+  }
+}
+
+.food-menu-item .item-info {
+  @apply w-1/2 flex flex-col justify-between p-3;
+}
+
+.food-menu-item .item-info h3 {
+  @apply text-black font-staatliches text-base xl:text-3xl leading-tight mb-1;
+}
+
+.food-menu-item .item-info p {
+  @apply text-black text-xs xl:text-2xl flex-grow leading-snug opacity-80;
+}
+
+.food-menu-item .item-info .price {
+  @apply bg-maki-orange text-white font-staatliches text-lg xl:text-4xl
+         text-center py-1.5 rounded-xl mt-2;
+  filter: brightness(0.8);
+}
+
+.add-btn {
+  @apply absolute bottom-3 right-3 bg-white text-black rounded-full
+         w-8 h-8 xl:w-11 xl:h-11 flex items-center justify-center
+         text-2xl xl:text-4xl font-bold leading-none cursor-pointer
+         hover:bg-gray-100 transition-colors;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: none;
+}
