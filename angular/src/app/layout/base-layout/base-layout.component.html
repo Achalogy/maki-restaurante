@@ -1,0 +1,11 @@
+<div class="relative min-h-screen w-full">
+  <ng-content>
+
+  </ng-content>
+
+  <div *ngIf="(this.cart.state | async)" class="shopping-cart-button">
+    <button (click)="this.cart.close()">
+      <i class="ti ti-x text-3xl"></i>
+    </button>
+  </div>
+</div>

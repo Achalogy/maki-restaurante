@@ -32,6 +32,9 @@ import { AdditionalCrudComponent } from './pages/additionals/additional-crud/add
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
+import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
+import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
+import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,10 @@ import { OperatorFormComponent } from './pages/operators/operator-form/operator-
     AdditionalCrudComponent,
     AdditionalFormComponent,
     AdditionalEditComponent,
+    FullLayoutComponent,
+    FooterLayoutComponent,
+    BaseLayoutComponent,
+    OperatorFormComponent
   ],  
   imports: [
     BrowserModule,
@@ -67,7 +74,6 @@ import { OperatorFormComponent } from './pages/operators/operator-form/operator-
     FormsModule,
     FoodMenuGridComponent,
     FoodMenuGridCardComponent,
-    OperatorFormComponent
 ],
   providers: [
     provideHttpClient()

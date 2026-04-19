@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AdditionalCategory } from 'src/app/interfaces/additional-category.interface';
 import { Additional } from 'src/app/interfaces/additional.interface';
 import { Category } from 'src/app/interfaces/category.interface';
-import { AdditionalService } from 'src/app/service/additional.service';
+import { AdditionalService } from 'src/app/service/data/additional.service';
 
 @Component({
   selector: 'app-additional-crud',
