@@ -12,13 +12,13 @@ export class ClientSessionComponent {
   client: Client | undefined;
 
   constructor(private clientService: ClientService,
-      private route: ActivatedRoute,
-      private router: Router){
+    private route: ActivatedRoute,
+    private router: Router) {
 
   }
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    
+
     this.clientService.selectById(id).subscribe(client => {
       if (!client) {
         this.router.navigate(['/client/crud']);
@@ -30,4 +30,14 @@ export class ClientSessionComponent {
 
   }
 
-}
+  logOut(): void {
+
+    window.localStorage
+      .removeItem("loggedAs")
+    window.localStorage
+      .removeItem("id")
+
+    this.router.navigate(["/"])
+  }
+
+}  
