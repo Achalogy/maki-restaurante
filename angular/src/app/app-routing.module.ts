@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PlateTableComponent } from './plates/plate-table/plate-table.component';
-import { PlateEditComponent } from './plates/plate-edit/plate-edit.component';
-import { PlateCreateComponent } from './plates/plate-create/plate-create.component';
-import { PlateViewComponent } from './plates/plate-view/plate-view.component';
-import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
-import { LandingPageComponent } from './landing/landing-page/landing-page.component';
+import { PlateTableComponent } from './pages/plates/plate-table/plate-table.component';
+import { PlateEditComponent } from './pages/plates/plate-edit/plate-edit.component';
+import { PlateCreateComponent } from './pages/plates/plate-create/plate-create.component';
+import { PlateViewComponent } from './pages/plates/plate-view/plate-view.component';
+import { PlateMenuComponent } from './pages/plates/plate-menu/plate-menu.component';
+import { LandingPageComponent } from './pages/landing/landing-page/landing-page.component';
 import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
 import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
 import { OperatorViewComponent } from './operators/operator-view/operator-view.component';
-import { ClientSessionComponent } from './clients/client-session/client-session.component';
-import { ClientLogInComponent } from './clients/client-log-in/client-log-in.component';
-import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.component';
-import { ClientEditComponent } from './clients/client-edit/client-edit.component';
-import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
-import { GatewayComponent } from './admin/gateway/gateway.component';
-import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
-import { AdditionalCrudComponent } from './additionals/additional-crud/additional-crud.component';
-import { AdditionalFormComponent } from './additionals/additional-form/additional-form.component';
-import { AdditionalEditComponent } from './additionals/additional-edit/additional-edit.component';
+import { ClientSessionComponent } from './pages/clients/client-session/client-session.component';
+import { ClientLogInComponent } from './pages/clients/client-log-in/client-log-in.component';
+import { ClientSignUpComponent } from './pages/clients/client-sign-up/client-sign-up.component';
+import { ClientEditComponent } from './pages/clients/client-edit/client-edit.component';
+import { ClientCrudComponent } from './pages/clients/client-crud/client-crud.component';
+import { GatewayComponent } from './pages/admin/gateway/gateway.component';
+import { ClientProfileComponent } from './pages/clients/client-profile/client-profile.component';
+import { AdditionalCrudComponent } from './pages/additionals/additional-crud/additional-crud.component';
+import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
+import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },

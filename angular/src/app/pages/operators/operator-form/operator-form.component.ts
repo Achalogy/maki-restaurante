@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Operator } from '../../interfaces/operator.interface'; 
-import {OperatorService} from '../../service/operator.service';
+import { Operator } from 'src/app/interfaces/operator.interface'; 
+import { OperatorService } from 'src/app/service/operator.service';
 
 @Component({
   selector: 'app-operator-form',
