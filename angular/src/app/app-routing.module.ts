@@ -6,9 +6,9 @@ import { PlateCreateComponent } from './pages/plates/plate-create/plate-create.c
 import { PlateViewComponent } from './pages/plates/plate-view/plate-view.component';
 import { PlateMenuComponent } from './pages/plates/plate-menu/plate-menu.component';
 import { LandingPageComponent } from './pages/landing/landing-page/landing-page.component';
-import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
-import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
-import { OperatorViewComponent } from './operators/operator-view/operator-view.component';
+import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
+import { OperatorCrudComponent } from './pages/operators/operator-crud/operator-crud.component';
+import { OperatorViewComponent } from './pages/operators/operator-view/operator-view.component';
 import { ClientSessionComponent } from './pages/clients/client-session/client-session.component';
 import { ClientLogInComponent } from './pages/clients/client-log-in/client-log-in.component';
 import { ClientSignUpComponent } from './pages/clients/client-sign-up/client-sign-up.component';
