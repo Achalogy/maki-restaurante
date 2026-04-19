@@ -1,54 +1,48 @@
-<app-header-menu>
-
-</app-header-menu>
-
-<main class="tree_background">
-  <br />
-  <h2 class="text-center">MENÚ de Administrador</h2>
-  <section class="max-w-full mx-auto px-6 py-10" *ngIf="additional">
-    <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl mx-auto">
-      <h3 class="text-2xl font-bold mb-8 text-gray-800 text-center">Editar Adicional</h3>
-
-      <form class="space-y-6" (ngSubmit)="updateAdditional()">
-        <input type="hidden" name="id" [(ngModel)]="additional.id" />
-
-        <div>
-          <label class="block font-semibold text-gray-700 mb-2">Nombre del adicional</label>
-          <input type="text" name="name" [(ngModel)]="additional.name" required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3" />
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
+<app-full-layout>
+  <main class="tree_background">
+    <br />
+    <h2 class="text-center">MENÚ de Administrador</h2>
+    <section class="max-w-full mx-auto px-6 py-10" *ngIf="additional">
+      <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-3xl mx-auto">
+        <h3 class="text-2xl font-bold mb-8 text-gray-800 text-center">Editar Adicional</h3>
+  
+        <form class="space-y-6" (ngSubmit)="updateAdditional()">
+          <input type="hidden" name="id" [(ngModel)]="additional.id" />
+  
           <div>
-            <label class="block font-semibold text-gray-700 mb-2">Precio</label>
-            <input type="number" name="price" [(ngModel)]="additional.price" step="0.01" required
+            <label class="block font-semibold text-gray-700 mb-2">Nombre del adicional</label>
+            <input type="text" name="name" [(ngModel)]="additional.name" required
               class="w-full border border-gray-300 rounded-lg px-4 py-3" />
           </div>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-gray-700 mb-2">Categorías</label>
-          <select multiple name="categories" [(ngModel)]="selectedCategoryList" [compareWith]="compareCategory" required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 min-h-[120px] focus:ring-[#eb7c21] focus:border-[#eb7c21]">
-            <option *ngFor="let category of categoryList" [ngValue]="category" class="py-1">
-              {{category.name}}
-            </option>
-          </select>
-          <p class="text-sm text-gray-500 mt-2">
-            * Mantén presionado <kbd class="bg-gray-100 border rounded px-1 font-sans">Ctrl</kbd> (o <kbd
-              class="bg-gray-100 border rounded px-1 font-sans">Cmd</kbd> en Mac) para seleccionar varias.
-          </p>
-        </div>
-
-        <button type="submit"
-          class="w-full bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-4 rounded-xl text-lg">
-          Actualizar Cambios
-        </button>
-      </form>
-    </div>
-  </section>
-</main>
-
-<app-footer>
-
-</app-footer>
+  
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-semibold text-gray-700 mb-2">Precio</label>
+              <input type="number" name="price" [(ngModel)]="additional.price" step="0.01" required
+                class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+            </div>
+          </div>
+  
+          <div>
+            <label class="block font-semibold text-gray-700 mb-2">Categorías</label>
+            <select multiple name="categories" [(ngModel)]="selectedCategoryList" [compareWith]="compareCategory" required
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 min-h-[120px] focus:ring-[#eb7c21] focus:border-[#eb7c21]">
+              <option *ngFor="let category of categoryList" [ngValue]="category" class="py-1">
+                {{category.name}}
+              </option>
+            </select>
+            <p class="text-sm text-gray-500 mt-2">
+              * Mantén presionado <kbd class="bg-gray-100 border rounded px-1 font-sans">Ctrl</kbd> (o <kbd
+                class="bg-gray-100 border rounded px-1 font-sans">Cmd</kbd> en Mac) para seleccionar varias.
+            </p>
+          </div>
+  
+          <button type="submit"
+            class="w-full bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-4 rounded-xl text-lg">
+            Actualizar Cambios
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+</app-full-layout>

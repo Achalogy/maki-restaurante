@@ -1,21 +1,18 @@
-<body class="font-sans">
-  <app-header-menu></app-header-menu>
-
+<app-full-layout>
   <main class="tree_background">
     <br />
     <h2 class="text-center ">
       Panel de Clientes
     </h2>
-
+  
     <section class="max-w-full mx-auto px-6 py-10">
       <div class="flex gap-4 mb-8">
-        <button
-          routerLink="/client/sign-up"
+        <button routerLink="/client/sign-up"
           class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg shadow-lg">
           + Registrar Nuevo Cliente
         </button>
       </div>
-
+  
       <div class="overflow-x-auto rounded-xl shadow-2xl">
         <table class="w-full border-collapse bg-white">
           <thead class="bg-[#eb7c21] text-white text-center">
@@ -28,14 +25,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let c of clientes"
-              class="border-b border-gray-200 hover:bg-orange-50 transition duration-150">
-
+            <tr *ngFor="let c of clientes" class="border-b border-gray-200 hover:bg-orange-50 transition duration-150">
+  
               <td class="px-6 py-4 text-center font-mono text-gray-500">
                 {{ c.email }}
               </td>
-
+  
               <td class="px-6 py-4">
                 <div class="flex flex-col">
                   <span class="text-xl font-bold text-black uppercase">
@@ -43,29 +38,28 @@
                   </span>
                 </div>
               </td>
-
+  
               <td class="px-6 py-4">
                 <p class="text-gray-700 font-medium">{{ c.phone }}</p>
               </td>
-
+  
               <td class="px-6 py-4">
                 <p class="text-gray-600 text-sm truncate max-w-xs">{{ c.address }}</p>
               </td>
-
+  
               <td class="px-6 py-4 text-center">
                 <div class="flex flex-col gap-2 items-center">
-
+  
                   <a [routerLink]="['/client/edit', c.id]"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 text-sm w-32 text-center">
                     Edit
                   </a>
-
-                  <button
-                    (click)="deleteClient(c.id)"
+  
+                  <button (click)="deleteClient(c.id)"
                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 text-sm w-32">
                     Delete
                   </button>
-
+  
                 </div>
               </td>
             </tr>
@@ -74,6 +68,4 @@
       </div>
     </section>
   </main>
-
-  <app-footer></app-footer>
-</body>
+</app-full-layout>

@@ -1,90 +1,84 @@
-<app-header-menu>
-
-</app-header-menu>
-
-<main class="tree_background">
-  <br />
-  <h2 class="text-center ">MENÚ de Administrador</h2>
-
-  <section class="max-w-full mx-auto px-6 py-10">
-    <!-- Action Buttons -->
-    <div class="flex gap-4 mb-8">
-      <a (click)="createOperator()">
-        <button type="submit"
-          class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
-          + Add New Item
-        </button>
-      </a>
-    </div>
-
-    <!-- Table -->
-    <div class="overflow-x-auto rounded-lg shadow-md">
-      <table class="w-full border-collapse bg-white">
-        <thead class="bg-[#eb7c21] text-white text-center">
-          <tr>
-            <th class="px-6 py-4 text-center font-bold text-lg">Id</th>
-            <th class="px-6 py-4 text-center font-bold text-lg">
-              Nombre
-            </th>
-            <th class="px-6 py-4 text-center font-bold text-lg">
-              Usuario
-            </th>
-            <th class="px-6 py-4 text-center font-bold text-lg">
-              Acción
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let operator of operatorList"
-            class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
-            <!-- id -->
-            <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black text-center">
-                {{operator.id}}
-              </h3>
-            </td>
-            <!-- Operator Name -->
-            <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black text-center">
-                {{operator.name}}
-              </h3>
-            </td>
-            <!-- Operator Username -->
-            <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black text-center">
-                {{operator.username}}
-              </h3>
-            </td>
-
-            <td class="flex flex-col px-6 py-4 text-center items-center">
-              <a (click)="goToOperator(operator.id)">
-                <button type="submit"
-                  class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  View
-                </button>
-              </a>
-
-              <a (click)="editOperator(operator.id)">
-                <button type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  Edit
-                </button>
-              </a>
-
-              <a (click)="deleteOperatorById(operator.id)">
-                <button type="submit"
-                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  Delete
-                </button>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</main>
-
-<app-footer>
-
-</app-footer>
+<app-full-layout>
+  <main class="tree_background">
+    <br />
+    <h2 class="text-center ">MENÚ de Administrador</h2>
+  
+    <section class="max-w-full mx-auto px-6 py-10">
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mb-8">
+        <a (click)="createOperator()">
+          <button type="submit"
+            class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
+            + Add New Item
+          </button>
+        </a>
+      </div>
+  
+      <!-- Table -->
+      <div class="overflow-x-auto rounded-lg shadow-md">
+        <table class="w-full border-collapse bg-white">
+          <thead class="bg-[#eb7c21] text-white text-center">
+            <tr>
+              <th class="px-6 py-4 text-center font-bold text-lg">Id</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Nombre
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Usuario
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Acción
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let operator of operatorList"
+              class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+              <!-- id -->
+              <td class="px-6 py-4">
+                <h3 class="text-xl font-bold uppercase text-black text-center">
+                  {{operator.id}}
+                </h3>
+              </td>
+              <!-- Operator Name -->
+              <td class="px-6 py-4">
+                <h3 class="text-xl font-bold uppercase text-black text-center">
+                  {{operator.name}}
+                </h3>
+              </td>
+              <!-- Operator Username -->
+              <td class="px-6 py-4">
+                <h3 class="text-xl font-bold uppercase text-black text-center">
+                  {{operator.username}}
+                </h3>
+              </td>
+  
+              <td class="flex flex-col px-6 py-4 text-center items-center">
+                <a (click)="goToOperator(operator.id)">
+                  <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    View
+                  </button>
+                </a>
+  
+                <a (click)="editOperator(operator.id)">
+                  <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    Edit
+                  </button>
+                </a>
+  
+                <a (click)="deleteOperatorById(operator.id)">
+                  <button type="submit"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    Delete
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</app-full-layout>

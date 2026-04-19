@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Operator } from 'src/app/interfaces/operator.interface';
-import { OperatorService } from 'src/app/service/operator.service';
+import { OperatorService } from 'src/app/service/data/operator.service';
 
 @Component({
   selector: 'app-operator-crud',
