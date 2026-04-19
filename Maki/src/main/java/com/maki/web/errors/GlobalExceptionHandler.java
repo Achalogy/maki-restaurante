@@ -2,52 +2,66 @@ package com.maki.web.errors;
 
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Página no encontrada //
-    @ExceptionHandler({NoHandlerFoundException.class, NoResourceFoundException.class})
-    public String handleNotFound(Exception ex, Model model) {
-        model.addAttribute("errorCode", "404");
-        model.addAttribute("errorTitle", "Página no encontrada");
-        model.addAttribute("errorMessage", "Lo sentimos, la página que buscas no existe o fue movida.");
-        model.addAttribute("errorIcon");
-        return "pages/error";
+    // DTO simple para respuestas de error
+    public static class ErrorResponse {
+        public String errorCode;
+        public String errorTitle;
+        public String errorMessage;
+
+        public ErrorResponse(String errorCode, String errorTitle, String errorMessage) {
+            this.errorCode = errorCode;
+            this.errorTitle = errorTitle;
+            this.errorMessage = errorMessage;
+        }
     }
 
-    // Entidad no encontrada en base de datos //
+    // Página no encontrada
+    @ExceptionHandler({ NoHandlerFoundException.class, NoResourceFoundException.class })
+    public ResponseEntity<ErrorResponse> handleNotFound(Exception ex) {
+        ErrorResponse error = new ErrorResponse(
+                "404",
+                "Página no encontrada",
+                "Lo sentimos, la página que buscas no existe o fue movida.");
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    // Entidad no encontrada
     @ExceptionHandler(EntityNotFoundException.class)
-    public String handleEntityNotFound(EntityNotFoundException ex, Model model) {
-        model.addAttribute("errorCode", "404");
-        model.addAttribute("errorTitle", "Recurso no encontrado");
-        model.addAttribute("errorMessage", ex.getMessage());
-        model.addAttribute("errorIcon");
-        return "pages/error";
+    public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "404",
+                "Recurso no encontrado",
+                ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    // Violación de restricción //
+    // Violación de restricción
     @ExceptionHandler(EntityConstraintException.class)
-    public String handleConstraint(EntityConstraintException ex, Model model) {
-        model.addAttribute("errorCode", "400");
-        model.addAttribute("errorTitle", "Datos inválidos");
-        model.addAttribute("errorMessage", ex.getMessage());
-        model.addAttribute("errorIcon");
-        return "pages/error";
+    public ResponseEntity<ErrorResponse> handleConstraint(EntityConstraintException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "400",
+                "Datos inválidos",
+                ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    //Cualquier otro error inesperado//
+    // Error general
     @ExceptionHandler(Exception.class)
-    public String handleGeneral(Exception ex, Model model) {
-        model.addAttribute("errorCode", "500");
-        model.addAttribute("errorTitle", "Error interno");
-        model.addAttribute("errorMessage", "Algo salió mal en el servidor. Por favor intenta más tarde.");
-        model.addAttribute("errorIcon");
-        return "pages/error";
+    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+        ErrorResponse error = new ErrorResponse(
+                "500",
+                "Error interno",
+                "Algo salió mal en el servidor. Por favor intenta más tarde.");
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

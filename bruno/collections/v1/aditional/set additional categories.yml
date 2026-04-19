@@ -1,0 +1,23 @@
+info:
+  name: set additional categories
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/additional/1/categories"
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "id": 1
+        }
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

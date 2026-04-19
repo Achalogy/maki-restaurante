@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maki.web.entities.Categoria;
+import com.maki.web.entities.Category;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.service.CategoriaService;
+import com.maki.web.service.CategoryService;
 
 @RequestMapping("/api/v1/category")
 
@@ -23,17 +23,17 @@ import com.maki.web.service.CategoriaService;
 public class CategoryController {
   
     @Autowired
-    private CategoriaService categoriaService;
+    private CategoryService categoriaService;
 
     @GetMapping("")
-    public List<Categoria> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categoriaService.selectAll();
     }
 
     // ===================== ADD CATEGORY =====================
 
     @PostMapping("")
-    public ResponseEntity<Categoria> createCategory(@RequestBody(required = false) Categoria data) {
+    public ResponseEntity<Category> createCategory(@RequestBody(required = false) Category data) {
         try {
             return new ResponseEntity<>(categoriaService.insert(data), HttpStatus.OK);
         } catch(Exception e) {
@@ -52,13 +52,13 @@ public class CategoryController {
             categoriaService.deleteByID(id);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(categoriaService.selectById(id), HttpStatus.OK);
         } catch(Exception e) {
