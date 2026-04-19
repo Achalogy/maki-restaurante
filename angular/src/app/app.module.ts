@@ -16,8 +16,8 @@ import { ReviewCarouselComponent } from './pages/landing/review-carousel/review-
 import { FoodMenuGridComponent } from './pages/landing/food-menu-grid/food-menu-grid.component';
 import { FormsModule } from '@angular/forms';
 import { FoodMenuGridCardComponent } from './pages/landing/food-menu-grid-card/food-menu-grid-card.component';
-import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
-import { OperatorViewComponent } from './operators/operator-view/operator-view.component';
+import { OperatorCrudComponent } from './pages/operators/operator-crud/operator-crud.component';
+import { OperatorViewComponent } from './pages/operators/operator-view/operator-view.component';
 import { ClientCrudComponent } from './pages/clients/client-crud/client-crud.component';
 import { ClientLogInComponent } from './pages/clients/client-log-in/client-log-in.component';
 import { ClientSignUpComponent } from './pages/clients/client-sign-up/client-sign-up.component';
@@ -31,7 +31,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AdditionalCrudComponent } from './pages/additionals/additional-crud/additional-crud.component';
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
-import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
+import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
 
 @NgModule({
   declarations: [

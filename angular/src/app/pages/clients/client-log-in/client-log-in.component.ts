@@ -28,6 +28,12 @@ export class ClientLogInComponent {
       password: this.password
     } as Partial<Client>).subscribe({
       next: (valid) => {
+
+        window.localStorage
+          .setItem("loggedAs", "client")
+        window.localStorage
+          .setItem("id", valid.id.toString())
+
         this.router.navigate([`/client/${valid.id}`]);
       },
       error: (err) => {
