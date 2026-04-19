@@ -29,3 +29,7 @@
 .header-button p {
   @apply hidden lg:block;
 }
+
+.shopping-cart button {
+  @apply header-button bg-white bg-opacity-15;
+}

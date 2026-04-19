@@ -22,11 +22,24 @@ export class ClientSignUpComponent {
   }
 
   onSubmit() {
-    this.clientService.create(this.client as Omit<Client, 'id'>).subscribe((client) => {
-      if(client) {
-        this.router.navigate(['/client/' + client.id]);
-      } else {
-        
+    this.clientService.create(this.client as Omit<Client, 'id'>).subscribe({
+      next: (client) => {
+          this.router.navigate(['/client/' + client.id]);
+
+          window.localStorage
+            .setItem("loggedAs", "client")
+          window.localStorage
+            .setItem("id", client.id.toString())
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          alert("Correo ya registrado")
+          this.router.navigate(["/client/sign-up"], {
+            queryParams: { error: 'credentials' }
+          });
+        } else {
+          console.error(err);
+        }
       }
     })
 
