@@ -19,6 +19,7 @@ import { ClientProfileComponent } from './pages/clients/client-profile/client-pr
 import { AdditionalCrudComponent } from './pages/additionals/additional-crud/additional-crud.component';
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
+import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -47,7 +48,8 @@ const routes: Routes = [
   { path: 'additional/:id/edit', component: AdditionalEditComponent },
 
   {path: "admin", component: GatewayComponent },
-  
+  {path: "purchase-order/crud", component: PurchaseOrderCrudComponent },
+
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 

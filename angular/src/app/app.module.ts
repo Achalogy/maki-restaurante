@@ -32,6 +32,8 @@ import { AdditionalCrudComponent } from './pages/additionals/additional-crud/add
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
+import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { OperatorFormComponent } from './pages/operators/operator-form/operator-
     AdditionalCrudComponent,
     AdditionalFormComponent,
     AdditionalEditComponent,
+    PurchaseOrderCrudComponent
   ],  
   imports: [
     BrowserModule,
