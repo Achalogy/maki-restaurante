@@ -17,10 +17,10 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "moduleResolution": "node",
+    "lib": ["ES2022", "dom"],
+    "downlevelIteration": true,
+    "baseUrl": "./",
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
