@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AdditionalOrderDetails } from 'src/app/interfaces/additional-order-details.interface';
+import { Additional } from 'src/app/interfaces/additional.interface';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
 import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
@@ -10,7 +12,9 @@ import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 export class ShoppingCartService {
   // Emite eventos :D
   private isOpen$ = new BehaviorSubject<boolean>(false);
-  private shoppingCart: PurchaseOrderDetails[] = []
+  private shoppingCart: (PurchaseOrderDetails & {
+    aditionals: Additional[]
+  })[] = []
 
   toggle() {
     this.isOpen$.next(!this.isOpen$.value);
@@ -32,9 +36,9 @@ export class ShoppingCartService {
     return this.shoppingCart
   }
 
-  addItem(plate: Plate) {
+  addItem(plate: Plate, additionals: Additional[] = []) {
     
-    const oldItem = this.shoppingCart.findIndex(d => d.plate.id == plate.id)
+    const oldItem = this.shoppingCart.findIndex(d => d.plate.id == plate.id && d.aditionals.length == additionals.length && d.aditionals.every(x => additionals.includes(x)))
 
     if(oldItem != -1)
       this.shoppingCart[oldItem]
@@ -44,7 +48,8 @@ export class ShoppingCartService {
         plate,
         quantity: 1,
         order: {} as any,
-        id: -1
+        id: -1,
+        aditionals: additionals
       }
     )
   }
