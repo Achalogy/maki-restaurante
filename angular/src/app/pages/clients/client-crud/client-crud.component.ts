@@ -31,4 +31,8 @@ export class ClientCrudComponent {
 
   }
 
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
+
 }
