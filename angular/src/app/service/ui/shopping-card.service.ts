@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AdditionalOrderDetails } from 'src/app/interfaces/additional-order-details.interface';
 import { Additional } from 'src/app/interfaces/additional.interface';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
-import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 
 @Injectable({
   providedIn: 'root'
