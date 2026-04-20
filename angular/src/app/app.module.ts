@@ -38,7 +38,6 @@ import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.comp
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +64,7 @@ import { OperatorLogInComponent } from './pages/operators/operator-log-in/operat
     AdditionalCrudComponent,
     AdditionalFormComponent,
     AdditionalEditComponent,
-    PurchaseOrderCrudComponent
+    PurchaseOrderCrudComponent,
     FullLayoutComponent,
     FooterLayoutComponent,
     BaseLayoutComponent,

@@ -14,5 +14,16 @@
   animation-name: show-cart-animation;
   animation-duration: .6s;
 
-  @apply flex flex-col p-2 lg:p-8 items-end fixed h-screen bg-maki-black w-full xl:max-w-[35rem] top-0 right-0 z-50 text-maki-white border-l border-l-black
+  @apply flex flex-col gap-4 p-2 lg:p-8 items-end fixed h-screen bg-maki-black w-full xl:max-w-[35rem] top-0 right-0 z-50 text-maki-white border-l border-l-black
+}
+.cart-price p {
+  @apply text-end
+}
+
+.cart-price b {
+  @apply text-maki-orange
+}
+
+.pay-cart-btn {
+  @apply bg-maki-orange px-8 p-3 rounded-xl
 }
