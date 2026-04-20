@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
+import { Plate } from 'src/app/interfaces/plate.interface';
 import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
 
 @Component({
@@ -8,10 +10,18 @@ import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
 })
 export class BaseLayoutComponent {
 
+  shoppingCart: PurchaseOrderDetails[] = []
+
   constructor(
     public cart: ShoppingCartService
   ) {
+    this.shoppingCart = cart.getShoppingCart()
+  }
 
+  getPrice(): number {
+    return this.shoppingCart.reduce((acc, curr) => {
+      return acc + (curr.quantity * curr.plate.price)
+    }, 0)
   }
 
   openCart() {
@@ -22,4 +32,8 @@ export class BaseLayoutComponent {
     this.cart.open()
   }
 
+  removeItem(plate: Plate) {
+    this.cart.removeItem(plate)
+    this.shoppingCart = this.cart.getShoppingCart()
+  }
 }
