@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plate } from '../interfaces/plate.interface';
+import { Plate } from 'src/app/interfaces/plate.interface';
 import { HttpClient } from "@angular/common/http"
 import { Observable } from 'rxjs';
 

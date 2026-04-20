@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
 
 @Component({
   selector: 'app-header-menu',
@@ -11,7 +12,8 @@ export class HeaderMenuComponent {
   public loggedId: string |  null = null;
 
   constructor(
-    private router: Router
+    private router: Router,
+    public cart: ShoppingCartService
   ) {}
 
   ngOnInit() {

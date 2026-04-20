@@ -33,6 +33,10 @@ import { AdditionalFormComponent } from './pages/additionals/additional-form/add
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
 import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
+import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
+import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
+import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
+import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 
 
 @NgModule({
@@ -62,6 +66,11 @@ import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-orde
     AdditionalFormComponent,
     AdditionalEditComponent,
     PurchaseOrderCrudComponent
+    FullLayoutComponent,
+    FooterLayoutComponent,
+    BaseLayoutComponent,
+    OperatorFormComponent,
+    OperatorLogInComponent
   ],  
   imports: [
     BrowserModule,
@@ -70,7 +79,6 @@ import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-orde
     FormsModule,
     FoodMenuGridComponent,
     FoodMenuGridCardComponent,
-    OperatorFormComponent
 ],
   providers: [
     provideHttpClient()

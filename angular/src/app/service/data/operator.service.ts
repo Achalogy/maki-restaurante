@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { Operator } from '../interfaces/operator.interface';
+import { Operator } from 'src/app/interfaces/operator.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +29,9 @@ export class OperatorService {
   delete(id: number): Observable<boolean> {
     return this.http.delete<boolean>(`http://localhost:8080/api/v1/operator/${id}`);
   }
+
+    logIn(credentials: { username: string; password: string }): Observable<Operator> {
+    return this.http.post<Operator>(`http://localhost:8080/api/v1/operator/log-in`, credentials);
+  }
+
 }

@@ -1,183 +1,174 @@
-<app-header-menu>
+<app-full-layout>
+  <main class="tree_background">
+    <br />
+    <h2 class="text-center ">MENÚ de Administrador</h2>
+    <!-- Title -->
+    <section class="max-w-full mx-auto px-6 mt-8 mb-10">
   
-</app-header-menu>
-
-<main class="tree_background">
-  <br />
-  <h2 class="text-center ">MENÚ de Administrador</h2>
-  <!-- Title -->
-  <section class="max-w-full mx-auto px-6 mt-8 mb-10">
-
-    <div class="bg-white shadow-md rounded-xl p-6">
-
-      <!-- Header -->
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-bold text-gray-800">
-          Gestión de Categorías
-        </h3>
-
-        <!-- Add Tag Button -->
-        <button (click)="toggleModal()"
-          class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
-          + Nueva Categoría
-        </button>
-      </div>
-
-      <!-- Tag List -->
-      <div class="flex flex-wrap gap-3 items-center">
-
-        <div *ngFor="let category of categoryList" class="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
-          <span class="text-sm font-semibold text-gray-800">
-            {{category.name}}
-          </span>
-        
-          <!-- Delete Button -->
-          <form method="post" (submit)="deleteCategory(category.id)">
-            <button type="submit" class="text-red-500 hover:text-red-700 font-bold text-sm">
-              ✖
+      <div class="bg-white shadow-md rounded-xl p-6">
+  
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-gray-800">
+            Gestión de Categorías
+          </h3>
+  
+          <!-- Add Tag Button -->
+          <button (click)="toggleModal()"
+            class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
+            + Nueva Categoría
+          </button>
+        </div>
+  
+        <!-- Tag List -->
+        <div class="flex flex-wrap gap-3 items-center">
+  
+          <div *ngFor="let category of categoryList"
+            class="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
+            <span class="text-sm font-semibold text-gray-800">
+              {{category.name}}
+            </span>
+  
+            <!-- Delete Button -->
+            <form method="post" (submit)="deleteCategory(category.id)">
+              <button type="submit" class="text-red-500 hover:text-red-700 font-bold text-sm">
+                ✖
+              </button>
+            </form>
+          </div>
+  
+        </div>
+  
+        <!-- Tag Form -->
+        <div id="newTagForm" class="mt-6 hidden">
+          <form method="post" class="flex gap-3 items-center">
+            <input type="text" name="nombre" placeholder="Nombre de nueva categoría" required
+              class="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-[#eb7c21]" />
+  
+            <button type="submit"
+              class="bg-green-500 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
+              Guardar
             </button>
           </form>
         </div>
-
+  
       </div>
-
-      <!-- Tag Form -->
-      <div id="newTagForm" class="mt-6 hidden">
-        <form method="post" class="flex gap-3 items-center">
-          <input type="text" name="nombre" placeholder="Nombre de nueva categoría" required
-            class="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-[#eb7c21]" />
-
+    </section>
+    <section class="max-w-full mx-auto px-6 py-10">
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mb-8">
+        <a (click)="createPlate()">
           <button type="submit"
-            class="bg-green-500 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
-            Guardar
+            class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
+            + Add New Item
           </button>
-        </form>
+        </a>
       </div>
-
-    </div>
-  </section>
-  <section class="max-w-full mx-auto px-6 py-10">
-    <!-- Action Buttons -->
-    <div class="flex gap-4 mb-8">
-      <a (click)="createPlate()">
-        <button type="submit"
-          class="bg-[#eb7c21] hover:bg-[#d15d19] text-white font-bold py-3 px-8 rounded-lg transition duration-200 text-lg">
-          + Add New Item
-        </button>
-      </a>
-    </div>
-
-    <!-- Table -->
-    <div class="overflow-x-auto rounded-lg shadow-md">
-      <table class="w-full border-collapse bg-white">
-        <thead class="bg-[#eb7c21] text-white text-center">
-          <tr>
-            <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
-            <th class="px-6 py-4 text-center font-bold text-lg">
-              Nombre de Producto
-            </th>
-            <th class="px-6 py-4 text-center font-bold text-lg">
-              Descripción
-            </th>
-            <th class="px-6 py-4 text-center font-bold text-lg">Categoría</th>
-            <th class="px-6 py-4 text-center font-bold text-lg">Precio</th>
-            <th class="px-6 py-4 text-center font-bold text-lg">Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let plate of plateList" class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
-            <!-- Image -->
-            <td class="px-6 py-4">
-              <img alt="Imagen producto"
-                src={{plate.urlImage}}
-                class="rounded-lg shadow-sm w-20 h-20 object-cover" />
-            </td>
-            <!-- Product Name -->
-            <td class="px-6 py-4">
-              <h3 class="text-xl font-bold uppercase text-black">
-                {{plate.name}}
-              </h3>
-            </td>
-            <!-- Description -->
-            <td class="px-6 py-4">
-              <p class="text-gray-700 text-base font-medium">{{plate.description}}
-              </p>
-            </td>
-            <!-- Tag -->
-            <td class="px-6 py-4">
-              <form method="post">
+  
+      <!-- Table -->
+      <div class="overflow-x-auto rounded-lg shadow-md">
+        <table class="w-full border-collapse bg-white">
+          <thead class="bg-[#eb7c21] text-white text-center">
+            <tr>
+              <th class="px-6 py-4 text-center font-bold text-lg">Imagen</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Nombre de Producto
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">
+                Descripción
+              </th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Categoría</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Precio</th>
+              <th class="px-6 py-4 text-center font-bold text-lg">Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let plate of plateList" class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+              <!-- Image -->
+              <td class="px-6 py-4">
+                <img alt="Imagen producto" src={{plate.urlImage}} class="rounded-lg shadow-sm w-20 h-20 object-cover" />
+              </td>
+              <!-- Product Name -->
+              <td class="px-6 py-4">
+                <h3 class="text-xl font-bold uppercase text-black">
+                  {{plate.name}}
+                </h3>
+              </td>
+              <!-- Description -->
+              <td class="px-6 py-4">
+                <p class="text-gray-700 text-base font-medium">{{plate.description}}
+                </p>
+              </td>
+              <!-- Tag -->
+              <td class="px-6 py-4">
+                <form method="post">
                   <p>
                     {{plate.category.name}}
                   </p>
-              </form>
-            </td>
-            <!-- Price -->
-            <td class="px-6 py-4">
-              <span
-                class="text-xl font-extrabold text-orange-500">{{plate.price}}
-              </span>
-            </td>
-
-            <td class="flex flex-col px-6 py-4 text-center">
-              <a (click)="goToPlate(plate.id)">
-                <button type="submit"
-                  class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  View
-                </button>
-              </a>
-
-              <a (click)="editPlate(plate.id)">
-                <button type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  Edit
-                </button>
-              </a>
-
-              <a (click)="deletePlateById(plate.id)">
-                <button type="submit"
-                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
-                  Delete
-                </button>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</main>
-
-<app-footer>
-
-</app-footer>
-
-<div *ngIf="showModal"
-  class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-  <div class="fixed inset-0 bg-black opacity-50" (click)="toggleModal()"></div>
-
-  <div class="relative w-auto max-w-md mx-auto my-6 z-50">
-    <div class="bg-white rounded-xl shadow-2xl relative flex flex-col w-full outline-none focus:outline-none p-6">
-
-      <div class="flex items-center justify-between mb-4 border-b pb-3">
-        <h3 class="text-2xl font-bold text-gray-800">Nueva Categoría</h3>
-        <button (click)="toggleModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                </form>
+              </td>
+              <!-- Price -->
+              <td class="px-6 py-4">
+                <span class="text-xl font-extrabold text-orange-500">{{plate.price}}
+                </span>
+              </td>
+  
+              <td class="flex flex-col px-6 py-4 text-center">
+                <a (click)="goToPlate(plate.id)">
+                  <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    View
+                  </button>
+                </a>
+  
+                <a (click)="editPlate(plate.id)">
+                  <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    Edit
+                  </button>
+                </a>
+  
+                <a (click)="deletePlateById(plate.id)">
+                  <button type="submit"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mt-3 w-[8rem]">
+                    Delete
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la categoría</label>
-        <input type="text" [(ngModel)]="newCategoryName" placeholder="Ej: Postres, Bebidas..."
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#eb7c21]" />
-      </div>
-
-      <div class="flex justify-end gap-3">
-        <button (click)="toggleModal()" class="px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold transition">
-          Cancelar
-        </button>
-        <button (click)="saveCategory()" [disabled]="!newCategoryName"
-          class="bg-[#eb7c21] hover:bg-[#d15d19] disabled:bg-gray-400 text-white font-bold px-6 py-2 rounded-lg transition shadow-md">
-          Guardar Categoría
-        </button>
+    </section>
+  </main>
+  <div *ngIf="showModal"
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+    <div class="fixed inset-0 bg-black opacity-50" (click)="toggleModal()"></div>
+  
+    <div class="relative w-auto max-w-md mx-auto my-6 z-50">
+      <div class="bg-white rounded-xl shadow-2xl relative flex flex-col w-full outline-none focus:outline-none p-6">
+  
+        <div class="flex items-center justify-between mb-4 border-b pb-3">
+          <h3 class="text-2xl font-bold text-gray-800">Nueva Categoría</h3>
+          <button (click)="toggleModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+        </div>
+  
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la categoría</label>
+          <input type="text" [(ngModel)]="newCategoryName" placeholder="Ej: Postres, Bebidas..."
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#eb7c21]" />
+        </div>
+  
+        <div class="flex justify-end gap-3">
+          <button (click)="toggleModal()" class="px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold transition">
+            Cancelar
+          </button>
+          <button (click)="saveCategory()" [disabled]="!newCategoryName"
+            class="bg-[#eb7c21] hover:bg-[#d15d19] disabled:bg-gray-400 text-white font-bold px-6 py-2 rounded-lg transition shadow-md">
+            Guardar Categoría
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</app-full-layout>

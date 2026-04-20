@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/interfaces/client.interface';
-import { ClientService } from 'src/app/service/client.service';
+import { ClientService } from 'src/app/service/data/client.service';
 
 @Component({
   selector: 'app-client-session',

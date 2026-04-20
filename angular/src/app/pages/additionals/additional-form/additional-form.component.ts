@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Additional } from 'src/app/interfaces/additional.interface';
 import { Category } from 'src/app/interfaces/category.interface';
-import { AdditionalService } from 'src/app/service/additional.service';
-import { CategoryService } from 'src/app/service/category.service';
+import { AdditionalService } from 'src/app/service/data/additional.service';
+import { CategoryService } from 'src/app/service/data/category.service';
 
 @Component({
   selector: 'app-additional-form',

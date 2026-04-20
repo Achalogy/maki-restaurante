@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Operator } from 'src/app/interfaces/operator.interface'; 
-import { OperatorService } from 'src/app/service/operator.service';
+import { OperatorService } from 'src/app/service/data/operator.service';
 
 @Component({
   selector: 'app-operator-form',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './operator-form.component.html',
   styleUrls: ['./operator-form.component.css']
 })
-export class OperatorFormComponent implements OnInit {
+export class OperatorFormComponent {
 
   modo: 'crear' | 'editar' = 'crear';
 

@@ -8,23 +8,23 @@ main {
   background-attachment: fixed;
 }
 
-.edit-container {
+.login-container {
   @apply w-screen h-screen flex items-center justify-center p-4;
 }
 
-.card-edit {
+.card-login {
   @apply w-full max-w-[35rem] bg-maki-black p-6 lg:p-10 rounded-xl flex flex-col gap-6 text-white;
 }
 
-.card-edit form {
+.card-login form {
   @apply flex flex-col gap-4
 }
 
-.card-edit form > div {
+.card-login form > div {
   @apply flex gap-4
 }
 
-.card-edit input {
+.card-login input {
   @apply w-full p-2 px-3 lg:px-4 lg:p-3 rounded outline-none text-neutral-900
 }
 
@@ -32,18 +32,18 @@ main {
   @apply flex flex-col gap-1 text-red-400 text-sm;
 }
 
-.card-edit button {
+.card-login button {
   @apply bg-maki-orange text-white w-full p-2 lg:p-3 rounded font-semibold text-base lg:text-lg
 }
 
-.card-edit button:disabled {
+.card-login button:disabled {
   @apply opacity-50 cursor-not-allowed;
 }
 
-.edit-urls {
+.login-urls {
   @apply flex justify-between
 }
 
-.edit-urls a {
+.login-urls a {
   @apply flex-1 text-xs text-neutral-300
 }
