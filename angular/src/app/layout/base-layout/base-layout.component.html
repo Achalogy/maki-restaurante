@@ -8,19 +8,28 @@
       <i class="ti ti-x text-3xl"></i>
     </button>
 
-    <div class="flex flex-col gap-4 flex-1 w-full">
-      <div class="flex gap-8 items-center justify-center w-full border-b border-b-neutral-700 p-4" *ngFor="let item of shoppingCart">
-        <img src={{item.plate.urlImage}} class="h-12 w-12 rounded-xl" alt="">
-        <div class="flex flex-col flex-1 justify-center">
-          <p class="font-semibold text-maki-orange">{{item.plate.name}}</p>
-          <label>Cantidad: 
-            <input [(ngModel)]="item.quantity" class="text-black px-2 p-1 rounded-lg text-xs w-12"  type="number" min="1" id="">
-          </label>
+    <div class="flex flex-col gap-4 flex-1 w-full overflow-scroll">
+      <div class="flex flex-col gap-2 border-b border-b-neutral-700 p-4" *ngFor="let item of shoppingCart">
+        <div class="flex gap-4 items-center justify-center w-full">
+          <img src={{item.plate.urlImage}} class="h-12 w-12 rounded-xl" alt="">
+          <div class="flex flex-col flex-1 justify-center">
+            <p class="font-semibold text-maki-orange">{{item.plate.name}}</p>
+            <label>Cantidad: 
+              <input [(ngModel)]="item.quantity" class="text-black px-2 p-1 rounded-lg text-xs w-12"  type="number" min="1" id="">
+            </label>
+          </div>
+          <p>${{getItemPrice(item)}}</p>
+          <i (click)="removeItem(item.plate)" class="ti ti-x text-red-500 cursor-pointer">
+  
+          </i>
         </div>
-        <p>${{item.plate.price * item.quantity}}</p>
-        <i (click)="removeItem(item.plate)" class="ti ti-x text-red-500 cursor-pointer">
-
-        </i>
+        <div class="flex flex-col gap-2 w-[90%] ml-auto">
+          <div class="flex gap-2 items-center" *ngFor="let additional of item.aditionals">
+            <i class="ti ti-circle text-xs"></i>
+            <p class="flex-1">{{additional.name}}</p>
+            <p>${{additional.price}}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -28,7 +37,7 @@
       <p>Tienes <b>{{shoppingCart.length}}</b> items en el carrito</p>
       <p class="text-xl">Total: <b>${{getPrice()}}</b></p>
     </div>
-    <button class="pay-cart-btn flex gap-2 items-center justify-center text-xl transition hover:translate-x-1">
+    <button (click)="createOrder()" class="pay-cart-btn flex gap-2 items-center justify-center text-xl transition hover:translate-x-1">
       <i class="ti ti-cash"></i>
       Ir a pagar
     </button>

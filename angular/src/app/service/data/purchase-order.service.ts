@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { PurchaseOrder } from "src/app/interfaces/purchase-order.interface";
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
+import { Additional } from 'src/app/interfaces/additional.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +21,28 @@ export class PurchaseOrderService {
   selectById(id: number): Observable<PurchaseOrder> {
     return this.http.get<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order/${id}`)
   }
-  //This 2 technically dont work yet, cause clients must create it, please finish this
-  /*create(purchaseOrder: Partial<Omit<PurchaseOrder, 'id'>>): Observable<PurchaseOrder> {
-    return this.http.post<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order`, purchaseOrder)
+  
+  create(
+    clientId: number,
+    plates: (PurchaseOrderDetails & {
+        aditionals: Additional[]
+      })[]
+  ): Observable<PurchaseOrder> {
+
+    const payload = plates.map(p => ({
+      detail: {
+        id: -1,
+        order: {},
+        plate: p.plate,
+        quantity: p.quantity
+      },
+      additionals: p.aditionals
+    }))
+
+    return this.http.post<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order/client/${clientId}`, payload)
   }
 
+  /*
   update(id: number, data: Partial<PurchaseOrder>): Observable<PurchaseOrder> {
     return this.http.post<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order/${id}`, data)
   }*/

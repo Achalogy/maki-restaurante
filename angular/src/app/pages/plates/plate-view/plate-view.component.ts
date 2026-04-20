@@ -57,7 +57,9 @@ export class PlateViewComponent {
 
   addToOrder() {
     if(this.plate)
-      this.cartService.addItem(this.plate)
+      this.cartService.addItem(this.plate, 
+        this.selectedAdditionals.map(a => this.additionalsList.find(b => b.id == a)!)
+      )
     alert('Plato agregado al pedido');
   }
 }
