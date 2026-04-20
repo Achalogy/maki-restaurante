@@ -36,4 +36,8 @@ export class OperatorLogInComponent {
       }
     });
   }
+
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
 }

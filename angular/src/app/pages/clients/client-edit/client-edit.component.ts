@@ -70,4 +70,9 @@ export class ClientEditComponent implements OnInit, OnDestroy, AfterViewInit {
   private checkErrorParam(): void {
     this.errorMessage = this.route.snapshot.queryParamMap.get('msg');
   }
+
+
+  navigateTo(url: string) {
+    this.router.navigate([url])
+  }
 }
