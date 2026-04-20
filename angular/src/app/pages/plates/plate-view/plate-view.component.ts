@@ -4,6 +4,7 @@ import { Additional } from 'src/app/interfaces/additional.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
 import { AdditionalService } from 'src/app/service/data/additional.service';
 import { PlateService } from 'src/app/service/data/plate.service';
+import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
 
 @Component({
   selector: 'app-plate-view',
@@ -21,7 +22,8 @@ export class PlateViewComponent {
   constructor(
     private route: ActivatedRoute,
     private plateService: PlateService,
-    private additionalService: AdditionalService
+    private additionalService: AdditionalService,
+    private cartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {
@@ -54,13 +56,8 @@ export class PlateViewComponent {
   }
 
   addToOrder() {
-    const orderItem = {
-      plateId: this.plate?.id,
-      instructions: this.specialInstructions,
-      additionals: this.selectedAdditionals
-    };
-    console.log('Agregando al pedido:', orderItem);
-    // Aquí llamarías a tu servicio de Carrito
+    if(this.plate)
+      this.cartService.addItem(this.plate)
     alert('Plato agregado al pedido');
   }
 }

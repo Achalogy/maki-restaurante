@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
-import { PlateService } from 'src/app/service/plate.service';
-import { PurchaseOrderService } from 'src/app/service/purchase-order.service';
+import { PurchaseOrderService } from 'src/app/service/data/purchase-order.service';
 
 @Component({
   selector: 'app-purchase-order-crud',

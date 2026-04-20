@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PurchaseOrder } from '../interfaces/purchase-order.interface';
+import { PurchaseOrder } from "src/app/interfaces/purchase-order.interface";
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
