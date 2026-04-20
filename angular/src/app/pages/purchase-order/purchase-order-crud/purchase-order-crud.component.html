@@ -1,0 +1,87 @@
+<app-header-menu>
+  
+</app-header-menu>
+
+<main class="tree_background">
+  <br />
+  <h2 class="text-center ">MENÚ de Operador</h2>
+  <!-- Title -->
+  <section class="max-w-full mx-auto px-6 py-10">
+    <!-- Table -->
+    <div class="overflow-x-auto rounded-lg shadow-md">
+      <table class="w-full border-collapse bg-white">
+        <thead class="bg-[#eb7c21] text-white text-center">
+          <tr>
+            <th class="px-6 py-4 text-center font-bold text-lg">Cliente</th>
+            <th class="px-6 py-4 text-center font-bold text-lg">
+              Operador
+            </th>
+            <th class="px-6 py-4 text-center font-bold text-lg">
+              Fecha de creación
+            </th>
+            <th class="px-6 py-4 text-center font-bold text-lg">Estado</th>
+            <th class="px-6 py-4 text-center font-bold text-lg">Costo total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let purchaseOrder of purchaseOrderList" class="border-b border-gray-200 hover:bg-gray-50 transition duration-150">
+            <!-- Client data first -->
+            <!-- Client name and ID -->
+            <td class="px-6 py-4 text-center">
+              <h3 class="text-xl font-bold uppercase text-black">
+                {{purchaseOrder.client.name}}
+              </h3>
+                <p class="text-gray-500 text-sm font-mono">
+                    ID: {{purchaseOrder.client.id}}
+                </p>
+            </td>
+            <!-- Operator name and ID -->
+            <td class="px-6 py-4 text-center">
+              <h3 class="text-xl font-bold uppercase text-black">
+                {{purchaseOrder.operator.name}}
+              </h3>
+                <p class="text-gray-500 text-sm font-mono">
+                    ID: {{purchaseOrder.operator.id}}
+                </p>
+            </td>
+
+            <!-- Creation Date -->
+            <td class="px-6 py-4 text-center">
+              <p class="text-gray-700 text-base font-medium">{{purchaseOrder.creation_date | date:'medium'}}</p>
+            </td>   
+
+            <!-- Status -->
+            <td class="px-6 py-4 text-center">
+              <form method="post">
+                  <p>
+                    {{purchaseOrder.status}}
+                  </p>
+              </form>
+            </td>
+
+            <!-- Total Price  Details like products are not shwon here, but in an individual page for it, there are products, amount, status and date of delivery (if already delivered) -->
+            
+            <td class="flex flex-row px-6 py-4 text-center content-center justify-center">
+              <a (click)="goToPurchaseOrder(purchaseOrder.id)">
+                <button type="submit"
+                  class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base mr-3 w-[8rem]">
+                  View
+                </button>
+              </a>
+
+              <a (click)="deletePurchaseOrder(purchaseOrder.id)">
+                <button type="submit"
+                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 text-base ml-3 w-[8rem]">
+                  Delete
+                </button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>
+
+
