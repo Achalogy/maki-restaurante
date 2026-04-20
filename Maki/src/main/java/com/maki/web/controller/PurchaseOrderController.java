@@ -1,6 +1,5 @@
 package com.maki.web.controller;
 import com.maki.web.entities.PurchaseOrder;
-import com.maki.web.entities.Plate;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.maki.web.entities.OrderDetails;
-import com.maki.web.service.CategoryService;
-import com.maki.web.service.ClientService;
-import com.maki.web.service.PlateService;
 import com.maki.web.service.PurchaseOrderService;
 
 @RestController
@@ -23,19 +18,19 @@ public class PurchaseOrderController {
 
     // ===================== GET ALL =====================
     @GetMapping("")
-    public List<PurchaseOrder> getAllPlates() {
+    public List<PurchaseOrder> getAllPurchaseOrders() {
         return purchaseOrderService.selectAll();
     }
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
-    public ResponseEntity<PurchaseOrder> getPlateById(@PathVariable Long id) {
+    public ResponseEntity<PurchaseOrder> getPurcharseOrderById(@PathVariable Long id) {
         try {
-            PurchaseOrder plato = purchaseOrderService.selectById(id);
-            if (plato == null) {
+            PurchaseOrder purchaseOrder = purchaseOrderService.selectById(id);
+            if (purchaseOrder == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(plato, HttpStatus.OK);
+            return new ResponseEntity<>(purchaseOrder, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
