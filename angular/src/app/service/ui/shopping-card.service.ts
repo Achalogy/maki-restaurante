@@ -57,4 +57,7 @@ export class ShoppingCartService {
     this.shoppingCart = this.shoppingCart.filter(x => x.plate.id != plate.id)
   }
 
+  clear() {
+    this.shoppingCart = []
+  }
 }
