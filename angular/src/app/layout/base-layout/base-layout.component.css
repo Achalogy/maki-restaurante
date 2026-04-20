@@ -1,0 +1,18 @@
+
+@keyframes show-cart-animation {
+  from {
+    transform: translateX(
+      100dvw
+    )
+  }
+  to {
+    transform: translateX(0)
+  }
+}
+
+.shopping-cart-button {
+  animation-name: show-cart-animation;
+  animation-duration: .6s;
+
+  @apply flex flex-col p-2 lg:p-8 items-end fixed h-screen bg-maki-black w-full xl:max-w-[35rem] top-0 right-0 z-50 text-maki-white border-l border-l-black
+}

@@ -20,6 +20,7 @@ import { AdditionalCrudComponent } from './pages/additionals/additional-crud/add
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
+import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component'; 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'plate/:id', component: PlateViewComponent },
 
   { path: 'operator/crud', component: OperatorCrudComponent },
+  { path: 'operator/log-in', component: OperatorLogInComponent },
   { path: 'operator/:id/edit', component: OperatorFormComponent },
   { path: 'operator/create', component: OperatorFormComponent },
   { path: 'operator/:id', component: OperatorViewComponent },

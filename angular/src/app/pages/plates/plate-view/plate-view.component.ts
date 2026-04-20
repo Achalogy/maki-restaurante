@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Additional } from 'src/app/interfaces/additional.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
-import { AdditionalService } from 'src/app/service/additional.service';
-import { PlateService } from 'src/app/service/plate.service';
+import { AdditionalService } from 'src/app/service/data/additional.service';
+import { PlateService } from 'src/app/service/data/plate.service';
 
 @Component({
   selector: 'app-plate-view',

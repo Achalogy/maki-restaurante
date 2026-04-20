@@ -1,61 +1,68 @@
-<div class="bg-slideshow">
-  <div
-    *ngFor="let slide of bgSlides; let i = index"
-    class="bg-slide"
-    [class.activo]="i === currentSlide"
-    [style.background-image]="'url(' + slide + ')'">
-  </div>
-</div>
+<app-footer-layout>
+  <main>
+    <div class="edit-container">
 
-<div class="login-wrapper">
-  <div class="card-login" style="max-width: 500px;">
-    <div class="d-flex align-items-center gap-3 mb-4">
-      <app-maki-logo></app-maki-logo>
-      <div>
-        <div class="brand-name">MAKI</div>
-        <div class="brand-sub">editar cuenta</div>
+
+      <div class="card-edit" style="max-width: 500px;">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <app-maki-logo></app-maki-logo>
+        </div>
+
+        <form (ngSubmit)="clientUpdate()" #updateForm="ngForm" novalidate>
+          <input type="hidden" name="id" [(ngModel)]="client.id">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <input type="text" name="name" [(ngModel)]="client.name" required #nameRef="ngModel" placeholder="Nombre"
+                [class.border-2]="nameRef.invalid && nameRef.touched"
+                [class.border-red-500]="nameRef.invalid && nameRef.touched" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <input type="text" name="surname" [(ngModel)]="client.surname" required #surnameRef="ngModel"
+                placeholder="Apellido" [class.border-2]="surnameRef.invalid && surnameRef.touched"
+                [class.border-red-500]="surnameRef.invalid && surnameRef.touched" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input type="email" name="email" [(ngModel)]="client.email" required email #emailRef="ngModel"
+              placeholder="Correo electrónico" [class.border-2]="emailRef.invalid && emailRef.touched"
+              [class.border-red-500]="emailRef.invalid && emailRef.touched" />
+          </div>
+
+          <div class="mb-3">
+            <input type="password" name="password" [(ngModel)]="client.password" required minlength="6"
+              #passRef="ngModel" placeholder="Contraseña (mín. 6 caracteres)"
+              [class.border-2]="passRef.invalid && passRef.touched"
+              [class.border-red-500]="passRef.invalid && passRef.touched" />
+          </div>
+
+          <div class="mb-3">
+            <input type="tel" name="phone" [(ngModel)]="client.phone" placeholder="Teléfono" />
+          </div>
+
+          <div class="mb-4">
+            <input type="text" name="address" [(ngModel)]="client.address" placeholder="Dirección de entrega" />
+          </div>
+
+          <div id="log-in-errors" class="mb-3">
+            <p *ngIf="nameRef.invalid && nameRef.touched">El nombre es obligatorio.</p>
+            <p *ngIf="emailRef.errors?.['email'] && emailRef.touched">Correo no válido.</p>
+            <p *ngIf="passRef.errors?.['minlength'] && passRef.touched">Mínimo 6 caracteres.</p>
+            <p *ngIf="errorMessage" class="p-error">{{ errorMessage }}</p>
+          </div>
+
+          <div>
+            <button type="submit" [disabled]="updateForm.invalid">
+              Actualizar cuenta
+            </button>
+          </div>
+
+          <div class="edit-urls">
+            <a class="text-left" href="/client/profile">Volver al perfil</a>
+          </div>
+        </form>
       </div>
     </div>
-
-    <form (ngSubmit)="clientUpdate()">
-    <input style="display:none;" type="number" name="id" [(ngModel)]="client.id">
-
-    <div class="row">
-        <div class="col-md-6 mb-3">
-        <input type="text" class="form-control form-control-maki"
-            placeholder="Nombre" [(ngModel)]="client.name" name="name" required />
-        </div>
-        <div class="col-md-6 mb-3">
-        <input type="text" class="form-control form-control-maki"
-            placeholder="Apellido" [(ngModel)]="client.surname" name="surname" required />
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <input type="email" class="form-control form-control-maki w-100"
-        placeholder="Correo electrónico" [(ngModel)]="client.email" name="email" required />
-    </div>
-
-    <div class="mb-3">
-        <input type="password" class="form-control form-control-maki w-100"
-        placeholder="Contraseña" [(ngModel)]="client.password" name="password" required />
-    </div>
-
-    <div class="mb-3">
-        <input type="tel" class="form-control form-control-maki w-100"
-        placeholder="Teléfono" [(ngModel)]="client.phone" name="phone" />
-    </div>
-
-    <div class="mb-4">
-        <input type="text" class="form-control form-control-maki w-100"
-        placeholder="Dirección de entrega" [(ngModel)]="client.address" name="address" />
-    </div>
-
-    <div class="d-grid mb-4">
-        <button type="submit" class="btn btn-maki">Actualizar cuenta</button>
-    </div>
-    </form>
-
-    <p *ngIf="errorMessage" class="p-error">{{ errorMessage }}</p>
-  </div>
-</div>
+  </main>
+</app-footer-layout>

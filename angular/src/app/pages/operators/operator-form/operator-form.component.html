@@ -1,90 +1,72 @@
-<div class="maki-form-page">
-  <div class="bg-pattern"></div>
-
-  <div class="form-wrapper">
-
-    <div class="form-header">
-      <div class="brand-circle">M</div>
-      <div>
-        <div class="brand-name">MAKI</div>
-        <div class="brand-sub">
-          {{ modo === 'crear' ? 'nuevo operario' : 'editar operario' }}
+<app-footer-layout>
+  <div class="maki-form-page">
+    <div class="bg-pattern"></div>
+  
+    <div class="form-wrapper">
+  
+      <div class="form-header">
+        <div class="brand-circle">M</div>
+        <div>
+          <div class="brand-name">MAKI</div>
+          <div class="brand-sub">
+            {{ modo === 'crear' ? 'nuevo operario' : 'editar operario' }}
+          </div>
         </div>
       </div>
-    </div>
-
-    <h2 class="form-title">
-      <span class="title-accent">{{ modo === 'crear' ? 'Registrar' : 'Actualizar' }}</span>
-      Operario
-    </h2>
-
-    <form (ngSubmit)="onSubmit()" #operarioForm="ngForm" novalidate>
-
-      <!-- name -->
-      <div class="form-group">
-        <label for="name">Nombre completo</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          [(ngModel)]="operator.name"
-          required
-          placeholder="Ej: Carlos Mendoza"
-          #nameRef="ngModel"
-        />
-        <span class="field-error" *ngIf="nameRef.invalid && nameRef.touched">
-          El nombre es obligatorio.
-        </span>
-      </div>
-
-      <!-- username -->
-      <div class="form-group">
-        <label for="username">Usuario</label>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          [(ngModel)]="operator.username"
-          required
-          placeholder="Ej: cmendoza"
-          #usernameRef="ngModel"
-        />
-        <span class="field-error" *ngIf="usernameRef.invalid && usernameRef.touched">
-          El usuario es obligatorio.
-        </span>
-      </div>
-
-      <!-- password -->
-      <div class="form-group">
-        <label for="password">
-          Contraseña
-          <span class="label-hint" *ngIf="modo === 'editar'">
-            (déjala igual si no deseas cambiarla)
+  
+      <h2 class="form-title">
+        <span class="title-accent">{{ modo === 'crear' ? 'Registrar' : 'Actualizar' }}</span>
+        Operario
+      </h2>
+  
+      <form (ngSubmit)="onSubmit()" #operarioForm="ngForm" novalidate>
+  
+        <!-- name -->
+        <div class="form-group">
+          <label for="name">Nombre completo</label>
+          <input id="name" name="name" type="text" [(ngModel)]="operator.name" required placeholder="Ej: Carlos Mendoza"
+            #nameRef="ngModel" />
+          <span class="field-error" *ngIf="nameRef.invalid && nameRef.touched">
+            El nombre es obligatorio.
           </span>
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          [(ngModel)]="operator.password"
-          [required]="modo === 'crear'"
-          placeholder="••••••••"
-          #passwordRef="ngModel"
-        />
-        <span class="field-error" *ngIf="passwordRef.invalid && passwordRef.touched">
-          La contraseña es obligatoria al crear.
-        </span>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn-primary" [disabled]="operarioForm.invalid">
-          {{ modo === 'crear' ? '+ Registrar Operario' : '✓ Guardar Cambios' }}
-        </button>
-        <button type="button" class="btn-secondary" (click)="cancelar()">
-          Cancelar
-        </button>
-      </div>
-
-    </form>
+        </div>
+  
+        <!-- username -->
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input id="username" name="username" type="text" [(ngModel)]="operator.username" required
+            placeholder="Ej: cmendoza" #usernameRef="ngModel" />
+          <span class="field-error" *ngIf="usernameRef.invalid && usernameRef.touched">
+            El usuario es obligatorio.
+          </span>
+        </div>
+  
+        <!-- password -->
+        <div class="form-group">
+          <label for="password">
+            Contraseña
+            <span class="label-hint" *ngIf="modo === 'editar'">
+              (déjala igual si no deseas cambiarla)
+            </span>
+          </label>
+          <input id="password" name="password" type="password" [(ngModel)]="operator.password"
+            [required]="modo === 'crear'" placeholder="••••••••" #passwordRef="ngModel" />
+          <span class="field-error" *ngIf="passwordRef.invalid && passwordRef.touched">
+            La contraseña es obligatoria al crear.
+          </span>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="operarioForm.invalid">
+            {{ modo === 'crear' ? '+ Registrar Operario' : '✓ Guardar Cambios' }}
+          </button>
+          <button type="button" class="btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+  
+      </form>
+    </div>
   </div>
-</div>
+
+</app-footer-layout>

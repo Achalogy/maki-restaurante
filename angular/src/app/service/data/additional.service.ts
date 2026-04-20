@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Additional } from '../interfaces/additional.interface';
+import { Additional } from 'src/app/interfaces/additional.interface';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AdditionalCategory } from '../interfaces/additional-category.interface';
-import { Category } from '../interfaces/category.interface';
+import { AdditionalCategory } from 'src/app/interfaces/additional-category.interface';
+import { Category } from 'src/app/interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root'

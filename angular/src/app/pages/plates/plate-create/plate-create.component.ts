@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/interfaces/category.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
-import { CategoryService } from 'src/app/service/category.service';
-import { PlateService } from 'src/app/service/plate.service';
+import { CategoryService } from 'src/app/service/data/category.service';
+import { PlateService } from 'src/app/service/data/plate.service';
 
 @Component({
   selector: 'app-plate-create',
