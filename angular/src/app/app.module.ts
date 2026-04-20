@@ -35,6 +35,8 @@ import { OperatorFormComponent } from './pages/operators/operator-form/operator-
 import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
 import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
+import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { BaseLayoutComponent } from './layout/base-layout/base-layout.component'
     FullLayoutComponent,
     FooterLayoutComponent,
     BaseLayoutComponent,
-    OperatorFormComponent
+    OperatorFormComponent,
+    OperatorLogInComponent
   ],  
   imports: [
     BrowserModule,
