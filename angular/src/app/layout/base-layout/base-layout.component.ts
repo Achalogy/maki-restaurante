@@ -49,14 +49,16 @@ export class BaseLayoutComponent {
     this.cart.removeItem(plate)
     this.shoppingCart = this.cart.getShoppingCart()
   }
-
+  
   createOrder() {
     const clientId = window.localStorage.getItem("id")!
     
     this.purchaseOrderService.create(
       +clientId, this.cart.getShoppingCart()
     ).subscribe(() => {
-      alert("creado!")
+      alert("Pedido creado!")
+      this.cart.clear()
+      this.shoppingCart = this.cart.getShoppingCart()
     })
   }
 }
