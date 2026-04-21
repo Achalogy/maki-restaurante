@@ -6,8 +6,8 @@ import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.ClientRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -17,13 +17,11 @@ import java.util.List;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-  private final PurchaseOrderServiceImpl orderServiceImpl;
   @Autowired
   private ClientRepository repo;
+  @Autowired
+  private PurchaseOrderRepository purchaseOrderRepo;
 
-  ClientServiceImpl(PurchaseOrderServiceImpl orderServiceImpl) {
-    this.orderServiceImpl = orderServiceImpl;
-  }
 
   @Override
   public List<Client> selectAll() {
@@ -62,10 +60,9 @@ public class ClientServiceImpl implements ClientService {
     Client client = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado: " + id));
 
-    for (PurchaseOrder p : orderServiceImpl.selectAll()) {
+    for (PurchaseOrder p : purchaseOrderRepo.findAll()) {
       if (p.getClient() != null && p.getClient().getId().equals(id)) {
         p.setClient(null);
-        orderServiceImpl.update(p);
       }
     }
 
