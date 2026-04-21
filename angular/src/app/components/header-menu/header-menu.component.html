@@ -13,11 +13,25 @@
       </a>
     </div>
 
-    <div class="header-profile">
-      <a (click)="navigateTo('/client/log-in')">
-        <i class="ti ti-user"></i>
-        <p>Iniciar Sesión</p>
-      </a>
+    <div class="flex gap-2">
+      <div *ngIf="loggedAs == 'client'" class="shopping-cart">
+        <button (click)="this.cart.open()">
+          <i class="ti ti-shopping-bag"></i>
+          <p>Carrito</p>
+        </button>
+      </div>
+      
+      <div class="header-profile">
+        <a *ngIf="!loggedAs" (click)="navigateTo('/client/log-in')">
+          <i class="ti ti-user"></i>
+          <p>Iniciar Sesión</p>
+        </a>
+      
+        <a *ngIf="loggedAs" (click)="goToProfile()">
+          <i class="ti ti-user"></i>
+          <p>Perfil</p>
+        </a>
+      </div>
     </div>
 
   </nav>

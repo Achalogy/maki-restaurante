@@ -3,35 +3,41 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PlateTableComponent } from './plates/plate-table/plate-table.component';
+import { PlateTableComponent } from './pages/plates/plate-table/plate-table.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgOptimizedImage } from "@angular/common";
-import { PlateCreateComponent } from './plates/plate-create/plate-create.component';
-import { PlateEditComponent } from './plates/plate-edit/plate-edit.component';
-import { PlateViewComponent } from './plates/plate-view/plate-view.component';
-import { LandingPageComponent } from './landing/landing-page/landing-page.component';
-import { HeroCarouselComponent } from './landing/hero-carousel/hero-carousel.component';
+import { PlateCreateComponent } from './pages/plates/plate-create/plate-create.component';
+import { PlateEditComponent } from './pages/plates/plate-edit/plate-edit.component';
+import { PlateViewComponent } from './pages/plates/plate-view/plate-view.component';
+import { LandingPageComponent } from './pages/landing/landing-page/landing-page.component';
+import { HeroCarouselComponent } from './pages/landing/hero-carousel/hero-carousel.component';
 import { HeaderMenuComponent } from './components/header-menu/header-menu.component';
-import { ReviewCarouselComponent } from './landing/review-carousel/review-carousel.component';
-import { FoodMenuGridComponent } from './landing/food-menu-grid/food-menu-grid.component';
+import { ReviewCarouselComponent } from './pages/landing/review-carousel/review-carousel.component';
+import { FoodMenuGridComponent } from './pages/landing/food-menu-grid/food-menu-grid.component';
 import { FormsModule } from '@angular/forms';
-import { FoodMenuGridCardComponent } from './landing/food-menu-grid-card/food-menu-grid-card.component';
-import { OperatorCrudComponent } from './operators/operator-crud/operator-crud.component';
-import { OperatorViewComponent } from './operators/operator-view/operator-view.component';
-import { ClientCrudComponent } from './clients/client-crud/client-crud.component';
-import { ClientLogInComponent } from './clients/client-log-in/client-log-in.component';
-import { ClientSignUpComponent } from './clients/client-sign-up/client-sign-up.component';
-import { ClientSessionComponent } from './clients/client-session/client-session.component';
-import { PlateMenuComponent } from './plates/plate-menu/plate-menu.component';
-import { ClientEditComponent } from './clients/client-edit/client-edit.component';
+import { FoodMenuGridCardComponent } from './pages/landing/food-menu-grid-card/food-menu-grid-card.component';
+import { OperatorCrudComponent } from './pages/operators/operator-crud/operator-crud.component';
+import { OperatorViewComponent } from './pages/operators/operator-view/operator-view.component';
+import { ClientCrudComponent } from './pages/clients/client-crud/client-crud.component';
+import { ClientLogInComponent } from './pages/clients/client-log-in/client-log-in.component';
+import { ClientSignUpComponent } from './pages/clients/client-sign-up/client-sign-up.component';
+import { ClientSessionComponent } from './pages/clients/client-session/client-session.component';
+import { PlateMenuComponent } from './pages/plates/plate-menu/plate-menu.component';
+import { ClientEditComponent } from './pages/clients/client-edit/client-edit.component';
 import { MakiLogoComponent } from './components/shared/maki-logo/maki-logo.component';
-import { GatewayComponent } from './admin/gateway/gateway.component';
-import { ClientProfileComponent } from './clients/client-profile/client-profile.component';
+import { GatewayComponent } from './pages/admin/gateway/gateway.component';
+import { ClientProfileComponent } from './pages/clients/client-profile/client-profile.component';
 import { provideHttpClient } from '@angular/common/http';
-import { AditionalCrudComponent } from './aditionals/aditional-crud/aditional-crud.component';
-import { AditionalFormComponent } from './aditionals/aditional-form/aditional-form.component';
-import { AditionalEditComponent } from './aditionals/aditional-edit/aditional-edit.component';
-import { OperatorFormComponent } from './operators/operator-form/operator-form.component';
+import { AdditionalCrudComponent } from './pages/additionals/additional-crud/additional-crud.component';
+import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
+import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
+import { OperatorFormComponent } from './pages/operators/operator-form/operator-form.component';
+import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
+import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
+import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
+import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
+import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
+import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
 
 @NgModule({
   declarations: [
@@ -56,9 +62,16 @@ import { OperatorFormComponent } from './operators/operator-form/operator-form.c
     MakiLogoComponent,
     GatewayComponent,
     ClientProfileComponent,
-    AditionalCrudComponent,
-    AditionalFormComponent,
-    AditionalEditComponent,
+    AdditionalCrudComponent,
+    AdditionalFormComponent,
+    AdditionalEditComponent,
+    PurchaseOrderCrudComponent,
+    FullLayoutComponent,
+    FooterLayoutComponent,
+    BaseLayoutComponent,
+    OperatorFormComponent,
+    OperatorLogInComponent,
+    PurchaseOrderViewComponent
   ],  
   imports: [
     BrowserModule,
@@ -67,7 +80,6 @@ import { OperatorFormComponent } from './operators/operator-form/operator-form.c
     FormsModule,
     FoodMenuGridComponent,
     FoodMenuGridCardComponent,
-    OperatorFormComponent
 ],
   providers: [
     provideHttpClient()

@@ -1,10 +1,11 @@
 package com.maki.web.service;
 
 import com.maki.web.entities.Operator;
-import com.maki.web.entities.Pedido;
+import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.repository.OperadorRepository;
+import com.maki.web.exception.InvalidCredentialsException;
+import com.maki.web.repository.OperatorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OperatorServiceImpl implements OperadorService {
+public class OperatorServiceImpl implements OperatorService {
 
   @Autowired
-  private OperadorRepository repo;
+  private OperatorRepository repo;
 
   @Autowired
-  private PedidoService pedidoService;
+  private PurchaseOrderService pedidoService;
 
   @Override
   public List<Operator> selectAll() {
@@ -51,9 +52,9 @@ public class OperatorServiceImpl implements OperadorService {
         .orElseThrow(() -> new EntityNotFoundException("Operator no encontrado para eliminar: " + id));
 
     // Desvincular pedidos antes de borrar al Operator para mantener integridad
-    for (Pedido p : pedidoService.selectAll()) {
-      if (p.getOperador() != null && p.getOperador().getId().equals(id)) {
-        p.setOperador(null);
+    for (PurchaseOrder p : pedidoService.selectAll()) {
+      if (p.getOperator() != null && p.getOperator().getId().equals(id)) {
+        p.setOperator(null);
         pedidoService.update(p);
       }
     }
@@ -67,5 +68,19 @@ public class OperatorServiceImpl implements OperadorService {
       throw new EntityNotFoundException("No se puede actualizar: Operator no encontrado");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public Operator verifyCredentials(String username, String password)
+      throws InvalidCredentialsException, EntityNotFoundException {
+    Operator repoOperator = repo.findByUsername(username)
+        .orElseThrow(
+            () -> new EntityNotFoundException("No existe un operator registrado con el username: " + username));
+
+    if (!repoOperator.getPassword().equals(password)) {
+      throw new InvalidCredentialsException("Credenciales inválidas");
+    }
+
+    return repoOperator;
   }
 }
