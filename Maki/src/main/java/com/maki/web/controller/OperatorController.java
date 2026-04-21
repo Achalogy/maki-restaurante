@@ -4,12 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.maki.web.entities.Operator;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.service.OperadorService;
+import com.maki.web.service.OperatorService;
 
 @RestController
 @RequestMapping("/api/v1/operator")
@@ -17,7 +16,7 @@ import com.maki.web.service.OperadorService;
 public class OperatorController {
 
     @Autowired
-    private OperadorService OperatorService;
+    private OperatorService OperatorService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
@@ -86,6 +85,18 @@ public class OperatorController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/log-in")
+    public ResponseEntity<Operator> loginOperator(@RequestBody(required = false) Operator data) {
+        try {
+            return new ResponseEntity<>(OperatorService.verifyCredentials(
+                    data.getUsername(),
+                    data.getPassword()), HttpStatus.OK);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
