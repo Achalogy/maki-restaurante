@@ -25,7 +25,7 @@ export class OperatorLogInComponent {
       password: this.password
     }).subscribe({
       next: (operator) => {
-        this.router.navigate([`/operator/portal`]);
+        this.router.navigate([`/purchase-order/crud`]);
       },
       error: (err) => {
         if (err.status === 400 || err.status === 401) {

@@ -4,6 +4,7 @@ import com.maki.web.entities.Operator;
 import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.repository.OperatorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,19 @@ public class OperatorServiceImpl implements OperatorService {
       throw new EntityNotFoundException("No se puede actualizar: Operator no encontrado");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public Operator verifyCredentials(String username, String password)
+      throws InvalidCredentialsException, EntityNotFoundException {
+    Operator repoOperator = repo.findByUsername(username)
+        .orElseThrow(
+            () -> new EntityNotFoundException("No existe un operator registrado con el username: " + username));
+
+    if (!repoOperator.getPassword().equals(password)) {
+      throw new InvalidCredentialsException("Credenciales inválidas");
+    }
+
+    return repoOperator;
   }
 }
