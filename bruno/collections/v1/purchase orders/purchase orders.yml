@@ -5,11 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{host}}/api/v1/additional?categoryId=2"
-  params:
-    - name: categoryId
-      value: "2"
-      type: query
+  url: "{{host}}/api/v1/purchase-order"
   auth: inherit
 
 settings:
