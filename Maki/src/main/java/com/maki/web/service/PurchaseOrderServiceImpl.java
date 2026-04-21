@@ -7,7 +7,8 @@ import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.repository.ClientRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PurchaseOrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   private PurchaseOrderRepository repo;
 
   @Autowired
-  private OrderDetailsService pedidoDetallesService;
+  private OrderDetailsRepository orderDetailsRepo;
   
   @Autowired
-  private ClientRepository clientRepository;
+  private ClientService clientService;
 
   @Autowired
-  private OrderDetailsService orderDetailsService;
-  
-  @Autowired
-  private AdditionalOrderDetailsService additionalOrderDetailsService;
+  private AdditionalOrderDetailsRepository additionalOrderDetailsRepo;
 
   @Override
   public List<PurchaseOrder> selectAll() {
@@ -68,9 +66,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Pedido no encontrado"));
 
     // Limpiar los detalles del pedido antes de borrar el pedido principal
-    for (OrderDetails detalle : pedidoDetallesService.selectAll()) {
+    for (OrderDetails detalle : orderDetailsRepo.findAll()) {
       if (detalle.getOrder() != null && detalle.getOrder().getId().equals(id)) {
-        pedidoDetallesService.deleteByID(detalle.getId());
+        orderDetailsRepo.deleteById(detalle.getId());
       }
     }
 
@@ -89,12 +87,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   public PurchaseOrder createPurchaseOrderFromcart(Long id, List<PlateWithAdditionals> plates) {
     PurchaseOrder order = this.insert(
       new PurchaseOrder(
-        clientRepository.findById(id).get()
+        clientService.selectById(id)
       )
     );
 
     for (PlateWithAdditionals plate : plates) {
-      OrderDetails detail = orderDetailsService.insert(
+      OrderDetails detail = orderDetailsRepo.save(
         new OrderDetails(
           order,
           plate.detail.getPlate(),
@@ -102,8 +100,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         );
 
       for (Additional additional : plate.additionals) {
-          additionalOrderDetailsService
-            .insert(
+          additionalOrderDetailsRepo
+            .save(
               new AdditionalOrderDetails(
                 detail,
                 additional)

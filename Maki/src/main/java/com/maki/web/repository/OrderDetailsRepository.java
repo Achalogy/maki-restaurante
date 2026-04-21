@@ -6,7 +6,7 @@ import java.util.List;
 import com.maki.web.entities.OrderDetails;
 
 @Repository
-public interface OrderDetailRepository extends JpaRepository<OrderDetails, Long> {
+public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long> {
 
     List<OrderDetails> findByOrder_Id(Long orderId);
 

@@ -24,7 +24,7 @@ import com.maki.web.repository.AdministratorRepository;
 import com.maki.web.repository.CategoryRepository;
 import com.maki.web.repository.ClientRepository;
 import com.maki.web.repository.OperatorRepository;
-import com.maki.web.repository.OrderDetailRepository;
+import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PlateRepository;
 import com.maki.web.repository.PurchaseOrderRepository;
 import com.maki.web.repository.DeliveryRepository;
@@ -51,7 +51,7 @@ public class Dataloader implements CommandLineRunner {
         @Autowired
         private PurchaseOrderRepository orderRepo;
         @Autowired
-        private OrderDetailRepository orderDetallesRepo;
+        private OrderDetailsRepository orderDetallesRepo;
 
         @Autowired
         private DeliveryRepository deliveryRepo;
