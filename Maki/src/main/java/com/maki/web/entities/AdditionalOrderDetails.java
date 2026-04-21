@@ -1,5 +1,6 @@
 package com.maki.web.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class AdditionalOrderDetails {
 
   @ManyToOne
   @JoinColumn(name = "detail_id", nullable = false)
+  @JsonIgnore
   private OrderDetails detail;
 
   @ManyToOne
