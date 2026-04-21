@@ -37,6 +37,7 @@ import { FullLayoutComponent } from './layout/full-layout/full-layout.component'
 import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
+import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { OperatorLogInComponent } from './pages/operators/operator-log-in/operat
     FooterLayoutComponent,
     BaseLayoutComponent,
     OperatorFormComponent,
-    OperatorLogInComponent
+    OperatorLogInComponent,
+    PurchaseOrderViewComponent
   ],  
   imports: [
     BrowserModule,

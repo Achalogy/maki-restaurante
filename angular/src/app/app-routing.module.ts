@@ -20,7 +20,8 @@ import { AdditionalCrudComponent } from './pages/additionals/additional-crud/add
 import { AdditionalFormComponent } from './pages/additionals/additional-form/additional-form.component';
 import { AdditionalEditComponent } from './pages/additionals/additional-edit/additional-edit.component';
 import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
-import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component'; 
+import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
+import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
 
   {path: "admin", component: GatewayComponent },
   {path: "purchase-order/crud", component: PurchaseOrderCrudComponent },
+  {path: "purchase-order/:id", component: PurchaseOrderViewComponent },
 
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
