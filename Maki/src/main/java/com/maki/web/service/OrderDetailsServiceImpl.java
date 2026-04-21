@@ -50,7 +50,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     OrderDetails detalle = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Detalle no encontrado"));
 
-    // Limpiar los additionales asociados a este detalle específico antes de borrarlo
+    // Limpiar los additionales asociados a este detalle espec?fico antes de borrarlo
     for (AdditionalOrderDetails apd : additionalDetalleService.selectAll()) {
       if (apd.getDetail() != null && apd.getDetail().getId().equals(id)) {
         additionalDetalleService.deleteByID(apd.getId());
@@ -66,5 +66,10 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
       throw new EntityNotFoundException("No se puede actualizar: Detalle de pedido no existe");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public List<OrderDetails> findByOrderId(Long orderId) {
+    return repo.findByOrder_Id(orderId);
   }
 }
