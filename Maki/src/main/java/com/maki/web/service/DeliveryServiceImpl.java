@@ -5,6 +5,8 @@ import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.DeliveryRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class DeliveryServiceImpl implements DeliveryService {
   private DeliveryRepository repo;
 
   @Autowired
-  private PurchaseOrderService pedidoService;
+  private PurchaseOrderRepository purchaseOrderRepo;
 
   @Override
   public List<Delivery> selectAll() {
@@ -51,10 +53,10 @@ public class DeliveryServiceImpl implements DeliveryService {
         .orElseThrow(() -> new EntityNotFoundException("Domiciliario no encontrado para eliminar: " + id));
 
     // Lógica de integridad: Desvincular pedidos antes de borrar al domiciliario
-    for (PurchaseOrder p : pedidoService.selectAll()) {
+    for (PurchaseOrder p : purchaseOrderRepo.findAll()) {
       if (p.getDelivery() != null && p.getDelivery().getId().equals(id)) {
         p.setDelivery(null);
-        pedidoService.update(p);
+        purchaseOrderRepo.save(p);
       }
     }
 
