@@ -14,6 +14,10 @@ export class ShoppingCartService {
     aditionals: Additional[]
   })[] = []
 
+  persistCart() {
+    window.localStorage.setItem("cart", JSON.stringify(this.shoppingCart))
+  }
+
   toggle() {
     this.isOpen$.next(!this.isOpen$.value);
   }
@@ -31,6 +35,7 @@ export class ShoppingCartService {
   }
 
   getShoppingCart() {
+    this.shoppingCart = JSON.parse(window.localStorage.getItem("cart") ?? "[]")
     return this.shoppingCart
   }
 
@@ -50,12 +55,16 @@ export class ShoppingCartService {
         aditionals: additionals
       }
     )
+
+    this.persistCart()
   }
   removeItem(plate: Plate) {
     this.shoppingCart = this.shoppingCart.filter(x => x.plate.id != plate.id)
+    this.persistCart()
   }
-
+  
   clear() {
     this.shoppingCart = []
+    this.persistCart()
   }
 }
