@@ -2,6 +2,7 @@ package com.maki.web.service;
 
 import com.maki.web.entities.AdditionalCategory;
 import com.maki.web.entities.Category;
+import com.maki.web.repository.AdditionalCategoryRepository;
 import com.maki.web.repository.CategoryRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
   PlateService platoService;
 
   @Autowired
-  AdditionalCategoryService additionalCategoriaService;
+  AdditionalCategoryRepository additionalCategoryRepo;
 
   @Override
   public List<Category> selectAll() {
@@ -62,9 +63,9 @@ public class CategoryServiceImpl implements CategoryService {
         platoService.delete(p);
       }
     }
-    for (AdditionalCategory p : additionalCategoriaService.selectAll()) {
+    for (AdditionalCategory p : additionalCategoryRepo.findAll()) {
       if (p.getCategory() != null && p.getCategory().getId().equals(id)) {
-        additionalCategoriaService.delete(p);
+        additionalCategoryRepo.delete(p);
       }
     }
 

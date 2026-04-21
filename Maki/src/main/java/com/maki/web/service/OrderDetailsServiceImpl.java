@@ -4,7 +4,8 @@ import com.maki.web.entities.AdditionalOrderDetails;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.repository.OrderDetailRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.OrderDetailsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,10 @@ import java.util.List;
 public class OrderDetailsServiceImpl implements OrderDetailsService {
 
   @Autowired
-  private OrderDetailRepository repo;
+  private OrderDetailsRepository repo;
 
   @Autowired
-  private AdditionalOrderDetailsService additionalDetalleService;
+  private AdditionalOrderDetailsRepository additionalOrderDetailsRepo;
 
   @Override
   public List<OrderDetails> selectAll() {
@@ -51,9 +52,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Detalle no encontrado"));
 
     // Limpiar los additionales asociados a este detalle espec?fico antes de borrarlo
-    for (AdditionalOrderDetails apd : additionalDetalleService.selectAll()) {
+    for (AdditionalOrderDetails apd : additionalOrderDetailsRepo.findAll()) {
       if (apd.getDetail() != null && apd.getDetail().getId().equals(id)) {
-        additionalDetalleService.deleteByID(apd.getId());
+        additionalOrderDetailsRepo.deleteById(apd.getId());
       }
     }
 
