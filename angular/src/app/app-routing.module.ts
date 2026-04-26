@@ -22,6 +22,7 @@ import { AdditionalEditComponent } from './pages/additionals/additional-edit/add
 import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
+import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -53,6 +54,8 @@ const routes: Routes = [
   {path: "admin", component: GatewayComponent },
   {path: "purchase-order/crud", component: PurchaseOrderCrudComponent },
   {path: "purchase-order/:id", component: PurchaseOrderViewComponent },
+
+  { path: 'delivery/crud', component: DeliveryCrudComponent },
 
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
