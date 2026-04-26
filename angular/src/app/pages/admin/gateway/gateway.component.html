@@ -11,7 +11,7 @@
       </div>
   
       <section>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 m-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
   
           <!-- Operadores -->
           <a (click)="navigateTo('/operator/crud')"
@@ -72,21 +72,34 @@
             <p class="text-xs text-gray-400 mt-0.5">Gestionar adicionales</p>
           </a>
 
+          <!-- Pedidos -->
+          <a (click)="navigateTo('/purchase-order/adminview')"
+            class="group block bg-white border rounded-xl p-5 hover:border-gray-300 hover:scale-105 transition-all">
+            <div class="w-9 h-9 rounded-lg bg-orange-400 flex items-center justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11l19-9-9 19-2-8-8-2z" />
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-gray-900">Pedidos</p>
+            <p class="text-xs text-gray-400 mt-0.5">Gestionar pedidos</p>
+          </a>
+
             <!-- Domiciliarios -->
-        <a (click)="navigateTo('/delivery/crud')"
-          class="group block bg-white border rounded-xl p-5 hover:border-gray-300 hover:scale-105 transition-all">
-          <div class="w-9 h-9 rounded-lg bg-orange-400 flex items-center justify-center mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="1" y="3" width="15" height="13" rx="1"/>
-              <path d="M16 8h4l3 5v3h-7V8z"/>
-              <circle cx="5.5" cy="18.5" r="2.5"/>
-              <circle cx="18.5" cy="18.5" r="2.5"/>
-            </svg>
-          </div>
-          <p class="text-sm font-medium text-gray-900">Domiciliarios</p>
-          <p class="text-xs text-gray-400 mt-0.5">Gestionar domiciliarios</p>
-        </a>
+          <a (click)="navigateTo('/delivery/crud')"
+            class="group block bg-white border rounded-xl p-5 hover:border-gray-300 hover:scale-105 transition-all">
+            <div class="w-9 h-9 rounded-lg bg-orange-400 flex items-center justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13" rx="1"/>
+                <path d="M16 8h4l3 5v3h-7V8z"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-gray-900">Domiciliarios</p>
+            <p class="text-xs text-gray-400 mt-0.5">Gestionar domiciliarios</p>
+          </a>
   
         </div>
       </section>
