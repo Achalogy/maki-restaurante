@@ -38,6 +38,8 @@ import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.comp
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
+import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-orde
     BaseLayoutComponent,
     OperatorFormComponent,
     OperatorLogInComponent,
-    PurchaseOrderViewComponent
+    PurchaseOrderViewComponent,
+    DeliveryCrudComponent
   ],  
   imports: [
     BrowserModule,
