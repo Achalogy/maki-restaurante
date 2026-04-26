@@ -41,6 +41,7 @@ import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.com
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
 import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
+import { AdminGatewayButtonComponent } from './pages/admin/components/admin-gateway-button/admin-gateway-button.component';
 
 
 @NgModule({
@@ -76,9 +77,10 @@ import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase
     OperatorFormComponent,
     OperatorLogInComponent,
     PurchaseOrderViewComponent,
-    DeliveryCrudComponent
+    DeliveryCrudComponent,
     AdminLogInComponent,
-    PurchaseOrderAdminviewComponent
+    PurchaseOrderAdminviewComponent,
+    AdminGatewayButtonComponent
   ],  
   imports: [
     BrowserModule,
