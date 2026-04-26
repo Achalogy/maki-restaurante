@@ -3,6 +3,7 @@ package com.maki.web.service;
 import com.maki.web.entities.Administrator;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.repository.AdministratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,19 @@ public class AdministratorServiceImpl implements AdministratorService {
       throw new EntityNotFoundException("No se puede actualizar: Administrador no encontrado");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public Administrator verifyCredentials(String username, String password)
+      throws InvalidCredentialsException, EntityNotFoundException {
+    Administrator repoAdministrator = repo.findByUsername(username)
+        .orElseThrow(
+            () -> new EntityNotFoundException("No existe un administrador registrado con el username: " + username));
+
+    if (!repoAdministrator.getPassword().equals(password)) {
+      throw new InvalidCredentialsException("Credenciales inválidas");
+    }
+
+    return repoAdministrator;
   }
 }
