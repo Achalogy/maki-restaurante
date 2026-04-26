@@ -39,6 +39,7 @@ import { BaseLayoutComponent } from './layout/base-layout/base-layout.component'
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.component';
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
+import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
 
 
@@ -75,6 +76,7 @@ import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase
     OperatorFormComponent,
     OperatorLogInComponent,
     PurchaseOrderViewComponent,
+    DeliveryCrudComponent
     AdminLogInComponent,
     PurchaseOrderAdminviewComponent
   ],  
