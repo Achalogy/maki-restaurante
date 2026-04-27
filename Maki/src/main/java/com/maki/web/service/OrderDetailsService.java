@@ -7,4 +7,6 @@ public interface OrderDetailsService extends ServiceInterface<OrderDetails> {
 
     List<OrderDetails> findByOrderId(Long orderId);
 
+    List<OrderDetails> findByClientId(Long clientId);
+
 }
