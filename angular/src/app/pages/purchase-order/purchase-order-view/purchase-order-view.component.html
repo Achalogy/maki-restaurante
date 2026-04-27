@@ -17,11 +17,11 @@
         </span>
         <span class="text-xs font-bold uppercase tracking-wider px-4 py-1 rounded-full"
           [ngClass]="{
-            'bg-blue-100 text-blue-800':     orderInfo.status.toLowerCase().includes('preparaci'),
-            'bg-cyan-100 text-cyan-800':     orderInfo.status.toLowerCase().includes('camino'),
-            'bg-green-100 text-green-800':   orderInfo.status.toLowerCase().includes('entregado'),
-            'bg-red-100 text-red-800':       orderInfo.status.toLowerCase().includes('cancelado'),
-            'bg-yellow-100 text-yellow-800': !orderInfo.status.toLowerCase().includes('preparaci') && !orderInfo.status.toLowerCase().includes('camino') && !orderInfo.status.toLowerCase().includes('entregado') && !orderInfo.status.toLowerCase().includes('cancelado')
+            'bg-blue-100 text-blue-800':     orderInfo.status.toLowerCase().includes('preparation'),
+            'bg-cyan-100 text-cyan-800':     orderInfo.status.toLowerCase().includes('sent'),
+            'bg-green-100 text-green-800':   orderInfo.status.toLowerCase().includes('delivered'),
+            'bg-red-100 text-red-800':       orderInfo.status.toLowerCase().includes('cancelled'),
+            'bg-yellow-100 text-yellow-800': orderInfo.status.toLowerCase().includes('pending')
           }">
           {{ translateStatus(orderInfo.status!) }}
         </span>
