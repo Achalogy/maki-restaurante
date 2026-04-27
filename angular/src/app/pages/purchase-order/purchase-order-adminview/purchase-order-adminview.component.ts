@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
+import { OrderStatus, PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 import { PurchaseOrderService } from 'src/app/service/data/purchase-order.service';
 
 @Component({
@@ -40,5 +40,14 @@ export class PurchaseOrderAdminviewComponent {
 
     navigateTo(url: string) {
       this.router.navigate([url])
+    }
+    
+    translateStatus(status: OrderStatus) {
+      switch(status) {
+        case "pending": return "Pendiente";
+        case "preparation": return "En preparación";
+        case "sent": return "Enviado";
+        case "delivered": return "En camino";
+      }
     }
 }

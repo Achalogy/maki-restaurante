@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { OrderDetailsService } from 'src/app/service/data/order-details.service';
 import { Router } from '@angular/router';
+import { OrderStatus } from 'src/app/interfaces/purchase-order.interface';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -40,5 +41,14 @@ export class PurchaseOrderViewComponent implements OnInit {
         .reduce((s: number, a: any) => s + (a.additional?.price ?? 0), 0);
       return acc + plateTotal + addTotal;
     }, 0);
+  }
+
+  translateStatus(status: OrderStatus) {
+    switch(status) {
+      case "pending": return "Pendiente";
+      case "preparation": return "En preparación";
+      case "sent": return "Enviado";
+      case "delivered": return "En camino";
+    }
   }
 }

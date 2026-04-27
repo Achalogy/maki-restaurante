@@ -23,7 +23,7 @@
             'bg-red-100 text-red-800':       orderInfo?.status?.toLowerCase()?.includes('cancelado'),
             'bg-yellow-100 text-yellow-800': !orderInfo?.status?.toLowerCase()?.includes('preparaci') && !orderInfo?.status?.toLowerCase()?.includes('camino') && !orderInfo?.status?.toLowerCase()?.includes('entregado') && !orderInfo?.status?.toLowerCase()?.includes('cancelado')
           }">
-          {{ orderInfo?.status }}
+          {{ translateStatus(orderInfo?.status!) }}
         </span>
       </div>
     </header>
