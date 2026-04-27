@@ -73,4 +73,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
   public List<OrderDetails> findByOrderId(Long orderId) {
     return repo.findByOrder_Id(orderId);
   }
+
+  @Override
+  public List<OrderDetails> findByClientId(Long clientId) {
+    return repo.findByOrder_Client_Id(clientId);
+  }
 }
