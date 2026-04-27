@@ -68,15 +68,20 @@ public class PurchaseOrderController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            if(data.getStatus() != null)
+            if (data.getDelivery() != null)
+                updateData.setDelivery(
+                        data.getDelivery());
+
+            if(data.getStatus() != null) {
+                if (!updateData.getStatus().equals("sent") && data.getStatus().equals("sent")) {
+                    // Solo si cambia a enviado y no se esta actualizando ya el delivery
+                    updateData.setDelivery(null);
+                }
+
                 updateData.setStatus(
                     data.getStatus()
                 );
-
-            if(data.getDelivery() != null)
-                updateData.setDelivery(
-                    data.getDelivery()
-                );
+            }
 
             if(data.getDelivery_date() != null)
                 updateData.setDelivery_date(
