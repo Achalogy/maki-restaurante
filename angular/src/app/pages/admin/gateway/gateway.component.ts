@@ -53,6 +53,18 @@ export class GatewayComponent {
       icon: "ti ti-truck-delivery",
       href: "/delivery/crud"
     },
+    {
+      title: "Log In Operador",
+      description: "Iniciar sesión como operador",
+      icon: "ti ti-truck-delivery",
+      href: "/operator/log-in"
+    },
+    {
+      title: "Log In Admin",
+      description: "Iniciar sesión como administrador",
+      icon: "ti ti-truck-delivery",
+      href: "/admin/log-in"
+    }
   ]
 
   public constructor(
