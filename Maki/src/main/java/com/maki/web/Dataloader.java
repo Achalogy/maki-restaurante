@@ -426,7 +426,7 @@ public class Dataloader implements CommandLineRunner {
                 order1.setDelivery(deliveryRepo.findById(1L).orElse(null));
                 order1.setDelivery_date(java.time.LocalDateTime.now().plusHours(1));
                 order1.setCreation_date(java.time.LocalDateTime.now());
-                order1.setStatus("En preparación");
+                order1.setStatus("preparation");
                 orderRepo.save(order1);
 
                 PurchaseOrder order2 = new PurchaseOrder();
@@ -435,7 +435,7 @@ public class Dataloader implements CommandLineRunner {
                 order2.setDelivery(deliveryRepo.findById(2L).orElse(null));
                 order2.setDelivery_date(java.time.LocalDateTime.now().plusHours(2));
                 order2.setCreation_date(java.time.LocalDateTime.now());
-                order2.setStatus("Pendiente");
+                order2.setStatus("pending");
                 orderRepo.save(order2);
 
                 PurchaseOrder order3 = new PurchaseOrder();
@@ -444,7 +444,7 @@ public class Dataloader implements CommandLineRunner {
                 order3.setDelivery(deliveryRepo.findById(3L).orElse(null));
                 order3.setDelivery_date(java.time.LocalDateTime.now().plusHours(3));
                 order3.setCreation_date(java.time.LocalDateTime.now());
-                order3.setStatus("En camino");
+                order3.setStatus("sent");
                 orderRepo.save(order3);
 
                 PurchaseOrder order4 = new PurchaseOrder();
@@ -453,7 +453,7 @@ public class Dataloader implements CommandLineRunner {
                 order4.setDelivery(deliveryRepo.findById(4L).orElse(null));
                 order4.setDelivery_date(java.time.LocalDateTime.now().plusHours(1).plusMinutes(30));
                 order4.setCreation_date(java.time.LocalDateTime.now());
-                order4.setStatus("Entregado");
+                order4.setStatus("delivered");
                 orderRepo.save(order4);
 
                 PurchaseOrder order5 = new PurchaseOrder();
@@ -462,7 +462,7 @@ public class Dataloader implements CommandLineRunner {
                 order5.setDelivery(deliveryRepo.findById(5L).orElse(null));
                 order5.setDelivery_date(java.time.LocalDateTime.now().plusHours(4));
                 order5.setCreation_date(java.time.LocalDateTime.now());
-                order5.setStatus("Pendiente");
+                order5.setStatus("pending");
                 orderRepo.save(order5);
 
                 PurchaseOrder order6 = new PurchaseOrder();
@@ -471,7 +471,7 @@ public class Dataloader implements CommandLineRunner {
                 order6.setDelivery(deliveryRepo.findById(1L).orElse(null));
                 order6.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(15));
                 order6.setCreation_date(java.time.LocalDateTime.now());
-                order6.setStatus("En preparación");
+                order6.setStatus("preparation");
                 orderRepo.save(order6);
                 
                 PurchaseOrder order7 = new PurchaseOrder();
@@ -480,7 +480,7 @@ public class Dataloader implements CommandLineRunner {
                 order7.setDelivery(deliveryRepo.findById(2L).orElse(null));
                 order7.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(45));
                 order7.setCreation_date(java.time.LocalDateTime.now());
-                order7.setStatus("Pendiente");
+                order7.setStatus("pending");
                 orderRepo.save(order7);
 
                 PurchaseOrder order8 = new PurchaseOrder();
@@ -489,7 +489,7 @@ public class Dataloader implements CommandLineRunner {
                 order8.setDelivery(deliveryRepo.findById(3L).orElse(null));
                 order8.setDelivery_date(java.time.LocalDateTime.now().plusHours(3).plusMinutes(30));
                 order8.setCreation_date(java.time.LocalDateTime.now());
-                order8.setStatus("En preparación");
+                order8.setStatus("preparation");
                 orderRepo.save(order8);
 
                 PurchaseOrder order9 = new PurchaseOrder();
@@ -498,7 +498,7 @@ public class Dataloader implements CommandLineRunner {
                 order9.setDelivery(deliveryRepo.findById(4L).orElse(null));
                 order9.setDelivery_date(java.time.LocalDateTime.now().plusHours(1).plusMinutes(15));
                 order9.setCreation_date(java.time.LocalDateTime.now());
-                order9.setStatus("En camino");
+                order9.setStatus("sent");
                 orderRepo.save(order9);
 
                 PurchaseOrder order10 = new PurchaseOrder();
@@ -507,7 +507,7 @@ public class Dataloader implements CommandLineRunner {
                 order10.setDelivery(deliveryRepo.findById(5L).orElse(null));
                 order10.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(20));
                 order10.setCreation_date(java.time.LocalDateTime.now());
-                order10.setStatus("Entregado");
+                order10.setStatus("delivered");
                 orderRepo.save(order10);
 
                 PurchaseOrder order11 = new PurchaseOrder();
@@ -516,7 +516,7 @@ public class Dataloader implements CommandLineRunner {
                 order11.setDelivery(deliveryRepo.findById(1L).orElse(null));
                 order11.setDelivery_date(java.time.LocalDateTime.now().plusHours(4).plusMinutes(10));
                 order11.setCreation_date(java.time.LocalDateTime.now());
-                order11.setStatus("Pendiente");
+                order11.setStatus("pending");
                 orderRepo.save(order11);
 
                 PurchaseOrder order12 = new PurchaseOrder();
@@ -525,7 +525,7 @@ public class Dataloader implements CommandLineRunner {
                 order12.setDelivery(deliveryRepo.findById(2L).orElse(null));
                 order12.setDelivery_date(java.time.LocalDateTime.now().plusHours(1).plusMinutes(50));
                 order12.setCreation_date(java.time.LocalDateTime.now());
-                order12.setStatus("En preparación");
+                order12.setStatus("preparation");
                 orderRepo.save(order12);
 
                 PurchaseOrder order13 = new PurchaseOrder();
@@ -534,7 +534,7 @@ public class Dataloader implements CommandLineRunner {
                 order13.setDelivery(deliveryRepo.findById(3L).orElse(null));
                 order13.setDelivery_date(java.time.LocalDateTime.now().plusHours(3).plusMinutes(5));
                 order13.setCreation_date(java.time.LocalDateTime.now());
-                order13.setStatus("En camino");
+                order13.setStatus("sent");
                 orderRepo.save(order13);
 
                 PurchaseOrder order14 = new PurchaseOrder();
@@ -543,7 +543,7 @@ public class Dataloader implements CommandLineRunner {
                 order14.setDelivery(deliveryRepo.findById(4L).orElse(null));
                 order14.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(35));
                 order14.setCreation_date(java.time.LocalDateTime.now());
-                order14.setStatus("Pendiente");
+                order14.setStatus("pending");
                 orderRepo.save(order14);
 
                 PurchaseOrder order15 = new PurchaseOrder();
@@ -552,7 +552,7 @@ public class Dataloader implements CommandLineRunner {
                 order15.setDelivery(deliveryRepo.findById(5L).orElse(null));
                 order15.setDelivery_date(java.time.LocalDateTime.now().plusHours(1).plusMinutes(40));
                 order15.setCreation_date(java.time.LocalDateTime.now());
-                order15.setStatus("En preparación");
+                order15.setStatus("preparation");
                 orderRepo.save(order15);
 
                 PurchaseOrder order16 = new PurchaseOrder();
@@ -561,7 +561,7 @@ public class Dataloader implements CommandLineRunner {
                 order16.setDelivery(deliveryRepo.findById(1L).orElse(null));
                 order16.setDelivery_date(java.time.LocalDateTime.now().plusHours(3).plusMinutes(25));
                 order16.setCreation_date(java.time.LocalDateTime.now());
-                order16.setStatus("Entregado");
+                order16.setStatus("delivered");
                 orderRepo.save(order16);
 
                 PurchaseOrder order17 = new PurchaseOrder();
@@ -570,7 +570,7 @@ public class Dataloader implements CommandLineRunner {
                 order17.setDelivery(deliveryRepo.findById(2L).orElse(null));
                 order17.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(55));
                 order17.setCreation_date(java.time.LocalDateTime.now());
-                order17.setStatus("En camino");
+                order17.setStatus("sent");
                 orderRepo.save(order17);
 
                 PurchaseOrder order18 = new PurchaseOrder();
@@ -579,7 +579,7 @@ public class Dataloader implements CommandLineRunner {
                 order18.setDelivery(deliveryRepo.findById(3L).orElse(null));
                 order18.setDelivery_date(java.time.LocalDateTime.now().plusHours(1).plusMinutes(35));
                 order18.setCreation_date(java.time.LocalDateTime.now());
-                order18.setStatus("Pendiente");
+                order18.setStatus("pending");
                 orderRepo.save(order18);
 
                 PurchaseOrder order19 = new PurchaseOrder();
@@ -588,7 +588,7 @@ public class Dataloader implements CommandLineRunner {
                 order19.setDelivery(deliveryRepo.findById(4L).orElse(null));
                 order19.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(10));
                 order19.setCreation_date(java.time.LocalDateTime.now());
-                order19.setStatus("En preparación");
+                order19.setStatus("preparation");
                 orderRepo.save(order19);
 
                 PurchaseOrder order20 = new PurchaseOrder();
@@ -597,7 +597,7 @@ public class Dataloader implements CommandLineRunner {
                 order20.setDelivery(deliveryRepo.findById(5L).orElse(null));
                 order20.setDelivery_date(java.time.LocalDateTime.now().plusHours(3).plusMinutes(45));
                 order20.setCreation_date(java.time.LocalDateTime.now());
-                order20.setStatus("En camino");
+                order20.setStatus("sent");
                 orderRepo.save(order20);
 
                 PurchaseOrder order21 = new PurchaseOrder();
@@ -606,7 +606,7 @@ public class Dataloader implements CommandLineRunner {
                 order21.setDelivery(deliveryRepo.findById(1L).orElse(null));
                 order21.setDelivery_date(java.time.LocalDateTime.now().plusHours(2).plusMinutes(20));
                 order21.setCreation_date(java.time.LocalDateTime.now());
-                order21.setStatus("Entregado");
+                order21.setStatus("delivered");
                 orderRepo.save(order21);
                 
 
