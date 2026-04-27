@@ -5,6 +5,7 @@ import com.maki.web.entities.PurchaseOrder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,40 @@ public class PurchaseOrderController {
 
     // ===================== UPDATE PLATE =====================
 
+    @PostMapping("/{id}")
+    public ResponseEntity<PurchaseOrder> updatePurchaseOrder(@PathVariable Long id,
+            @RequestBody(required= false) PurchaseOrder data) {
+        try {
+            PurchaseOrder updateData = purchaseOrderService.selectById(id);
+            if(updateData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            if(data.getStatus() != null)
+                updateData.setStatus(
+                    data.getStatus()
+                );
+
+            if(data.getDelivery() != null)
+                updateData.setDelivery(
+                    data.getDelivery()
+                );
+
+            if(data.getDelivery_date() != null)
+                updateData.setDelivery_date(
+                    data.getDelivery_date()
+                );
+
+            return new ResponseEntity<>(
+                purchaseOrderService.update(updateData),
+                HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 
     // ===================== DELETE Order =====================
     @DeleteMapping("/{id}")
