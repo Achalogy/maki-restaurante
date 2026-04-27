@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { OrderDetailsService } from 'src/app/service/data/order-details.service';
 import { Router } from '@angular/router';
-import { OrderStatus } from 'src/app/interfaces/purchase-order.interface';
+import { OrderStatus, PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
+import translateStatus from 'src/utils/translateStatus';
+import { PurchaseOrderService } from 'src/app/service/data/purchase-order.service';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -13,24 +15,31 @@ export class PurchaseOrderViewComponent implements OnInit {
 
   // All detail rows for this order (one per plate)
   orderItems: PurchaseOrderDetails[] = [];
+  purchaseOrder: PurchaseOrder = {} as PurchaseOrder;
 
   // Shared order info — taken from the first item
   get orderInfo() {
-    return this.orderItems[0]?.order ?? null;
+    return this.purchaseOrder;
   }
 
   constructor(
     private orderDetailsService: OrderDetailsService,
+    private purchaseOrderService: PurchaseOrderService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  updateData() {
     const orderId = parseInt(this.router.url.split('/').pop() || '0', 10);
     this.orderDetailsService.selectByOrderId(orderId).subscribe(
       (items: PurchaseOrderDetails[]) => {
         this.orderItems = items;
+        this.purchaseOrder = items[0].order
       }
     );
+  }
+
+  ngOnInit() {
+    this.updateData()
   }
 
   // Sum of all plates × quantity + all additionals across every item
@@ -44,11 +53,15 @@ export class PurchaseOrderViewComponent implements OnInit {
   }
 
   translateStatus(status: OrderStatus) {
-    switch(status) {
-      case "pending": return "Pendiente";
-      case "preparation": return "En preparación";
-      case "sent": return "Enviado";
-      case "delivered": return "En camino";
-    }
+    return translateStatus(status)
+  }
+
+  updateStatus() {
+    this.purchaseOrderService.update(
+      this.purchaseOrder.id,
+      this.purchaseOrder
+    ).subscribe(() => {
+      this.updateData()
+    })
   }
 }
