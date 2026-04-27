@@ -37,12 +37,16 @@
             </td>
             <!-- Operator name and ID -->
             <td class="px-6 py-4 text-center">
-              <h3 class="text-xl font-bold uppercase text-black">
-                {{purchaseOrder.delivery.name}}
+              <h3 *ngIf="purchaseOrder.delivery != null" class="text-xl font-bold uppercase text-black">
+                {{purchaseOrder.delivery?.name}}
               </h3>
-                <p class="text-gray-500 text-sm font-mono">
-                    ID: {{purchaseOrder.delivery.id}}
-                </p>
+              <p *ngIf="purchaseOrder.delivery != null" class="text-gray-500 text-sm font-mono">
+                  ID: {{purchaseOrder.delivery?.id}}
+              </p>
+
+              <p *ngIf="!purchaseOrder.delivery">
+                Sin Domiciliario
+              </p>
             </td>
 
             <!-- Creation Date -->

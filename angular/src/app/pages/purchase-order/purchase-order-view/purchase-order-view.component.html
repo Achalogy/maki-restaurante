@@ -86,20 +86,24 @@
 
           <div class="bg-white rounded-xl border border-maki-bg px-4 py-3 shadow-sm flex flex-col gap-2">
             <p class="text-maki-orange text-[0.62rem] font-bold uppercase tracking-wider pb-2 border-b border-gray-100">Repartidor</p>
-            <div class="flex justify-between items-baseline gap-2 text-sm border-b border-gray-50 pb-1">
+            <div *ngIf="orderInfo.delivery" class="flex justify-between items-baseline gap-2 text-sm border-b border-gray-50 pb-1">
               <span class="text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">Nombre</span>
               <span class="text-maki-black font-semibold">{{ orderInfo.delivery.name }}</span>
             </div>
-            <div class="flex justify-between items-baseline gap-2 text-sm border-b border-gray-50 pb-1">
+            <div *ngIf="orderInfo.delivery"  class="flex justify-between items-baseline gap-2 text-sm border-b border-gray-50 pb-1">
               <span class="text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">Teléfono</span>
               <span class="text-maki-black font-semibold">{{ orderInfo.delivery.phone }}</span>
             </div>
-            <div class="flex justify-between items-baseline gap-2 text-sm">
+            <div *ngIf="orderInfo.delivery"  class="flex justify-between items-baseline gap-2 text-sm">
               <span class="text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">Disponible</span>
               <span [class]="orderInfo.delivery.available ? 'text-green-600 font-bold text-sm' : 'text-red-500 font-bold text-sm'">
                 {{ orderInfo.delivery.available ? 'Sí' : 'No' }}
               </span>
             </div>
+
+            <p *ngIf="!orderInfo.delivery" class="text-sm" >
+              No hay domiciliario aún
+            </p>
           </div>
 
         </div>
