@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
@@ -69,5 +71,10 @@ public class DeliveryServiceImpl implements DeliveryService {
       throw new EntityNotFoundException("No se puede actualizar: Domiciliario no encontrado");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public List<Delivery> selectAllActive() {
+    return repo.findAll().stream().filter(s -> s.isAvailable()).collect(Collectors.toList());
   }
 }

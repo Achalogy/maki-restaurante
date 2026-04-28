@@ -10,18 +10,26 @@ import { Additional } from 'src/app/interfaces/additional.interface';
 })
 export class OrderDetailsService {
 
+  /**
+   * Inyecta HttpClient para poder realizar peticiones HTTP al backend.
+   */
   constructor(
       private http: HttpClient
     ) { }
 
-    selectByOrderId(orderId: number): Observable<PurchaseOrderDetails[]> {
+  /**
+   * Obtiene los detalles de los productos de una orden específica.
+   * @param orderId Identificador de la orden cuyos detalles se van a recuperar.
+   * @returns Observable que emite un arreglo de PurchaseOrderDetails.
+   */
+  selectByOrderId(orderId: number): Observable<PurchaseOrderDetails[]> {
     return this.http.get<PurchaseOrderDetails[]>(
         `http://localhost:8080/api/v1/order-details/${orderId}`
     );
-    }
-    selectOrdersByClientId(clientId: number): Observable<PurchaseOrderDetails[]> {
-      return this.http.get<PurchaseOrderDetails[]>(
-          `http://localhost:8080/api/v1/order-details/client/${clientId}`
-      );
-    }
+   }
+  selectOrdersByClientId(clientId: number): Observable<PurchaseOrderDetails[]> {
+    return this.http.get<PurchaseOrderDetails[]>(
+        `http://localhost:8080/api/v1/order-details/client/${clientId}`
+    );
+  }
 }
