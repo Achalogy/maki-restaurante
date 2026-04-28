@@ -26,5 +26,10 @@ export class OrderDetailsService {
     return this.http.get<PurchaseOrderDetails[]>(
         `http://localhost:8080/api/v1/order-details/${orderId}`
     );
+   }
+  selectOrdersByClientId(clientId: number): Observable<PurchaseOrderDetails[]> {
+    return this.http.get<PurchaseOrderDetails[]>(
+        `http://localhost:8080/api/v1/order-details/client/${clientId}`
+    );
   }
 }

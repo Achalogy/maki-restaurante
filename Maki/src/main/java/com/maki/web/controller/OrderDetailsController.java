@@ -21,4 +21,10 @@ public class OrderDetailsController {
         List<OrderDetails> orderDetails = orderDetailsService.findByOrderId(id);
         return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }
+
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<OrderDetails>> getOrderDetailsByClientId(@PathVariable Long clientId) {
+        List<OrderDetails> orderDetails = orderDetailsService.findByClientId(clientId);
+        return new ResponseEntity<>(orderDetails, HttpStatus.OK);
+    }
 }
