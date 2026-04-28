@@ -411,9 +411,9 @@ public class Dataloader implements CommandLineRunner {
 
                 Delivery delivery1 = new Delivery("Perez", "101", "11010101", true);
                 deliveryRepo.save(delivery1);
-                Delivery delivery2 = new Delivery("Gonzalez", "102", "11010102", true);
+                Delivery delivery2 = new Delivery("Gonzalez", "102", "11010102", false);
                 deliveryRepo.save(delivery2);
-                Delivery delivery3 = new Delivery("Sanchez", "103", "11010103", true);
+                Delivery delivery3 = new Delivery("Sanchez", "103", "11010103", false);
                 deliveryRepo.save(delivery3);
                 Delivery delivery4 = new Delivery("Rodriguez", "104", "11010104", true);
                 deliveryRepo.save(delivery4);
