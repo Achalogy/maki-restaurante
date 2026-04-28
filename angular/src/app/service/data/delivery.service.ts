@@ -71,4 +71,8 @@ export class DeliveryService {
       available: !delivery.available
     });
   }
+  
+  selectActive(): Observable<Delivery[]> {
+    return this.http.get<Delivery[]>(`${this.API_URL}/?active=1`)
+  }
 }
