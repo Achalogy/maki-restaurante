@@ -1,14 +1,18 @@
 package com.maki.web.controller;
+import com.maki.web.entities.Delivery;
 import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.entities.PurchaseOrder;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.maki.web.service.DeliveryService;
 import com.maki.web.service.PurchaseOrderService;
 
 import jakarta.transaction.Transactional;
@@ -20,10 +24,18 @@ public class PurchaseOrderController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
 
+    @Autowired
+    private DeliveryService deliveryService;
+
     // ===================== GET ALL =====================
     @GetMapping("")
-    public List<PurchaseOrder> getAllPurchaseOrders() {
-        return purchaseOrderService.selectAll();
+    public List<PurchaseOrder> getAllPurchaseOrders(@RequestParam(required = false) Optional<Long> notCompleted) {
+        if(notCompleted.isPresent() && notCompleted.get() == 1) {
+            System.out.println("AGUACATE");
+            return purchaseOrderService.selectNotCompleted();
+        }else {
+            return purchaseOrderService.selectAll();
+        }
     }
 
     // ===================== GET BY ID =====================
@@ -68,14 +80,35 @@ public class PurchaseOrderController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            if (data.getDelivery() != null)
+            Delivery newDelivery = data.getDelivery();
+            Delivery oldDelivery = updateData.getDelivery();
+
+            if (data.getDelivery() != null){
+
+                newDelivery.setAvailable(false);
+                
+                if(oldDelivery != null) {
+                    oldDelivery.setAvailable(true);
+                    deliveryService.update(oldDelivery);
+                }
+
                 updateData.setDelivery(
-                        data.getDelivery());
+                    newDelivery
+                );
+
+                deliveryService.update(
+                    newDelivery
+                );
+            }
 
             if(data.getStatus() != null) {
                 if (!updateData.getStatus().equals("sent") && data.getStatus().equals("sent")) {
                     // Solo si cambia a enviado y no se esta actualizando ya el delivery
                     updateData.setDelivery(null);
+                    if(oldDelivery != null) {
+                        oldDelivery.setAvailable(true);
+                        deliveryService.update(oldDelivery);
+                    }
                 }
 
                 updateData.setStatus(
