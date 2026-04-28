@@ -73,6 +73,6 @@ export class DeliveryService {
   }
   
   selectActive(): Observable<Delivery[]> {
-    return this.http.get<Delivery[]>(`${this.API_URL}/?active=1`)
+    return this.http.get<Delivery[]>(`${this.API_URL}?active=1`)
   }
 }
