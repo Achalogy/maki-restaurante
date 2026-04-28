@@ -1,65 +1,82 @@
+<!-- 
+  Plantilla de Página de Perfil de Cliente
+  ========================================
+  Esta plantilla muestra dos secciones principales:
+  
+  1. Tarjeta de Perfil - Un formulario para que los clientes vean y editen su información personal.
+     - Muestra nombre, apellido, correo (solo lectura), teléfono y dirección de entrega
+     - Incluye botones para guardar cambios, volver o eliminar la cuenta
+  
+  2. Sección de Pedidos - Muestra el historial de pedidos del cliente.
+     - Muestra un mensaje cuando no hay pedidos
+     - Para cada pedido: muestra ID, fecha de creación y badge de estado
+     - Lista todos los artículos del pedido con imágenes, nombres, cantidades y precios
+     - Muestra cualquier adicional extra para cada artículo
+     - Muestra fecha estimada de entrega y monto total del pedido
+-->
 <app-full-layout>
   <main class="tree_background min-h-[80dvh] py-12 flex items-center justify-center">
-    <section class="w-[95%] max-w-[40rem] bg-white shadow-2xl rounded-2xl p-8 md:p-12 flex flex-col gap-4">
-  
-      <div class="mb-8">
-        <h2 class="text-4xl font-bold text-gray-800">Mi <span class="text-maki-orange">Perfil</span></h2>
-        <p class="text-gray-500">Actualiza tu información de contacto y entrega.</p>
-      </div>
-  
-      <form (ngSubmit)="onUpdate()" class="space-y-6">
-  
-        <div class="grid md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-2">Nombre</label>
-            <input type="text" [(ngModel)]="client!.name" name="name"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"
-              required>
+    <div class="w-[95%] max-w-[40rem] flex flex-col gap-8">
+
+      <!-- Profile Card -->
+      <section class="bg-white shadow-2xl rounded-2xl p-8 md:p-12 flex flex-col gap-4">
+        <div class="mb-8">
+          <h2 class="text-4xl font-bold text-gray-800">Mi <span class="text-maki-orange">Perfil</span></h2>
+          <p class="text-gray-500">Actualiza tu información de contacto y entrega.</p>
+        </div>
+
+        <form (ngSubmit)="onUpdate()" class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Nombre</label>
+              <input type="text" [(ngModel)]="client!.name" name="name"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"
+                required>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Apellido</label>
+              <input type="text" [(ngModel)]="client!.surname" name="surname"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"
+                required>
+            </div>
           </div>
+
           <div>
-            <label class="block text-sm font-bold text-gray-700 mb-2">Apellido</label>
-            <input type="text" [(ngModel)]="client!.surname" name="surname"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"
-              required>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Correo Electrónico</label>
+            <input type="email" [value]="client?.email"
+              class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" readonly>
+            <p class="text-xs text-gray-400 mt-1">El correo no puede ser modificado por seguridad.</p>
           </div>
-        </div>
-  
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Correo Electrónico</label>
-          <input type="email" [value]="client?.email"
-            class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" readonly>
-          <p class="text-xs text-gray-400 mt-1">El correo no puede ser modificado por seguridad.</p>
-        </div>
-  
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono</label>
-          <input type="tel" [(ngModel)]="client!.phone" name="phone"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none">
-        </div>
-  
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Dirección de Entrega</label>
-          <textarea [(ngModel)]="client!.address" name="address" rows="3"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"></textarea>
-        </div>
-  
-        <div class="pt-4 flex flex-col gap-3">
-          <button type="submit"
-            class="w-full bg-maki-orange text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
-            Guardar Cambios
-          </button>
-          <a [routerLink]="['/client', client?.id]"
-            class="text-center text-gray-500 hover:text-black font-medium transition">
-            Volver al Panel
-          </a>
-        </div>
-      </form>
-  
-      <button (click)="onDelete()"
-        class="w-full bg-maki-black text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
-        Eliminar cuenta
-      </button>
-  
-    </section>
+
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono</label>
+            <input type="tel" [(ngModel)]="client!.phone" name="phone"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Dirección de Entrega</label>
+            <textarea [(ngModel)]="client!.address" name="address" rows="3"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-maki-orange outline-none"></textarea>
+          </div>
+
+          <div class="pt-4 flex flex-col gap-3">
+            <button type="submit"
+              class="w-full bg-maki-orange text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
+              Guardar Cambios
+            </button>
+            <a [routerLink]="['/client', client?.id]"
+              class="text-center text-gray-500 hover:text-black font-medium transition">
+              Volver al Panel
+            </a>
+          </div>
+        </form>
+
+        <button (click)="onDelete()"
+          class="w-full bg-maki-black text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-600 transition duration-200">
+          Eliminar cuenta
+        </button>
+      </section>
+    </div>
   </main>
 </app-full-layout>

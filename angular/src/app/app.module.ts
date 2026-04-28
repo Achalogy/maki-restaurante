@@ -42,6 +42,7 @@ import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-orde
 import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
 import { AdminGatewayButtonComponent } from './pages/admin/components/admin-gateway-button/admin-gateway-button.component';
+import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
 import { OperatorGatewayComponent } from './pages/operators/operator-gateway/operator-gateway.component';
 import { LogOutComponent } from './pages/log-out/log-out.component';
 
@@ -83,6 +84,7 @@ import { LogOutComponent } from './pages/log-out/log-out.component';
     AdminLogInComponent,
     PurchaseOrderAdminviewComponent,
     AdminGatewayButtonComponent,
+    ClientOrdersComponent,
     OperatorGatewayComponent,
     LogOutComponent
   ],  
