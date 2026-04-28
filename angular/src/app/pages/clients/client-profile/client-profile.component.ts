@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/interfaces/client.interface';
+import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { ClientService } from 'src/app/service/data/client.service';
+import { OrderDetailsService } from 'src/app/service/data/order-details.service';
 
 @Component({
   selector: 'app-client-profile',
@@ -11,10 +13,16 @@ import { ClientService } from 'src/app/service/data/client.service';
 export class ClientProfileComponent implements OnInit {
   client: Client | undefined;
 
+  orderItems: PurchaseOrderDetails[] = [];
+  get orderInfo() {
+    return this.orderItems[0]?.order ?? null;
+  }
+
   constructor(
     private clientService: ClientService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private orderDetailsService: OrderDetailsService
   ) {}
 
   ngOnInit(): void {
