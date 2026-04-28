@@ -25,6 +25,8 @@ import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-orde
 import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
 import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.component';
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
+import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
+
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -48,7 +50,8 @@ const routes: Routes = [
   {path: "client/edit/:id", component: ClientEditComponent },
   {path: "client/:id", component: ClientSessionComponent },
   {path: "client/profile/:id", component: ClientProfileComponent },
-  
+  {path: "client/orders/:id", component: ClientOrdersComponent },
+
   { path: 'additional/crud', component: AdditionalCrudComponent },
   { path: 'additional/create', component: AdditionalFormComponent },
   { path: 'additional/:id/edit', component: AdditionalEditComponent },
