@@ -43,6 +43,8 @@ import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-c
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
 import { AdminGatewayButtonComponent } from './pages/admin/components/admin-gateway-button/admin-gateway-button.component';
 import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
+import { OperatorGatewayComponent } from './pages/operators/operator-gateway/operator-gateway.component';
+import { LogOutComponent } from './pages/log-out/log-out.component';
 
 
 @NgModule({
@@ -82,7 +84,9 @@ import { ClientOrdersComponent } from './pages/clients/client-orders/client-orde
     AdminLogInComponent,
     PurchaseOrderAdminviewComponent,
     AdminGatewayButtonComponent,
-    ClientOrdersComponent
+    ClientOrdersComponent,
+    OperatorGatewayComponent,
+    LogOutComponent
   ],  
   imports: [
     BrowserModule,

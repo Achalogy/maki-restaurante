@@ -27,6 +27,8 @@ import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.com
 import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
 import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
 
+import { OperatorGatewayComponent } from './pages/operators/operator-gateway/operator-gateway.component';
+import { LogOutComponent } from './pages/log-out/log-out.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -39,8 +41,9 @@ const routes: Routes = [
 
   { path: 'operator/crud', component: OperatorCrudComponent },
   { path: 'operator/log-in', component: OperatorLogInComponent },
-  { path: 'operator/:id/edit', component: OperatorFormComponent },
+  { path: 'operator/gateway', component: OperatorGatewayComponent },
   { path: 'operator/create', component: OperatorFormComponent },
+  { path: 'operator/:id/edit', component: OperatorFormComponent },
   { path: 'operator/:id', component: OperatorViewComponent },
   
   
@@ -63,6 +66,8 @@ const routes: Routes = [
   {path: "purchase-order/:id", component: PurchaseOrderViewComponent },
 
   { path: 'delivery/crud', component: DeliveryCrudComponent },
+
+  {path: "log-out", component: LogOutComponent},
 
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

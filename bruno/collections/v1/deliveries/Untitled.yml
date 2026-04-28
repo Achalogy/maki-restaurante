@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{host}}/api/v1/delivery"
+  url: "{{host}}/api/v1/delivery?active=1"
+  params:
+    - name: active
+      value: "1"
+      type: query
   auth: inherit
 
 settings:
