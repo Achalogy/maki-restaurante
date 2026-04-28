@@ -14,29 +14,32 @@ import { Additional } from 'src/app/interfaces/additional.interface';
 })
 export class OrderDetailsService {
 
+  /**
+   * Inyecta HttpClient para poder realizar peticiones HTTP al backend.
+   */
   constructor(
       private http: HttpClient
     ) { }
 
-    /**
-     * Obtiene todos los artículos de detalles de un pedido específico.
-     * @param orderId - El identificador único del pedido
-     * @returns Observable con un array de PurchaseOrderDetails que contiene información del plato, cantidad y adicionales
-     */
-    selectByOrderId(orderId: number): Observable<PurchaseOrderDetails[]> {
+/**
+   * Obtiene todos los artículos de detalles de un pedido específico.
+   * @param orderId - El identificador único del pedido
+   * @returns Observable con un array de PurchaseOrderDetails que contiene información del plato, cantidad y adicionales
+   */
+  selectByOrderId(orderId: number): Observable<PurchaseOrderDetails[]> {
     return this.http.get<PurchaseOrderDetails[]>(
         `http://localhost:8080/api/v1/order-details/${orderId}`
     );
-    }
+  }
 
-    /**
-     * Obtiene todos los  pedidos realizados por un cliente específico.
-     * @param clientId - El identificador único del cliente
-     * @returns Observable con un array de PurchaseOrderDetails que contiene todos los artículos del cliente
-     */
-    selectOrdersByClientId(clientId: number): Observable<PurchaseOrderDetails[]> {
-      return this.http.get<PurchaseOrderDetails[]>(
-          `http://localhost:8080/api/v1/order-details/client/${clientId}`
-      );
-    }
+  /**
+   * Obtiene todos los pedidos realizados por un cliente específico.
+   * @param clientId - El identificador único del cliente
+   * @returns Observable con un array de PurchaseOrderDetails que contiene todos los artículos del cliente
+   */
+  selectOrdersByClientId(clientId: number): Observable<PurchaseOrderDetails[]> {
+    return this.http.get<PurchaseOrderDetails[]>(
+        `http://localhost:8080/api/v1/order-details/client/${clientId}`
+    );
+  }
 }
