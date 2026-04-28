@@ -4,6 +4,8 @@ import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.entities.PurchaseOrder;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -27,8 +29,13 @@ public class PurchaseOrderController {
 
     // ===================== GET ALL =====================
     @GetMapping("")
-    public List<PurchaseOrder> getAllPurchaseOrders() {
-        return purchaseOrderService.selectAll();
+    public List<PurchaseOrder> getAllPurchaseOrders(@RequestParam(required = false) Optional<Long> notCompleted) {
+        if(notCompleted.isPresent() && notCompleted.get() == 1) {
+            System.out.println("AGUACATE");
+            return purchaseOrderService.selectNotCompleted();
+        }else {
+            return purchaseOrderService.selectAll();
+        }
     }
 
     // ===================== GET BY ID =====================

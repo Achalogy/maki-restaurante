@@ -64,6 +64,12 @@ export class GatewayComponent {
       description: "Iniciar sesión como administrador",
       icon: "ti ti-truck-delivery",
       href: "/admin/log-in"
+    },
+    {
+      title: "Cerrar sesión",
+      description: "Cerrar sesión y volver al inicio",
+      icon: "ti ti-logout",
+      href: "/log-out"
     }
   ]
 

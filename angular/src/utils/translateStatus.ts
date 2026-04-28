@@ -7,5 +7,6 @@ export default (status: OrderStatus) => {
       case "sent": return "Enviado";
       case "delivered": return "En camino";
       case "cancelled": return "Cancelado"
+      case "completed": return "Completado"
     }
   }

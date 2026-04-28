@@ -26,6 +26,11 @@ export class AdminLogInComponent {
     }).subscribe({
       next: (administrator) => {
         this.router.navigate([`/admin`]);
+        
+        window.localStorage
+          .setItem("loggedAs", "admin")
+        window.localStorage
+          .setItem("id", administrator.id.toString())
       },
       error: (err) => {
         if (err.status === 400 || err.status === 401) {

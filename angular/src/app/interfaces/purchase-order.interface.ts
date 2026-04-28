@@ -2,7 +2,7 @@ import { Client } from "./client.interface";
 import { Delivery } from "./delivery.interface";
 import { Operator } from "./operator.interface";
 
-export type OrderStatus = "pending" | "preparation" | "sent" | "delivered" | "cancelled"
+export type OrderStatus = "pending" | "preparation" | "sent" | "delivered" | "cancelled" | "completed"
 
 export interface PurchaseOrder {
   id: number,
