@@ -40,7 +40,7 @@ export class PurchaseOrderViewComponent implements OnInit {
       (items: PurchaseOrderDetails[]) => {
         this.orderItems = items;
         this.purchaseOrder = items[0].order
-        this.deliveryId = items[0].order.delivery.id
+        this.deliveryId = items[0].order?.delivery.id ?? -1
         this.deliveryService.selectActive().subscribe(deliveries => this.activeDeliveries = [...deliveries, items[0].order.delivery])
       }
     );
@@ -66,14 +66,26 @@ export class PurchaseOrderViewComponent implements OnInit {
   }
 
   updateOrder() {
-    this.deliveryService.selectById(this.deliveryId).subscribe(d => {
-      this.purchaseOrder.delivery = d
+
+    if(this.deliveryId == -1) {
       this.purchaseOrderService.update(
         this.purchaseOrder.id,
         this.purchaseOrder
       ).subscribe(() => {
         this.updateData()
       })
-    })
+    } else {
+      this.deliveryService.selectById(this.deliveryId).subscribe(d => {
+        this.purchaseOrder.delivery = d
+        this.purchaseOrderService.update(
+          this.purchaseOrder.id,
+          this.purchaseOrder
+        ).subscribe(() => {
+          this.updateData()
+        })
+      })
+    }
+
+    
   }
 }

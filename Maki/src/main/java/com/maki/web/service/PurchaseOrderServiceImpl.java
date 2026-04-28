@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
@@ -34,6 +35,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   @Override
   public List<PurchaseOrder> selectAll() {
     return repo.findAll();
+  }
+
+  @Override
+  public List<PurchaseOrder> selectNotCompleted() {
+    return repo.findAll().stream().filter(x -> !x.getStatus().equals("completed")).collect(Collectors.toList());
   }
 
   @Override

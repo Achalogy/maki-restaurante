@@ -11,6 +11,7 @@ import translateStatus from 'src/utils/translateStatus';
 })
 export class PurchaseOrderCrudComponent {
   purchaseOrderList: PurchaseOrder[] = [];
+  loggedAs: String | null= null;
   constructor(
       private purchaseOrderService: PurchaseOrderService,
           private router: Router
@@ -18,11 +19,20 @@ export class PurchaseOrderCrudComponent {
   
     }
     ngOnInit() {
-      this.purchaseOrderService.selectAll().subscribe(
-        (purchaseOrders) => {
-          this.purchaseOrderList = purchaseOrders;
-        }
-      )
+      this.loggedAs = window.localStorage.getItem("loggedAs")
+      if(this.loggedAs == "operator") {
+        this.purchaseOrderService.selectNotCompleted().subscribe(
+          (purchaseOrders) => {
+            this.purchaseOrderList = purchaseOrders;
+          }
+        )
+      }else {
+        this.purchaseOrderService.selectAll().subscribe(
+          (purchaseOrders) => {
+            this.purchaseOrderList = purchaseOrders;
+          }
+        )
+      }
     }
 
     deletePurchaseOrder(id: number){

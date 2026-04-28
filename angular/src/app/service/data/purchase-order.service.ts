@@ -19,6 +19,11 @@ export class PurchaseOrderService {
     return this.http.get<PurchaseOrder[]>('http://localhost:8080/api/v1/purchase-order')
   }
 
+  /** Obtiene todas las órdenes de activas. */
+  selectNotCompleted(): Observable<PurchaseOrder[]> {
+    return this.http.get<PurchaseOrder[]>('http://localhost:8080/api/v1/purchase-order?notCompleted=1')
+  }
+
   /**
    * Obtiene una orden de compra por su ID.
    * @param id El ID de la orden de compra.
