@@ -54,10 +54,9 @@ export class PurchaseOrderService {
     return this.http.post<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order/client/${clientId}`, payload)
   }
 
-  /*
   update(id: number, data: Partial<PurchaseOrder>): Observable<PurchaseOrder> {
     return this.http.post<PurchaseOrder>(`http://localhost:8080/api/v1/purchase-order/${id}`, data)
-  }*/
+  }
 
   /**
    * Elimina una orden de compra por su ID.

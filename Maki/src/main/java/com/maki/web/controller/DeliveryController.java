@@ -4,7 +4,9 @@ import com.maki.web.entities.Delivery;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.DeliveryService;
 
+import java.lang.foreign.Linker.Option;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,11 @@ public class DeliveryController {
 
     /** Retorna la lista completa de domiciliarios */
     @GetMapping("")
-    public List<Delivery> getAllDeliveries() {
+    public List<Delivery> getAllDeliveries(@RequestParam(required = false) Optional<Long> active) {
+        if(active.isPresent() && active.get() == 1) {
+            return deliveryService.selectAllActive();
+        }
+        
         return deliveryService.selectAll();
     }
 
