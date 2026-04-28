@@ -41,10 +41,10 @@ export class PurchaseOrderViewComponent implements OnInit {
         this.orderItems = items;
         this.purchaseOrder = items[0].order
         this.deliveryId = items[0].order.delivery.id
+        this.deliveryService.selectActive().subscribe(deliveries => this.activeDeliveries = [...deliveries, items[0].order.delivery])
       }
     );
 
-    this.deliveryService.selectAll().subscribe(deliveries => this.activeDeliveries = deliveries)
   }
 
   ngOnInit() {

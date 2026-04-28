@@ -1,4 +1,5 @@
 package com.maki.web.controller;
+import com.maki.web.entities.Delivery;
 import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.entities.PurchaseOrder;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.maki.web.service.DeliveryService;
 import com.maki.web.service.PurchaseOrderService;
 
 import jakarta.transaction.Transactional;
@@ -19,6 +21,9 @@ import jakarta.transaction.Transactional;
 public class PurchaseOrderController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
+
+    @Autowired
+    private DeliveryService deliveryService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
@@ -68,14 +73,35 @@ public class PurchaseOrderController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            if (data.getDelivery() != null)
+            Delivery newDelivery = data.getDelivery();
+            Delivery oldDelivery = updateData.getDelivery();
+
+            if (data.getDelivery() != null){
+
+                newDelivery.setAvailable(false);
+                
+                if(oldDelivery != null) {
+                    oldDelivery.setAvailable(true);
+                    deliveryService.update(oldDelivery);
+                }
+
                 updateData.setDelivery(
-                        data.getDelivery());
+                    newDelivery
+                );
+
+                deliveryService.update(
+                    newDelivery
+                );
+            }
 
             if(data.getStatus() != null) {
                 if (!updateData.getStatus().equals("sent") && data.getStatus().equals("sent")) {
                     // Solo si cambia a enviado y no se esta actualizando ya el delivery
                     updateData.setDelivery(null);
+                    if(oldDelivery != null) {
+                        oldDelivery.setAvailable(true);
+                        deliveryService.update(oldDelivery);
+                    }
                 }
 
                 updateData.setStatus(
