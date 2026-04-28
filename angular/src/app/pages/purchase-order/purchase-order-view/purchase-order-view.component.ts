@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { OrderStatus, PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 import translateStatus from 'src/utils/translateStatus';
 import { PurchaseOrderService } from 'src/app/service/data/purchase-order.service';
+import { DeliveryService } from 'src/app/service/data/delivery.service';
+import { Delivery } from 'src/app/interfaces/delivery.interface';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -15,7 +17,10 @@ export class PurchaseOrderViewComponent implements OnInit {
 
   // All detail rows for this order (one per plate)
   orderItems: PurchaseOrderDetails[] = [];
+  activeDeliveries: Delivery[] = []
   purchaseOrder: PurchaseOrder = {} as PurchaseOrder;
+  deliveryId: number = -1;
+  
 
   // Shared order info — taken from the first item
   get orderInfo() {
@@ -25,6 +30,7 @@ export class PurchaseOrderViewComponent implements OnInit {
   constructor(
     private orderDetailsService: OrderDetailsService,
     private purchaseOrderService: PurchaseOrderService,
+    private deliveryService: DeliveryService,
     private router: Router
   ) {}
 
@@ -34,8 +40,11 @@ export class PurchaseOrderViewComponent implements OnInit {
       (items: PurchaseOrderDetails[]) => {
         this.orderItems = items;
         this.purchaseOrder = items[0].order
+        this.deliveryId = items[0].order.delivery.id
       }
     );
+
+    this.deliveryService.selectAll().subscribe(deliveries => this.activeDeliveries = deliveries)
   }
 
   ngOnInit() {
@@ -56,12 +65,15 @@ export class PurchaseOrderViewComponent implements OnInit {
     return translateStatus(status)
   }
 
-  updateStatus() {
-    this.purchaseOrderService.update(
-      this.purchaseOrder.id,
-      this.purchaseOrder
-    ).subscribe(() => {
-      this.updateData()
+  updateOrder() {
+    this.deliveryService.selectById(this.deliveryId).subscribe(d => {
+      this.purchaseOrder.delivery = d
+      this.purchaseOrderService.update(
+        this.purchaseOrder.id,
+        this.purchaseOrder
+      ).subscribe(() => {
+        this.updateData()
+      })
     })
   }
 }

@@ -23,7 +23,7 @@
             'bg-red-100 text-red-800':       orderInfo.status.toLowerCase().includes('cancelled'),
             'bg-yellow-100 text-yellow-800': orderInfo.status.toLowerCase().includes('pending')
           }">
-            <select (change)="updateStatus()" [(ngModel)]="orderInfo.status"  class="bg-transparent" name="status">
+            <select (change)="updateOrder()" [(ngModel)]="orderInfo.status"  class="bg-transparent" name="status">
               <option value="pending">
                 {{translateStatus("pending")}}
               </option>
@@ -94,7 +94,7 @@
               <span class="text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">Teléfono</span>
               <span class="text-maki-black font-semibold">{{ orderInfo.delivery.phone }}</span>
             </div>
-            <div *ngIf="orderInfo.delivery"  class="flex justify-between items-baseline gap-2 text-sm">
+            <div *ngIf="orderInfo.delivery"  class="flex justify-between items-baseline gap-2 text-sm border-b border-gray-50 pb-1">
               <span class="text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">Disponible</span>
               <span [class]="orderInfo.delivery.available ? 'text-green-600 font-bold text-sm' : 'text-red-500 font-bold text-sm'">
                 {{ orderInfo.delivery.available ? 'Sí' : 'No' }}
@@ -102,8 +102,15 @@
             </div>
 
             <p *ngIf="!orderInfo.delivery" class="text-sm" >
-              No hay domiciliario aún
+              No hay domiciliario aún, ¿quieres seleccionar uno?
             </p>
+<p class="text-maki-orange text-[0.62rem] font-bold uppercase tracking-wider pb-2 border-b border-gray-100">Seleccionar
+</p>
+            <select [(ngModel)]="deliveryId" (change)="updateOrder()" class="text-xs">
+              <option *ngFor="let delivery of activeDeliveries" value="{{delivery.id}}">
+                {{delivery.id}} - {{delivery.name}}
+              </option>
+            </select>
           </div>
 
         </div>
