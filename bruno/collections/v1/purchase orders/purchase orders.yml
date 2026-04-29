@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{host}}/api/v1/purchase-order"
+  url: "{{host}}/api/v1/purchase-order?notCompleted=1"
+  params:
+    - name: notCompleted
+      value: "1"
+      type: query
   auth: inherit
 
 settings:
