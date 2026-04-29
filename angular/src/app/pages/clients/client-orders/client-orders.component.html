@@ -75,11 +75,22 @@
 
               <!-- Order Footer -->
               <div class="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-100">
-                <div class="text-sm text-gray-500 flex items-center gap-1">
-                  <span>Entrega estimada:</span>
-                  <span class="font-medium text-gray-700">
-                    {{ group.items[0].order.delivery_date | date:'d MMM y, h:mm a' }}
-                  </span>
+                <ng-container *ngIf="group.items[0].order.status === 'delivered'; else notDelivered">
+                  <div class="flex items-center gap-1">
+                    <span>Entregado el:</span>
+                    <span class="font-medium text-gray-700">
+                      {{ group.items[0].order.delivery_date | date:'d MMM y, h:mm a' }}
+                    </span>
+                  </div>
+                </ng-container>
+                <ng-template #notDelivered>
+                  <div class="text-sm text-gray-500 flex items-center gap-1">
+                    <span>Entrega estimada:</span>
+                    <span class="font-medium text-gray-700">
+                      {{ group.items[0].order.delivery_date | date:'d MMM y, h:mm a' }}
+                    </span>
+                  </div>
+                </ng-template>
                 </div>
                 <div class="text-right">
                   <p class="text-xs text-gray-400 uppercase tracking-wide">Total</p>
@@ -88,7 +99,6 @@
                   </p>
                 </div>
               </div>
-            </div>
           </div>
 
         </ng-container>
