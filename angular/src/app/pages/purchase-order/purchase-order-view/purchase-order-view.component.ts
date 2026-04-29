@@ -20,7 +20,6 @@ export class PurchaseOrderViewComponent implements OnInit {
   activeDeliveries: Delivery[] = []
   purchaseOrder: PurchaseOrder = {} as PurchaseOrder;
   deliveryId: number = -1;
-  
 
   // Shared order info — taken from the first item
   get orderInfo() {
@@ -40,7 +39,8 @@ export class PurchaseOrderViewComponent implements OnInit {
       (items: PurchaseOrderDetails[]) => {
         this.orderItems = items;
         this.purchaseOrder = items[0].order
-        this.deliveryId = items[0].order?.delivery.id ?? -1
+        console.log(items[0])
+        this.deliveryId = items[0].order?.delivery?.id ?? -1
         this.deliveryService.selectActive().subscribe(deliveries => this.activeDeliveries = [...deliveries, items[0].order.delivery])
       }
     );
