@@ -1,5 +1,6 @@
 import { OrderStatus } from "src/app/interfaces/purchase-order.interface";
 
+// Literalmente solo traduce el estado
 export default (status: OrderStatus) => {
     switch(status) {
       case "pending": return "Pendiente";
