@@ -75,6 +75,6 @@ public class DeliveryServiceImpl implements DeliveryService {
 
   @Override
   public List<Delivery> selectAllActive() {
-    return repo.findAll().stream().filter(s -> s.isAvailable()).collect(Collectors.toList());
+    return repo.findAll().stream().filter(s -> s.isAvailable() && !s.isBusy()).collect(Collectors.toList());
   }
 }
