@@ -43,7 +43,7 @@ public class PurchaseOrder {
 
   public PurchaseOrder(Client client) {
     this.client = client;
-    this.status = "PENDING";
+    this.status = "pending";
     this.creation_date = java.time.LocalDateTime.now();
   }
 }

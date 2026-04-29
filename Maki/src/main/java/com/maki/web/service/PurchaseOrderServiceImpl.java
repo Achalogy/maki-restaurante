@@ -3,6 +3,7 @@ package com.maki.web.service;
 import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.entities.Additional;
 import com.maki.web.entities.AdditionalOrderDetails;
+import com.maki.web.entities.Delivery;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.exception.EntityConstraintException;
@@ -71,11 +72,23 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     PurchaseOrder pedido = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Pedido no encontrado"));
 
+        
+    for (AdditionalOrderDetails detalle : additionalOrderDetailsRepo.findAll()) {
+      if (detalle.getDetail().getOrder() != null && detalle.getDetail().getOrder().getId() ==id ) {
+        additionalOrderDetailsRepo.deleteById(detalle.getId());
+      }
+    }
     // Limpiar los detalles del pedido antes de borrar el pedido principal
     for (OrderDetails detalle : orderDetailsRepo.findAll()) {
-      if (detalle.getOrder() != null && detalle.getOrder().getId().equals(id)) {
+      if (detalle.getOrder() != null && detalle.getOrder().getId() ==id ) {
         orderDetailsRepo.deleteById(detalle.getId());
       }
+    }
+
+    Delivery delivery = pedido.getDelivery();
+
+    if(delivery != null) {
+      delivery.setBusy(false);
     }
 
     repo.delete(pedido);
