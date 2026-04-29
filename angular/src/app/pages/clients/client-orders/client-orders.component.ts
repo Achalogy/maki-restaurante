@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'src/app/interfaces/category.interface';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { OrderDetailsService } from 'src/app/service/data/order-details.service';
 
@@ -18,6 +19,7 @@ export class ClientOrdersComponent implements OnInit {
 
   // Lista de artículos de pedidos desde la API
   orderItems: PurchaseOrderDetails[] = [];
+  status: string[] = [];
 
   /**
    * Getter que agrupa los artículos de pedido por ID de pedido.
@@ -74,6 +76,7 @@ export class ClientOrdersComponent implements OnInit {
     this.orderDetailsService.selectOrdersByClientId(id).subscribe(
       (orderDetails) => {
         this.orderItems = orderDetails;
+        this.status = [...new Set(this.orderItems.map(item => item.order.status))];
       }
     );
   }
@@ -86,6 +89,10 @@ export class ClientOrdersComponent implements OnInit {
   getItemTotal(item: PurchaseOrderDetails): number {
     const additionalsTotal = (item.additionals ?? []).reduce((a, x) => a + x.additional.price, 0);
     return (item.plate.price + additionalsTotal) * item.quantity;
+  }
+
+  getOrdersPerStatus(status: string): { orderId: number; items: PurchaseOrderDetails[] }[] {
+    return this.groupedOrders.filter(order => order.items[0].order.status === status);
   }
 
 }
