@@ -85,10 +85,10 @@ public class PurchaseOrderController {
 
             if (data.getDelivery() != null){
 
-                newDelivery.setAvailable(false);
+                newDelivery.setBusy(true);
                 
                 if(oldDelivery != null) {
-                    oldDelivery.setAvailable(true);
+                    oldDelivery.setBusy(false);
                     deliveryService.update(oldDelivery);
                 }
 
@@ -106,7 +106,7 @@ public class PurchaseOrderController {
                     // Solo si cambia a enviado y no se esta actualizando ya el delivery
                     updateData.setDelivery(null);
                     if(oldDelivery != null) {
-                        oldDelivery.setAvailable(true);
+                        oldDelivery.setBusy(false);
                         deliveryService.update(oldDelivery);
                     }
                 }
