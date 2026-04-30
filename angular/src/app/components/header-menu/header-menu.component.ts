@@ -24,8 +24,10 @@ export class HeaderMenuComponent {
   goToProfile() {
     if(this.loggedAs == "client")
       this.router.navigate([`/client/${this.loggedId}`])
-    else {
-      // TODO: OPERATOR
+    else if(this.loggedAs == "operator") {
+      this.router.navigate(["/operator/gateway"])
+    } else {
+      this.router.navigate(["/admin"])
     }
   }
 

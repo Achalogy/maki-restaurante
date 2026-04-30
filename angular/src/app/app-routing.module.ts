@@ -22,6 +22,13 @@ import { AdditionalEditComponent } from './pages/additionals/additional-edit/add
 import { PurchaseOrderCrudComponent } from './pages/purchase-order/purchase-order-crud/purchase-order-crud.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
+import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
+import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.component';
+import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
+import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
+
+import { OperatorGatewayComponent } from './pages/operators/operator-gateway/operator-gateway.component';
+import { LogOutComponent } from './pages/log-out/log-out.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -34,8 +41,9 @@ const routes: Routes = [
 
   { path: 'operator/crud', component: OperatorCrudComponent },
   { path: 'operator/log-in', component: OperatorLogInComponent },
-  { path: 'operator/:id/edit', component: OperatorFormComponent },
+  { path: 'operator/gateway', component: OperatorGatewayComponent },
   { path: 'operator/create', component: OperatorFormComponent },
+  { path: 'operator/:id/edit', component: OperatorFormComponent },
   { path: 'operator/:id', component: OperatorViewComponent },
   
   
@@ -45,14 +53,21 @@ const routes: Routes = [
   {path: "client/edit/:id", component: ClientEditComponent },
   {path: "client/:id", component: ClientSessionComponent },
   {path: "client/profile/:id", component: ClientProfileComponent },
-  
+  {path: "client/orders/:id", component: ClientOrdersComponent },
+
   { path: 'additional/crud', component: AdditionalCrudComponent },
   { path: 'additional/create', component: AdditionalFormComponent },
   { path: 'additional/:id/edit', component: AdditionalEditComponent },
 
+  { path: 'admin/log-in', component: AdminLogInComponent },
   {path: "admin", component: GatewayComponent },
   {path: "purchase-order/crud", component: PurchaseOrderCrudComponent },
+  {path: "purchase-order/adminview", component: PurchaseOrderAdminviewComponent },
   {path: "purchase-order/:id", component: PurchaseOrderViewComponent },
+
+  { path: 'delivery/crud', component: DeliveryCrudComponent },
+
+  {path: "log-out", component: LogOutComponent},
 
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

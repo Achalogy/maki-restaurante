@@ -6,6 +6,8 @@ import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.exception.InvalidCredentialsException;
 import com.maki.web.repository.OperatorRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class OperatorServiceImpl implements OperatorService {
   private OperatorRepository repo;
 
   @Autowired
-  private PurchaseOrderService pedidoService;
+  private PurchaseOrderRepository purchaseOrderRepo;
 
   @Override
   public List<Operator> selectAll() {
@@ -52,10 +54,10 @@ public class OperatorServiceImpl implements OperatorService {
         .orElseThrow(() -> new EntityNotFoundException("Operator no encontrado para eliminar: " + id));
 
     // Desvincular pedidos antes de borrar al Operator para mantener integridad
-    for (PurchaseOrder p : pedidoService.selectAll()) {
+    for (PurchaseOrder p : purchaseOrderRepo.findAll()) {
       if (p.getOperator() != null && p.getOperator().getId().equals(id)) {
         p.setOperator(null);
-        pedidoService.update(p);
+        purchaseOrderRepo.save(p);
       }
     }
 

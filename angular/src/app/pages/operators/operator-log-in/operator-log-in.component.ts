@@ -25,7 +25,14 @@ export class OperatorLogInComponent {
       password: this.password
     }).subscribe({
       next: (operator) => {
-        this.router.navigate([`/purchase-order/crud`]);
+        this.router.navigate([`/operator/gateway`]);
+
+        window.localStorage
+          .setItem("loggedAs", "operator")
+        window.localStorage
+          .setItem("id", operator.id.toString())
+
+
       },
       error: (err) => {
         if (err.status === 400 || err.status === 401) {

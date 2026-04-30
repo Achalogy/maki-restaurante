@@ -5,11 +5,15 @@ import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.repository.DeliveryRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
@@ -18,7 +22,7 @@ public class DeliveryServiceImpl implements DeliveryService {
   private DeliveryRepository repo;
 
   @Autowired
-  private PurchaseOrderService pedidoService;
+  private PurchaseOrderRepository purchaseOrderRepo;
 
   @Override
   public List<Delivery> selectAll() {
@@ -51,10 +55,10 @@ public class DeliveryServiceImpl implements DeliveryService {
         .orElseThrow(() -> new EntityNotFoundException("Domiciliario no encontrado para eliminar: " + id));
 
     // Lógica de integridad: Desvincular pedidos antes de borrar al domiciliario
-    for (PurchaseOrder p : pedidoService.selectAll()) {
+    for (PurchaseOrder p : purchaseOrderRepo.findAll()) {
       if (p.getDelivery() != null && p.getDelivery().getId().equals(id)) {
         p.setDelivery(null);
-        pedidoService.update(p);
+        purchaseOrderRepo.save(p);
       }
     }
 
@@ -67,5 +71,10 @@ public class DeliveryServiceImpl implements DeliveryService {
       throw new EntityNotFoundException("No se puede actualizar: Domiciliario no encontrado");
     }
     return repo.save(entity);
+  }
+
+  @Override
+  public List<Delivery> selectAllActive() {
+    return repo.findAll().stream().filter(s -> s.isAvailable() && !s.isBusy()).collect(Collectors.toList());
   }
 }

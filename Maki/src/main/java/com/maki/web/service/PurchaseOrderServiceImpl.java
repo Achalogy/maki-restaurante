@@ -3,17 +3,20 @@ package com.maki.web.service;
 import com.maki.web.entities.PurchaseOrder;
 import com.maki.web.entities.Additional;
 import com.maki.web.entities.AdditionalOrderDetails;
+import com.maki.web.entities.Delivery;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.PlateWithAdditionals;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
-import com.maki.web.repository.ClientRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PurchaseOrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
@@ -22,20 +25,22 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   private PurchaseOrderRepository repo;
 
   @Autowired
-  private OrderDetailsService pedidoDetallesService;
+  private OrderDetailsRepository orderDetailsRepo;
   
   @Autowired
-  private ClientRepository clientRepository;
+  private ClientService clientService;
 
   @Autowired
-  private OrderDetailsService orderDetailsService;
-  
-  @Autowired
-  private AdditionalOrderDetailsService additionalOrderDetailsService;
+  private AdditionalOrderDetailsRepository additionalOrderDetailsRepo;
 
   @Override
   public List<PurchaseOrder> selectAll() {
     return repo.findAll();
+  }
+
+  @Override
+  public List<PurchaseOrder> selectNotCompleted() {
+    return repo.findAll().stream().filter(x -> !x.getStatus().equals("completed")).collect(Collectors.toList());
   }
 
   @Override
@@ -67,11 +72,23 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     PurchaseOrder pedido = repo.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("No se puede eliminar: Pedido no encontrado"));
 
-    // Limpiar los detalles del pedido antes de borrar el pedido principal
-    for (OrderDetails detalle : pedidoDetallesService.selectAll()) {
-      if (detalle.getOrder() != null && detalle.getOrder().getId().equals(id)) {
-        pedidoDetallesService.deleteByID(detalle.getId());
+        
+    for (AdditionalOrderDetails detalle : additionalOrderDetailsRepo.findAll()) {
+      if (detalle.getDetail().getOrder() != null && detalle.getDetail().getOrder().getId() ==id ) {
+        additionalOrderDetailsRepo.deleteById(detalle.getId());
       }
+    }
+    // Limpiar los detalles del pedido antes de borrar el pedido principal
+    for (OrderDetails detalle : orderDetailsRepo.findAll()) {
+      if (detalle.getOrder() != null && detalle.getOrder().getId() ==id ) {
+        orderDetailsRepo.deleteById(detalle.getId());
+      }
+    }
+
+    Delivery delivery = pedido.getDelivery();
+
+    if(delivery != null) {
+      delivery.setBusy(false);
     }
 
     repo.delete(pedido);
@@ -89,12 +106,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   public PurchaseOrder createPurchaseOrderFromcart(Long id, List<PlateWithAdditionals> plates) {
     PurchaseOrder order = this.insert(
       new PurchaseOrder(
-        clientRepository.findById(id).get()
+        clientService.selectById(id)
       )
     );
 
     for (PlateWithAdditionals plate : plates) {
-      OrderDetails detail = orderDetailsService.insert(
+      OrderDetails detail = orderDetailsRepo.save(
         new OrderDetails(
           order,
           plate.detail.getPlate(),
@@ -102,8 +119,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         );
 
       for (Additional additional : plate.additionals) {
-          additionalOrderDetailsService
-            .insert(
+          additionalOrderDetailsRepo
+            .save(
               new AdditionalOrderDetails(
                 detail,
                 additional)

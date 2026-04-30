@@ -5,6 +5,8 @@ import com.maki.web.entities.AdditionalCategory;
 import com.maki.web.entities.AdditionalOrderDetails;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.repository.AdditionalCategoryRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
 import com.maki.web.repository.AdditionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,10 @@ public class AdditionalServiceImpl implements AdditionalService {
   private AdditionalRepository repo;
   
   @Autowired
-  private AdditionalCategoryService additionalCategoriaService;
+  private AdditionalCategoryRepository additionalCategoryRepo;
 
   @Autowired
-  private AdditionalOrderDetailsService additionalPedidoDetallesService;
+  private AdditionalOrderDetailsRepository additionalOrderDetailsRepo;
 
   AdditionalServiceImpl() {
   }
@@ -57,14 +59,14 @@ public class AdditionalServiceImpl implements AdditionalService {
       throw new EntityNotFoundException("No se puede eliminar: Adicional no existe con ID: " + id);
     }
 
-    for(AdditionalCategory a: additionalCategoriaService.selectAll()) {
+    for(AdditionalCategory a: additionalCategoryRepo.findAll()) {
       if(a.getAdditional() != null && a.getAdditional().getId() == id) {
-        additionalCategoriaService.delete(a);
+        additionalCategoryRepo.delete(a);
       }
     }
-    for(AdditionalOrderDetails a: additionalPedidoDetallesService.selectAll()) {
+    for(AdditionalOrderDetails a: additionalOrderDetailsRepo.findAll()) {
       if(a.getAdditional() != null && a.getAdditional().getId() == id) {
-        additionalPedidoDetallesService.delete(a);
+        additionalOrderDetailsRepo.delete(a);
       }
     }
 

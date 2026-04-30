@@ -1,8 +1,11 @@
 package com.maki.web.service;
 
+import com.maki.web.entities.AdditionalOrderDetails;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.Plate;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PlateRepository;
 import com.maki.web.exception.EntityConstraintException;
 import com.maki.web.exception.EntityNotFoundException;
@@ -19,7 +22,11 @@ public class PlateServiceImpl implements PlateService {
   private PlateRepository repo;
 
   @Autowired
-  private OrderDetailsService pedidoDetallesService;
+  private OrderDetailsRepository orderDetailsRepository;
+
+  @Autowired
+  private AdditionalOrderDetailsRepository additionalOrderDetailsRepo;
+
 
   @Override
   public List<Plate> selectAll() {
@@ -64,9 +71,17 @@ public class PlateServiceImpl implements PlateService {
       throw new EntityNotFoundException("No se puede eliminar: Plato no encontrado con ID: " + id);
     }
 
-    for( OrderDetails pd: pedidoDetallesService.selectAll()) {
+
+    for( OrderDetails pd: orderDetailsRepository.findAll()) {
       if(pd.getPlate() != null && pd.getPlate().getId().equals(id)) {
-        pedidoDetallesService.delete(pd);
+
+        for (AdditionalOrderDetails detalle : additionalOrderDetailsRepo.findAll()) {
+          if (detalle.getDetail().getOrder() != null && detalle.getDetail().getOrder().getId() == pd.getOrder().getId()) {
+            additionalOrderDetailsRepo.deleteById(detalle.getId());
+          }
+        }
+
+        orderDetailsRepository.delete(pd);
       }
     }
 
