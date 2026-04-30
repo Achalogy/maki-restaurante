@@ -16,6 +16,7 @@ export class PlateTableComponent {
   categoryList: Category[] = [];
   showModal: boolean = false; // Controla el Pop-up
   newCategoryName: string = ''; // Almacena el input
+  errorMessage: string = ""
 
   constructor(
     private plateService: PlateService,
@@ -64,13 +65,20 @@ export class PlateTableComponent {
     if (confirm(
       '¿Estás seguro de que deseas eliminar este plato?',
     )) {
-      this.plateService.delete(id).subscribe(() => {
-        this.plateService.selectAll().subscribe(
-          (plates) => this.plateList = plates
-        )
-        this.categoryService.selectAll().subscribe(categories => this.categoryList = categories)
-      })
-      
+      try {
+        this.plateService.delete(id).subscribe({
+          next: () => {
+            this.plateService.selectAll().subscribe(
+              (plates) => this.plateList = plates
+            )
+            this.categoryService.selectAll().subscribe(categories => this.categoryList = categories)
+            },
+          error: () => {
+            this.errorMessage = "No se puede eliminar el plato por que hay pedidos asociados."
+          }
+        })
+      } catch(err) {
+      }
     }
   }
 

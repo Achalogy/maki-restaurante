@@ -30,10 +30,22 @@ public class Delivery {
   @Column(nullable = false)
   private boolean available;
 
+  @Column(nullable = false)
+  private boolean busy;
+
   public Delivery(String name, String phone, String national_id, boolean available) {
     this.name = name;
     this.phone = phone;
     this.national_id = national_id;
     this.available = available;
+    this.busy = false;
+  }
+
+  public Delivery(String name, String phone, String national_id, boolean available, boolean busy) {
+    this.name = name;
+    this.phone = phone;
+    this.national_id = national_id;
+    this.available = available;
+    this.busy = busy;
   }
 }

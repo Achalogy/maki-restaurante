@@ -37,7 +37,15 @@ import { FullLayoutComponent } from './layout/full-layout/full-layout.component'
 import { FooterLayoutComponent } from './layout/footer-layout/footer-layout.component';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { OperatorLogInComponent } from './pages/operators/operator-log-in/operator-log-in.component';
+import { AdminLogInComponent } from './pages/admin/admin-log-in/admin-log-in.component';
 import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-order-view/purchase-order-view.component';
+import { DeliveryCrudComponent } from './pages/delivery/delivery-crud/delivery-crud.component';
+import { PurchaseOrderAdminviewComponent } from './pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component';
+import { AdminGatewayButtonComponent } from './pages/admin/components/admin-gateway-button/admin-gateway-button.component';
+import { ClientOrdersComponent } from './pages/clients/client-orders/client-orders.component';
+import { OperatorGatewayComponent } from './pages/operators/operator-gateway/operator-gateway.component';
+import { LogOutComponent } from './pages/log-out/log-out.component';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +79,14 @@ import { PurchaseOrderViewComponent } from './pages/purchase-order/purchase-orde
     BaseLayoutComponent,
     OperatorFormComponent,
     OperatorLogInComponent,
-    PurchaseOrderViewComponent
+    PurchaseOrderViewComponent,
+    DeliveryCrudComponent,
+    AdminLogInComponent,
+    PurchaseOrderAdminviewComponent,
+    AdminGatewayButtonComponent,
+    ClientOrdersComponent,
+    OperatorGatewayComponent,
+    LogOutComponent
   ],  
   imports: [
     BrowserModule,

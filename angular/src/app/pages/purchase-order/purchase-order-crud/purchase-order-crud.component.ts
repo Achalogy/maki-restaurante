@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
+import { OrderStatus, PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 import { PurchaseOrderService } from 'src/app/service/data/purchase-order.service';
+import translateStatus from 'src/utils/translateStatus';
 
 @Component({
   selector: 'app-purchase-order-crud',
@@ -10,6 +11,7 @@ import { PurchaseOrderService } from 'src/app/service/data/purchase-order.servic
 })
 export class PurchaseOrderCrudComponent {
   purchaseOrderList: PurchaseOrder[] = [];
+  loggedAs: String | null= null;
   constructor(
       private purchaseOrderService: PurchaseOrderService,
           private router: Router
@@ -17,11 +19,20 @@ export class PurchaseOrderCrudComponent {
   
     }
     ngOnInit() {
-      this.purchaseOrderService.selectAll().subscribe(
-        (purchaseOrders) => {
-          this.purchaseOrderList = purchaseOrders;
-        }
-      )
+      this.loggedAs = window.localStorage.getItem("loggedAs")
+      if(this.loggedAs == "operator") {
+        this.purchaseOrderService.selectNotCompleted().subscribe(
+          (purchaseOrders) => {
+            this.purchaseOrderList = purchaseOrders;
+          }
+        )
+      }else {
+        this.purchaseOrderService.selectAll().subscribe(
+          (purchaseOrders) => {
+            this.purchaseOrderList = purchaseOrders;
+          }
+        )
+      }
     }
 
     deletePurchaseOrder(id: number){
@@ -40,5 +51,9 @@ export class PurchaseOrderCrudComponent {
 
     navigateTo(url: string) {
       this.router.navigate([url])
+    }
+    
+    translateStatus(status: OrderStatus) {
+      return translateStatus(status)
     }
 }

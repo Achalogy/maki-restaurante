@@ -41,7 +41,7 @@ main {
 }
 
 .login-urls {
-  @apply flex justify-between
+  @apply flex justify-between items-center
 }
 
 .login-urls a {

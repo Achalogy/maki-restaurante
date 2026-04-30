@@ -3,5 +3,6 @@ export interface Delivery {
   name: string,
   phone: string,
   national_id: string,
-  available: boolean
+  available: boolean,
+  busy: boolean
 }
