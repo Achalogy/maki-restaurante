@@ -83,9 +83,13 @@ public class PurchaseOrderController {
             Delivery newDelivery = data.getDelivery();
             Delivery oldDelivery = updateData.getDelivery();
 
-            if (data.getDelivery() != null){
-
+            if (newDelivery != null){
                 newDelivery.setBusy(true);
+
+                if (data.getStatus().equals("cancelled") || data.getStatus().equals("completed")) {
+                    newDelivery.setBusy(false);
+                    deliveryService.update(newDelivery);
+                }
                 
                 if(oldDelivery != null) {
                     oldDelivery.setBusy(false);
