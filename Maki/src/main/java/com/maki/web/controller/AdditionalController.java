@@ -26,29 +26,28 @@ import com.maki.web.service.AdditionalService;
 @RestController
 
 public class AdditionalController {
-  
+
     @Autowired
     private AdditionalService additionalService;
     @Autowired
     private AdditionalCategoryService additionalCategoryService;
 
+    // Da todos los adicionales, pero podemos pedir solo los
+    // que tengan un categoryId o un additionalId
     @GetMapping("")
-    public List<Additional> getAllAdicionales(@RequestParam(required=false) Long categoryId, 
-            @RequestParam(required = false) Long additionalId) {
-        if(categoryId == null && additionalId == null) {
-            return additionalService.selectAll();
-        } else if (categoryId != null) {
+    public List<Additional> getAllAdicionales(@RequestParam(required=false) Long categoryId) {
+       if (categoryId != null) {
+            // Filtrar por categoria
             List<AdditionalCategory> intermedias = additionalCategoryService.findByCategory_Id(categoryId);
-            return intermedias.stream().map( i -> i.getAdditional()).collect(Collectors.toList());
-        }else {
-            List<AdditionalCategory> intermedias = additionalCategoryService.findByAdditional_Id(additionalId);
             return intermedias.stream().map( i -> i.getAdditional()).collect(Collectors.toList());
         }
 
+        // En este caso queremos todos los adicionales
+        return additionalService.selectAll();
     }
 
     @GetMapping("/categories")
-    public List<AdditionalCategory> getAllAdditionalCategories(@RequestParam(required=false) Long categoryId, 
+    public List<AdditionalCategory> getAllAdditionalCategories(@RequestParam(required=false) Long categoryId,
             @RequestParam(required = false) Long additionalId) {
         if(categoryId == null && additionalId == null) {
             return additionalCategoryService.selectAll();
@@ -77,7 +76,7 @@ public class AdditionalController {
     public List<AdditionalCategory> setCategories(@PathVariable Long id, @RequestBody List<Category> categories) {
         return additionalCategoryService.setCategories(id, categories);
     }
-    
+
 
     // ===================== DELETE ADITIONAL =====================
 
