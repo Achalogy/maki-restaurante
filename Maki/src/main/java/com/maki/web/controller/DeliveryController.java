@@ -4,7 +4,6 @@ import com.maki.web.entities.Delivery;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.DeliveryService;
 
-import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +32,7 @@ public class DeliveryController {
         if(active.isPresent() && active.get() == 1) {
             return deliveryService.selectAllActive();
         }
-        
+
         return deliveryService.selectAll();
     }
 
