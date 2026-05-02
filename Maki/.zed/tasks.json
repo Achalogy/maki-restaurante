@@ -16,7 +16,7 @@
   },
   {
     "label": "Git add, commit, push",
-    "command": "git add -p; git commit; git push",
+    "command": "git add -p; git commit; git push; git status",
     "reveal": "always"
   }
 ]
