@@ -11,7 +11,7 @@
   },
   {
     "label": "Run Springboot",
-    "command": "./mvnw clean install",
+    "command": "java -jar target/maki-0.0.1-SNAPSHOT.jar",
     "reveal": "always"
   },
   {
