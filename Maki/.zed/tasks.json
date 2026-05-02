@@ -15,8 +15,8 @@
     "reveal": "always"
   },
   {
-    "label": "Git add",
-    "command": "git add -p",
+    "label": "Git add, commit, push",
+    "command": "git add -p; git commit; git push",
     "reveal": "always"
   }
 ]
