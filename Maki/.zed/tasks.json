@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Build & Run Springboot",
+    "command": "./mvnw clean install; java -jar target/maki-0.0.1-SNAPSHOT.jar",
+    "reveal": "always"
+  },
+  {
+    "label": "Build Springboot",
+    "command": "./mvnw clean install",
+    "reveal": "always"
+  },
+  {
+    "label": "Run Springboot",
+    "command": "./mvnw clean install",
+    "reveal": "always"
+  },
+  {
+    "label": "Git add",
+    "command": "git add -p",
+    "reveal": "always"
+  }
+]
