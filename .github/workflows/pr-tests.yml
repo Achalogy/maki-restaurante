@@ -1,0 +1,38 @@
+name: Pull Request Tests
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code into Maki folder
+      uses: actions/checkout@v4
+      with:
+        path: Maki
+
+    - name: Set up JDK 21 (Zulu)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21' # Versión de Java
+        distribution: 'zulu'
+        cache: maven
+
+    - name: Validate Maven Wrapper
+      run: chmod a+x Maki/mvnw
+
+    - name: Run Maven tests
+      run: Maki/mvnw test
+      env:
+        SPRING_PROFILES_ACTIVE: test
+
+    # Reportar los resultados de los tests en el PR
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: target/surefire-reports/
