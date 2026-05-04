@@ -18,5 +18,10 @@
     "label": "Git add, commit, push",
     "command": "git add -p; git commit; git push; git status",
     "reveal": "always"
+  },
+  {
+    "label": "Test Springboot",
+    "command": "./mvnw test",
+    "reveal": "always"
   }
 ]
