@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code into Maki folder
+    - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        path: Maki
 
     - name: Set up JDK 21 (Zulu)
       uses: actions/setup-java@v4
@@ -26,7 +24,8 @@ jobs:
       run: chmod a+x Maki/mvnw
 
     - name: Run Maven tests
-      run: Maki/mvnw test
+      run: ./mvnw test
+      working-directory: Maki
       env:
         SPRING_PROFILES_ACTIVE: test
 
@@ -35,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: target/surefire-reports/
+        path: Maki/target/surefire-reports/
