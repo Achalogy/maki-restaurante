@@ -1,4 +1,4 @@
-package com.maki.web.controller;
+﻿package com.maki.web.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +16,22 @@ import com.maki.web.service.OperatorService;
 public class OperatorController {
 
     @Autowired
-    private OperatorService OperatorService;
+    private OperatorService operatorService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
     public List<Operator> getAllOperators() {
-        return OperatorService.selectAll();
+        return operatorService.selectAll();
     }
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
     public ResponseEntity<Operator> getOperatorById(@PathVariable Long id) {
         try {
-            Operator Operator = OperatorService.selectById(id);
-            if (Operator == null)
+            Operator operator = operatorService.selectById(id);
+            if (operator == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(Operator, HttpStatus.OK);
+            return new ResponseEntity<>(operator, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -39,24 +39,21 @@ public class OperatorController {
 
     // ===================== CREATE =====================
     @PostMapping("")
-    public ResponseEntity<Operator> saveOperator(@RequestBody Operator Operator) {
+    public ResponseEntity<Operator> saveOperator(@RequestBody Operator operator) {
         try {
-            // El servicio insert suele manejar el guardado o actualización
-            return new ResponseEntity<>(OperatorService.insert(Operator), HttpStatus.OK);
+            return new ResponseEntity<>(operatorService.insert(operator), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    // ===================== Update =====================
+    // ===================== UPDATE =====================
     @PostMapping("/{id}")
     public ResponseEntity<Operator> updateOperator(@PathVariable Long id,
             @RequestBody(required = false) Operator data) {
         try {
-            // Buscamos el operador existente por ID
-            Operator updateData = OperatorService.selectById(id);
+            Operator updateData = operatorService.selectById(id);
 
-            // Validamos y actualizamos solo los campos presentes en el request
             if (data.getName() != null)
                 updateData.setName(data.getName());
             if (data.getUsername() != null)
@@ -64,15 +61,12 @@ public class OperatorController {
             if (data.getPassword() != null)
                 updateData.setPassword(data.getPassword());
 
-            // Guardamos los cambios usando el servicio
-            return new ResponseEntity<>(OperatorService.update(updateData), HttpStatus.OK);
+            return new ResponseEntity<>(operatorService.update(updateData), HttpStatus.OK);
 
         } catch (Exception e) {
-            // Si no se encuentra el registro
             if (e instanceof EntityNotFoundException) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            // Error genérico de solicitud
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -81,21 +75,48 @@ public class OperatorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteOperator(@PathVariable Long id) {
         try {
-            OperatorService.deleteByID(id);
+            operatorService.deleteByID(id);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
+    // ===================== GET BY USERNAME =====================
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Operator> getOperatorByUsername(@PathVariable String username) {
+        try {
+            return new ResponseEntity<>(operatorService.selectByUsername(username), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ===================== SEARCH =====================
+    @GetMapping("/search")
+    public ResponseEntity<List<Operator>> searchOperators(@RequestParam("term") String term) {
+        return new ResponseEntity<>(operatorService.searchByNameOrUsername(term), HttpStatus.OK);
+    }
+
+    // ===================== COUNT BY USERNAME =====================
+    @GetMapping("/count/{username}")
+    public ResponseEntity<Long> countOperatorsByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(operatorService.countByUsername(username), HttpStatus.OK);
+    }
+
+    // ===================== LIST ORDERED =====================
+    @GetMapping("/ordered")
+    public ResponseEntity<List<Operator>> getOperatorsOrderedByName() {
+        return new ResponseEntity<>(operatorService.selectAllOrderedByName(), HttpStatus.OK);
+    }
+
     @PostMapping("/log-in")
     public ResponseEntity<Operator> loginOperator(@RequestBody(required = false) Operator data) {
         try {
-            return new ResponseEntity<>(OperatorService.verifyCredentials(
+            return new ResponseEntity<>(operatorService.verifyCredentials(
                     data.getUsername(),
                     data.getPassword()), HttpStatus.OK);
         } catch (Exception e) {
-
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
