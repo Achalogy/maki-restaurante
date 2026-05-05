@@ -203,7 +203,106 @@ public class OperatorControllerTest {
     }
 
     // =====================================================================
-    // PRUEBA 7 — POST /api/v1/operator/log-in (CREDENCIALES CORRECTAS)
+    // PRUEBA 7 — GET /api/v1/operator/username/{username}
+    // Verifica que se puede obtener un operador por username usando el query personalizado
+    // =====================================================================
+    @Test
+    public void operatorController_getOperatorByUsername_returnsOperator() throws Exception {
+
+        // Arrange
+        Operator op = new Operator("Raul Perez", "raul.perez", "123456");
+        when(operatorService.selectByUsername("raul.perez")).thenReturn(op);
+
+        // Act
+        ResultActions result = mockMvc.perform(
+                get("/api/v1/operator/username/raul.perez")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // Assert
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("raul.perez"))
+                .andExpect(jsonPath("$.name").value("Raul Perez"));
+    }
+
+    // =====================================================================
+    // PRUEBA 8 — GET /api/v1/operator/search?term={term}
+    // Verifica que el endpoint de búsqueda usa el query personalizado y retorna coincidencias
+    // =====================================================================
+    @Test
+    public void operatorController_searchOperators_returnsMatchingOperators() throws Exception {
+
+        // Arrange
+        Operator op1 = new Operator("Carla Gomez", "carla.gomez", "123456");
+        Operator op2 = new Operator("Carlos Lopez", "carlos.lopez", "123456");
+        when(operatorService.searchByNameOrUsername("car")).thenReturn(List.of(op1, op2));
+
+        // Act
+        ResultActions result = mockMvc.perform(
+                get("/api/v1/operator/search")
+                        .param("term", "car")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // Assert
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].username").value("carla.gomez"))
+                .andExpect(jsonPath("$[1].username").value("carlos.lopez"));
+    }
+
+    // =====================================================================
+    // PRUEBA 9 — GET /api/v1/operator/count/{username}
+    // Verifica que el endpoint de conteo retorna la cantidad correcta usando el query personalizado
+    // =====================================================================
+    @Test
+    public void operatorController_countOperatorsByUsername_returnsCount() throws Exception {
+
+        // Arrange
+        when(operatorService.countByUsername("carla.gomez")).thenReturn(1L);
+
+        // Act
+        ResultActions result = mockMvc.perform(
+                get("/api/v1/operator/count/carla.gomez")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // Assert
+        result
+                .andExpect(status().isOk())
+                .andExpect(content().string("1"));
+    }
+
+    // =====================================================================
+    // PRUEBA 10 — GET /api/v1/operator/ordered
+    // Verifica que el endpoint retorna operadores ordenados por nombre usando el query personalizado
+    // =====================================================================
+    @Test
+    public void operatorController_getOperatorsOrderedByName_returnsSortedList() throws Exception {
+
+        // Arrange
+        Operator op1 = new Operator("Ana Martinez", "ana.martinez", "123456");
+        Operator op2 = new Operator("Beto Suarez", "beto.suarez", "123456");
+        when(operatorService.selectAllOrderedByName()).thenReturn(List.of(op1, op2));
+
+        // Act
+        ResultActions result = mockMvc.perform(
+                get("/api/v1/operator/ordered")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // Assert
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].name").value("Ana Martinez"))
+                .andExpect(jsonPath("$[1].name").value("Beto Suarez"));
+    }
+
+    // =====================================================================
+    // PRUEBA 11 — POST /api/v1/operator/log-in (CREDENCIALES CORRECTAS)
     // Verifica que el login retorna 200 con el operador cuando las credenciales son válidas
     // =====================================================================
     @Test

@@ -1,4 +1,4 @@
-package com.maki.web.service;
+﻿package com.maki.web.service;
 
 import com.maki.web.entities.Operator;
 import com.maki.web.entities.PurchaseOrder;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OperatorServiceImpl implements OperatorService {
@@ -75,14 +76,38 @@ public class OperatorServiceImpl implements OperatorService {
   @Override
   public Operator verifyCredentials(String username, String password)
       throws InvalidCredentialsException, EntityNotFoundException {
-    Operator repoOperator = repo.findByUsername(username)
-        .orElseThrow(
-            () -> new EntityNotFoundException("No existe un operator registrado con el username: " + username));
+    Optional<Operator> authenticated = repo.findByUsernameAndPassword(username, password);
 
-    if (!repoOperator.getPassword().equals(password)) {
+    if (authenticated.isPresent()) {
+      return authenticated.get();
+    }
+
+    boolean exists = repo.findByUsername(username).isPresent();
+    if (exists) {
       throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
-    return repoOperator;
+    throw new EntityNotFoundException("No existe un operator registrado con el username: " + username);
+  }
+
+  @Override
+  public Operator selectByUsername(String username) throws EntityNotFoundException {
+    return repo.findByUsername(username)
+        .orElseThrow(() -> new EntityNotFoundException("Operator no encontrado con username: " + username));
+  }
+
+  @Override
+  public List<Operator> searchByNameOrUsername(String term) {
+    return repo.searchByNameOrUsername(term);
+  }
+
+  @Override
+  public Long countByUsername(String username) {
+    return repo.countByUsername(username);
+  }
+
+  @Override
+  public List<Operator> selectAllOrderedByName() {
+    return repo.findAllOrderByNameAsc();
   }
 }
