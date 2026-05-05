@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Delivery {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,7 +34,12 @@ public class Delivery {
   @Column(nullable = false)
   private boolean busy;
 
-  public Delivery(String name, String phone, String national_id, boolean available) {
+  public Delivery(
+    String name,
+    String phone,
+    String national_id,
+    boolean available
+  ) {
     this.name = name;
     this.phone = phone;
     this.national_id = national_id;
@@ -41,11 +47,25 @@ public class Delivery {
     this.busy = false;
   }
 
-  public Delivery(String name, String phone, String national_id, boolean available, boolean busy) {
+  public Delivery(
+    String name,
+    String phone,
+    String national_id,
+    boolean available,
+    boolean busy
+  ) {
     this.name = name;
     this.phone = phone;
     this.national_id = national_id;
     this.available = available;
     this.busy = busy;
+  }
+
+  public Delivery(Delivery d) {
+    this.name = d.name;
+    this.phone = d.phone;
+    this.national_id = d.national_id;
+    this.available = d.available;
+    this.busy = d.busy;
   }
 }

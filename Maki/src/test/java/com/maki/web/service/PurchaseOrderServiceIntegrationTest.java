@@ -30,10 +30,16 @@ public class PurchaseOrderServiceIntegrationTest {
   private PurchaseOrderService purchaseOrderService;
 
   @Autowired
+  private OrderDetailsService orderDetailsService;
+
+  @Autowired
   private ClientRepository clientRepository;
 
   @Autowired
   private PurchaseOrderRepository purchaseOrderRepository;
+  
+  @Autowired
+  private DeliveryService deliveryService;
 
   @Autowired
   private PlateRepository plateRepository;
@@ -42,6 +48,7 @@ public class PurchaseOrderServiceIntegrationTest {
   private CategoryRepository categoryRepository;
 
   private Client testClient;
+  private Delivery testDelivery;
   private Category testCategory;
 
   @BeforeEach
@@ -59,10 +66,13 @@ public class PurchaseOrderServiceIntegrationTest {
 
     testCategory = new Category("Sushi");
     testCategory = categoryRepository.save(testCategory);
+
+    testDelivery = new Delivery(
+      "Juan Domiciliario", "123", "123", true, false);
   }
 
   @Test
-  public void insert_Pedido_GuardaEnBaseDeDatos()
+  public void insert_Pedido_Vacio_GuardaEnBaseDeDatos()
     throws EntityConstraintException {
     // Arrange
     PurchaseOrder order = new PurchaseOrder(testClient);
@@ -74,6 +84,65 @@ public class PurchaseOrderServiceIntegrationTest {
     assertNotNull(saved.getId());
     assertEquals("pending", saved.getStatus());
     assertEquals(testClient.getId(), saved.getClient().getId());
+
+    // como esta vacio:
+    assertTrue(
+      orderDetailsService.findByOrderId(saved.getId()).size() == 0, 
+      "No debería tener ningun pedido"
+    );
+
+    assertNull(
+      order.getDelivery()
+    ); // No debería tener un delivery asignado
+  }
+
+  @Test
+  public void insert_Pedido_Y_Asignar_Domiciliario_Disponible() {
+    // Arrange
+    PurchaseOrder order = new PurchaseOrder(testClient);
+    Delivery delivery = new Delivery(testDelivery);
+
+    // Act
+    PurchaseOrder saved = purchaseOrderService.insert(order);
+    Delivery saved_delivery = deliveryService.insert(delivery);
+  
+    assertDoesNotThrow(() ->
+      purchaseOrderService.setDelivery(saved.getId(), saved_delivery)
+    );
+  }
+  
+  @Test
+  public void insert_Pedido_Y_Asignar_Domiciliario_Ocupado() {
+    // Arrange
+    PurchaseOrder order = new PurchaseOrder(testClient);
+    Delivery delivery = new Delivery(testDelivery);
+
+    delivery.setBusy(true);
+
+    // Act
+    PurchaseOrder saved = purchaseOrderService.insert(order);
+    Delivery saved_delivery = deliveryService.insert(delivery);
+  
+    assertThrows(EntityConstraintException.class, () ->
+      purchaseOrderService.setDelivery(saved.getId(), saved_delivery)
+    );
+  }
+  
+  @Test
+  public void insert_Pedido_Y_Asignar_Domiciliario_NoDisponible() {
+    // Arrange
+    PurchaseOrder order = new PurchaseOrder(testClient);
+    Delivery delivery = new Delivery(testDelivery);
+
+    delivery.setAvailable(false);
+
+    // Act
+    PurchaseOrder saved = purchaseOrderService.insert(order);
+    Delivery saved_delivery = deliveryService.insert(delivery);
+  
+    assertThrows(EntityConstraintException.class, () ->
+      purchaseOrderService.setDelivery(saved.getId(), saved_delivery)
+    );
   }
 
   @Test
