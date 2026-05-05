@@ -54,6 +54,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     if (entity.getId() != null) {
       throw new EntityConstraintException("El insert de Pedido no debe incluir un ID");
     }
+    if(entity.getStatus() == null)
+      entity.setStatus("pending");
     // Opcional: Establecer fecha de creación por defecto si viene nula
     if (entity.getCreation_date() == null) {
       entity.setCreation_date(java.time.LocalDateTime.now());

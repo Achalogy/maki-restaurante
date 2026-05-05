@@ -66,7 +66,6 @@ public class PurchaseOrderServiceIntegrationTest {
     throws EntityConstraintException {
     // Arrange
     PurchaseOrder order = new PurchaseOrder(testClient);
-    order.setStatus("pending");
 
     // Act
     PurchaseOrder saved = purchaseOrderService.insert(order);
@@ -97,7 +96,6 @@ public class PurchaseOrderServiceIntegrationTest {
     throws EntityConstraintException {
     // Arrange
     PurchaseOrder pending = new PurchaseOrder(testClient);
-    pending.setStatus("pending");
     purchaseOrderRepository.save(pending);
 
     PurchaseOrder completed = new PurchaseOrder(testClient);
