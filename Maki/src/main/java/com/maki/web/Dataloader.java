@@ -2,6 +2,7 @@ package com.maki.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
@@ -32,6 +33,7 @@ import java.util.Random;
 
 @Component
 @Transactional
+@Profile("default")
 public class Dataloader implements CommandLineRunner {
 
         @Autowired
