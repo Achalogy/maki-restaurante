@@ -163,6 +163,10 @@ public class AdminLoginAddPlate {
         );
         platosButton.click();
         wait.until(ExpectedConditions.urlContains("/plate/crud"));
+
+        //¿Llego a la pantalla de administración de platos?
+        assertTrue(driver.getCurrentUrl().contains("/plate/crud"),
+            "No navegó a la pantalla de administración de platos");
     }
 
     @AfterEach
