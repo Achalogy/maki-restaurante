@@ -1,4 +1,5 @@
 <a
+ [id]="'gateway-' + data?.title?.toLowerCase()?.replace(' ', '-')"
   (click)="navigate()"
   class="group block bg-white border rounded-xl p-5 hover:border-gray-300 hover:scale-105 transition-all cursor-pointer"
 >
