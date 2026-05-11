@@ -52,7 +52,11 @@ public class ClientE2ETest {
     options.addArguments("--disable-extensions");
     options.addArguments("--disable-notifications");
     // Descomenta la siguiente línea si quieres correr sin ventana gráfica:
-    // options.addArguments("--headless");
+    options.addArguments("--headless");
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    options.addArguments("--disable-gpu");
+    options.addArguments("--window-size=1920,1080");
 
     driver = new ChromeDriver(options);
     wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS));
