@@ -2,11 +2,13 @@ package com.maki.web;
 
 import com.maki.web.entities.Additional;
 import com.maki.web.entities.AdditionalCategory;
+import com.maki.web.entities.Administrator;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Client;
 import com.maki.web.entities.Plate;
 import com.maki.web.repository.AdditionalCategoryRepository;
 import com.maki.web.repository.AdditionalRepository;
+import com.maki.web.repository.AdministratorRepository;
 import com.maki.web.repository.CategoryRepository;
 import com.maki.web.repository.ClientRepository;
 import com.maki.web.repository.PlateRepository;
@@ -23,6 +25,9 @@ public class DataloaderTest implements CommandLineRunner {
 
   @Autowired
   private ClientRepository clientRepo;
+
+  @Autowired
+  private AdministratorRepository adminRepo;
 
   @Autowired
   private CategoryRepository categoriaRepo;
@@ -86,5 +91,8 @@ public class DataloaderTest implements CommandLineRunner {
     adcatRepo.save(new AdditionalCategory(sushi.getId(), a1.getId()));
     adcatRepo.save(new AdditionalCategory(sushi.getId(), a2.getId()));
     adcatRepo.save(new AdditionalCategory(sushi.getId(), a3.getId()));
+
+    // Admin
+    adminRepo.save(new Administrator("Tomas", "Neon", "4567"));
   }
 }
