@@ -10,22 +10,26 @@
     
                 <section *ngFor="let cat of categorias" class="menu-section grid grid-cols-1 lg:grid-cols-2 gap-6"
                     [id]="'cat-' + cat.id">
-                    <h2 class="col-span-2">{{ getCategoryLabel(cat.name) }}</h2>
+                    <!-- CLASE AGREGADA: category-title -->
+                    <h2 class="col-span-2 category-title">{{ getCategoryLabel(cat.name) }}</h2>
     
-                    <article *ngFor="let plate of platesForCategory(cat.name)" class="food-menu-item h-[20rem] relative">
+                    <!-- CLASE AGREGADA: plate-card (dentro de ngFor → class) -->
+                    <article *ngFor="let plate of platesForCategory(cat.name)"
+                        class="food-menu-item h-[20rem] relative plate-card">
                         <img [src]="plate.urlImage" [alt]="plate.name" class="w-full h-full object-cover rounded-t-lg" />
     
                         <div class="p-4">
-                            <h3 class="font-bold mb-2">{{ plate.name }}</h3>
+                            <!-- CLASE AGREGADA: plate-card-name -->
+                            <h3 class="font-bold mb-2 plate-card-name">{{ plate.name }}</h3>
                             <p class="text-gray-700 text-2xl mb-4 line-clamp-3">{{ plate.description }}</p>
                             <p class="font-semibold text-[#ffffff] text-3xl">
                                 {{ plate.price | currency:'COP':'symbol':'1.0-0' }}
                             </p>
+                            <!-- CLASE AGREGADA: btn-ver-plato (dentro de ngFor → class) -->
                             <button
-                                class="absolute bottom-5 right-5 bg-white text-black rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all cursor-pointer"
+                                class="absolute bottom-5 right-5 bg-white text-black rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all cursor-pointer btn-ver-plato"
                                 (click)="navigateTo('/plate/' + plate.id)">
                                 <span class="text-4xl font-bold leading-none select-none">+</span>
-    
                             </button>
                         </div>
                     </article>

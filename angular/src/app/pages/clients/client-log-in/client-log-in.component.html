@@ -8,18 +8,19 @@
         <form (ngSubmit)="onSubmit()" novalidate #clientForm="ngForm">
   
           <div>
-            <input name="email" type="email" [(ngModel)]="email" required email #emailRef="ngModel" placeholder="Correo"
+            <!-- ID AGREGADO: input-email -->
+            <input id="input-email" name="email" type="email" [(ngModel)]="email" required email #emailRef="ngModel" placeholder="Correo"
               [class.border-2]="emailRef.invalid && emailRef.touched"
               [class.border-red-500]="emailRef.invalid && emailRef.touched" />
           </div>
   
           <div>
-            <input name="password" type="password" [(ngModel)]="password" required minlength="6" #passwordRef="ngModel"
+            <!-- ID AGREGADO: input-password -->
+            <input id="input-password" name="password" type="password" [(ngModel)]="password" required minlength="6" #passwordRef="ngModel"
               placeholder="Contraseña" [class.border-2]="passwordRef.invalid && passwordRef.touched"
               [class.border-red-500]="passwordRef.invalid && passwordRef.touched" />
           </div>
   
-          <!-- ✅ FIX: el div ahora tiene display:flex gracias al CSS corregido -->
           <div id="log-in-errors">
             <p *ngIf="emailRef.errors?.['required'] && emailRef.touched">
               El correo es obligatorio.
@@ -36,8 +37,8 @@
           </div>
   
           <div>
-  
-            <button type="submit" [disabled]="clientForm.invalid">
+            <!-- ID AGREGADO: btn-login -->
+            <button id="btn-login" type="submit" [disabled]="clientForm.invalid">
               Iniciar sesión
             </button>
           </div>
