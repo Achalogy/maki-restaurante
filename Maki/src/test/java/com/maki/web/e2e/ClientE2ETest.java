@@ -51,7 +51,6 @@ public class ClientE2ETest {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--disable-extensions");
     options.addArguments("--disable-notifications");
-    // Descomenta la siguiente línea si quieres correr sin ventana gráfica:
     options.addArguments("--headless");
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
