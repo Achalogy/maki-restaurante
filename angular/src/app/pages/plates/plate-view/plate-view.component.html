@@ -1,3 +1,4 @@
+
 <app-full-layout>
   <main id="single-item" [ngStyle]="{ 'background-image': 'url(' + plate.urlImage + ')' }" *ngIf="plate; else notFound">
     <div class="single-food-card">
@@ -6,16 +7,19 @@
       </div>
   
       <div id="plate-info">
-        <h2 class="mb-0 text-3xl font-bold">{{ plate.name }}</h2>
-        <h3 class="font-semibold mt-0 text-md text-orange-600">
+        <!-- ID AGREGADO: plate-name -->
+        <h2 id="plate-name" class="mb-0 text-3xl font-bold">{{ plate.name }}</h2>
+        <!-- ID AGREGADO: plate-category -->
+        <h3 id="plate-category" class="font-semibold mt-0 text-md text-orange-600">
           {{ plate.category.name }}
         </h3>
   
-        <p class="mt-4 text-gray-700">{{ plate.description }}</p>
+        <!-- ID AGREGADO: plate-description -->
+        <p id="plate-description" class="mt-4 text-gray-700">{{ plate.description }}</p>
   
         <div id="special-info" class="mt-6">
           <label for="special-instructions" class="block font-medium mb-1">Instrucciones especiales:</label>
-          <textarea id="special-instructionsç" name="specialInstructions" [(ngModel)]="specialInstructions" rows="3"
+          <textarea id="special-instructions" name="specialInstructions" [(ngModel)]="specialInstructions" rows="3"
             class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-orange-500 outline-none"
             placeholder="Ej: Sin cebolla, salsa aparte..."></textarea>
         </div>
@@ -24,11 +28,13 @@
           <h4 class="text-lg font-semibold mb-3">Adicionales disponibles:</h4>
   
           <div *ngIf="additionalsList.length > 0; else noAdditionals">
-            <div *ngFor="let add of additionalsList" class="flex items-center mb-2">
+            <!-- CLASE AGREGADA: additional-checkbox-item (dentro de ngFor → class, no id) -->
+            <div *ngFor="let add of additionalsList" class="flex items-center mb-2 additional-checkbox-item">
               <input type="checkbox" [id]="'add-' + add.id" (change)="onCheckboxChange(add.id, $event)"
-                class="w-4 h-4 text-orange-500 accent-orange-500 mr-2" />
-              <label [for]="'add-' + add.id" class="text-sm cursor-pointer">
-                {{ add.name }} <span class="text-gray-500">(+${{ add.price }})</span>
+                class="w-4 h-4 text-orange-500 accent-orange-500 mr-2 additional-checkbox" />
+              <!-- CLASE AGREGADA: additional-name -->
+              <label [for]="'add-' + add.id" class="text-sm cursor-pointer additional-name">
+                {{ add.name }} <span class="text-gray-500 additional-price">(+${{ add.price }})</span>
               </label>
             </div>
           </div>
@@ -37,7 +43,8 @@
             <p class="text-gray-500 text-sm italic">No hay adicionales disponibles para este plato.</p>
           </ng-template>
   
-          <button (click)="addToOrder()" [disabled]="!plate.available"
+          <!-- ID AGREGADO: btn-add-to-order -->
+          <button id="btn-add-to-order" (click)="addToOrder()" [disabled]="!plate.available"
             class="mt-6 w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
             {{ plate.available ? 'Agregar al pedido' : 'No disponible' }}
           </button>

@@ -1,22 +1,22 @@
+
 <app-full-layout>
   <main class="tree_background min-h-[80dvh]">
     <br />
-    <!-- Orders Section -->
     <section class="flex flex-col gap-8 pb-12 px-6 py-10">
       <div>
         <h2 class="text-4xl font-bold text-gray-800">Mis <span class="text-maki-orange">Pedidos</span></h2>
         <p class="text-gray-500">Historial de todos tus pedidos realizados.</p>
       </div>
 
-      <div *ngIf="groupedOrders.length === 0" class="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
+      <!-- ID AGREGADO: mensaje-sin-pedidos -->
+      <div id="mensaje-sin-pedidos" *ngIf="groupedOrders.length === 0"
+           class="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
         Aún no tienes pedidos registrados.
       </div>
 
-      <!-- Status Sections -->
       <ng-container *ngFor="let s of status">
         <ng-container *ngIf="getOrdersPerStatus(s).length > 0">
 
-          <!-- Status Header -->
           <div class="flex items-center gap-3">
             <span [ngClass]="getStatusClass(s)"
               class="text-sm font-bold px-4 py-1.5 rounded-full">
@@ -28,52 +28,58 @@
             <div class="flex-1 h-px bg-gray-200"></div>
           </div>
 
-          <!-- Orders for this Status -->
           <div class="flex flex-col gap-4">
+            <!-- CLASE AGREGADA: orden-card (dentro de ngFor → class) -->
             <div *ngFor="let group of getOrdersPerStatus(s)"
-              class="bg-white shadow-lg rounded-2xl overflow-hidden">
+              class="bg-white shadow-lg rounded-2xl overflow-hidden orden-card">
 
-              <!-- Order Header -->
               <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                 <div class="flex items-center gap-3">
                   <span class="text-sm font-bold text-gray-500">Pedido</span>
-                  <span class="text-sm font-bold text-gray-800">#{{ group.orderId }}</span>
+                  <!-- CLASE AGREGADA: orden-id -->
+                  <span class="text-sm font-bold text-gray-800 orden-id">#{{ group.orderId }}</span>
                   <span class="text-xs text-gray-400">
                     · {{ group.items[0].order.creation_date | date:'d MMM y, h:mm a' }}
                   </span>
                 </div>
+                <!-- CLASE AGREGADA: orden-status -->
                 <span [ngClass]="getStatusClass(group.items[0].order.status)"
-                  class="text-xs font-bold px-3 py-1 rounded-full">
+                  class="text-xs font-bold px-3 py-1 rounded-full orden-status">
                   {{ group.items[0].order.status }}
                 </span>
               </div>
 
-              <!-- Order Items -->
               <div class="divide-y divide-gray-50">
+                <!-- CLASE AGREGADA: orden-item (dentro de ngFor → class) -->
                 <div *ngFor="let item of group.items"
-                  class="flex items-center gap-4 px-6 py-4">
+                  class="flex items-center gap-4 px-6 py-4 orden-item">
                   <img [src]="item.plate.urlImage" [alt]="item.plate.name"
                     class="w-16 h-16 rounded-xl object-cover shrink-0">
                   <div class="flex-1 min-w-0">
-                    <p class="font-bold text-gray-800 truncate">{{ item.plate.name }}</p>
+                    <!-- CLASE AGREGADA: orden-item-nombre -->
+                    <p class="font-bold text-gray-800 truncate orden-item-nombre">{{ item.plate.name }}</p>
                     <p class="text-sm text-gray-500">{{ item.plate.description | slice:0:60 }}...</p>
-                    <div *ngIf="item.additionals && item.additionals.length > 0" class="flex flex-wrap gap-1 mt-1">
+                    <!-- CLASE AGREGADA: orden-item-adicionales -->
+                    <div *ngIf="item.additionals && item.additionals.length > 0"
+                         class="flex flex-wrap gap-1 mt-1 orden-item-adicionales">
+                      <!-- CLASE AGREGADA: orden-adicional-tag (dentro de ngFor → class) -->
                       <span *ngFor="let a of item.additionals"
-                        class="text-xs bg-orange-50 text-maki-orange border border-orange-200 rounded-full px-2 py-0.5">
+                        class="text-xs bg-orange-50 text-maki-orange border border-orange-200 rounded-full px-2 py-0.5 orden-adicional-tag">
                         + {{ a.additional.name }}
                       </span>
                     </div>
                   </div>
                   <div class="text-right shrink-0">
-                    <p class="text-sm text-gray-400">x{{ item.quantity }}</p>
-                    <p class="font-bold text-gray-800">
+                    <!-- CLASE AGREGADA: orden-item-cantidad -->
+                    <p class="text-sm text-gray-400 orden-item-cantidad">x{{ item.quantity }}</p>
+                    <!-- CLASE AGREGADA: orden-item-precio -->
+                    <p class="font-bold text-gray-800 orden-item-precio">
                       ${{ getItemTotal(item) | number:'1.0-0' }}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <!-- Order Footer -->
               <div class="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-100">
                 <ng-container *ngIf="group.items[0].order.status === 'completed'; else notDelivered">
                   <div class="flex items-center gap-1">
@@ -91,14 +97,15 @@
                     </span>
                   </div>
                 </ng-template>
-                </div>
                 <div class="text-right">
                   <p class="text-xs text-gray-400 uppercase tracking-wide">Total</p>
-                  <p class="text-lg font-bold text-maki-orange">
+                  <!-- CLASE AGREGADA: orden-total -->
+                  <p class="text-lg font-bold text-maki-orange orden-total">
                     ${{ getOrderTotal(group.items) | number:'1.0-0' }}
                   </p>
                 </div>
               </div>
+            </div>
           </div>
 
         </ng-container>
