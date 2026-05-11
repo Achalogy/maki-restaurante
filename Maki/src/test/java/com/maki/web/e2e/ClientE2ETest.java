@@ -224,8 +224,10 @@ public class ClientE2ETest {
         WebElement elementoTotal = wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.id("carrito-total")));
 
+        // Esperar a que el texto del total no esté vacío
+        wait.until(driver -> !elementoTotal.getText().replaceAll("[^0-9]", "").isEmpty());
+
         String textoTotal = elementoTotal.getText();
-        // El texto tiene formato "Total: $95.840" — extraer el número
         String soloNumeros = textoTotal.replaceAll("[^0-9]", "");
         long totalNumerico = Long.parseLong(soloNumeros);
 
@@ -255,28 +257,23 @@ public class ClientE2ETest {
         // ── PASO 1: Login ─────────────────────────────────────────────────────
         loginComoCliente();
 
-        // ── PASO 2: Ir al menú y guardar los nombres de los platos ───────────
+        // ── PASO 2: Ir al menú ────────────────────────────────────────────────
         driver.get(MENU_URL);
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-                By.className("plate-card-name")));
+                By.className("btn-ver-plato")));
 
-        // Guardar los nombres de los primeros 2 platos para verificarlos después
-        List<WebElement> nombresDePlatos = driver.findElements(
-                By.className("plate-card-name"));
-        assertTrue(nombresDePlatos.size() >= 2,
-                "Debe haber al menos 2 platos en el menú");
-
-        String nombrePlato1 = nombresDePlatos.get(0).getText();
-        String nombrePlato2 = nombresDePlatos.get(1).getText();
-
-        assertFalse(nombrePlato1.isEmpty(), "El nombre del plato 1 no debe estar vacío");
-        assertFalse(nombrePlato2.isEmpty(), "El nombre del plato 2 no debe estar vacío");
-
-        // ── PASO 3: Agregar primer plato con 2 adicionales ───────────────────
         List<WebElement> botonesVerPlato = driver.findElements(
                 By.className("btn-ver-plato"));
-        agregarPlatoConAdicionales(botonesVerPlato, 0);
+
+        assertTrue(botonesVerPlato.size() >= 2,
+                "Debe haber al menos 2 platos en el menú");
+
+        // ── PASO 3: Agregar primer plato y capturar su nombre desde la página ──
+        // El nombre se lee desde #plate-name una vez dentro de la página del plato,
+        // así se garantiza que coincide con el botón que se clickeó.
+        String nombrePlato1 = agregarPlatoConAdicionalesYObtenerNombre(botonesVerPlato, 0);
+        assertFalse(nombrePlato1.isEmpty(), "El nombre del plato 1 no debe estar vacío");
 
         // ── PASO 4: Volver al menú y agregar segundo plato ───────────────────
         driver.get(MENU_URL);
@@ -285,7 +282,8 @@ public class ClientE2ETest {
                 By.className("btn-ver-plato")));
 
         botonesVerPlato = driver.findElements(By.className("btn-ver-plato"));
-        agregarPlatoConAdicionales(botonesVerPlato, 1);
+        String nombrePlato2 = agregarPlatoConAdicionalesYObtenerNombre(botonesVerPlato, 1);
+        assertFalse(nombrePlato2.isEmpty(), "El nombre del plato 2 no debe estar vacío");
 
         // ── PASO 5: Abrir el carrito ──────────────────────────────────────────
         WebElement btnCarrito = wait.until(ExpectedConditions.elementToBeClickable(
@@ -296,9 +294,9 @@ public class ClientE2ETest {
                 By.className("carrito-item")));
 
         // Verificar que los nombres de los platos están en el carrito
-        List<WebElement> nombresEnCarrito = driver.findElements(
-                By.className("carrito-item-nombre"));
-
+        List<WebElement> nombresEnCarrito = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(
+                        By.className("carrito-item-nombre")));
         List<String> nombresTexto = nombresEnCarrito.stream()
                 .map(WebElement::getText)
                 .toList();
@@ -311,6 +309,9 @@ public class ClientE2ETest {
         // ── PASO 6: Guardar el total del carrito para comparar después ────────
         WebElement elementoTotalCarrito = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("carrito-total")));
+
+        wait.until(driver -> !elementoTotalCarrito.getText().replaceAll("[^0-9]", "").isEmpty());
+
         String textoTotalCarrito = elementoTotalCarrito.getText();
         long totalCarritoNumerico = Long.parseLong(
                 textoTotalCarrito.replaceAll("[^0-9]", ""));
@@ -408,15 +409,34 @@ public class ClientE2ETest {
     }
 
     /**
+     * Hace clic en el botón del plato indicado, selecciona 2 adicionales y lo agrega al pedido.
+     *
      * @param botonesVerPlato Lista de botones "+" del menú
      * @param indicePlato     Posición (0-based) del plato a abrir
      */
     private void agregarPlatoConAdicionales(List<WebElement> botonesVerPlato, int indicePlato) {
+        agregarPlatoConAdicionalesYObtenerNombre(botonesVerPlato, indicePlato);
+    }
+
+    /**
+     * Hace clic en el botón del plato indicado, selecciona 2 adicionales, lo agrega al pedido
+     * y retorna el nombre del plato leído desde la página del plato (id="plate-name").
+     * Esto garantiza que el nombre capturado corresponde exactamente al plato abierto,
+     * evitando desajustes de índice entre plate-card-name y btn-ver-plato en el menú.
+     *
+     * @param botonesVerPlato Lista de botones "+" del menú
+     * @param indicePlato     Posición (0-based) del plato a abrir
+     * @return Nombre del plato leído desde la página del plato
+     */
+    private String agregarPlatoConAdicionalesYObtenerNombre(List<WebElement> botonesVerPlato, int indicePlato) {
         // Hacer clic en el botón "+" del plato indicado
         botonesVerPlato.get(indicePlato).click();
 
         // Esperar a que cargue la página del plato
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("plate-name")));
+
+        // Capturar el nombre del plato desde la página (fuente de verdad)
+        String nombrePlato = driver.findElement(By.id("plate-name")).getText();
 
         // Buscar los checkboxes de adicionales
         List<WebElement> checkboxes = driver.findElements(
@@ -450,5 +470,7 @@ public class ClientE2ETest {
         } catch (TimeoutException e) {
             // Si no hay alert, continuar normalmente
         }
+
+        return nombrePlato;
     }
 }
