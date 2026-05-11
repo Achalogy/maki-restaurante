@@ -9,6 +9,7 @@
 
         <div>
           <input
+            id="username"
             name="username"
             type="text"
             [(ngModel)]="username"
@@ -21,6 +22,7 @@
 
         <div>
           <input
+            id="password"
             name="password"
             type="password"
             [(ngModel)]="password"
@@ -42,10 +44,13 @@
           <p *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched">
             La contraseña debe tener al menos 4 caracteres.
           </p>
+          <p id="invalid-credentials-error" *ngIf="loginError">
+            Usuario o contraseña incorrectos.
+          </p>
         </div>
 
         <div>
-          <button type="submit" [disabled]="operatorForm.invalid">
+          <button id="logInAdButton" type="submit" [disabled]="operatorForm.invalid">
             Iniciar sesión
           </button>
         </div>

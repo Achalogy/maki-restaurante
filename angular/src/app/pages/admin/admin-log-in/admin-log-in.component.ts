@@ -13,6 +13,7 @@ export class AdminLogInComponent {
 
   username: string = '';
   password: string = '';
+  loginError: boolean = false;
 
   constructor(
     private administratorService: AdministratorService,
@@ -20,6 +21,7 @@ export class AdminLogInComponent {
   ) {}
 
   onSubmit(): void {
+    this.loginError = false;
     this.administratorService.logIn({
       username: this.username,
       password: this.password
@@ -34,7 +36,7 @@ export class AdminLogInComponent {
       },
       error: (err) => {
         if (err.status === 400 || err.status === 401) {
-          alert('Credenciales incorrectas');
+          this.loginError = true;
         } else {
           console.error(err);
         }

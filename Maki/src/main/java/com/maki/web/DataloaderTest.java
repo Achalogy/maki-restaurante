@@ -4,10 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
 import jakarta.transaction.Transactional;
 
-import com.maki.web.entities.*;
-import com.maki.web.repository.*;
+import com.maki.web.entities.Additional;
+import com.maki.web.entities.AdditionalCategory;
+import com.maki.web.entities.Category;
+import com.maki.web.entities.Client;
+import com.maki.web.entities.Operator;
+import com.maki.web.entities.Administrator;
+import com.maki.web.entities.Plate;
+import com.maki.web.entities.PurchaseOrder;
+import com.maki.web.entities.OrderDetails;
+import com.maki.web.entities.Delivery;
+import com.maki.web.entities.AdditionalOrderDetails;
+import com.maki.web.repository.AdditionalCategoryRepository;
+import com.maki.web.repository.AdditionalOrderDetailsRepository;
+import com.maki.web.repository.AdditionalRepository;
+import com.maki.web.repository.AdministratorRepository;
+import com.maki.web.repository.CategoryRepository;
+import com.maki.web.repository.ClientRepository;
+import com.maki.web.repository.OperatorRepository;
+import com.maki.web.repository.OrderDetailsRepository;
+import com.maki.web.repository.PlateRepository;
+import com.maki.web.repository.PurchaseOrderRepository;
+import com.maki.web.repository.DeliveryRepository;
+import java.util.Random;
 
 @Component
 @Transactional
