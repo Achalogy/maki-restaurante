@@ -3,7 +3,7 @@
     <app-maki-logo></app-maki-logo>
 
     <div class="header-menu">
-      <a id="menu-link" (click)="navigateTo('plate/menu')">
+      <a (click)="navigateTo('plate/menu')">
         <i class="ti ti-picnic-table"></i>
         <p>Ver Menú</p>
       </a>
@@ -27,7 +27,7 @@
           <p>Iniciar Sesión</p>
         </a>
       
-        <a id = "profile-link" *ngIf="loggedAs" (click)="goToProfile()">
+        <a *ngIf="loggedAs" (click)="goToProfile()">
           <i class="ti ti-user"></i>
           <p>Perfil</p>
         </a>
