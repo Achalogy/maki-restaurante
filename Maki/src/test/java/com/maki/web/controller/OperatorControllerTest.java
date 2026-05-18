@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -31,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * POST actualizar, DELETE, y POST login.
  */
 @WebMvcTest(OperatorController.class)
+// Esto arregla los tests
+@Import(com.maki.web.security.SecurityConfig.class)
 public class OperatorControllerTest {
 
     // MockMvc es la herramienta que simula las peticiones HTTP
