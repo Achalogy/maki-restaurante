@@ -33,7 +33,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class AdminLoginAddPlate {
-
+ // Configuración común para todas las pruebas
   private WebDriver driver;
   private WebDriverWait wait;
   private static final String BASE_URL = "http://localhost:4200";
