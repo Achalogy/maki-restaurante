@@ -4441,6 +4441,7 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 2026-05-12 01:03:12.512414-05:00 database: close
+2026-05-12 00:48:59.124698-05:00 database: close
 org.h2.message.DbException: IO Exception: "Closing" [90028-232]
 	at org.h2.message.DbException.get(DbException.java:212)
 	at org.h2.mvstore.db.Store.close(Store.java:374)
@@ -4550,6 +4551,7 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 2026-05-12 01:03:51.450247-05:00 database: close
+2026-05-12 00:49:32.234437-05:00 database: close
 org.h2.message.DbException: IO Exception: "Closing" [90028-232]
 	at org.h2.message.DbException.get(DbException.java:212)
 	at org.h2.mvstore.db.Store.close(Store.java:374)
@@ -4563,6 +4565,19 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientException: IO Exception: "Closing" [90
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 8 more
+	at org.h2.engine.Database.close(Database.java:1150)
+	at org.h2.engine.Database.removeSession(Database.java:1077)
+	at org.h2.engine.SessionLocal.close(SessionLocal.java:916)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:390)
+	at com.zaxxer.hikari.pool.PoolBase.quietlyCloseConnection(PoolBase.java:139)
+	at com.zaxxer.hikari.pool.HikariPool.lambda$closeConnection$1(HikariPool.java:435)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: IO Exception: "Closing" [90028-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 14 more
 Caused by: org.h2.mvstore.MVStoreException: java.lang.AssertionError [2.3.232/3]
 	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:926)
@@ -4574,6 +4589,7 @@ Caused by: org.h2.mvstore.MVStoreException: java.lang.AssertionError [2.3.232/3]
 	at org.h2.mvstore.MVStore.close(MVStore.java:643)
 	at org.h2.mvstore.db.Store.close(Store.java:364)
 	... 6 more
+	... 12 more
 Caused by: java.lang.AssertionError
 	at org.h2.mvstore.RandomAccessStore.moveChunkInside(RandomAccessStore.java:630)
 	at org.h2.mvstore.RandomAccessStore.compactMoveChunks(RandomAccessStore.java:569)
@@ -4583,6 +4599,8 @@ Caused by: java.lang.AssertionError
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:922)
 	... 13 more
 2026-05-12 01:04:50.754548-05:00 database: close
+	... 19 more
+2026-05-12 00:51:38.251666-05:00 database: close
 org.h2.message.DbException: IO Exception: "Closing" [90028-232]
 	at org.h2.message.DbException.get(DbException.java:212)
 	at org.h2.mvstore.db.Store.close(Store.java:374)
@@ -4616,6 +4634,7 @@ Caused by: java.lang.AssertionError
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:922)
 	... 13 more
 2026-05-12 01:04:50.754548-05:00 jdbc[3]: exception
+2026-05-12 01:03:11.060643-05:00 jdbc[53]: exception
 org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -4638,6 +4657,7 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.invokeProxyMethod(AbstractEntityManagerFactoryBean.java:519)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean$ManagedEntityManagerFactoryInvocationHandler.invoke(AbstractEntityManagerFactoryBean.java:735)
 	at jdk.proxy2/jdk.proxy2.$Proxy156.close(Unknown Source)
+	at jdk.proxy2/jdk.proxy2.$Proxy128.close(Unknown Source)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:652)
 	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
@@ -4654,6 +4674,7 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 2026-05-12 01:04:50.765449-05:00 jdbc[3]: exception
+2026-05-12 01:03:11.062408-05:00 jdbc[53]: exception
 org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -4676,6 +4697,7 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.invokeProxyMethod(AbstractEntityManagerFactoryBean.java:519)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean$ManagedEntityManagerFactoryInvocationHandler.invoke(AbstractEntityManagerFactoryBean.java:735)
 	at jdk.proxy2/jdk.proxy2.$Proxy156.close(Unknown Source)
+	at jdk.proxy2/jdk.proxy2.$Proxy128.close(Unknown Source)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:652)
 	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
