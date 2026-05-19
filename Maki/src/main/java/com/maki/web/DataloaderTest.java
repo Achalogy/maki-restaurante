@@ -15,6 +15,8 @@ import com.maki.web.repository.AdministratorRepository;
 import com.maki.web.repository.CategoryRepository;
 import com.maki.web.repository.ClientRepository;
 import com.maki.web.repository.PlateRepository;
+import com.maki.web.repository.RoleRepository;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -50,8 +52,16 @@ public class DataloaderTest implements CommandLineRunner {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private RoleRepository roleRepo;
+
   @Override
   public void run(String... args) throws Exception {
+
+    roleRepo.save(new com.maki.web.entities.Role("CLIENT"));
+    roleRepo.save(new com.maki.web.entities.Role("ADMIN"));
+    roleRepo.save(new com.maki.web.entities.Role("OPERATOR"));
+
     Client client = new Client(
         "Miguel",
         "Vargas",

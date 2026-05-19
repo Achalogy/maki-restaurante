@@ -55,7 +55,7 @@ public class CustomUserDetailService implements UserDetailsService {
     user.setUsername(client.getEmail());
     user.setPassword(passwordEncoder.encode(client.getPassword()));
 
-    Role role = roleRepository.findByName("CLIENT").get();
+    Role role = roleRepository.findByName("CLIENT").orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     user.setRole(role);
 
     return user;
