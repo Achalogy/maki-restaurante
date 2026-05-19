@@ -1,37 +1,39 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ShoppingCartService } from "src/app/service/ui/shopping-card.service";
+import { AuthService } from "src/app/service/data/auth.service";
 
 @Component({
-  selector: 'app-header-menu',
-  templateUrl: './header-menu.component.html',
-  styleUrls: ['./header-menu.component.css']
+  selector: "app-header-menu",
+  templateUrl: "./header-menu.component.html",
+  styleUrls: ["./header-menu.component.css"],
 })
-export class HeaderMenuComponent {
-  public loggedAs: "client" | "operator" | null = null;
-  public loggedId: string |  null = null;
+export class HeaderMenuComponent implements OnInit {
+  public loggedRole: string | null = null;
+  public loggedId: string | null = null;
 
   constructor(
     private router: Router,
-    public cart: ShoppingCartService
+    public cart: ShoppingCartService,
+    public authService: AuthService,
   ) {}
 
   ngOnInit() {
-    this.loggedAs = window.localStorage.getItem("loggedAs") as any
-    this.loggedId = window.localStorage.getItem("id") as any
+    this.loggedRole = this.authService.getRole();
+    this.loggedId = this.authService.getUserId();
   }
 
   goToProfile() {
-    if(this.loggedAs == "client")
-      this.router.navigate([`/client/${this.loggedId}`])
-    else if(this.loggedAs == "operator") {
-      this.router.navigate(["/operator/gateway"])
-    } else {
-      this.router.navigate(["/admin"])
+    if (this.loggedRole === "CLIENT")
+      this.router.navigate([`/client/${this.loggedId}`]);
+    else if (this.loggedRole === "OPERATOR") {
+      this.router.navigate(["/operator/gateway"]);
+    } else if (this.loggedRole === "ADMIN") {
+      this.router.navigate(["/admin"]);
     }
   }
 
   navigateTo(url: string) {
-    this.router.navigate([url])
+    this.router.navigate([url]);
   }
 }

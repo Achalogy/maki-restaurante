@@ -32,7 +32,7 @@ public class SecurityConfig {
 
             // Endpoints públicos (Login y Registro de Clientes)
             .requestMatchers(HttpMethod.POST, "/api/v1/client", "/api/v1/client/log-in").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/v1/admin/log-in", "/api/v1/operator/log-in").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/v1/admin/log-in", "/api/v1/operator/log-in", "/api/v1/auth/log-in").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/health").permitAll()
 
             // Consultas públicas (Ver platos, categorías y adicionales)
