@@ -24,8 +24,7 @@ export class HeaderMenuComponent implements OnInit {
   }
 
   goToProfile() {
-    if (this.loggedRole === "CLIENT")
-      this.router.navigate([`/client/${this.loggedId}`]);
+    if (this.loggedRole === "CLIENT") this.router.navigate([`/client`]);
     else if (this.loggedRole === "OPERATOR") {
       this.router.navigate(["/operator/gateway"]);
     } else if (this.loggedRole === "ADMIN") {

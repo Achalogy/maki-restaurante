@@ -106,13 +106,13 @@ const routes: Routes = [
     data: { roles: ["ADMIN", "CLIENT"] },
   },
   {
-    path: "client/:id",
+    path: "client",
     component: ClientSessionComponent,
     canActivate: [AuthGuard],
     data: { roles: ["ADMIN", "CLIENT"] },
   },
   {
-    path: "client/profile/:id",
+    path: "client/profile",
     component: ClientProfileComponent,
     canActivate: [AuthGuard],
     data: { roles: ["ADMIN", "CLIENT"] },
