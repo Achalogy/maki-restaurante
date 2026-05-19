@@ -5,16 +5,12 @@ import com.maki.web.entities.AdditionalCategory;
 import com.maki.web.entities.Administrator;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Client;
-import com.maki.web.entities.Delivery;
-import com.maki.web.entities.Operator;
 import com.maki.web.entities.Plate;
 import com.maki.web.repository.AdditionalCategoryRepository;
 import com.maki.web.repository.AdditionalRepository;
 import com.maki.web.repository.AdministratorRepository;
 import com.maki.web.repository.CategoryRepository;
 import com.maki.web.repository.ClientRepository;
-import com.maki.web.repository.DeliveryRepository;
-import com.maki.web.repository.OperatorRepository;
 import com.maki.web.repository.PlateRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +40,6 @@ public class DataloaderTest implements CommandLineRunner {
 
   @Autowired
   private AdditionalCategoryRepository adcatRepo;
-
-  @Autowired
-  private OperatorRepository operatorRepo;
-
-  @Autowired
-  private DeliveryRepository deliveryRepo;
 
   @Override
   public void run(String... args) throws Exception {
@@ -104,14 +94,5 @@ public class DataloaderTest implements CommandLineRunner {
 
     // Admin
     adminRepo.save(new Administrator("Tomas", "Neon", "4567"));
-
-    // Operador para pruebas E2E (login: carlos.gomez@example.com / 123456)
-    operatorRepo.save(
-      new Operator("Gomez", "carlos.gomez@example.com", "123456")
-    );
-
-    // Repartidores para pruebas E2E
-    deliveryRepo.save(new Delivery("Perez", "101", "11010101", true));
-    deliveryRepo.save(new Delivery("Gonzalez", "102", "11010102", true));
   }
 }
