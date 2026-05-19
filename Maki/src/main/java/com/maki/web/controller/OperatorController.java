@@ -9,6 +9,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +24,9 @@ public class OperatorController {
   
   @Autowired
   private CustomUserDetailService customUserDetailService;
+
+  @Autowired
+  AuthenticationManager authenticationManager;
 
   // ===================== GET ALL =====================
   @GetMapping("")
@@ -142,20 +149,18 @@ public class OperatorController {
     );
   }
 
-  // @PostMapping("/log-in")
-  // public ResponseEntity<Operator> loginOperator(
-  //   @RequestBody(required = false) Operator data
-  // ) {
-  //   try {
-  //     return new ResponseEntity<>(
-  //       operatorService.verifyCredentials(
-  //         data.getUsername(),
-  //         data.getPassword()
-  //       ),
-  //       HttpStatus.OK
-  //     );
-  //   } catch (Exception e) {
-  //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-  //   }
-  // }
+    @PostMapping("/log-in")
+    public ResponseEntity<String> loginClient(@RequestBody(required = false) Operator operator) {        
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(operator.getUsername(), operator.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            
+            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

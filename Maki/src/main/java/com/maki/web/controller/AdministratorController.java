@@ -4,6 +4,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +36,9 @@ public class AdministratorController {
     public List<Administrator> getAllAdministrators() {
         return administratorService.selectAll();
     }
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
@@ -103,15 +110,18 @@ public class AdministratorController {
         }
     }
 
-    // @PostMapping("/log-in")
-    // public ResponseEntity<Administrator> loginAdministrator(@RequestBody(required = false) Administrator data) {
-    //     try {
-    //         return new ResponseEntity<>(administratorService.verifyCredentials(
-    //                 data.getUsername(),
-    //                 data.getPassword()), HttpStatus.OK);
-    //     } catch (Exception e) {
+    @PostMapping("/log-in")
+    public ResponseEntity<String> loginClient(@RequestBody(required = false) Administrator admin) {        
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(admin.getUsername(), admin.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            
+            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
+        }
 
-    //         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    //     }
-    // }
+    }
 }

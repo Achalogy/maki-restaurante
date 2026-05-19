@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +36,9 @@ public class ClientController {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
     @GetMapping("")
     public List<Client> getAllClients() {
         return clienteService.selectAll();
@@ -47,22 +54,22 @@ public class ClientController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody(required = false) Client data) {
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody(required = false) Client client) {
         try {
             Client updateData = clienteService.selectById(id);
 
-            if (data.getName() != null)
-                updateData.setName(data.getName());
-            if (data.getSurname() != null)
-                updateData.setSurname(data.getSurname());
-            if (data.getEmail() != null)
-                updateData.setEmail(data.getEmail());
-            if (data.getPassword() != null)
-                updateData.setPassword(data.getPassword());
-            if (data.getPhone() != null)
-                updateData.setPhone(data.getPhone());
-            if (data.getAddress() != null)
-                updateData.setAddress(data.getAddress());
+            if (client.getName() != null)
+                updateData.setName(client.getName());
+            if (client.getSurname() != null)
+                updateData.setSurname(client.getSurname());
+            if (client.getEmail() != null)
+                updateData.setEmail(client.getEmail());
+            if (client.getPassword() != null)
+                updateData.setPassword(client.getPassword());
+            if (client.getPhone() != null)
+                updateData.setPhone(client.getPhone());
+            if (client.getAddress() != null)
+                updateData.setAddress(client.getAddress());
 
             return new ResponseEntity<>(clienteService.update(updateData), HttpStatus.OK);
         } catch (Exception e) {
@@ -84,32 +91,35 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Client> createClient(@RequestBody(required = false) Client data) {
+    public ResponseEntity<Client> createClient(@RequestBody(required = false) Client client) {
 
-        if(clienteService.existsByEmail(data.getEmail())) {
-          return new ResponseEntity<Client>(data,HttpStatus.BAD_REQUEST);
+        if(clienteService.existsByEmail(client.getEmail())) {
+          return new ResponseEntity<Client>(client,HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity userEntity = customUserDetailService.ClientToUserEntity(data);
-        data.setUser(userEntity);
-        Client newClient = clienteService.insert(data);
+        UserEntity userEntity = customUserDetailService.ClientToUserEntity(client);
+        client.setUser(userEntity);
+        Client newClient = clienteService.insert(client);
 
         if(newClient == null)
           return new ResponseEntity<Client>(newClient, HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<Client>(data, HttpStatus.CREATED);
+        return new ResponseEntity<Client>(client, HttpStatus.CREATED);
     }
 
-    // @PostMapping("/log-in")
-    // public ResponseEntity<Client> loginClient(@RequestBody(required = false) Client data) {
-    //     try {
-    //         return new ResponseEntity<>(clienteService.verifyCredentials(
-    //                 data.getEmail(),
-    //                 data.getPassword()), HttpStatus.OK);
-    //     } catch (Exception e) {
+    @PostMapping("/log-in")
+    public ResponseEntity<String> loginClient(@RequestBody(required = false) Client client) {        
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(client.getEmail(), client.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            
+            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
+        }
 
-    //         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    //     }
-    // }
+    }
 
 }
