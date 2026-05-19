@@ -1,0 +1,22 @@
+info:
+  name: login
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/admin/log-in"
+  auth: inherit
+  body: json
+
+body:json:
+  {
+    "username": "adminuser",
+    "password": "password123"
+  }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
