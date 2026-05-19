@@ -1,0 +1,21 @@
+info:
+  name: update administrator
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/admin/1"
+  auth: inherit
+  body: json
+
+body:json:
+  {
+    "name": "Updated Admin Name"
+  }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

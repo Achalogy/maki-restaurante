@@ -8,14 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import com.maki.web.entities.Role;
 
 @Entity
 @Table(name = "users")
@@ -39,6 +34,4 @@ public class UserEntity {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     Role role;
-    
-
 }

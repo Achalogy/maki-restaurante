@@ -1,0 +1,22 @@
+info:
+  name: update additional
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/additional/1"
+  auth: inherit
+  body: json
+
+body:json:
+  {
+    "name": "Updated Additional",
+    "price": 1000
+  }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

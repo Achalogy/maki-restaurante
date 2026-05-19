@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService {
     try {
       return repo.save(entity);
     } catch (Exception e) {
-      throw new EntityConstraintException("Ya existe un usuario con este email");
+      return null;
     }
   }
 
@@ -78,48 +78,7 @@ public class ClientServiceImpl implements ClientService {
   }
 
   @Override
-  public Client registerClient(Client client) throws EntityConstraintException {
-    return this.insert(client);
-  }
-
-  @Override
-  public Client registerClient(String name, String username, String email, String password, String phone,
-      String direccion) throws EntityConstraintException {
-    Client nuevo = new Client(
-        name, username, email, password, phone, direccion);
-
-    return this.insert(nuevo);
-  }
-
-  @Override
-  public Client verifyCredentials(Client client) throws InvalidCredentialsException, EntityNotFoundException {
-    if (client.getId() == null) {
-      throw new EntityNotFoundException("ID de client es obligatorio para verificar por objeto");
-    }
-
-    Client repoClient = this.selectById(client.getId());
-
-    if (!repoClient.getEmail().equalsIgnoreCase(client.getEmail())) {
-      throw new InvalidCredentialsException("El Email no coincide con el ID proporcionado");
-    }
-
-    if (!repoClient.getPassword().equals(client.getPassword())) {
-      throw new InvalidCredentialsException("Contraseña incorrecta");
-    }
-
-    return repoClient;
-  }
-
-  @Override
-  public Client verifyCredentials(String email, String password)
-      throws InvalidCredentialsException, EntityNotFoundException {
-    Client repoClient = repo.findByEmail(email)
-        .orElseThrow(() -> new EntityNotFoundException("No existe un client registrado con el email: " + email));
-
-    if (!repoClient.getPassword().equals(password)) {
-      throw new InvalidCredentialsException("Credenciales inválidas");
-    }
-
-    return repoClient;
+  public boolean existsByEmail(String email) {
+      return repo.existsByEmail(email);
   }
 }

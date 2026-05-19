@@ -3,16 +3,30 @@ package com.maki.web.controller;
 import com.maki.web.dtos.ClientDTO;
 import com.maki.web.dtos.MakiMapper;
 import com.maki.web.entities.Client;
+import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.ClientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
+
+import com.maki.web.security.CustomUserDetailService;
+
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -22,15 +36,24 @@ public class ClientController {
     private ClientService clienteService;
 
     @Autowired
+    private CustomUserDetailService customUserDetailService;
+    
+    
+    @Autowired
     private MakiMapper mapper;
 
     // GET todos — retorna lista de DTOs (sin password)
     @GetMapping("")
     public List<ClientDTO> getAllClients() {
-        return clienteService.selectAll()
+        try {
+            return clienteService.selectAll()
                 .stream()
                 .map(mapper::toClientDTO)
                 .collect(Collectors.toList());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     // GET por id — retorna DTO
@@ -78,26 +101,19 @@ public class ClientController {
 
     // CREATE — recibe Client completo pero retorna DTO (sin password)
     @PostMapping("")
-    public ResponseEntity<ClientDTO> createClient(@RequestBody(required = false) Client data) {
-        try {
-            return new ResponseEntity<>(mapper.toClientDTO(clienteService.insert(data)), HttpStatus.OK);
-        } catch (Exception e) {
-            if (e instanceof EntityNotFoundException) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    public ResponseEntity<ClientDTO> createClient(@RequestBody(required = false) Client client) {
 
-    // LOGIN — retorna DTO (sin password en la respuesta)
-    @PostMapping("/log-in")
-    public ResponseEntity<ClientDTO> loginClient(@RequestBody(required = false) Client data) {
-        try {
-            return new ResponseEntity<>(
-                    mapper.toClientDTO(clienteService.verifyCredentials(data.getEmail(), data.getPassword())),
-                    HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(clienteService.existsByEmail(client.getEmail())) {
+          return new ResponseEntity<ClientDTO>(mapper.toClientDTO(client),HttpStatus.BAD_REQUEST);
         }
+
+        UserEntity userEntity = customUserDetailService.ClientToUserEntity(client);
+        client.setUser(userEntity);
+        Client newClient = clienteService.insert(client);
+
+        if(newClient == null)
+          return new ResponseEntity<ClientDTO>(mapper.toClientDTO(newClient), HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<ClientDTO>(mapper.toClientDTO(client), HttpStatus.CREATED);
     }
 }

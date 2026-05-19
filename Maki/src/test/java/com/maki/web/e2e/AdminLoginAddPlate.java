@@ -47,7 +47,7 @@ public class AdminLoginAddPlate {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--disable-extensions");
     options.addArguments("--disable-notifications");
-    
+
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
     options.addArguments("--disable-gpu");
@@ -69,13 +69,7 @@ public class AdminLoginAddPlate {
         ExpectedConditions.elementToBeClickable(By.className("header-profile"))
     );
     loginButton.click();
-    wait.until(ExpectedConditions.urlContains("/client/log-in"));
-
-    WebElement adminLink = wait.until(
-        ExpectedConditions.elementToBeClickable(By.id("LogAdmin"))
-    );
-    adminLink.click();
-    wait.until(ExpectedConditions.urlContains("/admin/log-in"));
+    wait.until(ExpectedConditions.urlContains("/log-in"));
 
     WebElement usernameField = wait.until(
         ExpectedConditions.visibilityOfElementLocated(By.id("username"))
@@ -112,29 +106,15 @@ public class AdminLoginAddPlate {
     );
     loginButton.click();
 
-    wait.until(ExpectedConditions.urlContains("/client/log-in"));
+    wait.until(ExpectedConditions.urlContains("/log-in"));
 
-    //¿Llego a login de cliente?
+    //¿Llego a login?
     assertTrue(
-      driver.getCurrentUrl().contains("/client/log-in"),
-      "No navegó al login de cliente"
+      driver.getCurrentUrl().contains("/log-in"),
+      "No navegó al login"
     );
 
-    //Va a a iniciar sesion como administrador
-    WebElement adminLink = wait.until(
-      ExpectedConditions.elementToBeClickable(By.id("LogAdmin"))
-    );
-    adminLink.click();
-
-    wait.until(ExpectedConditions.urlContains("/admin/log-in"));
-
-    //¿Llego a login de Admin?
-    assertTrue(
-      driver.getCurrentUrl().contains("/admin/log-in"),
-      "No navegó al login de administrador"
-    );
-
-    //¿El formulario de login de administrador está presente?
+    //¿El formulario de login está presente?
     WebElement usernameField = wait.until(
       ExpectedConditions.visibilityOfElementLocated(By.id("username"))
     );
@@ -158,20 +138,20 @@ public class AdminLoginAddPlate {
     );
 
     loginAdButton.click();
-    wait.until(ExpectedConditions.urlContains("/admin/log-in"));
 
-    //¿Sigue en el login de Admin?
-    assertTrue(
-      driver.getCurrentUrl().contains("/admin/log-in"),
-      "No debio cambiar de pantalla"
-    );
-
-    //¿Aparece mensaje de error?
+    //¿Sigue en el login?
+    // Wait for the error message to appear before checking URL, which confirms login failed
     WebElement errorMessage = wait.until(
       ExpectedConditions.visibilityOfElementLocated(
         By.id("invalid-credentials-error")
       )
     );
+
+    assertTrue(
+      driver.getCurrentUrl().contains("/log-in"),
+      "No debio cambiar de pantalla"
+    );
+
     assertTrue(
       errorMessage.isDisplayed(),
       "No aparece mensaje de error correspondiente"
@@ -180,7 +160,6 @@ public class AdminLoginAddPlate {
 
   @Test
   public void Admin_Login_Correct_Go_To_PlatePanel() {
-    //Igual al anterior, pero ahora con un usuario existente, como ya se comprobaron algunos elementos, se descarta volverlos a probar
     //Inicia en landing page
     driver.get(BASE_URL);
 
@@ -190,15 +169,7 @@ public class AdminLoginAddPlate {
     );
     loginButton.click();
 
-    wait.until(ExpectedConditions.urlContains("/client/log-in"));
-
-    //Va a a iniciar sesion como administrador
-    WebElement adminLink = wait.until(
-      ExpectedConditions.elementToBeClickable(By.id("LogAdmin"))
-    );
-    adminLink.click();
-
-    wait.until(ExpectedConditions.urlContains("/admin/log-in"));
+    wait.until(ExpectedConditions.urlContains("/log-in"));
 
     //Ingresa credenciales correctas
     //Usuario: Neon
@@ -297,7 +268,7 @@ public class AdminLoginAddPlate {
     categorySelect.selectByVisibleText(categoryOption);
 
     //Da click en guardar
-    WebElement saveButton = wait.until( 
+    WebElement saveButton = wait.until(
       ExpectedConditions.elementToBeClickable(By.id("savePlateButton"))
     );
     saveButton.click();
@@ -355,7 +326,7 @@ public class AdminLoginAddPlate {
     doLoginAndGoToPlatePanel();
 
     //ir al menu
-    WebElement menuLinkd = wait.until( 
+    WebElement menuLinkd = wait.until(
       ExpectedConditions.elementToBeClickable(By.id("menu-link"))
     );
     menuLinkd.click();
@@ -380,33 +351,33 @@ public class AdminLoginAddPlate {
     }
 
     // Ir a la pagina del gateway del administrador
-    WebElement adminButton = wait.until( 
+    WebElement adminButton = wait.until(
       ExpectedConditions.elementToBeClickable(By.id("profile-link"))
     );
     adminButton.click();
 
     // Ir al menu the adicionales
-    WebElement adicionalesButton = wait.until( 
+    WebElement adicionalesButton = wait.until(
       ExpectedConditions.elementToBeClickable(By.id("gateway-adicionales"))
     );
     adicionalesButton.click();
     wait.until(ExpectedConditions.urlContains("/additional/crud"));
 
     // Da click en crea un nuevo adicional
-    WebElement createAdditional = wait.until( 
+    WebElement createAdditional = wait.until(
       ExpectedConditions.elementToBeClickable(By.id("createAdditionalButton"))
     );
     createAdditional.click();
     wait.until(ExpectedConditions.urlContains("/additional/create"));
 
     // Llenar el nombre del adicional
-    WebElement nameField = wait.until( 
+    WebElement nameField = wait.until(
       ExpectedConditions.visibilityOfElementLocated(By.id("name"))
     );
     nameField.sendKeys("Aji");
 
     // Llena el precio del adicional
-    WebElement priceField = wait.until( 
+    WebElement priceField = wait.until(
       ExpectedConditions.visibilityOfElementLocated(By.id("price"))
     );
     priceField.sendKeys("2000");

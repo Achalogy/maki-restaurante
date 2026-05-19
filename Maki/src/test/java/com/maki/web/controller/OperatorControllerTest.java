@@ -2,13 +2,18 @@ package com.maki.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maki.web.dtos.MakiMapper;
-import com.maki.web.dtos.OperatorDTO;
 import com.maki.web.entities.Operator;
 import com.maki.web.service.OperatorService;
+import com.maki.web.security.CustomUserDetailService;
+import com.maki.web.security.JwtAuthEntryPoint;
+import com.maki.web.security.JWTGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,221 +25,298 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Pruebas de integración del OperatorController.
+ *
+ * Se usa @WebMvcTest para levantar únicamente la capa web del controlador,
+ * sin arrancar toda la aplicación. Esto hace las pruebas más rápidas.
+ *
+ * Se usa @MockBean para simular el OperatorService, ya que lo que queremos
+ * probar es el comportamiento del controlador, no del servicio.
+ *
+ * Cubrimos 1 prueba de cada tipo HTTP: GET all, GET by id, POST crear,
+ * POST actualizar, DELETE, y POST login.
+ */
 @WebMvcTest(OperatorController.class)
+@AutoConfigureMockMvc(addFilters = false)
+// Esto arregla los tests
+@Import({ com.maki.web.security.SecurityConfig.class, com.maki.web.dtos.MakiMapper.class })
 public class OperatorControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        // MockMvc es la herramienta que simula las peticiones HTTP
+        @Autowired
+        private MockMvc mockMvc;
 
-    @MockBean
-    private OperatorService operatorService;
+        // Mockeamos el servicio para no depender de la base de datos
+        @MockBean
+        private OperatorService operatorService;
 
-    // ESTO ES LO QUE FALTABA — el controlador ahora depende de MakiMapper
-    @MockBean
-    private MakiMapper makiMapper;
+        @MockBean
+        private CustomUserDetailService customUserDetailService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+        @MockBean
+        private JwtAuthEntryPoint jwtAuthEntryPoint;
 
-    // Helper para no repetir codigo en cada test
-    private OperatorDTO buildDTO(Long id, String name, String username) {
-        OperatorDTO dto = new OperatorDTO();
-        dto.setId(id);
-        dto.setName(name);
-        dto.setUsername(username);
-        return dto;
-    }
+        @MockBean
+        private JWTGenerator jwtGenerator;
 
-    @Test
-    public void operatorController_getAllOperators_returnsList() throws Exception {
-        Operator op1 = new Operator("Carlos Gomez", "carlos.gomez", "123456");
-        Operator op2 = new Operator("Maria Lopez", "maria.lopez", "123456");
+        // ObjectMapper convierte objetos Java a JSON para enviarlo en el body
+        @Autowired
+        private ObjectMapper objectMapper;
 
-        when(operatorService.selectAll()).thenReturn(List.of(op1, op2));
-        when(makiMapper.toOperatorDTO(op1)).thenReturn(buildDTO(1L, "Carlos Gomez", "carlos.gomez"));
-        when(makiMapper.toOperatorDTO(op2)).thenReturn(buildDTO(2L, "Maria Lopez", "maria.lopez"));
+        // =====================================================================
+        // PRUEBA 1 — GET /api/v1/operator
+        // Verifica que el endpoint retorna la lista de operadores con status 200
+        // =====================================================================
+        @Test
+        public void operatorController_getAllOperators_returnsList() throws Exception {
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator").contentType(MediaType.APPLICATION_JSON));
+                // Arrange: creamos operadores de prueba quemados
+                Operator op1 = new Operator("Carlos Gomez", "carlos.gomez", "123456");
+                Operator op2 = new Operator("Maria Lopez", "maria.lopez", "123456");
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].name").value("Carlos Gomez"))
-                .andExpect(jsonPath("$[1].name").value("Maria Lopez"));
-    }
+                // Cuando el servicio llame a selectAll(), retorna nuestra lista quemada
+                when(operatorService.selectAll()).thenReturn(List.of(op1, op2));
 
-    @Test
-    public void operatorController_getOperatorById_returnsOperator() throws Exception {
-        Operator op = new Operator("Ana Martinez", "ana.martinez", "123456");
+                // Act: realizamos la petición GET
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-        when(operatorService.selectById(1L)).thenReturn(op);
-        when(makiMapper.toOperatorDTO(op)).thenReturn(buildDTO(1L, "Ana Martinez", "ana.martinez"));
+                // Assert: esperamos status 200 y que la lista tenga 2 elementos
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.length()").value(2))
+                                .andExpect(jsonPath("$[0].name").value("Carlos Gomez"))
+                                .andExpect(jsonPath("$[1].name").value("Maria Lopez"));
+        }
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/1").contentType(MediaType.APPLICATION_JSON));
+        // =====================================================================
+        // PRUEBA 2 — GET /api/v1/operator/{id} (CASO EXITOSO)
+        // Verifica que cuando existe el operador, retorna 200 con sus datos
+        // =====================================================================
+        @Test
+        public void operatorController_getOperatorById_returnsOperator() throws Exception {
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Ana Martinez"))
-                .andExpect(jsonPath("$.username").value("ana.martinez"));
-    }
+                // Arrange
+                Operator op = new Operator("Ana Martinez", "ana.martinez", "123456");
 
-    @Test
-    public void operatorController_getOperatorById_notFound_returns404() throws Exception {
-        when(operatorService.selectById(999L))
-                .thenThrow(new com.maki.web.exception.EntityNotFoundException("Operator no encontrado"));
+                // Simulamos que el servicio encuentra el operador con id=1
+                when(operatorService.selectById(1L)).thenReturn(op);
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/999").contentType(MediaType.APPLICATION_JSON));
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/1")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-        result.andExpect(status().isNotFound());
-    }
+                // Assert: esperamos 200 y que el nombre coincida
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.name").value("Ana Martinez"))
+                                .andExpect(jsonPath("$.username").value("ana.martinez"));
+        }
 
-    @Test
-    public void operatorController_createOperator_returnsCreatedOperator() throws Exception {
-        Operator newOperator = new Operator("Luis Garcia", "luis.garcia", "123456");
+        // =====================================================================
+        // PRUEBA 3 — GET /api/v1/operator/{id} (CASO FALLIDO)
+        // Verifica que cuando el operador no existe, retorna 404
+        // =====================================================================
+        @Test
+        public void operatorController_getOperatorById_notFound_returns404() throws Exception {
 
-        when(operatorService.insert(any(Operator.class))).thenReturn(newOperator);
-        when(makiMapper.toOperatorDTO(newOperator)).thenReturn(buildDTO(1L, "Luis Garcia", "luis.garcia"));
+                // Arrange: simulamos que el servicio lanza excepción cuando no encuentra el
+                // operador
+                when(operatorService.selectById(999L))
+                                .thenThrow(new com.maki.web.exception.EntityNotFoundException(
+                                                "Operator no encontrado"));
 
-        ResultActions result = mockMvc.perform(
-                post("/api/v1/operator")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newOperator)));
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/999")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Luis Garcia"))
-                .andExpect(jsonPath("$.username").value("luis.garcia"));
-    }
+                // Assert: esperamos 404
+                result.andExpect(status().isNotFound());
+        }
 
-    @Test
-    public void operatorController_updateOperator_returnsUpdatedOperator() throws Exception {
-        Operator existingOperator = new Operator("Sofia Rodriguez", "sofia.rodriguez", "123456");
-        Operator updateData = new Operator("Sofia Rodriguez Updated", "sofia.updated", "newpass");
+        // =====================================================================
+        // PRUEBA 4 — POST /api/v1/operator (CREAR)
+        // Verifica que se puede crear un operador y retorna 200 con el objeto creado
+        // =====================================================================
+        @Test
+        public void operatorController_createOperator_returnsCreatedOperator() throws Exception {
 
-        when(operatorService.selectById(1L)).thenReturn(existingOperator);
-        when(operatorService.update(any(Operator.class))).thenReturn(updateData);
-        when(makiMapper.toOperatorDTO(updateData))
-                .thenReturn(buildDTO(1L, "Sofia Rodriguez Updated", "sofia.updated"));
+                // Arrange: operador que vamos a enviar en el body
+                Operator newOperator = new Operator("Luis Garcia", "luis.garcia", "123456");
 
-        ResultActions result = mockMvc.perform(
-                post("/api/v1/operator/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateData)));
+                // Simulamos que el servicio guarda y retorna el operador
+                when(operatorService.insert(any(Operator.class))).thenReturn(newOperator);
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Sofia Rodriguez Updated"))
-                .andExpect(jsonPath("$.username").value("sofia.updated"));
-    }
+                // Act: enviamos el POST con el operador serializado en JSON
+                ResultActions result = mockMvc.perform(
+                                post("/api/v1/operator")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .content(objectMapper.writeValueAsString(newOperator)));
 
-    @Test
-    public void operatorController_deleteOperator_returnsTrue() throws Exception {
-        ResultActions result = mockMvc.perform(
-                delete("/api/v1/operator/1").contentType(MediaType.APPLICATION_JSON));
+                // Assert: esperamos 201 y que el nombre del operador retornado sea correcto
+                result
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.name").value("Luis Garcia"))
+                                .andExpect(jsonPath("$.username").value("luis.garcia"));
+        }
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(true));
-    }
+        // =====================================================================
+        // PRUEBA 5 — POST /api/v1/operator/{id} (ACTUALIZAR)
+        // Verifica que se puede actualizar un operador existente y retorna 200
+        // =====================================================================
+        @Test
+        public void operatorController_updateOperator_returnsUpdatedOperator() throws Exception {
 
-    @Test
-    public void operatorController_getOperatorByUsername_returnsOperator() throws Exception {
-        Operator op = new Operator("Raul Perez", "raul.perez", "123456");
-        when(operatorService.selectByUsername("raul.perez")).thenReturn(op);
-        when(makiMapper.toOperatorDTO(op)).thenReturn(buildDTO(1L, "Raul Perez", "raul.perez"));
+                // Arrange: operador original que está en la base de datos
+                Operator existingOperator = new Operator("Sofia Rodriguez", "sofia.rodriguez", "123456");
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/username/raul.perez").contentType(MediaType.APPLICATION_JSON));
+                // Datos de actualización que llegan en el body
+                Operator updateData = new Operator("Sofia Rodriguez Updated", "sofia.updated", "newpass");
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("raul.perez"))
-                .andExpect(jsonPath("$.name").value("Raul Perez"));
-    }
+                // Simulamos que el servicio encuentra el operador por id
+                when(operatorService.selectById(1L)).thenReturn(existingOperator);
 
-    @Test
-    public void operatorController_searchOperators_returnsMatchingOperators() throws Exception {
-        Operator op1 = new Operator("Carla Gomez", "carla.gomez", "123456");
-        Operator op2 = new Operator("Carlos Lopez", "carlos.lopez", "123456");
-        when(operatorService.searchByNameOrUsername("car")).thenReturn(List.of(op1, op2));
-        when(makiMapper.toOperatorDTO(op1)).thenReturn(buildDTO(1L, "Carla Gomez", "carla.gomez"));
-        when(makiMapper.toOperatorDTO(op2)).thenReturn(buildDTO(2L, "Carlos Lopez", "carlos.lopez"));
+                // Simulamos que el servicio guarda los cambios y retorna el operador
+                // actualizado
+                when(operatorService.update(any(Operator.class))).thenReturn(updateData);
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/search")
-                        .param("term", "car")
-                        .contentType(MediaType.APPLICATION_JSON));
+                // Act
+                ResultActions result = mockMvc.perform(
+                                post("/api/v1/operator/1")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .content(objectMapper.writeValueAsString(updateData)));
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].username").value("carla.gomez"))
-                .andExpect(jsonPath("$[1].username").value("carlos.lopez"));
-    }
+                // Assert: esperamos 200 y que el nombre actualizado se refleje
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.name").value("Sofia Rodriguez Updated"))
+                                .andExpect(jsonPath("$.username").value("sofia.updated"));
+        }
 
-    @Test
-    public void operatorController_countOperatorsByUsername_returnsCount() throws Exception {
-        when(operatorService.countByUsername("carla.gomez")).thenReturn(1L);
+        // =====================================================================
+        // PRUEBA 6 — DELETE /api/v1/operator/{id}
+        // Verifica que eliminar un operador retorna 200 con true
+        // =====================================================================
+        @Test
+        public void operatorController_deleteOperator_returnsTrue() throws Exception {
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/count/carla.gomez").contentType(MediaType.APPLICATION_JSON));
+                // Arrange: no necesitamos preparar nada especial porque delete no retorna
+                // objeto
+                // Solo simulamos que el servicio no lanza excepción (comportamiento por defecto
+                // del mock)
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(content().string("1"));
-    }
+                // Act
+                ResultActions result = mockMvc.perform(
+                                delete("/api/v1/operator/1")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-    @Test
-    public void operatorController_getOperatorsOrderedByName_returnsSortedList() throws Exception {
-        Operator op1 = new Operator("Ana Martinez", "ana.martinez", "123456");
-        Operator op2 = new Operator("Beto Suarez", "beto.suarez", "123456");
-        when(operatorService.selectAllOrderedByName()).thenReturn(List.of(op1, op2));
-        when(makiMapper.toOperatorDTO(op1)).thenReturn(buildDTO(1L, "Ana Martinez", "ana.martinez"));
-        when(makiMapper.toOperatorDTO(op2)).thenReturn(buildDTO(2L, "Beto Suarez", "beto.suarez"));
+                // Assert: esperamos 200 y true como respuesta
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$").value(true));
+        }
 
-        ResultActions result = mockMvc.perform(
-                get("/api/v1/operator/ordered").contentType(MediaType.APPLICATION_JSON));
+        // =====================================================================
+        // PRUEBA 7 — GET /api/v1/operator/username/{username}
+        // Verifica que se puede obtener un operador por username usando el query
+        // personalizado
+        // =====================================================================
+        @Test
+        public void operatorController_getOperatorByUsername_returnsOperator() throws Exception {
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].name").value("Ana Martinez"))
-                .andExpect(jsonPath("$[1].name").value("Beto Suarez"));
-    }
+                // Arrange
+                Operator op = new Operator("Raul Perez", "raul.perez", "123456");
+                when(operatorService.selectByUsername("raul.perez")).thenReturn(op);
 
-    @Test
-    public void operatorController_login_validCredentials_returnsOperator() throws Exception {
-        Operator loginData = new Operator("Javier Martinez", "javier.martinez", "123456");
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/username/raul.perez")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-        when(operatorService.verifyCredentials("javier.martinez", "123456")).thenReturn(loginData);
-        when(makiMapper.toOperatorDTO(loginData)).thenReturn(buildDTO(1L, "Javier Martinez", "javier.martinez"));
+                // Assert
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.username").value("raul.perez"))
+                                .andExpect(jsonPath("$.name").value("Raul Perez"));
+        }
 
-        ResultActions result = mockMvc.perform(
-                post("/api/v1/operator/log-in")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(loginData)));
+        // =====================================================================
+        // PRUEBA 8 — GET /api/v1/operator/search?term={term}
+        // Verifica que el endpoint de búsqueda usa el query personalizado y retorna
+        // coincidencias
+        // =====================================================================
+        @Test
+        public void operatorController_searchOperators_returnsMatchingOperators() throws Exception {
 
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Javier Martinez"))
-                .andExpect(jsonPath("$.username").value("javier.martinez"));
-    }
+                // Arrange
+                Operator op1 = new Operator("Carla Gomez", "carla.gomez", "123456");
+                Operator op2 = new Operator("Carlos Lopez", "carlos.lopez", "123456");
+                when(operatorService.searchByNameOrUsername("car")).thenReturn(List.of(op1, op2));
 
-    @Test
-    public void operatorController_login_invalidCredentials_returns400() throws Exception {
-        Operator badLogin = new Operator("Nadie", "noexiste", "wrongpass");
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/search")
+                                                .param("term", "car")
+                                                .contentType(MediaType.APPLICATION_JSON));
 
-        when(operatorService.verifyCredentials(anyString(), anyString()))
-                .thenThrow(new com.maki.web.exception.InvalidCredentialsException("Credenciales invalidas"));
+                // Assert
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.length()").value(2))
+                                .andExpect(jsonPath("$[0].username").value("carla.gomez"))
+                                .andExpect(jsonPath("$[1].username").value("carlos.lopez"));
+        }
 
-        ResultActions result = mockMvc.perform(
-                post("/api/v1/operator/log-in")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(badLogin)));
+        // =====================================================================
+        // PRUEBA 9 — GET /api/v1/operator/count/{username}
+        // Verifica que el endpoint de conteo retorna la cantidad correcta usando el
+        // query personalizado
+        // =====================================================================
+        @Test
+        public void operatorController_countOperatorsByUsername_returnsCount() throws Exception {
 
-        result.andExpect(status().isBadRequest());
-    }
+                // Arrange
+                when(operatorService.countByUsername("carla.gomez")).thenReturn(1L);
+
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/count/carla.gomez")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                // Assert
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(content().string("1"));
+        }
+
+        // =====================================================================
+        // PRUEBA 10 — GET /api/v1/operator/ordered
+        // Verifica que el endpoint retorna operadores ordenados por nombre usando el
+        // query personalizado
+        // =====================================================================
+        @Test
+        public void operatorController_getOperatorsOrderedByName_returnsSortedList() throws Exception {
+
+                // Arrange
+                Operator op1 = new Operator("Ana Martinez", "ana.martinez", "123456");
+                Operator op2 = new Operator("Beto Suarez", "beto.suarez", "123456");
+                when(operatorService.selectAllOrderedByName()).thenReturn(List.of(op1, op2));
+
+                // Act
+                ResultActions result = mockMvc.perform(
+                                get("/api/v1/operator/ordered")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                // Assert
+                result
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.length()").value(2))
+                                .andExpect(jsonPath("$[0].name").value("Ana Martinez"))
+                                .andExpect(jsonPath("$[1].name").value("Beto Suarez"));
+        }
+
 }

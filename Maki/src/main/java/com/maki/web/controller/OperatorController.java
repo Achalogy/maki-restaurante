@@ -3,7 +3,10 @@ package com.maki.web.controller;
 import com.maki.web.dtos.MakiMapper;
 import com.maki.web.dtos.OperatorDTO;
 import com.maki.web.entities.Operator;
+import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.security.CustomUserDetailService;
+
 import com.maki.web.service.OperatorService;
 
 import java.util.List;
@@ -12,17 +15,32 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/operator")
 public class OperatorController {
 
-    @Autowired
-    private OperatorService operatorService;
+  @Autowired
+  private OperatorService operatorService;
 
-    @Autowired
-    private MakiMapper mapper;
+  @Autowired
+  private CustomUserDetailService customUserDetailService;
+  @Autowired
+  private MakiMapper mapper;
+
+  // ===================== GET BY ID =====================
+  @GetMapping("/{id}")
+  public ResponseEntity<OperatorDTO> getOperatorById(@PathVariable Long id) {
+    try {
+      Operator operator = operatorService.selectById(id);
+      if (operator == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(mapper.toOperatorDTO(operator), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 
     @GetMapping("")
     public List<OperatorDTO> getAllOperators() {
@@ -32,23 +50,23 @@ public class OperatorController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OperatorDTO> getOperatorById(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(mapper.toOperatorDTO(operatorService.selectById(id)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+  // ===================== CREATE =====================
+  @PostMapping("")
+  public ResponseEntity<Operator> saveOperator(@RequestBody Operator operator) {
+    if(operatorService.selectByUsername(operator.getUsername()) != null) {
+      return new ResponseEntity<Operator>(operator, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("")
-    public ResponseEntity<OperatorDTO> saveOperator(@RequestBody Operator operator) {
-        try {
-            return new ResponseEntity<>(mapper.toOperatorDTO(operatorService.insert(operator)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    UserEntity userEntity = customUserDetailService.OperatorToUserEntity(operator);
+    operator.setUser(userEntity);
+    Operator newOperator = operatorService.insert(operator);
+
+    if(newOperator == null)
+      return new ResponseEntity<Operator>(newOperator, HttpStatus.BAD_REQUEST);
+
+    return new ResponseEntity<Operator>(operator, HttpStatus.CREATED);
+  }
+
 
     @PostMapping("/{id}")
     public ResponseEntity<OperatorDTO> updateOperator(@PathVariable Long id,
@@ -107,17 +125,5 @@ public class OperatorController {
                 operatorService.selectAllOrderedByName()
                         .stream().map(mapper::toOperatorDTO).collect(Collectors.toList()),
                 HttpStatus.OK);
-    }
-
-    // LOGIN — retorna DTO sin password
-    @PostMapping("/log-in")
-    public ResponseEntity<OperatorDTO> loginOperator(@RequestBody(required = false) Operator data) {
-        try {
-            return new ResponseEntity<>(
-                    mapper.toOperatorDTO(operatorService.verifyCredentials(data.getUsername(), data.getPassword())),
-                    HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 }
