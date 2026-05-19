@@ -6,14 +6,10 @@ info:
 http:
   method: POST
   url: "{{host}}/api/v1/admin/log-in"
+  body:
+    type: json
+    data: ""
   auth: inherit
-  body: json
-
-body:json:
-  {
-    "username": "adminuser",
-    "password": "password123"
-  }
 
 settings:
   encodeUrl: true
