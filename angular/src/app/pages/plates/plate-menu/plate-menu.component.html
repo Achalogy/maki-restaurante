@@ -27,7 +27,7 @@
                             </p>
                             <!-- CLASE AGREGADA: btn-ver-plato (dentro de ngFor → class) -->
                             <button
-                                class="absolute bottom-5 right-5 bg-white text-black rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all cursor-pointer btn-ver-plato"
+                                id = "viewPlateButton" class="absolute bottom-5 right-5 bg-white text-black rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all cursor-pointer btn-ver-plato"
                                 (click)="navigateTo('/plate/' + plate.id)">
                                 <span class="text-4xl font-bold leading-none select-none">+</span>
                             </button>
