@@ -8,11 +8,13 @@ http:
   url: "{{host}}/api/v1/auth/log-in"
   body:
     type: json
-    data: |-
+    data: |+
       {
-        "username": "acha@acha.dev",
-        "password": "eveyzoe"
+        "username": "eveyzoe",
+        "password": "1234"
       }
+
+
   auth: inherit
 
 settings:

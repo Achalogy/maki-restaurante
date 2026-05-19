@@ -30,11 +30,8 @@ public class PlateController {
 
     // GET todos — retorna lista de DTOs (solo info necesaria)
     @GetMapping("")
-    public List<PlateDTO> getAllPlates() {
-        return platoService.selectAll()
-                .stream()
-                .map(mapper::toPlateDTO)
-                .collect(Collectors.toList());
+    public List<Plate> getAllPlates() {
+        return platoService.selectAll();
     }
 
     // GET por id

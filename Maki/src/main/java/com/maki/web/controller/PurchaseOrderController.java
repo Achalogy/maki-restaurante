@@ -35,14 +35,14 @@ public class PurchaseOrderController {
 
     // GET todos — retorna lista de DTOs (sin objetos anidados pesados)
     @GetMapping("")
-    public List<PurchaseOrderDTO> getAllPurchaseOrders(@RequestParam(required = false) Optional<Long> notCompleted) {
+    public List<PurchaseOrder> getAllPurchaseOrders(@RequestParam(required = false) Optional<Long> notCompleted) {
         List<PurchaseOrder> orders;
         if (notCompleted.isPresent() && notCompleted.get() == 1) {
             orders = purchaseOrderService.selectNotCompleted();
         } else {
             orders = purchaseOrderService.selectAll();
         }
-        return orders.stream().map(mapper::toPurchaseOrderDTO).collect(Collectors.toList());
+        return orders;
     }
 
     // GET por id — retorna la entidad completa para la vista de detalle

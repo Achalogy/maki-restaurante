@@ -7,6 +7,7 @@ import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.ClientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,18 +37,23 @@ public class ClientController {
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
-
-
-
+    
+    
+    @Autowired
     private MakiMapper mapper;
 
     // GET todos — retorna lista de DTOs (sin password)
     @GetMapping("")
     public List<ClientDTO> getAllClients() {
-        return clienteService.selectAll()
+        try {
+            return clienteService.selectAll()
                 .stream()
                 .map(mapper::toClientDTO)
                 .collect(Collectors.toList());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     // GET por id — retorna DTO
