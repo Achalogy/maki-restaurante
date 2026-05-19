@@ -43,6 +43,9 @@ public class SecurityConfig {
             // Acceso exclusivo de ADMINISTRADOR
             .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
             .requestMatchers("/api/v1/operator/**").hasAuthority("ADMIN")
+            .requestMatchers("/api/v1/client").hasAuthority("ADMIN")
+            .requestMatchers("/api/v1/admin").hasAuthority("ADMIN")
+            .requestMatchers("/api/v1/operator").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.POST, "/api/v1/plate/**", "/api/v1/category/**", "/api/v1/additional/**").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/api/v1/plate/**", "/api/v1/category/**", "/api/v1/additional/**", "/api/v1/purchase-order/**").hasAuthority("ADMIN")
 

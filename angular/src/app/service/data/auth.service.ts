@@ -87,7 +87,7 @@ export class AuthService {
       this.router.navigate(["/operator/gateway"]);
     } else if (role === "CLIENT") {
       if (id) {
-        this.router.navigate([`/client/${id}`]);
+        this.router.navigate([`/client`]);
       } else {
         this.router.navigate(["/"]);
       }
