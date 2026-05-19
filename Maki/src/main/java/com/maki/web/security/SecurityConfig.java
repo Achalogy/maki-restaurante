@@ -1,5 +1,6 @@
 package com.maki.web.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -14,15 +15,19 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  @Autowired
+  private JwtAuthEntryPoint jwtAuthEntryPoint;
+
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     http.csrf(AbstractHttpConfigurer::disable)
-    .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-    .authorizeHttpRequests(requests -> requests
-      .requestMatchers("/h2/**").permitAll()
-      .anyRequest().permitAll()
-      );
+        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+        .authorizeHttpRequests(requests -> requests
+            .requestMatchers("/h2/**").permitAll()
+            .anyRequest().permitAll())
+        .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint));
 
     return http.build();
   }
@@ -34,8 +39,7 @@ public class SecurityConfig {
 
   @Bean
   public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration
-  ) throws Exception {
+      AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
 }
