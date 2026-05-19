@@ -103,15 +103,15 @@ public class AdministratorController {
         }
     }
 
-    @PostMapping("/log-in")
-    public ResponseEntity<Administrator> loginAdministrator(@RequestBody(required = false) Administrator data) {
-        try {
-            return new ResponseEntity<>(administratorService.verifyCredentials(
-                    data.getUsername(),
-                    data.getPassword()), HttpStatus.OK);
-        } catch (Exception e) {
+    // @PostMapping("/log-in")
+    // public ResponseEntity<Administrator> loginAdministrator(@RequestBody(required = false) Administrator data) {
+    //     try {
+    //         return new ResponseEntity<>(administratorService.verifyCredentials(
+    //                 data.getUsername(),
+    //                 data.getPassword()), HttpStatus.OK);
+    //     } catch (Exception e) {
 
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    //         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    //     }
+    // }
 }

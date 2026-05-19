@@ -12,6 +12,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
   // NOWAY
   // Spring implementa esto automáticamente al ver el nombre "findBy" + "Correo"
   Optional<Client> findByEmail(String email);
-
+  
   Boolean existsByEmail(String email);
 }

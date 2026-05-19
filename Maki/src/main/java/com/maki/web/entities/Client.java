@@ -1,5 +1,7 @@
 package com.maki.web.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "clientes")
 public class Client {
 
+    @JsonIgnore
     @OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
     private UserEntity user;
 

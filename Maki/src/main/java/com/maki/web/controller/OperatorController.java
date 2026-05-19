@@ -142,20 +142,20 @@ public class OperatorController {
     );
   }
 
-  @PostMapping("/log-in")
-  public ResponseEntity<Operator> loginOperator(
-    @RequestBody(required = false) Operator data
-  ) {
-    try {
-      return new ResponseEntity<>(
-        operatorService.verifyCredentials(
-          data.getUsername(),
-          data.getPassword()
-        ),
-        HttpStatus.OK
-      );
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-  }
+  // @PostMapping("/log-in")
+  // public ResponseEntity<Operator> loginOperator(
+  //   @RequestBody(required = false) Operator data
+  // ) {
+  //   try {
+  //     return new ResponseEntity<>(
+  //       operatorService.verifyCredentials(
+  //         data.getUsername(),
+  //         data.getPassword()
+  //       ),
+  //       HttpStatus.OK
+  //     );
+  //   } catch (Exception e) {
+  //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 }

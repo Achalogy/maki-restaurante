@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService {
     try {
       return repo.save(entity);
     } catch (Exception e) {
-      throw new EntityConstraintException("Ya existe un usuario con este email");
+      return null;
     }
   }
 
