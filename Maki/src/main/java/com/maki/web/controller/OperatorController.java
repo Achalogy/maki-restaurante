@@ -1,7 +1,9 @@
 package com.maki.web.controller;
 
 import com.maki.web.entities.Operator;
+import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.security.CustomUserDetailService;
 import com.maki.web.service.OperatorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class OperatorController {
 
   @Autowired
   private OperatorService operatorService;
+  
+  @Autowired
+  private CustomUserDetailService customUserDetailService;
 
   // ===================== GET ALL =====================
   @GetMapping("")
@@ -37,14 +42,18 @@ public class OperatorController {
   // ===================== CREATE =====================
   @PostMapping("")
   public ResponseEntity<Operator> saveOperator(@RequestBody Operator operator) {
-    try {
-      return new ResponseEntity<>(
-        operatorService.insert(operator),
-        HttpStatus.OK
-      );
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    if(operatorService.selectByUsername(operator.getUsername()) != null) {
+      return new ResponseEntity<Operator>(operator, HttpStatus.BAD_REQUEST);
     }
+
+    UserEntity userEntity = customUserDetailService.OperatorToUserEntity(operator);
+    operator.setUser(userEntity);
+    Operator newOperator = operatorService.insert(operator);
+
+    if(newOperator == null)
+      return new ResponseEntity<Operator>(newOperator, HttpStatus.BAD_REQUEST);
+
+    return new ResponseEntity<Operator>(operator, HttpStatus.CREATED);
   }
 
   // ===================== UPDATE =====================

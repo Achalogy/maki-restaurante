@@ -48,7 +48,7 @@ public class CustomUserDetailService implements UserDetailsService {
     // return Arrays.asList(rol).stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
   }
 
-  public UserEntity StudentToUserEntity(Client client) {
+  public UserEntity ClientToUserEntity(Client client) {
     UserEntity user = new UserEntity();
     user.setUsername(client.getEmail());
     user.setPassword(passwordEncoder.encode(client.getPassword()));

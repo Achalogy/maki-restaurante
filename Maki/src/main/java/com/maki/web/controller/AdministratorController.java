@@ -1,4 +1,5 @@
 package com.maki.web.controller;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,27 +10,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.maki.web.entities.Administrator;
+import com.maki.web.entities.UserEntity;
 import com.maki.web.service.AdministratorService;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.security.CustomUserDetailService;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdministratorController {
     @Autowired
-    private AdministratorService AdministratorService;
+    private AdministratorService administratorService;
+
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
     // ===================== GET ALL =====================
     @GetMapping("")
     public List<Administrator> getAllAdministrators() {
-        return AdministratorService.selectAll();
+        return administratorService.selectAll();
     }
 
     // ===================== GET BY ID =====================
     @GetMapping("/{id}")
     public ResponseEntity<Administrator> getAdministratorById(@PathVariable Long id) {
         try {
-            Administrator Administrator = AdministratorService.selectById(id);
+            Administrator Administrator = administratorService.selectById(id);
             if (Administrator == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(Administrator, HttpStatus.OK);
@@ -40,13 +48,19 @@ public class AdministratorController {
 
     // ===================== CREATE =====================
     @PostMapping("")
-    public ResponseEntity<Administrator> saveAdministrator(@RequestBody Administrator Administrator) {
-        try {
-            // El servicio insert suele manejar el guardado o actualización
-            return new ResponseEntity<>(AdministratorService.insert(Administrator), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Administrator> saveAdministrator(@RequestBody Administrator admin) {
+        if (administratorService.existsByUsername(admin.getUsername())) {
+            return new ResponseEntity<Administrator>(admin, HttpStatus.BAD_REQUEST);
         }
+
+        UserEntity userEntity = customUserDetailService.AdministratorToUserEntity(admin);
+        admin.setUser(userEntity);
+        Administrator newAdministrator = administratorService.insert(admin);
+
+        if (newAdministrator == null)
+            return new ResponseEntity<Administrator>(newAdministrator, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<Administrator>(admin, HttpStatus.CREATED);
     }
 
     // ===================== Update =====================
@@ -55,7 +69,7 @@ public class AdministratorController {
             @RequestBody(required = false) Administrator data) {
         try {
             // Buscamos el administrador existente por ID
-            Administrator updateData = AdministratorService.selectById(id);
+            Administrator updateData = administratorService.selectById(id);
 
             // Validamos y actualizamos solo los campos presentes en el request
             if (data.getName() != null)
@@ -66,7 +80,7 @@ public class AdministratorController {
                 updateData.setPassword(data.getPassword());
 
             // Guardamos los cambios usando el servicio
-            return new ResponseEntity<>(AdministratorService.update(updateData), HttpStatus.OK);
+            return new ResponseEntity<>(administratorService.update(updateData), HttpStatus.OK);
 
         } catch (Exception e) {
             // Si no se encuentra el registro
@@ -82,7 +96,7 @@ public class AdministratorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteAdministrator(@PathVariable Long id) {
         try {
-            AdministratorService.deleteByID(id);
+            administratorService.deleteByID(id);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
@@ -92,7 +106,7 @@ public class AdministratorController {
     @PostMapping("/log-in")
     public ResponseEntity<Administrator> loginAdministrator(@RequestBody(required = false) Administrator data) {
         try {
-            return new ResponseEntity<>(AdministratorService.verifyCredentials(
+            return new ResponseEntity<>(administratorService.verifyCredentials(
                     data.getUsername(),
                     data.getPassword()), HttpStatus.OK);
         } catch (Exception e) {

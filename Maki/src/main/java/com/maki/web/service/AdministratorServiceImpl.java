@@ -57,16 +57,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public Administrator verifyCredentials(String username, String password)
-      throws InvalidCredentialsException, EntityNotFoundException {
-    Administrator repoAdministrator = repo.findByUsername(username)
-        .orElseThrow(
-            () -> new EntityNotFoundException("No existe un administrador registrado con el username: " + username));
-
-    if (!repoAdministrator.getPassword().equals(password)) {
-      throw new InvalidCredentialsException("Credenciales inválidas");
-    }
-
-    return repoAdministrator;
+  public boolean existsByUsername(String username) {
+    return repo.existsByUsername(username);
   }
 }

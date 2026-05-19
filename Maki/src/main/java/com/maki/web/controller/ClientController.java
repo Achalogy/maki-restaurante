@@ -1,6 +1,7 @@
 package com.maki.web.controller;
 
 import com.maki.web.entities.Client;
+import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.ClientService;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.maki.web.security.CustomUserDetailService;
+
 @RestController
 @RequestMapping("/api/v1/client")
 
@@ -24,6 +27,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clienteService;
+
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
     @GetMapping("")
     public List<Client> getAllClients() {
@@ -78,15 +84,19 @@ public class ClientController {
 
     @PostMapping("")
     public ResponseEntity<Client> createClient(@RequestBody(required = false) Client data) {
-        try {
-            return new ResponseEntity<>(clienteService.insert(data), HttpStatus.OK);
-        } catch (Exception e) {
 
-            if (e instanceof EntityNotFoundException) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(clienteService.existsByEmail(data.getEmail())) {
+          return new ResponseEntity<Client>(data,HttpStatus.BAD_REQUEST);
         }
+
+        UserEntity userEntity = customUserDetailService.ClientToUserEntity(data);
+        data.setUser(userEntity);
+        Client newClient = clienteService.insert(data);
+
+        if(newClient == null)
+          return new ResponseEntity<Client>(newClient, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<Client>(data, HttpStatus.CREATED);
     }
 
     @PostMapping("/log-in")
