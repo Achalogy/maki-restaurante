@@ -60,7 +60,7 @@ public class CorsTest {
   public void Cors_Allowed() {
     driver.get(BASE_URL);
 
-    String backendUrl = "http://localhost:8080/api/health"; // Cambia esto por un endpoint real de tu app
+    String backendUrl = "http://localhost:8080/api/v1/health"; // Cambia esto por un endpoint real de tu app
 
     String script =
         "return fetch('" + backendUrl + "')" +

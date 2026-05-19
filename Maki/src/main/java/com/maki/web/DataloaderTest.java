@@ -6,6 +6,9 @@ import com.maki.web.entities.Administrator;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Client;
 import com.maki.web.entities.Plate;
+import com.maki.web.security.CustomUserDetailService;
+import com.maki.web.entities.UserEntity;
+import com.maki.web.repository.UserRepository;
 import com.maki.web.repository.AdditionalCategoryRepository;
 import com.maki.web.repository.AdditionalRepository;
 import com.maki.web.repository.AdministratorRepository;
@@ -41,19 +44,26 @@ public class DataloaderTest implements CommandLineRunner {
   @Autowired
   private AdditionalCategoryRepository adcatRepo;
 
+  @Autowired
+  private CustomUserDetailService customUserDetailService;
+
+  @Autowired
+  private UserRepository userRepository;
+
   @Override
   public void run(String... args) throws Exception {
-    // Cliente que usa el test: acha@acha.dev / eveyzoe (id=1)
-    clientRepo.save(
-      new Client(
+    Client client = new Client(
         "Miguel",
         "Vargas",
         "acha@acha.dev",
         "eveyzoe",
         "+57 314 852 7241",
         "Cra 123 #24-242B"
-      )
     );
+    UserEntity clientUser = customUserDetailService.ClientToUserEntity(client);
+    clientUser = userRepository.save(clientUser);
+    client.setUser(clientUser);
+    clientRepo.save(client);
 
     // Categorías
     Category entradas = categoriaRepo.save(new Category("Entradas"));
@@ -93,6 +103,10 @@ public class DataloaderTest implements CommandLineRunner {
     adcatRepo.save(new AdditionalCategory(sushi.getId(), a3.getId()));
 
     // Admin
-    adminRepo.save(new Administrator("Tomas", "Neon", "4567"));
+    Administrator admin = new Administrator("Tomas", "Neon", "4567");
+    UserEntity adminUser = customUserDetailService.AdministratorToUserEntity(admin);
+    adminUser = userRepository.save(adminUser);
+    admin.setUser(adminUser);
+    adminRepo.save(admin);
   }
 }

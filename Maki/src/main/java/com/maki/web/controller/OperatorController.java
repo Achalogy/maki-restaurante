@@ -4,16 +4,13 @@ import com.maki.web.entities.Operator;
 import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.security.CustomUserDetailService;
-import com.maki.web.security.JWTGenerator;
+
 import com.maki.web.service.OperatorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,14 +19,11 @@ public class OperatorController {
 
   @Autowired
   private OperatorService operatorService;
-  
+
   @Autowired
   private CustomUserDetailService customUserDetailService;
 
-  @Autowired
-  AuthenticationManager authenticationManager;
-  @Autowired
-  JWTGenerator jwtGenerator;
+
 
   // ===================== GET ALL =====================
   @GetMapping("")
@@ -152,20 +146,5 @@ public class OperatorController {
     );
   }
 
-    @PostMapping("/log-in")
-    public ResponseEntity<String> loginClient(@RequestBody(required = false) Operator operator) {        
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(operator.getUsername(), operator.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String token = jwtGenerator.generateToken(authentication);
-
-            return new ResponseEntity<String>(token, HttpStatus.OK);
-        }catch(Exception e) {
-            return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
-        }
-
-    }
 }

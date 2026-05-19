@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.maki.web.security.CustomUserDetailService;
-import com.maki.web.security.JWTGenerator;
+
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -37,11 +34,7 @@ public class ClientController {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
 
-    @Autowired
-    JWTGenerator jwtGenerator;
 
     @GetMapping("")
     public List<Client> getAllClients() {
@@ -111,21 +104,6 @@ public class ClientController {
         return new ResponseEntity<Client>(client, HttpStatus.CREATED);
     }
 
-    @PostMapping("/log-in")
-    public ResponseEntity<String> loginClient(@RequestBody(required = false) Client client) {        
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(client.getEmail(), client.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String token = jwtGenerator.generateToken(authentication);
-            
-            return new ResponseEntity<String>(token, HttpStatus.OK);
-        }catch(Exception e) {
-            return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
-        }
-
-    }
 
 }

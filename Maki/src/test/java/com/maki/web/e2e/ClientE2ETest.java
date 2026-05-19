@@ -23,7 +23,7 @@ public class ClientE2ETest {
 
   // ── URLs ─────────────────────────────────────────────────────────────────
   private static final String BASE_URL = "http://localhost:4200";
-  private static final String LOGIN_URL = BASE_URL + "/client/log-in";
+  private static final String LOGIN_URL = BASE_URL + "/log-in";
   private static final String MENU_URL = BASE_URL + "/plate/menu";
 
   // ── Credenciales del cliente precargado por el Dataloader ────────────────
@@ -93,15 +93,15 @@ public class ClientE2ETest {
 
     // Esperar a que el formulario esté disponible
     wait.until(
-      ExpectedConditions.presenceOfElementLocated(By.id("input-email"))
+      ExpectedConditions.presenceOfElementLocated(By.id("username"))
     );
 
     // Llenar el formulario
-    driver.findElement(By.id("input-email")).sendKeys(CLIENT_EMAIL);
-    driver.findElement(By.id("input-password")).sendKeys(CLIENT_PASSWORD);
+    driver.findElement(By.id("username")).sendKeys(CLIENT_EMAIL);
+    driver.findElement(By.id("password")).sendKeys(CLIENT_PASSWORD);
 
     // Hacer clic en "Iniciar sesión"
-    driver.findElement(By.id("btn-login")).click();
+    driver.findElement(By.id("logInAdButton")).click();
 
     // Esperar que la URL cambie al perfil del cliente
     wait.until(ExpectedConditions.urlContains("/client/" + CLIENT_ID));
@@ -141,26 +141,26 @@ public class ClientE2ETest {
     driver.get(LOGIN_URL);
 
     wait.until(
-      ExpectedConditions.presenceOfElementLocated(By.id("input-email"))
+      ExpectedConditions.presenceOfElementLocated(By.id("username"))
     );
 
-    driver.findElement(By.id("input-email")).sendKeys(CLIENT_EMAIL);
+    driver.findElement(By.id("username")).sendKeys(CLIENT_EMAIL);
     driver
-      .findElement(By.id("input-password"))
+      .findElement(By.id("password"))
       .sendKeys("password_incorrecta_123");
-    driver.findElement(By.id("btn-login")).click();
+    driver.findElement(By.id("logInAdButton")).click();
 
     // Esperar a que aparezca el alert del navegador
     try {
-      wait.until(ExpectedConditions.alertIsPresent());
-      Alert alert = driver.switchTo().alert();
-      String mensajeAlerta = alert.getText();
-      alert.accept(); // Cerrar el alert
+      WebElement errorMessage = wait.until(
+        ExpectedConditions.visibilityOfElementLocated(
+          By.id("invalid-credentials-error")
+        )
+      );
 
       assertTrue(
-        mensajeAlerta.toLowerCase().contains("credencial") ||
-          mensajeAlerta.toLowerCase().contains("incorrect"),
-        "La alerta debe indicar credenciales incorrectas"
+        errorMessage.isDisplayed(),
+        "Debe mostrar mensaje de credenciales incorrectas"
       );
     } catch (TimeoutException e) {
       // Si no aparece alert, verificar que no se redirigió al perfil
@@ -516,12 +516,12 @@ public class ClientE2ETest {
   private void loginComoCliente() {
     driver.get(LOGIN_URL);
     wait.until(
-      ExpectedConditions.presenceOfElementLocated(By.id("input-email"))
+      ExpectedConditions.presenceOfElementLocated(By.id("username"))
     );
 
-    driver.findElement(By.id("input-email")).sendKeys(CLIENT_EMAIL);
-    driver.findElement(By.id("input-password")).sendKeys(CLIENT_PASSWORD);
-    driver.findElement(By.id("btn-login")).click();
+    driver.findElement(By.id("username")).sendKeys(CLIENT_EMAIL);
+    driver.findElement(By.id("password")).sendKeys(CLIENT_PASSWORD);
+    driver.findElement(By.id("logInAdButton")).click();
 
     wait.until(ExpectedConditions.urlContains("/client/" + CLIENT_ID));
   }
