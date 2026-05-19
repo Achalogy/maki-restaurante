@@ -1,12 +1,17 @@
 package com.maki.web.controller;
 
+import com.maki.web.dtos.MakiMapper;
+import com.maki.web.dtos.OperatorDTO;
 import com.maki.web.entities.Operator;
 import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.security.CustomUserDetailService;
 
 import com.maki.web.service.OperatorService;
+
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,26 +27,27 @@ public class OperatorController {
 
   @Autowired
   private CustomUserDetailService customUserDetailService;
-
-
-
-  // ===================== GET ALL =====================
-  @GetMapping("")
-  public List<Operator> getAllOperators() {
-    return operatorService.selectAll();
-  }
+  private MakiMapper mapper;
 
   // ===================== GET BY ID =====================
   @GetMapping("/{id}")
-  public ResponseEntity<Operator> getOperatorById(@PathVariable Long id) {
+  public ResponseEntity<OperatorDTO> getOperatorById(@PathVariable Long id) {
     try {
       Operator operator = operatorService.selectById(id);
       if (operator == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-      return new ResponseEntity<>(operator, HttpStatus.OK);
+      return new ResponseEntity<>(mapper.toOperatorDTO(operator), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+    @GetMapping("")
+    public List<OperatorDTO> getAllOperators() {
+        return operatorService.selectAll()
+                .stream()
+                .map(mapper::toOperatorDTO)
+                .collect(Collectors.toList());
+    }
 
   // ===================== CREATE =====================
   @PostMapping("")
@@ -60,91 +66,63 @@ public class OperatorController {
     return new ResponseEntity<Operator>(operator, HttpStatus.CREATED);
   }
 
-  // ===================== UPDATE =====================
-  @PostMapping("/{id}")
-  public ResponseEntity<Operator> updateOperator(
-    @PathVariable Long id,
-    @RequestBody(required = false) Operator data
-  ) {
-    try {
-      Operator updateData = operatorService.selectById(id);
 
-      if (data.getName() != null) updateData.setName(data.getName());
-      if (data.getUsername() != null) updateData.setUsername(
-        data.getUsername()
-      );
-      if (data.getPassword() != null) updateData.setPassword(
-        data.getPassword()
-      );
+    @PostMapping("/{id}")
+    public ResponseEntity<OperatorDTO> updateOperator(@PathVariable Long id,
+            @RequestBody(required = false) Operator data) {
+        try {
+            Operator updateData = operatorService.selectById(id);
 
-      return new ResponseEntity<>(
-        operatorService.update(updateData),
-        HttpStatus.OK
-      );
-    } catch (Exception e) {
-      if (e instanceof EntityNotFoundException) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-      }
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if (data.getName() != null) updateData.setName(data.getName());
+            if (data.getUsername() != null) updateData.setUsername(data.getUsername());
+            if (data.getPassword() != null) updateData.setPassword(data.getPassword());
+
+            return new ResponseEntity<>(mapper.toOperatorDTO(operatorService.update(updateData)), HttpStatus.OK);
+        } catch (Exception e) {
+            if (e instanceof EntityNotFoundException) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-  }
 
-  // ===================== DELETE =====================
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Boolean> deleteOperator(@PathVariable Long id) {
-    try {
-      operatorService.deleteByID(id);
-      return new ResponseEntity<>(true, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteOperator(@PathVariable Long id) {
+        try {
+            operatorService.deleteByID(id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
-  }
 
-  // ===================== GET BY USERNAME =====================
-  @GetMapping("/username/{username}")
-  public ResponseEntity<Operator> getOperatorByUsername(
-    @PathVariable String username
-  ) {
-    try {
-      return new ResponseEntity<>(
-        operatorService.selectByUsername(username),
-        HttpStatus.OK
-      );
-    } catch (EntityNotFoundException e) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/username/{username}")
+    public ResponseEntity<OperatorDTO> getOperatorByUsername(@PathVariable String username) {
+        try {
+            return new ResponseEntity<>(mapper.toOperatorDTO(operatorService.selectByUsername(username)), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-  }
 
-  // ===================== SEARCH =====================
-  @GetMapping("/search")
-  public ResponseEntity<List<Operator>> searchOperators(
-    @RequestParam("term") String term
-  ) {
-    return new ResponseEntity<>(
-      operatorService.searchByNameOrUsername(term),
-      HttpStatus.OK
-    );
-  }
+    @GetMapping("/search")
+    public ResponseEntity<List<OperatorDTO>> searchOperators(@RequestParam("term") String term) {
+        return new ResponseEntity<>(
+                operatorService.searchByNameOrUsername(term)
+                        .stream().map(mapper::toOperatorDTO).collect(Collectors.toList()),
+                HttpStatus.OK);
+    }
 
-  // ===================== COUNT BY USERNAME =====================
-  @GetMapping("/count/{username}")
-  public ResponseEntity<Long> countOperatorsByUsername(
-    @PathVariable String username
-  ) {
-    return new ResponseEntity<>(
-      operatorService.countByUsername(username),
-      HttpStatus.OK
-    );
-  }
+    @GetMapping("/count/{username}")
+    public ResponseEntity<Long> countOperatorsByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(operatorService.countByUsername(username), HttpStatus.OK);
+    }
 
-  // ===================== LIST ORDERED =====================
-  @GetMapping("/ordered")
-  public ResponseEntity<List<Operator>> getOperatorsOrderedByName() {
-    return new ResponseEntity<>(
-      operatorService.selectAllOrderedByName(),
-      HttpStatus.OK
-    );
-  }
-
-
+    @GetMapping("/ordered")
+    public ResponseEntity<List<OperatorDTO>> getOperatorsOrderedByName() {
+        return new ResponseEntity<>(
+                operatorService.selectAllOrderedByName()
+                        .stream().map(mapper::toOperatorDTO).collect(Collectors.toList()),
+                HttpStatus.OK);
+    }
 }
