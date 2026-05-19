@@ -28,9 +28,9 @@ import { PurchaseOrderAdminviewComponent } from "./pages/purchase-order/purchase
 import { ClientOrdersComponent } from "./pages/clients/client-orders/client-orders.component";
 import { OperatorGatewayComponent } from "./pages/operators/operator-gateway/operator-gateway.component";
 
-import { AuthGuard } from "../service/auth.guard";
 import { LogInComponent } from "./pages/log-in/log-in.component";
 import { LogOutComponent } from "./pages/log-out/log-out.component";
+import { AuthGuard } from "./service/auth.guard";
 
 const routes: Routes = [
   { path: "", component: LandingPageComponent },

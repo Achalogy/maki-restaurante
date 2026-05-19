@@ -20,7 +20,8 @@ export class PurchaseOrderCrudComponent {
     private router: Router,
   ) {}
   ngOnInit() {
-    this.loggedAs = window.localStorage.getItem("user_role")?.toLowerCase();
+    this.loggedAs =
+      window.localStorage.getItem("user_role")?.toLowerCase() ?? "";
     if (this.loggedAs == "operator") {
       this.purchaseOrderService
         .selectNotCompleted()

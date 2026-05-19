@@ -27,7 +27,10 @@ import { ClientEditComponent } from "./pages/clients/client-edit/client-edit.com
 import { MakiLogoComponent } from "./components/shared/maki-logo/maki-logo.component";
 import { GatewayComponent } from "./pages/admin/gateway/gateway.component";
 import { ClientProfileComponent } from "./pages/clients/client-profile/client-profile.component";
-import { provideHttpClient } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import { AdditionalCrudComponent } from "./pages/additionals/additional-crud/additional-crud.component";
 import { AdditionalFormComponent } from "./pages/additionals/additional-form/additional-form.component";
 import { AdditionalEditComponent } from "./pages/additionals/additional-edit/additional-edit.component";
@@ -100,7 +103,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
     FoodMenuGridCardComponent,
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
