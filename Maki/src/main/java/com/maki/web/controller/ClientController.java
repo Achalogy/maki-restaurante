@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.maki.web.security.CustomUserDetailService;
+import com.maki.web.security.JWTGenerator;
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -38,6 +39,9 @@ public class ClientController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTGenerator jwtGenerator;
 
     @GetMapping("")
     public List<Client> getAllClients() {
@@ -114,8 +118,10 @@ public class ClientController {
                 new UsernamePasswordAuthenticationToken(client.getEmail(), client.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String token = jwtGenerator.generateToken(authentication);
             
-            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+            return new ResponseEntity<String>(token, HttpStatus.OK);
         }catch(Exception e) {
             return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
         }

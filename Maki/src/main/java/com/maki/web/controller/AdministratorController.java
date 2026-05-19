@@ -18,6 +18,7 @@ import com.maki.web.entities.UserEntity;
 import com.maki.web.service.AdministratorService;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.security.CustomUserDetailService;
+import com.maki.web.security.JWTGenerator;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class AdministratorController {
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
+
+    @Autowired
+    private JWTGenerator jwtGenerator;
 
     // ===================== GET ALL =====================
     @GetMapping("")
@@ -117,8 +121,10 @@ public class AdministratorController {
                 new UsernamePasswordAuthenticationToken(admin.getUsername(), admin.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            
-            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+
+            String token = jwtGenerator.generateToken(authentication);
+
+            return new ResponseEntity<String>(token, HttpStatus.OK);
         }catch(Exception e) {
             return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
         }

@@ -4,6 +4,7 @@ import com.maki.web.entities.Operator;
 import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.security.CustomUserDetailService;
+import com.maki.web.security.JWTGenerator;
 import com.maki.web.service.OperatorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class OperatorController {
 
   @Autowired
   AuthenticationManager authenticationManager;
+  @Autowired
+  JWTGenerator jwtGenerator;
 
   // ===================== GET ALL =====================
   @GetMapping("")
@@ -156,8 +159,10 @@ public class OperatorController {
                 new UsernamePasswordAuthenticationToken(operator.getUsername(), operator.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            
-            return new ResponseEntity<String>("Usuario ingresa con exito", HttpStatus.OK);
+
+            String token = jwtGenerator.generateToken(authentication);
+
+            return new ResponseEntity<String>(token, HttpStatus.OK);
         }catch(Exception e) {
             return new ResponseEntity<String>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
         }
