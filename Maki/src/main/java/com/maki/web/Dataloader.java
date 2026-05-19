@@ -4,6 +4,8 @@ import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
@@ -34,7 +36,7 @@ import com.maki.web.repository.PurchaseOrderRepository;
 import com.maki.web.repository.DeliveryRepository;
 import java.util.Random;
 import com.maki.web.repository.UserRepository;
-import com.maki.web.repository.RoleRepository; 
+import com.maki.web.repository.RoleRepository;
 
 @Component
 @Transactional
@@ -71,6 +73,9 @@ public class Dataloader implements CommandLineRunner {
         @Autowired
         private RoleRepository roleRepo;
 
+        @Autowired
+        private PasswordEncoder passwordEncoder;
+
         Client clientSave;
         Administrator adminSave;
         Operator operatorSave;
@@ -91,7 +96,7 @@ public class Dataloader implements CommandLineRunner {
                 roleRepo.save(new com.maki.web.entities.Role("ADMIN"));
                 roleRepo.save(new com.maki.web.entities.Role("OPERATOR"));
 
-                
+
                 clientSave = new Client("Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241",
                                 "Cra 123 #24-242B");
                 userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
@@ -420,7 +425,7 @@ public class Dataloader implements CommandLineRunner {
                         adcatRepo.save(new AdditionalCategory((long) randomNum, additional.getId()));
                 }
 
-                
+
                 adminSave = new Administrator("Miguel", "eveyzoe",
                                 "1234");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
@@ -591,7 +596,9 @@ public class Dataloader implements CommandLineRunner {
         private UserEntity createUserEntity(String email, String password, String roleName) {
                 UserEntity user = new UserEntity();
                 user.setUsername(email);
-                user.setPassword(password);
+                user.setPassword(
+                  passwordEncoder.encode(password)
+                );
                 Role role = roleRepo.findByName(roleName).orElse(roleRepo.findByName("CLIENT").orElse(null));
                 user.setRole(role);
                 return userRepo.save(user);
