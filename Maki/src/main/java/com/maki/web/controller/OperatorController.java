@@ -27,6 +27,7 @@ public class OperatorController {
 
   @Autowired
   private CustomUserDetailService customUserDetailService;
+  @Autowired
   private MakiMapper mapper;
 
   // ===================== GET BY ID =====================
