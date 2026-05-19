@@ -1,19 +1,22 @@
 package com.maki.web.controller;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.maki.web.dtos.MakiMapper;
+import com.maki.web.dtos.PlateDTO;
 import com.maki.web.entities.Category;
 import com.maki.web.entities.Plate;
 import com.maki.web.service.CategoryService;
 import com.maki.web.service.PlateService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/api/v1/plate")
-
 public class PlateController {
 
     @Autowired
@@ -22,85 +25,68 @@ public class PlateController {
     @Autowired
     private CategoryService categoryService;
 
-    // ===================== GET ALL =====================
+    @Autowired
+    private MakiMapper mapper;
+
+    // GET todos — retorna lista de DTOs (solo info necesaria)
     @GetMapping("")
-    public List<Plate> getAllPlates() {
-        return platoService.selectAll();
+    public List<PlateDTO> getAllPlates() {
+        return platoService.selectAll()
+                .stream()
+                .map(mapper::toPlateDTO)
+                .collect(Collectors.toList());
     }
 
-    // ===================== GET BY ID =====================
+    // GET por id
     @GetMapping("/{id}")
-    public ResponseEntity<Plate> getPlateById(@PathVariable Long id) {
+    public ResponseEntity<PlateDTO> getPlateById(@PathVariable Long id) {
         try {
-            Plate plato = platoService.selectById(id);
-            if (plato == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(plato, HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toPlateDTO(platoService.selectById(id)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // ===================== CREATE / EDIT PLATE (UPSERT) =====================
+    // CREATE
     @PostMapping("")
-    public ResponseEntity<Plate> savePlate(@RequestBody Plate plato, @RequestParam Long categoryId) {
+    public ResponseEntity<PlateDTO> savePlate(@RequestBody Plate plato, @RequestParam Long categoryId) {
         try {
             Category category = categoryService.selectById(categoryId);
-            if (category == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
+            if (category == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             plato.setCategory(category);
-            // El servicio usa .insert() que internamente gestiona si es nuevo o update
-            return new ResponseEntity<>(platoService.insert(plato), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toPlateDTO(platoService.insert(plato)), HttpStatus.OK);
         } catch (Exception e) {
-            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    // ===================== UPDATE PLATE =====================
+    // UPDATE
     @PostMapping("/{id}")
-    public ResponseEntity<Plate> updatePlate(@PathVariable Long id, @RequestBody(required = false) Plate data,
+    public ResponseEntity<PlateDTO> updatePlate(@PathVariable Long id,
+            @RequestBody(required = false) Plate data,
             @RequestParam(required = false) Long categoryId) {
         try {
-            // 1. Buscamos el plato existente
             Plate updateData = platoService.selectById(id);
-            if (updateData == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            if (updateData == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            // 2. Actualizamos campos básicos si vienen en el body
-            if (data.getName() != null)
-                updateData.setName(data.getName());
-            
+            if (data.getName() != null) updateData.setName(data.getName());
             updateData.setPrice(data.getPrice());
             updateData.setAvailable(data.isAvailable());
+            if (data.getDescription() != null) updateData.setDescription(data.getDescription());
+            if (data.getUrlImage() != null) updateData.setUrlImage(data.getUrlImage());
 
-            if (data.getDescription() != null)
-                updateData.setDescription(data.getDescription());
-            if (data.getUrlImage() != null)
-                updateData.setUrlImage(data.getUrlImage());
-
-            // 3. Actualizamos la categoría solo si se envía un nuevo categoryId
             if (categoryId != null) {
                 Category category = categoryService.selectById(categoryId);
-                if (category != null) {
-                    updateData.setCategory(category);
-                }
+                if (category != null) updateData.setCategory(category);
             }
 
-            // 4. Guardamos los cambios
-            return new ResponseEntity<>(platoService.update(updateData), HttpStatus.OK);
-
+            return new ResponseEntity<>(mapper.toPlateDTO(platoService.update(updateData)), HttpStatus.OK);
         } catch (Exception e) {
-            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    // ===================== DELETE PLATE =====================
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletePlate(@PathVariable Long id) {
         try {
@@ -111,17 +97,11 @@ public class PlateController {
         }
     }
 
-    // ===================== ASSIGN/UPDATE CATEGORY =====================
     @PostMapping("/{platoId}/category/{categoryId}")
-    public ResponseEntity<Boolean> updatePlateCategory(
-            @PathVariable Long platoId,
-            @PathVariable Long categoryId) {
+    public ResponseEntity<Boolean> updatePlateCategory(@PathVariable Long platoId, @PathVariable Long categoryId) {
         try {
             Category category = categoryService.selectById(categoryId);
-            if (category == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
+            if (category == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             platoService.cambiarCategoria(category, platoId);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {

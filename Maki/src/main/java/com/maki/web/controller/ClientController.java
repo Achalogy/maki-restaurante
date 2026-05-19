@@ -1,63 +1,62 @@
 package com.maki.web.controller;
 
+import com.maki.web.dtos.ClientDTO;
+import com.maki.web.dtos.MakiMapper;
 import com.maki.web.entities.Client;
 import com.maki.web.exception.EntityNotFoundException;
 import com.maki.web.service.ClientService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/client")
-
 public class ClientController {
 
     @Autowired
     private ClientService clienteService;
 
+    @Autowired
+    private MakiMapper mapper;
+
+    // GET todos — retorna lista de DTOs (sin password)
     @GetMapping("")
-    public List<Client> getAllClients() {
-        return clienteService.selectAll();
+    public List<ClientDTO> getAllClients() {
+        return clienteService.selectAll()
+                .stream()
+                .map(mapper::toClientDTO)
+                .collect(Collectors.toList());
     }
 
+    // GET por id — retorna DTO
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(clienteService.selectById(id), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toClientDTO(clienteService.selectById(id)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    // UPDATE
     @PostMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody(required = false) Client data) {
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody(required = false) Client data) {
         try {
             Client updateData = clienteService.selectById(id);
 
-            if (data.getName() != null)
-                updateData.setName(data.getName());
-            if (data.getSurname() != null)
-                updateData.setSurname(data.getSurname());
-            if (data.getEmail() != null)
-                updateData.setEmail(data.getEmail());
-            if (data.getPassword() != null)
-                updateData.setPassword(data.getPassword());
-            if (data.getPhone() != null)
-                updateData.setPhone(data.getPhone());
-            if (data.getAddress() != null)
-                updateData.setAddress(data.getAddress());
+            if (data.getName() != null) updateData.setName(data.getName());
+            if (data.getSurname() != null) updateData.setSurname(data.getSurname());
+            if (data.getEmail() != null) updateData.setEmail(data.getEmail());
+            if (data.getPassword() != null) updateData.setPassword(data.getPassword());
+            if (data.getPhone() != null) updateData.setPhone(data.getPhone());
+            if (data.getAddress() != null) updateData.setAddress(data.getAddress());
 
-            return new ResponseEntity<>(clienteService.update(updateData), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toClientDTO(clienteService.update(updateData)), HttpStatus.OK);
         } catch (Exception e) {
             if (e instanceof EntityNotFoundException) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,6 +65,7 @@ public class ClientController {
         }
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteClient(@PathVariable Long id) {
         try {
@@ -76,12 +76,12 @@ public class ClientController {
         }
     }
 
+    // CREATE — recibe Client completo pero retorna DTO (sin password)
     @PostMapping("")
-    public ResponseEntity<Client> createClient(@RequestBody(required = false) Client data) {
+    public ResponseEntity<ClientDTO> createClient(@RequestBody(required = false) Client data) {
         try {
-            return new ResponseEntity<>(clienteService.insert(data), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toClientDTO(clienteService.insert(data)), HttpStatus.OK);
         } catch (Exception e) {
-
             if (e instanceof EntityNotFoundException) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -89,16 +89,15 @@ public class ClientController {
         }
     }
 
+    // LOGIN — retorna DTO (sin password en la respuesta)
     @PostMapping("/log-in")
-    public ResponseEntity<Client> loginClient(@RequestBody(required = false) Client data) {
+    public ResponseEntity<ClientDTO> loginClient(@RequestBody(required = false) Client data) {
         try {
-            return new ResponseEntity<>(clienteService.verifyCredentials(
-                    data.getEmail(),
-                    data.getPassword()), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    mapper.toClientDTO(clienteService.verifyCredentials(data.getEmail(), data.getPassword())),
+                    HttpStatus.OK);
         } catch (Exception e) {
-
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 }
