@@ -31,9 +31,6 @@ export class ClientSessionComponent {
   }
 
   logOut(): void {
-    window.localStorage.removeItem("loggedAs");
-    window.localStorage.removeItem("id");
-
-    this.router.navigate(["/"]);
+    this.router.navigate(["/log-out"]);
   }
 }
