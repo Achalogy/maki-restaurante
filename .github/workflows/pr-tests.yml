@@ -40,7 +40,7 @@ jobs:
         working-directory: angular
 
       - name: Start Angular app
-        run: npm start -- --watch=false &
+        run: npm start -- --watch=true &
         working-directory: angular
 
       - name: Wait for Angular to be ready
