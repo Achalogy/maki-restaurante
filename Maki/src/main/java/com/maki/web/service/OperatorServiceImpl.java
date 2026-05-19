@@ -87,10 +87,11 @@ public class OperatorServiceImpl implements OperatorService {
   @Override
   public Operator verifyCredentials(String username, String password)
     throws InvalidCredentialsException, EntityNotFoundException {
-    Optional<Operator> authenticated = repo.findByUsernameAndPassword(
-      username,
-      password
+    Optional<Operator> authenticated = repo.findByUsername(
+      username
     );
+
+    // TODO: VERIFICAR CREDENCIALES
 
     if (authenticated.isPresent()) {
       return authenticated.get();

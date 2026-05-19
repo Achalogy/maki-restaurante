@@ -46,9 +46,12 @@ public class OperatorRepositoryQueryTest {
 
   @Test
   public void findByUsernameAndPasswordQuery_returnsOperator() {
-    var found = operatorRepository.findByUsernameAndPassword("beto.suarez", "123456");
-    assertTrue(found.isPresent());
-    assertEquals("Beto Suarez", found.get().getName());
+  // TODO ARREGLAR
+    // var found = operatorRepository.findByUsernameAndPassword("beto.suarez", "123456");
+    // assertTrue(found.isPresent());
+    // assertEquals("Beto Suarez", found.get().getName());
+
+    assertEquals(true, false, "ARREGLAR ESTE TEST ANTES DE MERGE A DEVELOP");
   }
 
   @Test

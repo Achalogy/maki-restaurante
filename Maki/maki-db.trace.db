@@ -1285,3 +1285,6 @@ Caused by: java.lang.AssertionError
 	at org.h2.mvstore.FileStore.executeFileStoreOperation(FileStore.java:1893)
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:922)
 	... 13 more
+2026-05-18 21:47:17.547512-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "OPERATORS" not found; SQL statement:
+SELECT * FROM OPERATORS [42102-232]
