@@ -62,7 +62,7 @@ export class BaseLayoutComponent {
     const clientId = localStorage.getItem("user_id")!;
 
     this.purchaseOrderService
-      .create(+clientId, this.cart.getShoppingCart())
+      .create(this.cart.getShoppingCart())
       .subscribe(() => {
         alert("Pedido creado!");
         this.cart.clear();
