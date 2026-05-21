@@ -1,5 +1,7 @@
 package com.maki.web.controller;
 
+import com.maki.web.repository.UserEntityRepository;
+import com.maki.web.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,59 +9,63 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import com.maki.web.security.JWTGenerator;
-import com.maki.web.entities.UserEntity;
-import com.maki.web.repository.UserRepository;
-
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
+/**
+ * Controlador de autenticación unificado.
+ * Maneja el login para TODOS los tipos de usuario (client, operator, admin).
+ * Devuelve un JWT con el rol incluido para que Angular redirija correctamente.
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    JWTGenerator jwtGenerator;
+    private JwtGenerator jwtGenerator;
 
     @Autowired
-    UserRepository userRepository;
+    private UserEntityRepository userEntityRepository;
 
-    @PostMapping("/log-in")
+    /**
+     * Login unificado — funciona para client, operator y admin.
+     * Recibe: { "username": "...", "password": "..." }
+     * Devuelve: { "token": "...", "role": "CLIENT|OPERATOR|ADMIN", "username": "..." }
+     */
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         try {
             String username = credentials.get("username");
             String password = credentials.get("password");
 
+            // Spring Security verifica las credenciales contra la tabla users
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(username, password)
             );
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // Genera el JWT
             String token = jwtGenerator.generateToken(authentication);
+
+            // Obtiene el rol del usuario autenticado
             String role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .findFirst().orElse("UNKNOWN");
+                    .findFirst()
+                    .map(a -> a.getAuthority())
+                    .orElse("UNKNOWN");
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("role", role);
-            response.put("username", username);
+            // Devuelve token + rol para que Angular redirija según el tipo de usuario
+            return ResponseEntity.ok(Map.of(
+                    "token", token,
+                    "role", role,
+                    "username", username
+            ));
 
-            Optional<UserEntity> userOpt = userRepository.findByUsername(username);
-            if(userOpt.isPresent()) {
-                response.put("id", userOpt.get().getId());
-            }
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
         }
     }

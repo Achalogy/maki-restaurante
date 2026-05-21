@@ -1,32 +1,22 @@
 package com.maki.web.controller;
 
 import com.maki.web.dtos.ClientDTO;
-import com.maki.web.dtos.MakiMapper;
+import com.maki.web.dtos.ClientMapper;
 import com.maki.web.entities.Client;
 import com.maki.web.entities.UserEntity;
 import com.maki.web.exception.EntityNotFoundException;
+import com.maki.web.security.CustomUserDetailService;
 import com.maki.web.service.ClientService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import com.maki.web.security.CustomUserDetailService;
-
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -37,49 +27,57 @@ public class ClientController {
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
-    
-    
-    @Autowired
-    private MakiMapper mapper;
 
-    // GET todos — retorna lista de DTOs (sin password)
+    // ===================== GET ALL =====================
     @GetMapping("")
     public List<ClientDTO> getAllClients() {
-        try {
-            return clienteService.selectAll()
+        return clienteService.selectAll()
                 .stream()
-                .map(mapper::toClientDTO)
+                .map(ClientMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
-        } catch(Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
     }
 
-    // GET por id — retorna DTO
+    // ===================== GET BY ID =====================
     @GetMapping("/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(mapper.toClientDTO(clienteService.selectById(id)), HttpStatus.OK);
+            ClientDTO dto = ClientMapper.INSTANCE.toDTO(clienteService.selectById(id));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // UPDATE
+    /**
+     * Endpoint seguro: devuelve el cliente autenticado leyendo su email del JWT.
+     * NO usa el id del localStorage — el backend extrae el usuario del token.
+     */
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyProfile() {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
+            Client client = clienteService.findByEmail(email);
+            return new ResponseEntity<>(ClientMapper.INSTANCE.toDTO(client), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ===================== UPDATE =====================
     @PostMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody(required = false) Client data) {
+    public ResponseEntity<?> updateClient(@PathVariable Long id,
+            @RequestBody(required = false) Client data) {
         try {
             Client updateData = clienteService.selectById(id);
+            if (data.getName() != null)       updateData.setName(data.getName());
+            if (data.getSurname() != null)    updateData.setSurname(data.getSurname());
+            if (data.getEmail() != null)      updateData.setEmail(data.getEmail());
+            if (data.getPhone() != null)      updateData.setPhone(data.getPhone());
+            if (data.getAddress() != null)    updateData.setAddress(data.getAddress());
 
-            if (data.getName() != null) updateData.setName(data.getName());
-            if (data.getSurname() != null) updateData.setSurname(data.getSurname());
-            if (data.getEmail() != null) updateData.setEmail(data.getEmail());
-            if (data.getPassword() != null) updateData.setPassword(data.getPassword());
-            if (data.getPhone() != null) updateData.setPhone(data.getPhone());
-            if (data.getAddress() != null) updateData.setAddress(data.getAddress());
-
-            return new ResponseEntity<>(mapper.toClientDTO(clienteService.update(updateData)), HttpStatus.OK);
+            ClientDTO dto = ClientMapper.INSTANCE.toDTO(clienteService.update(updateData));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             if (e instanceof EntityNotFoundException) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -88,7 +86,7 @@ public class ClientController {
         }
     }
 
-    // DELETE
+    // ===================== DELETE =====================
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteClient(@PathVariable Long id) {
         try {
@@ -99,21 +97,38 @@ public class ClientController {
         }
     }
 
-    // CREATE — recibe Client completo pero retorna DTO (sin password)
+    // ===================== CREATE (SIGN UP) =====================
     @PostMapping("")
-    public ResponseEntity<ClientDTO> createClient(@RequestBody(required = false) Client client) {
+    public ResponseEntity<?> createClient(@RequestBody(required = false) Client data) {
+        try {
+            // 1. Verifica que el email no exista ya
+            if (clienteService.existsByEmail(data.getEmail())) {
+                return new ResponseEntity<>("Email ya registrado", HttpStatus.BAD_REQUEST);
+            }
 
-        if(clienteService.existsByEmail(client.getEmail())) {
-          return new ResponseEntity<ClientDTO>(mapper.toClientDTO(client),HttpStatus.BAD_REQUEST);
+            // 2. Guarda el cliente
+            Client savedClient = clienteService.insert(data);
+
+            // 3. Crea el UserEntity en la tabla users (para autenticación JWT)
+            UserEntity userEntity = customUserDetailService.clientToUserEntity(savedClient);
+            savedClient.setUser(userEntity);
+            clienteService.update(savedClient);
+
+            return new ResponseEntity<>(ClientMapper.INSTANCE.toDTO(savedClient), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
-        UserEntity userEntity = customUserDetailService.ClientToUserEntity(client);
-        client.setUser(userEntity);
-        Client newClient = clienteService.insert(client);
-
-        if(newClient == null)
-          return new ResponseEntity<ClientDTO>(mapper.toClientDTO(newClient), HttpStatus.BAD_REQUEST);
-
-        return new ResponseEntity<ClientDTO>(mapper.toClientDTO(client), HttpStatus.CREATED);
+    // ===================== LOGIN =====================
+    @PostMapping("/log-in")
+    public ResponseEntity<?> loginClient(@RequestBody(required = false) Client data) {
+        try {
+            ClientDTO dto = ClientMapper.INSTANCE.toDTO(
+                    clienteService.verifyCredentials(data.getEmail(), data.getPassword()));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
