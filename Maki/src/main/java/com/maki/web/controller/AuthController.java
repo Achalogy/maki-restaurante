@@ -1,5 +1,8 @@
 package com.maki.web.controller;
 
+import com.maki.web.repository.UserEntityRepository;
+import com.maki.web.security.JWTGenerator;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,60 +10,64 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import com.maki.web.security.JWTGenerator;
-import com.maki.web.entities.UserEntity;
-import com.maki.web.repository.UserRepository;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
+/**
+ * CORRECCIÓN: La clase se llama JWTGenerator (no JwtGenerator).
+ * Se corrige el import y la referencia.
+ *
+ * Ubicación: src/main/java/com/maki/web/controller/AuthController.java
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
-    @Autowired
-    JWTGenerator jwtGenerator;
+  @Autowired
+  private JWTGenerator jwtGenerator;
 
-    @Autowired
-    UserRepository userRepository;
+  @Autowired
+  private UserEntityRepository userEntityRepository;
 
-    @PostMapping("/log-in")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
-        try {
-            String username = credentials.get("username");
-            String password = credentials.get("password");
+  /**
+   * Login unificado para CLIENT, OPERATOR y ADMIN.
+   * Recibe: { "username": "...", "password": "..." }
+   * Devuelve: { "token": "...", "role": "CLIENT|OPERATOR|ADMIN", "username": "..." }
+   *
+   * El frontend guarda el token y llama a /me para saber quién es el usuario.
+   * NO devuelve el id — eso lo resuelve /client/me o /operator/me con el JWT.
+   */
+  @PostMapping("/log-in")
+  public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+    try {
+      String username = credentials.get("username");
+      String password = credentials.get("password");
 
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+      Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(username, password)
+      );
 
-            String token = jwtGenerator.generateToken(authentication);
-            String role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .findFirst().orElse("UNKNOWN");
+      SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("role", role);
-            response.put("username", username);
+      String token = jwtGenerator.generateToken(authentication);
 
-            Optional<UserEntity> userOpt = userRepository.findByUsername(username);
-            if(userOpt.isPresent()) {
-                response.put("id", userOpt.get().getId());
-            }
+      String role = authentication
+        .getAuthorities()
+        .stream()
+        .findFirst()
+        .map(a -> a.getAuthority())
+        .orElse("UNKNOWN");
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.BAD_REQUEST);
-        }
+      return ResponseEntity.ok(
+        Map.of("token", token, "role", role, "username", username)
+      );
+    } catch (Exception e) {
+      return new ResponseEntity<>(
+        "Credenciales incorrectas",
+        HttpStatus.BAD_REQUEST
+      );
     }
+  }
 }

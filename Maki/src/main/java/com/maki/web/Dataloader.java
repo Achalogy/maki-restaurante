@@ -32,9 +32,9 @@ import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PlateRepository;
 import com.maki.web.repository.PurchaseOrderRepository;
 import com.maki.web.repository.DeliveryRepository;
-import java.util.Random;
-import com.maki.web.repository.UserRepository;
+import com.maki.web.repository.UserEntityRepository; 
 import com.maki.web.repository.RoleRepository;
+import java.util.Random;
 
 @Component
 @Transactional
@@ -66,7 +66,7 @@ public class Dataloader implements CommandLineRunner {
         private AdditionalOrderDetailsRepository additionalPedidoDetallesRepo;
 
         @Autowired
-        private UserRepository userRepo;
+        private UserEntityRepository userRepo; 
 
         @Autowired
         private RoleRepository roleRepo;
@@ -166,7 +166,7 @@ public class Dataloader implements CommandLineRunner {
                 ramen.setCategory(platesFuertes);
                 plateRepo.save(ramen);
                 Plate tempura = new Plate("Tempura", 43960,
-                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa tradditional.",
+                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa tradicional.",
                                 "https://images.unsplash.com/photo-1677743537607-f7fc9273ec4d?w=500", true);
                 tempura.setCategory(entradas);
                 plateRepo.save(tempura);
@@ -186,7 +186,7 @@ public class Dataloader implements CommandLineRunner {
                 edamame.setCategory(entradas);
                 plateRepo.save(edamame);
                 Plate sopaMiso = new Plate("Sopa Miso", 15960,
-                                "Sopa tradditional japonesa con pasta miso fermentada, tofu y alga marina.",
+                                "Sopa tradicional japonesa con pasta miso fermentada, tofu y alga marina.",
                                 "https://images.unsplash.com/photo-1610393069309-2607fcf74146?w=500", true);
                 sopaMiso.setCategory(entradas);
                 plateRepo.save(sopaMiso);
@@ -331,13 +331,13 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(brownie);
 
                 Plate teVerde = new Plate("Té Verde", 7960,
-                                "Té verde tradditional japonés con sabor fresco y ligero.",
+                                "Té verde tradicional japonés con sabor fresco y ligero.",
                                 "https://image.tuasaude.com/media/article/yp/dt/beneficios-del-te-verde_17350.jpg",
                                 true);
                 teVerde.setCategory(bebidas);
                 plateRepo.save(teVerde);
 
-                Plate sakeTradditional = new Plate("Sake Tradditional", 35960,
+                Plate sakeTradditional = new Plate("Sake Tradicional", 35960,
                                 "Bebida alcohólica japonesa elaborada con arroz fermentado con notas complejas de sabor.",
                                 "https://monstersushi.es/blog/wp-content/uploads/2022/04/sake-robata-barcelona-e1637227199971-1024x784-1.png",
                                 true);
@@ -359,7 +359,7 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(jugoNatural);
 
                 Plate aguaArroz = new Plate("Agua de Arroz", 5960,
-                                "Bebida tradditional refrescante hecha con arroz y un toque de vainilla.",
+                                "Bebida tradicional refrescante hecha con arroz y un toque de vainilla.",
                                 "https://image.tuasaude.com/media/article/pc/nx/agua-de-arroz-para-la-diarrea_19076.jpg",
                                 true);
                 aguaArroz.setCategory(bebidas);
@@ -424,32 +424,27 @@ public class Dataloader implements CommandLineRunner {
                 }
 
 
-                adminSave = new Administrator("Miguel", "eveyzoe",
-                                "1234");
+                adminSave = new Administrator("Miguel", "eveyzoe", "1234");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
                 adminSave.setUser(userEntity);
                 adminRep.save(adminSave);
 
-                adminSave = new Administrator("Tomas", "Neon",
-                                "4567");
+                adminSave = new Administrator("Tomas", "Neon", "4567");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
                 adminSave.setUser(userEntity);
                 adminRep.save(adminSave);
 
-                adminSave = new Administrator("Juan", "Wonton",
-                                "7789");
+                adminSave = new Administrator("Juan", "Wonton", "7789");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
                 adminSave.setUser(userEntity);
                 adminRep.save(adminSave);
 
-                adminSave = new Administrator("Alex", "Aliz",
-                                "3452");
+                adminSave = new Administrator("Alex", "Aliz", "3452");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
                 adminSave.setUser(userEntity);
                 adminRep.save(adminSave);
 
-                adminSave = new Administrator("Akiara", "Starlight",
-                                "2231");
+                adminSave = new Administrator("Akiara", "Starlight", "2231");
                 userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
                 adminSave.setUser(userEntity);
                 adminRep.save(adminSave);
@@ -591,14 +586,16 @@ public class Dataloader implements CommandLineRunner {
 
         }
 
-        private UserEntity createUserEntity(String email, String password, String roleName) {
+        private UserEntity createUserEntity(String username, String password, String roleName) {
                 UserEntity user = new UserEntity();
-                user.setUsername(email);
-                user.setPassword(
-                  passwordEncoder.encode(password)
-                );
-                Role role = roleRepo.findByName(roleName).orElse(roleRepo.findByName("CLIENT").orElse(null));
-                user.setRole(role);
+                user.setUsername(username);
+                user.setPassword(passwordEncoder.encode(password));
+                
+                Role role = roleRepo.findByName(roleName)
+                        .orElseGet(() -> roleRepo.findByName("CLIENT").orElse(null));
+                if (role != null) {
+                        user.addRole(role);
+                }
                 return userRepo.save(user);
         }
 

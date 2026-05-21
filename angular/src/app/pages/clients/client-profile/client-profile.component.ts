@@ -34,7 +34,7 @@ export class ClientProfileComponent implements OnInit {
   ngOnInit(): void {
     const id = +this.authService.getUserId()!;
 
-    this.clientService.selectById(id).subscribe((client) => {
+    this.clientService.getMe().subscribe((client) => {
       if (!client) this.router.navigate(["/client/crud"]);
       else this.client = client;
     });

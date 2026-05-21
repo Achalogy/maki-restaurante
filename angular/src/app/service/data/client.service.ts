@@ -1,23 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Client } from 'src/app/interfaces/client.interface';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { Client } from "src/app/interfaces/client.interface";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ClientService {
-
-  constructor(
-      private http: HttpClient
-    ) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Obtiene todos los clientes desde el backend.
    * Devuelve un Observable con un arreglo de objetos Client.
    */
   selectAll(): Observable<Client[]> {
-    return this.http.get<Client[]>('http://localhost:8080/api/v1/client')
+    return this.http.get<Client[]>("http://localhost:8080/api/v1/client");
   }
 
   /**
@@ -26,7 +23,7 @@ export class ClientService {
    * Devuelve un Observable con el objeto Client correspondiente.
    */
   selectById(id: number): Observable<Client> {
-    return this.http.get<Client>(`http://localhost:8080/api/v1/client/${id}`)
+    return this.http.get<Client>(`http://localhost:8080/api/v1/client/${id}`);
   }
 
   /**
@@ -34,8 +31,11 @@ export class ClientService {
    * @param client Objeto parcial de Client sin el campo id.
    * Devuelve un Observable con el cliente creado.
    */
-  create(client: Partial<Omit<Client, 'id'>>): Observable<Client> {
-    return this.http.post<Client>(`http://localhost:8080/api/v1/client`, client)
+  create(client: Partial<Omit<Client, "id">>): Observable<Client> {
+    return this.http.post<Client>(
+      `http://localhost:8080/api/v1/client`,
+      client,
+    );
   }
 
   /**
@@ -43,8 +43,11 @@ export class ClientService {
    * @param client Objeto parcial de Client sin el campo id.
    * Devuelve un Observable con el cliente autenticado.
    */
-  logIn(client: Partial<Omit<Client, 'id'>>): Observable<Client> {
-    return this.http.post<Client>(`http://localhost:8080/api/v1/client/log-in`, client)
+  logIn(client: Partial<Omit<Client, "id">>): Observable<Client> {
+    return this.http.post<Client>(
+      `http://localhost:8080/api/v1/client/log-in`,
+      client,
+    );
   }
 
   /**
@@ -54,7 +57,10 @@ export class ClientService {
    * Devuelve un Observable con el cliente actualizado.
    */
   update(id: number, data: Partial<Client>): Observable<Client> {
-    return this.http.post<Client>(`http://localhost:8080/api/v1/client/${id}`, data)
+    return this.http.post<Client>(
+      `http://localhost:8080/api/v1/client/${id}`,
+      data,
+    );
   }
 
   /**
@@ -63,6 +69,16 @@ export class ClientService {
    * Devuelve un Observable con un valor booleano que indica éxito.
    */
   delete(id: number): Observable<Boolean> {
-    return this.http.delete<Boolean>(`http://localhost:8080/api/v1/client/${id}`)
+    return this.http.delete<Boolean>(
+      `http://localhost:8080/api/v1/client/${id}`,
+    );
+  }
+
+  /**
+   * Trae a mi cliente.
+   * Devuelve un Observable con el cliente en base al auth.
+   */
+  getMe(): Observable<Client> {
+    return this.http.get<Client>(`http://localhost:8080/api/v1/client/me`);
   }
 }

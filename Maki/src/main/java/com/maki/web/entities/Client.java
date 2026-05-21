@@ -1,29 +1,15 @@
 package com.maki.web.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "clientes")
 public class Client {
-
-    @JsonIgnore
-    @OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
-    private UserEntity user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +25,9 @@ public class Client {
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 
+    // La contraseña ya NO se guarda aquí, va en UserEntity
+    // Se mantiene solo para compatibilidad con el login viejo
     @Transient
-    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
     @Column(name = "phone", length = 100, nullable = false)
@@ -49,13 +36,12 @@ public class Client {
     @Column(name = "address", length = 100, nullable = false)
     private String address;
 
-    // Constructor para Login/Auth
-    public Client(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    // Relación con UserEntity - ignorada en JSON para no exponer credenciales
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
 
-    // Constructor para registro/creación (sin ID)
     public Client(String name, String surname, String email, String password, String phone, String address) {
         this.name = name;
         this.surname = surname;

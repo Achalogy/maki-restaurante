@@ -10,8 +10,8 @@ http:
     type: json
     data: |+
       {
-        "username": "eveyzoe",
-        "password": "1234"
+        "username": "acha@acha.dev",
+        "password": "eveyzoe"
       }
 
 

@@ -1,11 +1,11 @@
 info:
-  name: client by id
+  name: me
   type: http
-  seq: 2
+  seq: 7
 
 http:
   method: GET
-  url: "{{host}}/api/v1/client/1"
+  url: "{{host}}/api/v1/client/me"
   auth: inherit
 
 settings:

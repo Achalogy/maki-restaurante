@@ -1,20 +1,8 @@
 package com.maki.web.security;
 
-import org.springframework.stereotype.Service;
-
+import com.maki.web.entities.*;
 import com.maki.web.repository.RoleRepository;
-import com.maki.web.entities.Role;
-import com.maki.web.entities.Client;
-import com.maki.web.entities.UserEntity;
-import com.maki.web.entities.Operator;
-import com.maki.web.entities.Administrator;
-import com.maki.web.repository.UserRepository;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.stream.Collectors;
-
+import com.maki.web.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,63 +11,107 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Servicio central de autenticación.
+ * 1. Carga usuarios para Spring Security (loadUserByUsername)
+ * 2. Convierte entidades de negocio a UserEntity para guardar en la tabla users
+ */
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-  // UserEntity -> UserDetailService
 
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private RoleRepository roleRepository;
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserEntityRepository userRepository;
 
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserEntity userDB = userRepository.findByUsername(username).orElseThrow(
-      () -> new UsernameNotFoundException("User not found")
-    );
+    @Autowired
+    private RoleRepository roleRepository;
 
-    UserDetails userDetails = new User(userDB.getUsername(), userDB.getPassword(), asGrantedAuthorities(userDB.getRole()));
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    return userDetails;
-  }
+    // =====================================================================
+    // SPRING SECURITY - carga usuario por username para validar el JWT
+    // =====================================================================
 
-  private Collection<GrantedAuthority> asGrantedAuthorities(Role rol) {
-    return Arrays.asList(new SimpleGrantedAuthority(rol.getName()));
-    // return Arrays.asList(rol).stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-  }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity userDB = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-  public UserEntity ClientToUserEntity(Client client) {
-    UserEntity user = new UserEntity();
-    user.setUsername(client.getEmail());
-    user.setPassword(passwordEncoder.encode(client.getPassword()));
+        return new User(
+                userDB.getUsername(),
+                userDB.getPassword(),
+                mapRolesToAuthorities(userDB.getRoles())
+        );
+    }
 
-    Role role = roleRepository.findByName("CLIENT").orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-    user.setRole(role);
+    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+    }
 
-    return user;
-  }
+    // =====================================================================
+    // MÉTODOS AUXILIARES - convierten entidades de negocio a UserEntity
+    // Usados en los controllers al registrar un nuevo usuario
+    // =====================================================================
 
-  public UserEntity AdministratorToUserEntity(Administrator admin) {
-    UserEntity user = new UserEntity();
-    user.setUsername(admin.getUsername());
-    user.setPassword(passwordEncoder.encode(admin.getPassword()));
+    /**
+     * Convierte un Client a UserEntity y lo guarda en la tabla users.
+     * El username del cliente es su email.
+     * La contraseña se guarda encriptada.
+     * Los clientes no tienen contraseña propia, se les asigna "123" por defecto.
+     */
+    public UserEntity clientToUserEntity(Client client) {
+        // Busca o crea el rol CLIENT
+        Role roleClient = roleRepository.findByName("CLIENT")
+                .orElseGet(() -> roleRepository.save(new Role("CLIENT")));
 
-    Role role = roleRepository.findByName("ADMIN").get();
-    user.setRole(role);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(client.getEmail());
+        // Clientes se identifican solo con email (sin contraseña propia)
+        userEntity.setPassword(passwordEncoder.encode("123"));
+        userEntity.addRole(roleClient);
 
-    return user;
-  }
+        return userRepository.save(userEntity);
+    }
 
-  public UserEntity OperatorToUserEntity(Operator operator) {
-    UserEntity user = new UserEntity();
-    user.setUsername(operator.getUsername());
-    user.setPassword(passwordEncoder.encode(operator.getPassword()));
+    /**
+     * Convierte un Operator a UserEntity y lo guarda en la tabla users.
+     * El username del operador es su username.
+     * La contraseña se guarda encriptada.
+     */
+    public UserEntity operatorToUserEntity(Operator operator) {
+        Role roleOperator = roleRepository.findByName("OPERATOR")
+                .orElseGet(() -> roleRepository.save(new Role("OPERATOR")));
 
-    Role role = roleRepository.findByName("OPERATOR").get();
-    user.setRole(role);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(operator.getUsername());
+        userEntity.setPassword(passwordEncoder.encode(operator.getPassword()));
+        userEntity.addRole(roleOperator);
 
-    return user;
-  }
+        return userRepository.save(userEntity);
+    }
+
+    /**
+     * Convierte un Administrator a UserEntity y lo guarda en la tabla users.
+     * El username del admin es su username.
+     * La contraseña se guarda encriptada.
+     */
+    public UserEntity administratorToUserEntity(Administrator administrator) {
+        Role roleAdmin = roleRepository.findByName("ADMIN")
+                .orElseGet(() -> roleRepository.save(new Role("ADMIN")));
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(administrator.getUsername());
+        userEntity.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        userEntity.addRole(roleAdmin);
+
+        return userRepository.save(userEntity);
+    }
 }
