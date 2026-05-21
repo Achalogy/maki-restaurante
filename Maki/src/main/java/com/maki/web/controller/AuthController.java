@@ -1,7 +1,7 @@
 package com.maki.web.controller;
 
 import com.maki.web.repository.UserEntityRepository;
-import com.maki.web.security.JwtGenerator;
+import com.maki.web.security.JWTGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * Controlador de autenticación unificado.
- * Maneja el login para TODOS los tipos de usuario (client, operator, admin).
- * Devuelve un JWT con el rol incluido para que Angular redirija correctamente.
+ * CORRECCIÓN: La clase se llama JWTGenerator (no JwtGenerator).
+ * Se corrige el import y la referencia.
+ *
+ * Ubicación: src/main/java/com/maki/web/controller/AuthController.java
  */
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -25,16 +26,20 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    
     @Autowired
-    private JwtGenerator jwtGenerator;
+    private JWTGenerator jwtGenerator;
 
     @Autowired
     private UserEntityRepository userEntityRepository;
 
     /**
-     * Login unificado — funciona para client, operator y admin.
+     * Login unificado para CLIENT, OPERATOR y ADMIN.
      * Recibe: { "username": "...", "password": "..." }
      * Devuelve: { "token": "...", "role": "CLIENT|OPERATOR|ADMIN", "username": "..." }
+     *
+     * El frontend guarda el token y llama a /me para saber quién es el usuario.
+     * NO devuelve el id — eso lo resuelve /client/me o /operator/me con el JWT.
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
@@ -42,23 +47,19 @@ public class AuthController {
             String username = credentials.get("username");
             String password = credentials.get("password");
 
-            // Spring Security verifica las credenciales contra la tabla users
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Genera el JWT
             String token = jwtGenerator.generateToken(authentication);
 
-            // Obtiene el rol del usuario autenticado
             String role = authentication.getAuthorities().stream()
                     .findFirst()
                     .map(a -> a.getAuthority())
                     .orElse("UNKNOWN");
 
-            // Devuelve token + rol para que Angular redirija según el tipo de usuario
             return ResponseEntity.ok(Map.of(
                     "token", token,
                     "role", role,
