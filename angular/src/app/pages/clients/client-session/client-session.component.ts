@@ -21,7 +21,7 @@ export class ClientSessionComponent {
   ngOnInit(): void {
     const id = +this.authService.getUserId()!;
 
-    this.clientService.selectById(id).subscribe((client) => {
+    this.clientService.getMe().subscribe((client) => {
       if (!client) {
         this.router.navigate(["/client/crud"]);
       } else {
