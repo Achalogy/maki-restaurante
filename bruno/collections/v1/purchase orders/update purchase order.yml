@@ -1,0 +1,21 @@
+info:
+  name: update purchase order
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/purchase-order/1"
+  auth: inherit
+  body: json
+
+body:json:
+  {
+    "status": "completed"
+  }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

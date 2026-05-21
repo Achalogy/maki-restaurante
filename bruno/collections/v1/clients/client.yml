@@ -6,6 +6,18 @@ info:
 http:
   method: POST
   url: "{{host}}/api/v1/client"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "probando123aadsf@gmail.com", 
+        
+        "password": "achalogy",
+        "name": "Miguel",
+        "surname": "Vargas",
+        "phone": "123",
+        "address": "basura"
+      }
   auth: inherit
 
 settings:

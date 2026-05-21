@@ -1,0 +1,68 @@
+<main>
+  <div class="login-container">
+    <div class="card-login">
+
+      <p class="text-maki-orange font-semibold font-staatliches">Iniciar Sesión</p>
+      <app-maki-logo></app-maki-logo>
+
+      <form (ngSubmit)="onSubmit()" novalidate #loginForm="ngForm">
+
+        <div>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            [(ngModel)]="username"
+            required
+            #usernameRef="ngModel"
+            placeholder="Usuario / Correo"
+            [class.border-2]="usernameRef.invalid && usernameRef.touched"
+            [class.border-red-500]="usernameRef.invalid && usernameRef.touched" />
+        </div>
+
+        <div>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            required
+            minlength="4"
+            #passwordRef="ngModel"
+            placeholder="Contraseña"
+            [class.border-2]="passwordRef.invalid && passwordRef.touched"
+            [class.border-red-500]="passwordRef.invalid && passwordRef.touched" />
+        </div>
+
+        <div id="log-in-errors">
+          <p *ngIf="usernameRef.errors?.['required'] && usernameRef.touched">
+            El usuario o correo es obligatorio.
+          </p>
+          <p *ngIf="passwordRef.errors?.['required'] && passwordRef.touched">
+            La contraseña es obligatoria.
+          </p>
+          <p *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched">
+            La contraseña debe tener al menos 4 caracteres.
+          </p>
+          <p id="invalid-credentials-error" *ngIf="loginError">
+            Usuario o contraseña incorrectos.
+          </p>
+        </div>
+
+        <div>
+          <button id="logInAdButton" type="submit" [disabled]="loginForm.invalid">
+            Iniciar sesión
+          </button>
+        </div>
+
+        <div class="login-urls">
+          <a class="text-right cursor-pointer text-blue-500 hover:underline" (click)="navigateTo('/client/sign-up')">¿No tienes cuenta? Regístrate</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

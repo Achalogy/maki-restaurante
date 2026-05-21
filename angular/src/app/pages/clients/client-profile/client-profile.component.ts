@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Client } from 'src/app/interfaces/client.interface';
-import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
-import { ClientService } from 'src/app/service/data/client.service';
-import { OrderDetailsService } from 'src/app/service/data/order-details.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Client } from "src/app/interfaces/client.interface";
+import { PurchaseOrderDetails } from "src/app/interfaces/order-details.interface";
+import { AuthService } from "src/app/service/data/auth.service";
+import { ClientService } from "src/app/service/data/client.service";
+import { OrderDetailsService } from "src/app/service/data/order-details.service";
 
 /**
  * Componente de Perfil de Cliente
@@ -11,20 +12,19 @@ import { OrderDetailsService } from 'src/app/service/data/order-details.service'
  * - Información personal (nombre, apellido, correo, teléfono, dirección)
  */
 @Component({
-  selector: 'app-client-profile',
-  templateUrl: './client-profile.component.html',
-  styleUrls: ['./client-profile.component.css']
+  selector: "app-client-profile",
+  templateUrl: "./client-profile.component.html",
+  styleUrls: ["./client-profile.component.css"],
 })
 export class ClientProfileComponent implements OnInit {
   // Datos del cliente actual cargados desde la API
   client: Client | undefined;
-  
-
 
   constructor(
     private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   /**
@@ -32,9 +32,10 @@ export class ClientProfileComponent implements OnInit {
    * Carga los datos del cliente desde el ID de la ruta.
    */
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.clientService.selectById(id).subscribe(client => {
-      if (!client) this.router.navigate(['/client/crud']);
+    const id = +this.authService.getUserId()!;
+
+    this.clientService.getMe().subscribe((client) => {
+      if (!client) this.router.navigate(["/client/crud"]);
       else this.client = client;
     });
   }
@@ -45,9 +46,11 @@ export class ClientProfileComponent implements OnInit {
    */
   onUpdate(): void {
     if (this.client) {
-      this.clientService.update(this.client.id, this.client).subscribe((client) => {
-        this.router.navigate([`/client/${client.id}`]);
-      });
+      this.clientService
+        .update(this.client.id, this.client)
+        .subscribe((client) => {
+          this.router.navigate([`/client`]);
+        });
     }
   }
 
@@ -56,10 +59,12 @@ export class ClientProfileComponent implements OnInit {
    * Muestra alerta de confirmación, elimina la cuenta si se confirma y redirige a la página CRUD.
    */
   onDelete(): void {
-    const confirmed = confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.');
+    const confirmed = confirm(
+      "¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.",
+    );
     if (this.client && confirmed) {
       this.clientService.delete(this.client.id).subscribe(() => {
-        this.router.navigate(['/client/crud']);
+        this.router.navigate(["/client/crud"]);
       });
     }
   }

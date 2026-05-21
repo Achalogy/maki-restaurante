@@ -14,11 +14,6 @@ public interface OperatorRepository extends JpaRepository<Operator, Long> {
     @Query("SELECT o FROM Operator o WHERE o.username = :username")
     Optional<Operator> findByUsername(@Param("username") String username);
 
-    @Query("SELECT o FROM Operator o WHERE o.username = :username AND o.password = :password")
-    Optional<Operator> findByUsernameAndPassword(
-            @Param("username") String username,
-            @Param("password") String password);
-
     @Query("SELECT o FROM Operator o WHERE LOWER(o.name) LIKE LOWER(CONCAT('%', :term, '%')) "
             + "OR LOWER(o.username) LIKE LOWER(CONCAT('%', :term, '%'))")
     List<Operator> searchByNameOrUsername(@Param("term") String term);

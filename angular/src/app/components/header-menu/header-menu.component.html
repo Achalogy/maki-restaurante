@@ -3,7 +3,7 @@
     <app-maki-logo></app-maki-logo>
 
     <div class="header-menu">
-      <a (click)="navigateTo('plate/menu')">
+      <a id="menu-link" (click)="navigateTo('plate/menu')">
         <i class="ti ti-picnic-table"></i>
         <p>Ver Menú</p>
       </a>
@@ -14,20 +14,20 @@
     </div>
 
     <div class="flex gap-2">
-      <div *ngIf="loggedAs == 'client'" class="shopping-cart">
-        <button (click)="this.cart.open()">
+      <div *ngIf="loggedRole == 'CLIENT'" class="shopping-cart">
+        <button class="header-button" (click)="this.cart.open()">
           <i class="ti ti-shopping-bag"></i>
           <p>Carrito</p>
         </button>
       </div>
-      
+
       <div class="header-profile">
-        <a *ngIf="!loggedAs" (click)="navigateTo('/client/log-in')">
+        <a *ngIf="!loggedRole" (click)="navigateTo('/log-in')">
           <i class="ti ti-user"></i>
           <p>Iniciar Sesión</p>
         </a>
-      
-        <a *ngIf="loggedAs" (click)="goToProfile()">
+
+        <a id = "profile-link" *ngIf="loggedRole" (click)="goToProfile()">
           <i class="ti ti-user"></i>
           <p>Perfil</p>
         </a>

@@ -1,23 +1,19 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/service/data/auth.service";
 
 @Component({
-  selector: 'app-log-out',
-  templateUrl: './log-out.component.html',
-  styleUrls: ['./log-out.component.css']
+  selector: "app-log-out",
+  templateUrl: "./log-out.component.html",
+  styleUrls: ["./log-out.component.css"],
 })
 export class LogOutComponent {
-
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
-
-    window.localStorage
-      .removeItem("loggedAs")
-    window.localStorage
-      .removeItem("id")
-
-    this.router.navigate(["/"])
-
+    this.authService.logout();
   }
 }

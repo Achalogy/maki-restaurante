@@ -1,0 +1,21 @@
+info:
+  name: update delivery
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{host}}/api/v1/delivery/1"
+  auth: inherit
+  body: json
+
+body:json:
+  {
+    "available": false
+  }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

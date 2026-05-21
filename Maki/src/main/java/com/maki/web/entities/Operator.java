@@ -1,36 +1,46 @@
 package com.maki.web.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Operator {
-  @Id
-  @Column(name = "id", nullable = false, unique = true)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  @Column(name = "name", length = 100, nullable = false)
-  private String name;
+    @Id
+    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(name = "username", length = 100, nullable = false, unique = true)
-  private String username;
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
 
-  @Column(name = "password", length = 100, nullable = false)
-  private String password;
+    @Column(name = "username", length = 100, nullable = false, unique = true)
+    private String username;
 
-  public Operator(String name, String username, String password) {
-    this.name = name;
-    this.username = username;
-    this.password = password;
-  }
+    // La contraseña ya NO se guarda aquí, va en UserEntity
+    @Transient
+    private String password;
+
+    // Relación con UserEntity - ignorada en JSON
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
+
+    public Operator(String name, String username, String password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Operator(Long id, String name, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
 }

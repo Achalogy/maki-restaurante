@@ -1,8 +1,8 @@
 <app-full-layout>
   <main class="tree_background min-h-[80dvh] flex items-center justify-center py-8">
-  
+
     <section class="flex flex-col gap-8 w-[95%] xl:max-w-[60rem] bg-white shadow-2xl rounded-2xl p-12">
-  
+
       <!-- Bienvenida -->
       <div class="text-center mb-10">
         <h2 class="text-[6rem]! font-bold mb-4">
@@ -15,7 +15,7 @@
           {{client?.email}}
         </p>
       </div>
-  
+
       <!-- Panel de acciones -->
       <div class="grid md:grid-cols-2 gap-8 mt-8">
 
@@ -25,7 +25,7 @@
           <p class="group-hover:text-maki-black">Explora nuestros platos disponibles</p>
         </a>
 
-        <a [routerLink]="['/client/profile', client?.id]"
+        <a [routerLink]="['/client/profile']"
           class="group bg-maki-black text-white p-8 rounded-xl shadow-lg hover:bg-maki-orange hover:scale-105 transition duration-200 text-center">
           <h3 class="text-2xl font-bold mb-2 text-maki-orange group-hover:text-maki-black">Mi Perfil</h3>
           <p class="group-hover:text-maki-black">Gestiona tu información personal</p>
@@ -38,11 +38,11 @@
         </a>
 
       </div>
-  
+
       <button (click)="logOut()" class="text-maki-orange bg-maki-black rounded-xl mx-auto p-4 px-8 font-semibold hover:scale-105 transition duration-200">Cerrar
         sesión</button>
-  
+
     </section>
-  
+
   </main>
 </app-full-layout>

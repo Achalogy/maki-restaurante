@@ -8,4 +8,5 @@ import com.maki.web.entities.Administrator;
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
     Optional<Administrator> findByUsername(String username);
+    Boolean existsByUsername(String username);
 }

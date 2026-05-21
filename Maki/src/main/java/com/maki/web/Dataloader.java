@@ -3,6 +3,7 @@ package com.maki.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
@@ -15,6 +16,8 @@ import com.maki.web.entities.Operator;
 import com.maki.web.entities.Administrator;
 import com.maki.web.entities.Plate;
 import com.maki.web.entities.PurchaseOrder;
+import com.maki.web.entities.UserEntity;
+import com.maki.web.entities.Role;
 import com.maki.web.entities.OrderDetails;
 import com.maki.web.entities.Delivery;
 import com.maki.web.entities.AdditionalOrderDetails;
@@ -29,6 +32,8 @@ import com.maki.web.repository.OrderDetailsRepository;
 import com.maki.web.repository.PlateRepository;
 import com.maki.web.repository.PurchaseOrderRepository;
 import com.maki.web.repository.DeliveryRepository;
+import com.maki.web.repository.UserEntityRepository; 
+import com.maki.web.repository.RoleRepository;
 import java.util.Random;
 
 @Component
@@ -60,8 +65,23 @@ public class Dataloader implements CommandLineRunner {
         @Autowired
         private AdditionalOrderDetailsRepository additionalPedidoDetallesRepo;
 
+        @Autowired
+        private UserEntityRepository userRepo; 
+
+        @Autowired
+        private RoleRepository roleRepo;
+
+        @Autowired
+        private PasswordEncoder passwordEncoder;
+
+        Client clientSave;
+        Administrator adminSave;
+        Operator operatorSave;
+        UserEntity userEntity;
+
         @Override
         public void run(String... args) throws Exception {
+
 
                 Random random = new Random();
                 Category entradas = categoriaRepo.save(new Category("Entradas"));
@@ -70,26 +90,70 @@ public class Dataloader implements CommandLineRunner {
                 Category postres = categoriaRepo.save(new Category("Postres"));
                 Category bebidas = categoriaRepo.save(new Category("Bebidas"));
 
-                clientRepo.save(new Client("Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241",
-                                "Cra 123 #24-242B"));
-                clientRepo.save(new Client("Tomas", "Silva", "Neon@Zynth.dev", "StarlightSolos", "+57 316 776 6274",
-                                "Cra 53B #131A-72"));
-                clientRepo.save(new Client("Alex", "Aponte", "Alex@Ap.dev", "AlezElNaci", "+57 317 445 8921",
-                                "Cra 15 #45-67"));
-                clientRepo.save(new Client("Juan", "Vargas", "Pabon@GUI.dev", "GUIllermo", "+57 318 556 7832",
-                                "Cra 22 #89-145"));
-                clientRepo.save(new Client("Laura", "Martínez", "laura.m@email.com", "LauraMart99",
-                                "+57 319 667 8743", "Cra 30 #12-34"));
-                clientRepo.save(new Client("Diego", "López", "diego.lopez@email.com", "DiegoL2024",
-                                "+57 310 778 9654", "Cra 8 #56-78"));
-                clientRepo.save(new Client("Sofía", "Herrera", "sofia.h@email.com", "SofiaHe88", "+57 311 889 0765",
-                                "Cra 18 #90-23"));
-                clientRepo.save(new Client("Pablo", "Sánchez", "pablo.sanchez@email.com", "PabloSan77",
-                                "+57 312 990 1876", "Cra 25 #34-56"));
-                clientRepo.save(new Client("Marcela", "Pérez", "marcela.p@email.com", "MarcelaPerez55",
-                                "+57 313 101 2987", "Cra 11 #67-89"));
-                clientRepo.save(new Client("Javier", "Castro", "javier.c@email.com", "JavierCast44",
-                                "+57 314 212 3098", "Cra 20 #23-45"));
+                roleRepo.save(new com.maki.web.entities.Role("CLIENT"));
+                roleRepo.save(new com.maki.web.entities.Role("ADMIN"));
+                roleRepo.save(new com.maki.web.entities.Role("OPERATOR"));
+
+
+                clientSave = new Client("Miguel", "Vargas", "acha@acha.dev", "eveyzoe", "+57 314 852 7241",
+                                "Cra 123 #24-242B");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Tomas", "Silva", "Neon@Zynth.dev", "StarlightSolos", "+57 316 776 6274",
+                                "Cra 53B #131A-72");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Alex", "Aponte", "Alex@Ap.dev", "AlezElNaci", "+57 317 445 8921",
+                                "Cra 15 #45-67");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Juan", "Vargas", "Pabon@GUI.dev", "GUIllermo", "+57 318 556 7832",
+                                "Cra 22 #89-145");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Laura", "Martínez", "laura.m@email.com", "LauraMart99",
+                                "+57 319 667 8743", "Cra 30 #12-34");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Diego", "López", "diego.lopez@email.com", "DiegoL2024",
+                                "+57 310 778 9654", "Cra 8 #56-78");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Sofía", "Herrera", "sofia.h@email.com", "SofiaHe88", "+57 311 889 0765",
+                                "Cra 18 #90-23");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Pablo", "Sánchez", "pablo.sanchez@email.com", "PabloSan77",
+                                "+57 312 990 1876", "Cra 25 #34-56");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Marcela", "Pérez", "marcela.p@email.com", "MarcelaPerez55",
+                                "+57 313 101 2987", "Cra 11 #67-89");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
+
+                clientSave = new Client("Javier", "Castro", "javier.c@email.com", "JavierCast44",
+                                "+57 314 212 3098", "Cra 20 #23-45");
+                userEntity = createUserEntity(clientSave.getEmail(), clientSave.getPassword(), "CLIENT");
+                clientSave.setUser(userEntity);
+                clientRepo.save(clientSave);
 
                 Plate sushiVariado = new Plate("Sushi Variado", 51960,
                                 "Hermosa combinación de nigiri y rollos con los mejores ingredientes.",
@@ -102,7 +166,7 @@ public class Dataloader implements CommandLineRunner {
                 ramen.setCategory(platesFuertes);
                 plateRepo.save(ramen);
                 Plate tempura = new Plate("Tempura", 43960,
-                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa tradditional.",
+                                "Verduras y camarones fritos hasta obtener una perfección dorada con salsa tradicional.",
                                 "https://images.unsplash.com/photo-1677743537607-f7fc9273ec4d?w=500", true);
                 tempura.setCategory(entradas);
                 plateRepo.save(tempura);
@@ -122,7 +186,7 @@ public class Dataloader implements CommandLineRunner {
                 edamame.setCategory(entradas);
                 plateRepo.save(edamame);
                 Plate sopaMiso = new Plate("Sopa Miso", 15960,
-                                "Sopa tradditional japonesa con pasta miso fermentada, tofu y alga marina.",
+                                "Sopa tradicional japonesa con pasta miso fermentada, tofu y alga marina.",
                                 "https://images.unsplash.com/photo-1610393069309-2607fcf74146?w=500", true);
                 sopaMiso.setCategory(entradas);
                 plateRepo.save(sopaMiso);
@@ -267,13 +331,13 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(brownie);
 
                 Plate teVerde = new Plate("Té Verde", 7960,
-                                "Té verde tradditional japonés con sabor fresco y ligero.",
+                                "Té verde tradicional japonés con sabor fresco y ligero.",
                                 "https://image.tuasaude.com/media/article/yp/dt/beneficios-del-te-verde_17350.jpg",
                                 true);
                 teVerde.setCategory(bebidas);
                 plateRepo.save(teVerde);
 
-                Plate sakeTradditional = new Plate("Sake Tradditional", 35960,
+                Plate sakeTradditional = new Plate("Sake Tradicional", 35960,
                                 "Bebida alcohólica japonesa elaborada con arroz fermentado con notas complejas de sabor.",
                                 "https://monstersushi.es/blog/wp-content/uploads/2022/04/sake-robata-barcelona-e1637227199971-1024x784-1.png",
                                 true);
@@ -295,7 +359,7 @@ public class Dataloader implements CommandLineRunner {
                 plateRepo.save(jugoNatural);
 
                 Plate aguaArroz = new Plate("Agua de Arroz", 5960,
-                                "Bebida tradditional refrescante hecha con arroz y un toque de vainilla.",
+                                "Bebida tradicional refrescante hecha con arroz y un toque de vainilla.",
                                 "https://image.tuasaude.com/media/article/pc/nx/agua-de-arroz-para-la-diarrea_19076.jpg",
                                 true);
                 aguaArroz.setCategory(bebidas);
@@ -359,57 +423,112 @@ public class Dataloader implements CommandLineRunner {
                         adcatRepo.save(new AdditionalCategory((long) randomNum, additional.getId()));
                 }
 
-                adminRep.save(new Administrator("Miguel", "eveyzoe",
-                                "1234"));
-                adminRep.save(new Administrator("Tomas", "Neon",
-                                "4567"));
-                adminRep.save(new Administrator("Juan", "Wonton",
-                                "7789"));
-                adminRep.save(new Administrator("Alex", "Aliz",
-                                "3452"));
-                adminRep.save(new Administrator("Akiara", "Starlight",
-                                "2231"));
 
-                Operator operator1 = new Operator((long) 101011, "Gomez", "carlos.gomez@example.com", "123456");
-                operatorRepo.save(operator1);
-                Operator operator2 = new Operator((long) 101012, "Lopez", "maria.lopez@example.com", "123456");
-                operatorRepo.save(operator2);
-                Operator operator3 = new Operator((long) 101013, "Martinez", "ana.martinez@example.com", "123456");
-                operatorRepo.save(operator3);
-                Operator operator4 = new Operator((long) 101014, "Garcia", "luis.garcia@example.com", "123456");
-                operatorRepo.save(operator4);
-                Operator operator5 = new Operator((long) 101015, "Rodriguez", "sofia.rodriguez@example.com", "123456");
-                operatorRepo.save(operator5);
-                Operator operator6 = new Operator((long) 101016, "Martinez", "javier.martinez@example.com", "123456");
-                operatorRepo.save(operator6);
-                Operator operator7 = new Operator((long) 101017, "Ramirez", "laura.ramirez@example.com", "123456");
-                operatorRepo.save(operator7);
-                Operator operator8 = new Operator((long) 101018, "Torres", "andres.torres@example.com", "123456");
-                operatorRepo.save(operator8);
-                Operator operator9 = new Operator((long) 101019, "Vargas", "sofia.vargas@example.com", "123456");
-                operatorRepo.save(operator9);
-                Operator operator10 = new Operator((long) 101020, "Castillo", "camila.castillo@example.com", "123456");
-                operatorRepo.save(operator10);
-                Operator operator11 = new Operator((long) 101021, "Silva", "diego.silva@example.com", "123456");
-                operatorRepo.save(operator11);
-                Operator operator12 = new Operator((long) 101022, "Cruz", "mariana.cruz@example.com", "123456");
-                operatorRepo.save(operator12);
-                Operator operator13 = new Operator((long) 101023, "Ortiz", "felipe.ortiz@example.com", "123456");
-                operatorRepo.save(operator13);
-                Operator operator14 = new Operator((long) 101024, "Rojas", "andrea.rojas@example.com", "123456");
-                operatorRepo.save(operator14);
-                Operator operator15 = new Operator((long) 101025, "Pérez", "jose.perez@example.com", "123456");
-                operatorRepo.save(operator15);
-                Operator operator16 = new Operator((long) 101026, "Suarez", "valentina.suarez@example.com", "123456");
-                operatorRepo.save(operator16);
-                Operator operator17 = new Operator((long) 101027, "Moreno", "santiago.moreno@example.com", "123456");
-                operatorRepo.save(operator17);
-                Operator operator18 = new Operator((long) 101028, "Núñez", "camilo.nunez@example.com", "123456");
-                operatorRepo.save(operator18);
-                Operator operator19 = new Operator((long) 101029, "Herrera", "natasha.herrera@example.com", "123456");
-                operatorRepo.save(operator19);
-                Operator operator20 = new Operator((long) 101030, "Medina", "gabriel.medina@example.com", "123456");
-                operatorRepo.save(operator20);
+                adminSave = new Administrator("Miguel", "eveyzoe", "1234");
+                userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
+                adminSave.setUser(userEntity);
+                adminRep.save(adminSave);
+
+                adminSave = new Administrator("Tomas", "Neon", "4567");
+                userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
+                adminSave.setUser(userEntity);
+                adminRep.save(adminSave);
+
+                adminSave = new Administrator("Juan", "Wonton", "7789");
+                userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
+                adminSave.setUser(userEntity);
+                adminRep.save(adminSave);
+
+                adminSave = new Administrator("Alex", "Aliz", "3452");
+                userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
+                adminSave.setUser(userEntity);
+                adminRep.save(adminSave);
+
+                adminSave = new Administrator("Akiara", "Starlight", "2231");
+                userEntity = createUserEntity(adminSave.getUsername(), adminSave.getPassword(), "ADMIN");
+                adminSave.setUser(userEntity);
+                adminRep.save(adminSave);
+
+                operatorSave = new Operator("Gomez", "carlos.gomez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Lopez", "maria.lopez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Martinez", "ana.martinez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Garcia", "luis.garcia@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Rodriguez", "sofia.rodriguez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Martinez", "javier.martinez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Ramirez", "laura.ramirez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Torres", "andres.torres@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Vargas", "sofia.vargas@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Castillo", "camila.castillo@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Silva", "diego.silva@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Cruz", "mariana.cruz@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Ortiz", "felipe.ortiz@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Rojas", "andrea.rojas@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Pérez", "jose.perez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Suarez", "valentina.suarez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Moreno", "santiago.moreno@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Núñez", "camilo.nunez@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Herrera", "natasha.herrera@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
+                operatorSave = new Operator("Medina", "gabriel.medina@example.com", "123456");
+                userEntity = createUserEntity(operatorSave.getUsername(), operatorSave.getPassword(), "OPERATOR");
+                operatorSave.setUser(userEntity);
+                operatorRepo.save(operatorSave);
 
                 Delivery delivery1 = new Delivery("Perez", "101", "11010101", true, true);
                 deliveryRepo.save(delivery1);
@@ -467,5 +586,17 @@ public class Dataloader implements CommandLineRunner {
 
         }
 
+        private UserEntity createUserEntity(String username, String password, String roleName) {
+                UserEntity user = new UserEntity();
+                user.setUsername(username);
+                user.setPassword(passwordEncoder.encode(password));
+                
+                Role role = roleRepo.findByName(roleName)
+                        .orElseGet(() -> roleRepo.findByName("CLIENT").orElse(null));
+                if (role != null) {
+                        user.addRole(role);
+                }
+                return userRepo.save(user);
+        }
 
 }
