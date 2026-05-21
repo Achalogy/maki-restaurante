@@ -7,11 +7,15 @@ import com.maki.web.exception.EntityNotFoundException;
 import java.util.List;
 
 public interface OperatorService extends ServiceInterface<Operator> {
-    public Operator selectByUsername(String username) throws EntityNotFoundException;
+    Operator selectByUsername(String username) throws EntityNotFoundException;
 
-    public List<Operator> searchByNameOrUsername(String term);
+    List<Operator> searchByNameOrUsername(String term);
 
-    public Long countByUsername(String username);
+    Long countByUsername(String username);
 
-    public List<Operator> selectAllOrderedByName();
+    List<Operator> selectAllOrderedByName();
+
+    
+    Operator verifyCredentials(String username, String password)
+            throws InvalidCredentialsException, EntityNotFoundException;
 }

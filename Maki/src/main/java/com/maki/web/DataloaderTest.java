@@ -8,7 +8,7 @@ import com.maki.web.entities.Client;
 import com.maki.web.entities.Plate;
 import com.maki.web.security.CustomUserDetailService;
 import com.maki.web.entities.UserEntity;
-import com.maki.web.repository.UserRepository;
+import com.maki.web.repository.UserEntityRepository; 
 import com.maki.web.repository.AdditionalCategoryRepository;
 import com.maki.web.repository.AdditionalRepository;
 import com.maki.web.repository.AdministratorRepository;
@@ -50,8 +50,7 @@ public class DataloaderTest implements CommandLineRunner {
   private CustomUserDetailService customUserDetailService;
 
   @Autowired
-  private UserRepository userRepository;
-
+  private UserEntityRepository userRepository; 
   @Autowired
   private RoleRepository roleRepo;
 
@@ -70,7 +69,8 @@ public class DataloaderTest implements CommandLineRunner {
         "+57 314 852 7241",
         "Cra 123 #24-242B"
     );
-    UserEntity clientUser = customUserDetailService.ClientToUserEntity(client);
+    
+    UserEntity clientUser = customUserDetailService.clientToUserEntity(client);
     clientUser = userRepository.save(clientUser);
     client.setUser(clientUser);
     clientRepo.save(client);
@@ -114,7 +114,8 @@ public class DataloaderTest implements CommandLineRunner {
 
     // Admin
     Administrator admin = new Administrator("Tomas", "Neon", "4567");
-    UserEntity adminUser = customUserDetailService.AdministratorToUserEntity(admin);
+    
+    UserEntity adminUser = customUserDetailService.administratorToUserEntity(admin);
     adminUser = userRepository.save(adminUser);
     admin.setUser(adminUser);
     adminRepo.save(admin);
