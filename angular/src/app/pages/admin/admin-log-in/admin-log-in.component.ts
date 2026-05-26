@@ -11,9 +11,9 @@ import { AdministratorService } from 'src/app/service/data/admin.service';
 })
 export class AdminLogInComponent {
 
-  username: string = '';
-  password: string = '';
-  loginError: boolean = false;
+  username = '';
+  password = '';
+  loginError = false;
 
   constructor(
     private administratorService: AdministratorService,

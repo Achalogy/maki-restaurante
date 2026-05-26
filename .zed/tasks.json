@@ -1,0 +1,45 @@
+[
+  {
+    "label": "Build & Run Springboot",
+    "command": "cd springboot; export JAVA_HOME=`/usr/libexec/java_home -v 21`; ./mvnw spring-boot:run",
+    "reveal": "always",
+  },
+  {
+    "label": "Build Springboot",
+    "command": "cd springboot; export JAVA_HOME=`/usr/libexec/java_home -v 21`; ./mvnw clean install",
+    "reveal": "always",
+  },
+  {
+    "label": "Run Springboot",
+    "command": "cd springboot; export JAVA_HOME=`/usr/libexec/java_home -v 21`; java -jar target/maki-0.0.1-SNAPSHOT.jar",
+    "reveal": "always",
+  },
+  {
+    "label": "Run Angular",
+    "command": "cd angular; pnpm run start",
+    "reveal": "always",
+  },
+  {
+    "label": "Lint Angular",
+    "command": "cd angular; pnpm run lint --fix",
+    "reveal": "always",
+  },
+  {
+    "label": "Git add, commit, push",
+    "command": "git add -p; git commit; git push; git status",
+    "reveal": "always",
+  },
+  {
+    "label": "Test Springboot",
+    "command": "cd springboot;export JAVA_HOME=`/usr/libexec/java_home -v 21`; ./mvnw test",
+    "reveal": "always",
+  },
+  {
+    "label": "Run Springboot cleaner",
+    "command": "cd springboot; ./mvnw spotless:apply",
+  },
+  {
+    "label": "Run Springboot linter",
+    "command": "cd springboot; ./mvnw spotless:check; ./mvnw checkstyle:check",
+  },
+]

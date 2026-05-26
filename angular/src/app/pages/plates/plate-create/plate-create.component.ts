@@ -34,9 +34,6 @@ export class PlateCreateComponent {
 
   ngOnInit() {
     this.categoryService.selectAll().subscribe(cats => this.categoryList = cats);
-    if(!this.plate.category) {
-      this
-    }
   }
 
   savePlate() {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'src/app/interfaces/category.interface';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { OrderDetailsService } from 'src/app/service/data/order-details.service';
 
@@ -53,7 +52,7 @@ export class ClientOrdersComponent implements OnInit {
   /**
    * Retorna clase CSS según el estado del pedido para estilizar el badge de estado.
    * @param status - El estado actual del pedido (ej: 'Entregado', 'En preparación', 'Pendiente', 'Cancelado')
-   * @returns String con la clase CSS para el badge de estado
+   * @returns string con la clase CSS para el badge de estado
    */
   getStatusClass(status: string): string {
     switch (status) {

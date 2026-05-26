@@ -10,7 +10,6 @@ import { OperatorFormComponent } from "./pages/operators/operator-form/operator-
 import { OperatorCrudComponent } from "./pages/operators/operator-crud/operator-crud.component";
 import { OperatorViewComponent } from "./pages/operators/operator-view/operator-view.component";
 import { ClientSessionComponent } from "./pages/clients/client-session/client-session.component";
-import { ClientLogInComponent } from "./pages/clients/client-log-in/client-log-in.component";
 import { ClientSignUpComponent } from "./pages/clients/client-sign-up/client-sign-up.component";
 import { ClientEditComponent } from "./pages/clients/client-edit/client-edit.component";
 import { ClientCrudComponent } from "./pages/clients/client-crud/client-crud.component";
@@ -20,10 +19,8 @@ import { AdditionalCrudComponent } from "./pages/additionals/additional-crud/add
 import { AdditionalFormComponent } from "./pages/additionals/additional-form/additional-form.component";
 import { AdditionalEditComponent } from "./pages/additionals/additional-edit/additional-edit.component";
 import { PurchaseOrderCrudComponent } from "./pages/purchase-order/purchase-order-crud/purchase-order-crud.component";
-import { OperatorLogInComponent } from "./pages/operators/operator-log-in/operator-log-in.component";
 import { PurchaseOrderViewComponent } from "./pages/purchase-order/purchase-order-view/purchase-order-view.component";
 import { DeliveryCrudComponent } from "./pages/delivery/delivery-crud/delivery-crud.component";
-import { AdminLogInComponent } from "./pages/admin/admin-log-in/admin-log-in.component";
 import { PurchaseOrderAdminviewComponent } from "./pages/purchase-order/purchase-order-adminview/purchase-order-adminview.component";
 import { ClientOrdersComponent } from "./pages/clients/client-orders/client-orders.component";
 import { OperatorGatewayComponent } from "./pages/operators/operator-gateway/operator-gateway.component";

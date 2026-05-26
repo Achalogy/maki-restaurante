@@ -75,8 +75,8 @@ export class PurchaseOrderService {
    * @param id El ID de la orden de compra a eliminar.
    * @returns Un observable que emite un booleano indicando si la eliminación fue exitosa.
    */
-  delete(id: number): Observable<Boolean> {
-    return this.http.delete<Boolean>(
+  delete(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(
       `http://localhost:8080/api/v1/purchase-order/${id}`,
     );
   }

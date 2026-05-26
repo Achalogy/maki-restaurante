@@ -8,7 +8,8 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
   private baseUrl = "http://localhost:8080/api/v1/auth";
-  private currentUserSubject = new BehaviorSubject<any>(null);
+  private currentUserSubject: BehaviorSubject<object | null> =
+    new BehaviorSubject<object | null>(null);
 
   constructor(
     private http: HttpClient,
@@ -28,20 +29,32 @@ export class AuthService {
     }
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/log-in`, credentials).pipe(
-      tap((response) => {
-        if (response && response.token) {
-          localStorage.setItem("jwt_token", response.token);
-          localStorage.setItem("user_role", response.role);
-          localStorage.setItem("username", response.username);
-          if (response.id) {
-            localStorage.setItem("user_id", response.id);
+  login(credentials: { username: string; password: string }): Observable<{
+    token: string;
+    role: string;
+    username: string;
+    id: string;
+  }> {
+    return this.http
+      .post<{
+        token: string;
+        role: string;
+        username: string;
+        id: string;
+      }>(`${this.baseUrl}/log-in`, credentials)
+      .pipe(
+        tap((response) => {
+          if (response && response.token) {
+            localStorage.setItem("jwt_token", response.token);
+            localStorage.setItem("user_role", response.role);
+            localStorage.setItem("username", response.username);
+            if (response.id) {
+              localStorage.setItem("user_id", response.id);
+            }
+            this.currentUserSubject.next(response);
           }
-          this.currentUserSubject.next(response);
-        }
-      }),
-    );
+        }),
+      );
   }
 
   logout() {

@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Client } from "src/app/interfaces/client.interface";
-import { PurchaseOrderDetails } from "src/app/interfaces/order-details.interface";
 import { AuthService } from "src/app/service/data/auth.service";
 import { ClientService } from "src/app/service/data/client.service";
-import { OrderDetailsService } from "src/app/service/data/order-details.service";
 
 /**
  * Componente de Perfil de Cliente
@@ -32,8 +30,6 @@ export class ClientProfileComponent implements OnInit {
    * Carga los datos del cliente desde el ID de la ruta.
    */
   ngOnInit(): void {
-    const id = +this.authService.getUserId()!;
-
     this.clientService.getMe().subscribe((client) => {
       if (!client) this.router.navigate(["/client/crud"]);
       else this.client = client;
@@ -48,7 +44,7 @@ export class ClientProfileComponent implements OnInit {
     if (this.client) {
       this.clientService
         .update(this.client.id, this.client)
-        .subscribe((client) => {
+        .subscribe(() => {
           this.router.navigate([`/client`]);
         });
     }

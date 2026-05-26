@@ -50,6 +50,7 @@ import { OperatorGatewayComponent } from "./pages/operators/operator-gateway/ope
 import { LogOutComponent } from "./pages/log-out/log-out.component";
 import { LogInComponent } from "./pages/log-in/log-in.component";
 import { AuthInterceptor } from "./service/auth.interceptor";
+import { ApiUrlInterceptor } from "./service/api-url.interceptor";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
 @NgModule({
@@ -104,6 +105,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

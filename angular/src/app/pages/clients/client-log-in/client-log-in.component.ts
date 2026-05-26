@@ -10,8 +10,8 @@ import { ClientService } from 'src/app/service/data/client.service';
 })
 export class ClientLogInComponent {
 
-  email: string = "";
-  password: string = ""
+  email = "";
+  password = ""
 
   constructor(
     private clientService: ClientService,

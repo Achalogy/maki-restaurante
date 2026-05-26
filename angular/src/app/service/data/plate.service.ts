@@ -75,10 +75,10 @@ export class PlateService {
   /**
    * Elimina un plato por su id.
    * @param id Identificador del plato a eliminar.
-   * @returns Observable<Boolean> indicando si la eliminación fue exitosa.
+   * @returns Observable<boolean> indicando si la eliminación fue exitosa.
    */
-  delete(id: number): Observable<Boolean> {
-    return this.http.delete<Boolean>(`http://localhost:8080/api/v1/plate/${id}`)
+  delete(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`http://localhost:8080/api/v1/plate/${id}`)
   }
 
 }
