@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Additional } from 'src/app/interfaces/additional.interface';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
 import { Plate } from 'src/app/interfaces/plate.interface';
+import { PurchaseOrder } from 'src/app/interfaces/purchase-order.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -55,14 +56,14 @@ export class ShoppingCartService {
     
     const oldItem = this.shoppingCart.findIndex(d => d.plate.id == plate.id && d.aditionals.length == additionals.length && d.aditionals.every(x => additionals.includes(x)))
 
-    if(oldItem != -1)
+    if(oldItem !== -1)
       this.shoppingCart[oldItem]
         .quantity++;
     else this.shoppingCart.push(
       {
         plate,
         quantity: 1,
-        order: {} as any,
+        order: {} as PurchaseOrder,
         id: -1,
         aditionals: additionals
       }
@@ -73,7 +74,7 @@ export class ShoppingCartService {
 
   // Elimina todos los elementos del carrito que correspondan al plato dado.
   removeItem(plate: Plate) {
-    this.shoppingCart = this.shoppingCart.filter(x => x.plate.id != plate.id)
+    this.shoppingCart = this.shoppingCart.filter(x => x.plate.id !== plate.id)
     this.persistCart()
   }
   

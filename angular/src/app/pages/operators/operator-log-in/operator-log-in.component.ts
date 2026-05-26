@@ -11,8 +11,8 @@ import { OperatorService } from 'src/app/service/data/operator.service';
 })
 export class OperatorLogInComponent {
 
-  username: string = '';
-  password: string = '';
+  username = '';
+  password = '';
 
   constructor(
     private operatorService: OperatorService,

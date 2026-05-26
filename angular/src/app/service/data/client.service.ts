@@ -68,8 +68,8 @@ export class ClientService {
    * @param id Identificador numérico del cliente a eliminar.
    * Devuelve un Observable con un valor booleano que indica éxito.
    */
-  delete(id: number): Observable<Boolean> {
-    return this.http.delete<Boolean>(
+  delete(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(
       `http://localhost:8080/api/v1/client/${id}`,
     );
   }

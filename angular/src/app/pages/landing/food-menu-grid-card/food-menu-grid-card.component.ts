@@ -12,5 +12,5 @@ export class FoodMenuGridCardComponent {
   @Input() href!: string;
   @Input() src!: string;
   @Input() label!: string;
-  @Input() alt: string = '';
+  @Input() alt = '';
 }

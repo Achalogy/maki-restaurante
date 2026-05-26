@@ -10,7 +10,7 @@ import { ClientService } from 'src/app/service/data/client.service';
 })
 export class ClientEditComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string | null = null;
-  currentSlide: number = 0;
+  currentSlide = 0;
   client: Client;
   bgSlides: string[] = [
     'assets/images/carousel-login/fondo1.png',

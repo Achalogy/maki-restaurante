@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { PurchaseOrder } from "src/app/interfaces/purchase-order.interface";
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PurchaseOrderDetails } from 'src/app/interfaces/order-details.interface';
-import { Additional } from 'src/app/interfaces/additional.interface';
 
 /**
  * Servicio para gestionar los datos de detalles de pedidos.

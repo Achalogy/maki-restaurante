@@ -13,7 +13,7 @@ import { ShoppingCartService } from 'src/app/service/ui/shopping-card.service';
 })
 export class PlateViewComponent {
   plate?: Plate;
-  specialInstructions: string = '';
+  specialInstructions = '';
 
   selectedAdditionals: number[] = [];
 

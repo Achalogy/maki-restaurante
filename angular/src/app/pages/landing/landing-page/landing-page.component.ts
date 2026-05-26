@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { AuthService } from "src/app/service/data/auth.service";
 
 @Component({
@@ -6,12 +6,12 @@ import { AuthService } from "src/app/service/data/auth.service";
   templateUrl: "./landing-page.component.html",
   styleUrls: ["./landing-page.component.css"],
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent {
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.authService.redirectBasedOnRole();
-    }
-  }
+  // ngOnInit(): void {
+  //   if (this.authService.isLoggedIn()) {
+  //     this.authService.redirectBasedOnRole();
+  //   }
+  // }
 }

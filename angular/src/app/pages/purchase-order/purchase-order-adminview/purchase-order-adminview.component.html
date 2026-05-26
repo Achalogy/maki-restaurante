@@ -38,10 +38,10 @@
             </td>
             <!-- Operator name and ID -->
             <td class="px-6 py-4 text-center">
-              <h3 *ngIf="purchaseOrder.delivery != null" class="text-xl font-bold uppercase text-black">
+              <h3 *ngIf="purchaseOrder.delivery !== null" class="text-xl font-bold uppercase text-black">
                 {{purchaseOrder.delivery?.name}}
               </h3>
-              <p *ngIf="purchaseOrder.delivery != null" class="text-gray-500 text-sm font-mono">
+              <p *ngIf="purchaseOrder.delivery !== null" class="text-gray-500 text-sm font-mono">
                   ID: {{purchaseOrder.delivery?.id}}
               </p>
 

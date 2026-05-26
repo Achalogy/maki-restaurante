@@ -1,6 +1,5 @@
 import { PurchaseOrder } from "./purchase-order.interface";
 import { Plate } from "./plate.interface";
-import { Additional } from "./additional.interface";
 
 export interface PurchaseOrderDetails {
   id: number,

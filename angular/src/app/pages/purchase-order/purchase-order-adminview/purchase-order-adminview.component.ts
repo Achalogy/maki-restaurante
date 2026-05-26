@@ -14,7 +14,7 @@ import translateStatus from "src/utils/translateStatus";
 })
 export class PurchaseOrderAdminviewComponent {
   purchaseOrderList: PurchaseOrder[] = [];
-  loggedAs: String | null = null;
+  loggedAs: string | null = null;
   constructor(
     private purchaseOrderService: PurchaseOrderService,
     private router: Router,

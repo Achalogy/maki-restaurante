@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Operator } from 'src/app/interfaces/operator.interface'; 
 import { OperatorService } from 'src/app/service/data/operator.service';
 
